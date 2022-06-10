@@ -169,27 +169,34 @@ dvector_position dmatrix_position::operator () (int i)
  * Description not yet available.
  * \param
  */
-dvar_matrix_position::dvar_matrix_position(const dvar_matrix& m,int x)
-  : lb(m.rowmin(),m.rowmax()), ub(m.rowmin(),m.rowmax()),
+dvar_matrix_position::dvar_matrix_position(const dvar_matrix& m,int x):
+  lb(m.rowmin(),m.rowmax()),
+  ub(m.rowmin(),m.rowmax()),
   ptr(m.rowmin(),m.rowmax())
-
 {
   row_min=m.rowmin();
   row_max=m.rowmax();
+
+  const dvar_vector* pm = &m(row_min);
+  int* plb = lb.get_v() + row_min;
+  int* pub = ub.get_v() + row_min;
   for (int i=row_min;i<=row_max;i++)
   {
-    if (allocated(m(i)))
+    if (allocated(*pm))
     {
-      lb(i)=m(i).indexmin();
-      ub(i)=m(i).indexmax();
-      ptr(i)=m(i).get_va();
+      *plb = pm->indexmin();
+      *pub = pm->indexmax();
+      ptr(i) = pm->get_va();
     }
     else
     {
-      lb(i)=0;
-      ub(i)=-1;
-      ptr(i)=0;
+      *plb = 0;
+      *pub = -1;
+      ptr(i) = 0;
     }
+    ++pm;
+    ++plb;
+    ++pub;
   }
 }
 

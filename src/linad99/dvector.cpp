@@ -28,7 +28,7 @@
 #ifdef _MSC_VER
 #include <memory.h>
 #endif
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
   #include <climits>
 #endif
@@ -268,10 +268,6 @@ dvector& dvector::operator=(const dvector& t)
 
     if (v != t.v)
     {
-#ifdef DEBUG
-      assert(max >= min);
-#endif
-
       constexpr size_t sizeofdouble = sizeof(double);
       double* pv = v + min;
       double* pt = t.get_v() + min;
@@ -330,7 +326,7 @@ The range of valid subscripts for the %dvector object will be [0,sz-1].
 */
 dvector::dvector(unsigned int sz, double* x)
 {
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(sz > 0 && sz - 1 <= INT_MAX);
 #endif
   allocate(0, (int)(sz - 1));

@@ -170,6 +170,41 @@ void check_for_params_on_bounds(ostream& os);
 adstring_array get_param_names();
 std::chrono::time_point<std::chrono::system_clock> start_time;
 
+adstring get_maxparname(const int index)
+{
+  if (initial_params::num_initial_params){
+    adstring_array pars;
+    pars = get_param_names();
+    return pars(index);
+  }
+  else
+  {
+    adstring maxparname = "param[" + str(index) + "]";
+    return maxparname;
+  }
+}
+int get_maxpar(const dvector& g)
+{
+  int min = g.indexmin();
+  int max = g.indexmax();
+
+  double* pg = g.get_v() + min;
+  int maxpar = min;
+  double gmax = fabs(*pg);
+
+  ++pg;
+  for (int i = min + 1; i <= max; ++i)
+  {
+    double v = fabs(*pg);
+    if (v > gmax)
+    {
+      gmax = v;
+      maxpar = i;
+    }
+    ++pg;
+  }
+  return maxpar;
+}
 /**
 * Function fmin contains Quasi-Newton function minimizer with
 * inexact line search using Wolfe conditions and
@@ -455,10 +490,16 @@ label20: /* check for convergence */
          ihang = 1;
       gmax = 0;
       /* satisfy convergence criterion? */
-      for ( i=1; i<=n; i++)
       {
-        if(fabs(g.elem(i)) > crit) iconv = 2;
-        if(fabs(g.elem(i)) > fabs(gmax) ) gmax = g.elem(i);
+        double* pg = g.get_v() + 1;
+        for (i = 1; i <= n; ++i)
+        {
+          double gi = *pg;
+          double fabsgi = fabs(gi);
+          if(fabsgi > crit) iconv = 2;
+          if(fabsgi > fabs(gmax)) gmax = gi;
+	  ++pg;
+        }
       }
       /* exit if either convergence or no improvement has been achieved
          during last 10 iterations */
@@ -486,30 +527,16 @@ label20: /* check for convergence */
         if (!scroll_flag) clrscr();
 #endif
 label7003: /* Printing table header */
-	// This is the main console output
-	if(function_minimizer::output_flag==1){
-	  // new console output for optimization
-	  // stupid way to do which.max()
-	  adstring_array pars(1,n);
-          if (initial_params::num_initial_params){
-              pars = get_param_names();
-          } else {
-              for (int i = 1; i<=n; i++)  pars[i] = "param["+str(i)+"]";
-          }
-	  int maxpar=1; dvariable grMax=fabs(g.elem(1));
-	  for (int i = 1; i<=n; i++){
-	    if (fabs(g.elem(i))>grMax){
-	      grMax = fabs(g.elem(i));
-	      maxpar=i;
-	    }
-	  }
-	  // assert(pointer_to_phase);
-	  if (itn % iprint == 0) 
-          {
-	    ad_printf("phase=%2d | nvar=%3d | iter=%3d | nll=%.2e | mag=%.2e | par[%3d]=%s\n",
-		       initial_params::current_phase, n, itn,  double(f), fabs(double(gmax)), maxpar, (char*)pars(maxpar));
-          }
-	}
+        // This is the main console output
+      if (function_minimizer::output_flag==1){
+        int maxpar = get_maxpar(g);
+        adstring maxparname = get_maxparname(maxpar);
+        if (itn % iprint == 0)
+        {
+          ad_printf("phase=%2d | nvar=%3d | iter=%3d | nll=%.2e | mag=%.2e | par[%3d]=%s\n",
+            initial_params::current_phase, n, itn,  double(f), fabs(double(gmax)), maxpar, (char*)maxparname);
+        }
+      }
       if (iprint>0)
       {
         //ad_printf("%d variables; iteration %ld; function evaluation %ld", n, itn, ifn);
@@ -542,8 +569,7 @@ label21 : /* Calculating Newton step */
       w.elem(1)=-g.elem(1);
 
 #if defined(DIAG)
-      cout << __FILE__ << ':' << __LINE__ << ' '
-	   << fmintime.get_elapsed_time_and_reset() << endl;
+      cout << __FILE__ << ':' << __LINE__ << ' ' << fmintime.get_elapsed_time_and_reset() << endl;
 #endif
 
       /* solving system of linear equations H_(k+1) * (x_(k+1)-x(k)) = -g_k
@@ -857,8 +883,7 @@ label70:  // Hessian update
       w.elem(iv+1)=w.elem(iu+1);
 
 #if defined(DIAG)
-      cout << __FILE__ << ':' << __LINE__ << ' '
-	   << fmintime.get_elapsed_time_and_reset() << endl;
+      cout << __FILE__ << ':' << __LINE__ << ' ' << fmintime.get_elapsed_time_and_reset() << endl;
 #endif
 
       for (i=2;i<=n;i++)
@@ -875,8 +900,7 @@ label70:  // Hessian update
       }
 
 #if defined(DIAG)
-      cout << __FILE__ << ':' << __LINE__ << ' '
-	   << fmintime.get_elapsed_time_and_reset() << endl;
+      cout << __FILE__ << ':' << __LINE__ << ' ' << fmintime.get_elapsed_time_and_reset() << endl;
 #endif
 
       for (i=1;i<=n;i++)
@@ -905,7 +929,7 @@ label70:  // Hessian update
       if (xxlink == 2) goto label65;
 /*label90:*/
       for (i=1;i<=n;i++)
-	g.elem(i)=w.elem(i);
+        g.elem(i)=w.elem(i);
 label92: /* Exit with error */
 if (iprint>0)
   {
@@ -929,21 +953,21 @@ if (iprint>0)
 #endif
                     << endl;
     }
-    if(function_minimizer::output_flag==1)
-      {
-	// Not sure this really helps the user. It just moves
-	// on to next phase or finishes optimization and
-	// those messgaes are more useful
-	// cout << "Optimizer ended early due to not making progress (ialpha=" <<
-	//   ialph << ", ihang=" << ihang <<  ")" << endl;//try reoptimizing from .par file" << endl;
-      }
+    if (function_minimizer::output_flag==1)
+    {
+    // Not sure this really helps the user. It just moves
+    // on to next phase or finishes optimization and
+    // those messgaes are more useful
+    // cout << "Optimizer ended early due to not making progress (ialpha=" <<
+    //   ialph << ", ihang=" << ihang <<  ")" << endl;//try reoptimizing from .par file" << endl;
+    }
   }
 if(iexit == 2)
   {
     if (iprint>0)
     {
       ad_printf("*** grad transpose times delta x greater >= 0\n"
-		       " --- convergence critera may be too strict\n");
+                " --- convergence critera may be too strict\n");
       ireturn=-1;
     }
   }
@@ -979,57 +1003,23 @@ if (iprint>0)
      // always print info from final iteration.. copied from 7003
      // above b/c I don't know how to get the logic write, I
      // can't just use goto label7003 or it loops forever.
-     adstring_array pars(1,n);
-     if (initial_params::num_initial_params){
-       pars = get_param_names();
-     } else {
-       for (int i = 1; i<=n; i++)  pars[i] = "param["+str(i)+"]";
-     }
-     int maxpar = 1; double grMax = fabs(g.elem(1));
-     for (int i = 2; i <= n; ++i)
-     {
-       double v = fabs(g.elem(i));
-       if (v > grMax)
-       {
-	 grMax = v;
-	 maxpar = i;
-       }
-     }
+     int maxpar = get_maxpar(g);
+     adstring maxparname = get_maxparname(maxpar);
      if(iprint>0)
        ad_printf("phase=%2d | nvar=%3d | iter=%3d | nll=%.2e | mag=%.2e | par[%3d]=%s\n",
-		 initial_params::current_phase, n, itn,  double(f), fabs(double(gmax)), maxpar, (char*)pars(maxpar));
-      
+         initial_params::current_phase, n, itn,  double(f), fabs(double(gmax)), maxpar, (char*)maxparname);
+
      // only print global stuff if in last phase
      if (initial_params::current_phase==initial_params::max_number_phases)
      {
-       // new console output for optimization
-       // assert(pointer_to_phase);
-
-       // stupid way to do which.max()
-       adstring_array pars(1,n);
-       if (initial_params::num_initial_params){
-	 pars = get_param_names();
-       } else {
-	 for (int i = 1; i<=n; i++) pars[i] = "param["+str(i)+"]";
-       }
-       int maxpar = 1; double grMax = fabs(g.elem(1));
-       for (int i = 2; i <= n; ++i)
-       {
-         double v = fabs(g.elem(i));
-         if (v > grMax)
-         {
-           grMax = v;
-           maxpar = i;
-         }
-       }
        cout << "Optimization completed after "
             << get_elapsed_time(start_time, std::chrono::system_clock::now())
             << " with final statistics:\n" ;
-       ad_printf("  nll=%f | mag=%.5e | par[%3d]=%s\n\n", double(f), fabs(double(gmax)), maxpar, (char*)pars(maxpar));
+       ad_printf("  nll=%f | mag=%.5e | par[%3d]=%s\n\n", double(f), fabs(double(gmax)), maxpar, (char*)maxparname);
 
        if (initial_params::num_initial_params && function_minimizer::output_flag==1){
-	 check_for_params_on_bounds(std::cout);
-	 check_for_params_on_bounds(*ad_comm::global_logfile);
+         check_for_params_on_bounds(std::cout);
+         check_for_params_on_bounds(*ad_comm::global_logfile);
        }
      }
    }

@@ -91,85 +91,124 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
   dvector vv(lb,ub);
 
   d=1.0;
+  double* pvv = vv.get_v() + lb;
+  dvector* pbbi = &bb.elem(lb);
   for (int i=lb;i<=ub;i++)
   {
     big=0.0;
+    double* pbbij = pbbi->get_v() + lb;
     for (int j=lb;j<=ub;j++)
     {
-      temp=fabs(bb.elem(i,j));
+      temp=fabs(*pbbij);
       if (temp > big)
       {
         big=temp;
       }
+      ++pbbij;
     }
     if (big == 0.0)
     {
       cerr << "Error in matrix inverse -- matrix singular in "
       "solve(dvar_dmatrix)\n";
     }
-    vv[i]=1.0/big;
+    *pvv = 1.0/big;
+    ++pvv;
+    ++pbbi;
   }
 
   for (int j=lb;j<=ub;j++)
   {
-    for (int i=lb;i<j;i++)
+    dvector* pbbi = &bb.elem(lb);
+    for (int i = lb; i < j; ++i)
     {
-      sum=bb.elem(i,j);
+      double* pbbij = pbbi->get_v() + j;
+      sum = *pbbij;
+
+      double* pbbik = pbbi->get_v() + lb;
+      dvector* pbbk = &bb.elem(lb);
       for (int k=lb;k<i;k++)
       {
-        sum -= bb.elem(i,k)*bb.elem(k,j);
+        sum -= *pbbik * *(pbbk->get_v() + j);
+        ++pbbik;
+        ++pbbk;
       }
+
       //a[i][j]=sum;
-      bb.elem(i,j)=sum;
+      *pbbij = sum;
+
+      ++pbbi;
     }
+
     int imax = j;
     big=0.0;
+    pvv = vv.get_v() + j;
+
+    pbbi = &bb.elem(j);
     for (int i=j;i<=ub;i++)
     {
-      sum=bb.elem(i,j);
+      double* pbbij = pbbi->get_v() + j;
+      sum = *pbbij;
+
+      double* pbbik = pbbi->get_v() + lb;
+      dvector* pbbk = &bb.elem(lb);
       for (int k=lb;k<j;k++)
       {
-        sum -= bb.elem(i,k)*bb.elem(k,j);
+        sum -= *pbbik * *(pbbk->get_v() + j);
+        ++pbbik;
+        ++pbbk;
       }
-      bb.elem(i,j)=sum;
-      dum=vv[i]*fabs(sum);
-      if ( dum >= big)
+      *pbbij = sum;
+      dum = *pvv * fabs(sum);
+      if (dum >= big)
       {
-        big=dum;
-        imax=i;
+        big = dum;
+        imax = i;
       }
+      ++pvv;
+      ++pbbi;
     }
+
     if (j != imax)
     {
+      double* pbbimaxk = bb.elem(imax).get_v() + lb;
+      double* pbbjk = bb.elem(j).get_v() + lb;
       for (int k=lb;k<=ub;k++)
       {
-        dum=bb.elem(imax,k);
-        bb.elem(imax,k)=bb.elem(j,k);
-        bb.elem(j,k)=dum;
+        dum = *pbbimaxk;
+        *pbbimaxk = *pbbjk;
+        *pbbjk = dum;
+
+        ++pbbimaxk;
+        ++pbbjk;
       }
+
       d = -1.*d;
       vv[imax]=vv[j];
 
       //if (j<ub)
+      int* pindximax = indx.get_v() + imax;
+      int* pindxj = indx.get_v() + j;
       {
-        int itemp=indx.elem(imax);
-        indx.elem(imax)=indx.elem(j);
-        indx.elem(j)=itemp;
+        int itemp = *pindximax;
+        *pindximax = *pindxj;
+        *pindxj = itemp;
       }
       //cout << "indx= " <<indx<<endl;
     }
 
-    if (bb.elem(j,j) == 0.0)
+    double* pbbjj = bb.elem(j).get_v() + j;
+    if (*pbbjj == 0.0)
     {
-      bb.elem(j,j)=TINY;
+      *pbbjj = TINY;
     }
 
     if (j != n)
     {
-      dum=1.0/bb.elem(j,j);
+      dum = 1.0 / *pbbjj;
       for (int i=j+1;i<=ub;i++)
       {
-        bb.elem(i,j) = bb.elem(i,j) * dum;
+        double* pbbij = bb.elem(i).get_v() + j;
+        *pbbij = *pbbij * dum;
       }
     }
   }
@@ -192,33 +231,69 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
   //int ub=rowmax;
   dmatrix& b=bb;
   ivector indxinv(lb,ub);
-  for (int i=lb;i<=ub;i++)
+
+  int* pindx = indx.get_v() + lb;
+  int* pindxinv = indxinv.get_v();
+  for (int i = lb; i <= ub; ++i)
   {
-    indxinv(indx.elem(i))=i;
+    *(pindxinv + *pindx) = i;
+    ++pindx;
   }
 
-  for (int i=lb;i<=ub;i++)
+  double_and_int* pz = z.get_va() + lb;
+  pindxinv = indxinv.get_v() + lb;
+  double* py = y.get_v();
+  for (int i = lb; i <= ub; ++i)
   {
-    y.elem(indxinv(i))=z.elem_value(i);
+    *(py + *pindxinv) = pz->x;
+
+    ++pz;
+    ++pindxinv;
   }
 
+  py = y.get_v() + lb;
+  dvector* pbi = &b.elem(lb);
   for (int i=lb;i<=ub;i++)
   {
-    sum=y.elem(i);
+    sum = *py;
+
+    double* pyj = y.get_v() + lb;
+    double* pbij = pbi->get_v() + lb;
     for (int j=lb;j<=i-1;j++)
     {
-      sum-=b.elem(i,j)*y.elem(j);
+      sum -= *pbij * *pyj;
+
+      ++pyj;
+      ++pbij;
     }
-    y.elem(i)=sum;
+
+    *py = sum;
+
+    ++py;
+    ++pbi;
   }
+
+  py = y.get_v() + ub;
+  double* px = x.get_v() + ub;
+  pbi = &b.elem(ub);
   for (int i=ub;i>=lb;i--)
   {
-    sum=y.elem(i);
+    sum = *py;
+
+    double* pxj = x.get_v() + i + 1;
+    double* pbij = pbi->get_v() + i + 1;
     for (int j=i+1;j<=ub;j++)
     {
-      sum-=b.elem(i,j)*x.elem(j);
+      sum -= *pbij * *pxj;
+
+      ++pxj;
+      ++pbij;
     }
-    x.elem(i)=sum/b.elem(i,i);
+    *px = sum / *(pbi->get_v() + i);
+
+    --pbi;
+    --py;
+    --px;
   }
 
   vc=nograd_assign(x);
@@ -294,9 +369,13 @@ void dmdv_solve(void)
   dvector dfy(lb,ub);
   dvector dfpart_prod(lb,ub);
   ivector indxinv(lb,ub);
-  for (int i=lb;i<=ub;i++)
+
+  int* pindx = indx.get_v() + lb;
+  int* pindxinv = indxinv.get_v();
+  for (int i = lb; i <= ub; ++i)
   {
-    indxinv(indx.elem(i))=i;
+    *(pindxinv + *pindx) = i;
+    ++pindx;
   }
 
   double dfsum=0.;
@@ -307,62 +386,115 @@ void dmdv_solve(void)
     dfpart_prod.initialize();
   #endif
 
-  for (int i=lb;i<=ub;i++)
+  double* pdfxi = dfx.get_v() + lb;
+  double* pdfyi = dfy.get_v() + lb;
+  double* pxi = x.get_v() + lb;
+  dvector* pbi = &b.elem(lb);
+  dvector* pdfbi = &dfb.elem(lb);
+  for (int i = lb; i <= ub; ++i)
   {
+    double* pbii = pbi->get_v() + i;
+
     // x.elem(i)=sum/b.elem(i,i);
-    dfsum+=dfx.elem(i)/b.elem(i,i);
-    dfb.elem(i,i)-=dfx.elem(i)*x.elem(i)/b.elem(i,i);
-    dfx.elem(i)=0.;
-    for (int j=ub;j>=i+1;j--)
+    dfsum += *pdfxi / *pbii;
+    *(pdfbi->get_v() + i) -= *pdfxi * *pxi / *pbii;
+    *pdfxi = 0.0;
+
+    double* pxj = x.get_v() + ub;
+    double* pdfxj = dfx.get_v() + ub;
+    double* pbij = pbi->get_v() + ub;
+    double* pdfbij = pdfbi->get_v() + ub;
+    for (int j = ub; j >= i + 1; --j)
     {
       // sum -=b.elem(i,j)*x.elem(j);
-      dfb.elem(i,j)-=dfsum*x.elem(j);
-      dfx.elem(j)-=dfsum*b.elem(i,j);
+      dfb.elem(i,j) -= dfsum* *pxj;
+      *pdfxj -= dfsum * *pbij;
+      --pxj;
+      --pdfxj;
+      --pbij;
+      --pdfbij;
     }
+
     // sum=y.elem(i);
-    dfy.elem(i)+=dfsum;
-    dfsum=0.;
+    *pdfyi += dfsum;
+    dfsum = 0.0;
+
+    ++pdfxi;
+    ++pdfyi;
+    ++pxi;
+    ++pbi;
+    ++pdfbi;
   }
 
+  pdfyi = dfy.get_v() + ub;
+  pdfbi = &dfb.elem(ub);
+  pbi = &b.elem(ub);
   for (int i=ub;i>=lb;i--)
   {
     // y.elem(i)=sum;
-    dfsum+=dfy.elem(i);
-    dfy.elem(i)=0.;
+    dfsum += *pdfyi;
+    *pdfyi = 0.0;
+
+    double* pdfyj = dfy.get_v() + i - 1;
+    double* pyj = y.get_v() + i - 1;
+    double* pdfbij = pdfbi->get_v() + i - 1;
+    double* pbij = pbi->get_v() + i - 1;
     for (int j=i-1;j>=lb;j--)
     {
       // sum-=b.elem(i,j)*y.elem(j);
-      dfb.elem(i,j)-=dfsum*y.elem(j);
-      dfy.elem(j)-=dfsum*b.elem(i,j);
+      *pdfbij -= dfsum * *pyj;
+      *pdfyj -= dfsum * *pbij;
+
+      --pdfyj;
+      --pyj;
+      --pdfbij;
+      --pbij;
     }
     //sum=y.elem(i);
-    dfy.elem(i)=dfsum;
-    dfsum=0.;
+    *pdfyi = dfsum;
+    dfsum = 0.0;
+
+    --pdfyi;
+    --pdfbi;
+    --pbi;
   }
 
+  double* pdfz = dfz.get_v() + ub;
+  double* pdfy = dfy.get_v();
+  pindxinv = indxinv.get_v() + ub;
   for (int i=ub;i>=lb;i--)
   {
     //y.elem(indxinv(i))=z.elem_value(i);
-    dfz.elem(i)=dfy.elem(indxinv(i));
+    *pdfz = *(pdfy + *pindxinv);
+    --pdfz;
+    --pindxinv;
   }
 
   dfz.save_dvector_derivatives(zpos);
 
+  double* pdfpart_prod = dfpart_prod.get_v() + ub;
   //ln_unsigned_det=part_prod(ub);
-  dfpart_prod(ub)+=df_ln_det;
+  *pdfpart_prod += df_ln_det;
   df_ln_det=0.0;
 
+  dvector* pbj = &b.elem(ub);
+  dvector* pdfbj = &dfb.elem(ub);
   for (int j=ub;j>=lb+1;j--)
   {
+    double* pdfpart_prod2 = pdfpart_prod - 1;
     //part_prod(j)=part_prod(j-1)+log(fabs(bb(j,j));
-    dfpart_prod(j-1)+=dfpart_prod(j);
-    dfb(j,j)+=dfpart_prod(j)/b(j,j);
-    dfpart_prod(j)=0.0;
+    *pdfpart_prod2 += *pdfpart_prod;
+    *(pdfbj->get_v() + j) += *pdfpart_prod / *(pbj->get_v() + j);
+    *pdfpart_prod = 0.0;
+
+    --pdfpart_prod;
+    --pbj;
+    --pdfbj;
   }
 
   //part_prod(lb)=log(fabs(bb(lb,lb));
-  dfb(lb,lb)+=dfpart_prod(lb)/b(lb,lb);
-  dfpart_prod(lb)=0.0;
+  *(pdfbj->get_v() + lb) += *pdfpart_prod / *(pbj->get_v() + lb);
+  *pdfpart_prod = 0.0;
 
   for (int j=ub;j>=lb;j--)
   {

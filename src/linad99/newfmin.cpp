@@ -633,19 +633,35 @@ label30: /* Taking a step, updating x */
         iexit=1;
       }
       if(quit_flag) goto label92;
-      for (i=1; i<=n; i++)
       {
-        /* w(n+1,2n) has the next direction to go */
-        z=alpha*w.elem(is+i);
-        /* new independent vector values */
-        xx.elem(i)+=z;
-      }
-      for (i=1; i<=n; i++)
-      { /* save previous values and update x return value */
-        xsave.elem(i)=x.elem(i);
-        gsave.elem(i)=g.elem(i);
-        x.elem(i)=xx.elem(i);
-        fsave = f;
+	double* pw = w.get_v() + is + 1;
+	double* pxx = xx.get_v() + 1;
+        for (i=1; i<=n; i++)
+        {
+          /* w(n+1,2n) has the next direction to go */
+          z = alpha * *pw;
+          /* new independent vector values */
+          *pxx += z;
+	  ++pw;
+	  ++pxx;
+        }
+	double* px = x.get_v() + 1;
+	double* pg = g.get_v() + 1;
+	pxx = xx.get_v() + 1;
+	double* pxsave = xsave.get_v() + 1;
+	double* pgsave = gsave.get_v() + 1;
+        for (i=1; i<=n; i++)
+        { /* save previous values and update x return value */
+          *pxsave = *px;
+          *pgsave = *pg;
+          *px = *pxx;
+          fsave = f;
+	  ++px;
+	  ++pg;
+	  ++pxx;
+	  ++pxsave;
+	  ++pgsave;
+        }
       }
       fsave = f;
       ireturn=2;
@@ -664,11 +680,23 @@ label30: /* Taking a step, updating x */
         cout << "finished hessian restore" << endl;
       }
       /* restore x_k, g(x_k) and g(x_k+alpha*p_k) */
-      for (i=1; i<=n; i++)
       {
-        x.elem(i)=xsave.elem(i); //x_k
-        w.elem(i)=g.elem(i);     //g(x_k+alpha*p_k)
-        g.elem(i)=gsave.elem(i); //g(x_k)
+	double* px = x.get_v() + 1;
+	double* pw = w.get_v() + 1;
+	double* pg = g.get_v() + 1;
+	double* pgsave = gsave.get_v() + 1;
+	double* pxsave = xsave.get_v() + 1;
+        for (i=1; i<=n; i++)
+        {
+          *px = *pxsave; //x_k
+          *pw = *pg;     //g(x_k+alpha*p_k)
+          *pg = *pgsave; //g(x_k)
+          ++px;
+          ++pw;
+          ++pg;
+          ++pgsave;
+          ++pxsave;
+        }
       }
       fy = f;
       f = fsave; /* now fy is a new function value, f is the old one */
@@ -677,10 +705,19 @@ label30: /* Taking a step, updating x */
       if (fy <= fbest)
       {
         fbest=fy;
+	double* px = x.get_v() + 1;
+	double* pw = w.get_v() + 1;
+	double* pxx = xx.get_v() + 1;
+	double* pgbest = gbest.get_v() + 1;
         for (i=1; i<=n; i++)
         {
-          x.elem(i)=xx.elem(i);
-          gbest.elem(i)=w.elem(i);
+          *px = *pxx;
+          *pgbest = *pw;
+
+	  ++px;
+	  ++pw;
+	  ++pgbest;
+	  ++pxx;
         }
       }
       /* what to do if CTRL-C keys were pressed */
@@ -852,22 +889,51 @@ label50: /* compute Hessian updating terms */
       xxlink=1;
       if(dgs+alpha*gso>0.0)
          goto label52;
-      for (i=1;i<=n;i++)
-         w.elem(iu+i)=w.elem(i)-g.elem(i);
+
+      {
+	double* pg = g.get_v() + 1;
+	double* pw = w.get_v() + 1;
+	double* pwu = w.get_v() + iu + 1;
+        for (i=1;i<=n;i++)
+	{
+          *pwu = *pw - *pg;
+          ++pg;
+          ++pw;
+          ++pwu;
+	}
+      }
       /* now w(n+1,2n) = df(x_k+alpha_k*p_k)-df(x_k) */
       sig=1.0/(alpha*dgs);
       goto label70;
 label52: /* compute Hessian updating terms */
       zz=alpha/(dgs-alpha*gso);
       z=dgs*zz-1.0;
-      for (i=1;i<=n;i++)
-         w.elem(iu+i)=z*g.elem(i)+w.elem(i);
+      {
+	double* pg = g.get_v() + 1;
+	double* pw = w.get_v() + 1;
+	double* pwu = w.get_v() + iu + 1;
+        for (i=1;i<=n;i++)
+	{
+          *pwu = z * *pg + *pw;
+          ++pg;
+          ++pw;
+          ++pwu;
+	}
+      }
       sig=1.0/(zz*dgs*dgs);
       goto label70;
 label60: /* compute Hessian updating terms */
       xxlink=2;
-      for (i=1;i<=n;i++)
-         w.elem(iu+i)=g.elem(i);
+      {
+	double* pg = g.get_v() + 1;
+	double* pw = w.get_v() + iu + 1;
+        for (i=1;i<=n;i++)
+        {
+          *pw = *pg;
+	  ++pg;
+	  ++pw;
+        }
+      }
       if(dgs+alpha*gso>0.0)
          goto label62;
       sig=1.0/gso;
@@ -876,8 +942,16 @@ label62: /* compute Hessian updating terms */
       sig=-zz;
       goto label70;
 label65: /* save in g the gradient df(x_k+alpha*p_k) */
-      for (i=1;i<=n;i++)
-         g.elem(i)=w.elem(i);
+      {
+	double* pg = g.get_v() + 1;
+	double* pw = w.get_v() + 1;
+        for (i=1;i<=n;i++)
+	{
+          *pg = *pw;
+	  ++pg;
+	  ++pw;
+	}
+      }
       goto  label20; //convergence check
 label70:  // Hessian update
       w.elem(iv+1)=w.elem(iu+1);
@@ -886,17 +960,21 @@ label70:  // Hessian update
       cout << __FILE__ << ':' << __LINE__ << ' ' << fmintime.get_elapsed_time_and_reset() << endl;
 #endif
 
-      for (i=2;i<=n;i++)
       {
-         i1=i-1;
-         z=w.elem(iu+i);
-         double * pd=&(h.elem(i,1));
-         double * pw=&(w.elem(iv+1));
-         for (j=1;j<=i1;j++)
-         {
-           z-=*pd++ * *pw++;
-         }
-         w.elem(iv+i)=z;
+        for (i=2;i<=n;i++)
+        {
+           i1=i-1;
+           z=w.elem(iu+i);
+           double* ph = &(h.elem(i,1));
+           double* pw = &(w.elem(iv+1));
+           for (j=1;j<=i1;j++)
+           {
+             z -= *ph * *pw;
+	     ++ph;
+	     ++pw;
+           }
+           w.elem(iv+i)=z;
+        }
       }
 
 #if defined(DIAG)
@@ -928,8 +1006,16 @@ label70:  // Hessian update
       if (xxlink == 1) goto label60;
       if (xxlink == 2) goto label65;
 /*label90:*/
-      for (i=1;i<=n;i++)
-        g.elem(i)=w.elem(i);
+      {
+        double* pg = g.get_v() + 1;
+        double* pw = w.get_v() + 1;
+        for (i=1;i<=n;i++)
+        {
+          *pg = *pw;
+          ++pg;
+          ++pw;
+        }
+      }
 label92: /* Exit with error */
 if (iprint>0)
   {

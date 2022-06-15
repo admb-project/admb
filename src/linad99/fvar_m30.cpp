@@ -37,7 +37,7 @@ dvar_matrix operator/(const dvar_matrix& m, const double e)
   dvar_matrix tmp;
   int min = m.indexmin();
   int max = m.indexmax();
-  if (min > max)
+  if (min <= max)
   {
     tmp.allocate(min, max);
     dvar_vector* ptmp = &tmp(min);
@@ -61,7 +61,7 @@ dvar_matrix operator/(const dvar_matrix& m, const prevariable& e)
   dvar_matrix tmp;
   int min = m.indexmin();
   int max = m.indexmax();
-  if (min > max)
+  if (min <= max)
   {
     tmp.allocate(min, max);
     dvar_vector* ptmp = &tmp(min);
@@ -86,7 +86,7 @@ dvar_matrix operator/(const dmatrix& m, const prevariable& e)
   int min = m.indexmin();
   int max = m.indexmax();
   tmp.allocate(min, max);
-  if (min > max)
+  if (min <= max)
   {
     dvar_vector* ptmp = &tmp(min);
     const dvector* pm = &m(min);

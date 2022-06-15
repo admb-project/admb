@@ -177,7 +177,7 @@ dvar_matrix_position::dvar_matrix_position(const dvar_matrix& m,int x):
   row_min=m.rowmin();
   row_max=m.rowmax();
 
-  if (row_min > row_max)
+  if (row_min <= row_max)
   {
     const dvar_vector* pm = &m(row_min);
     int* plb = lb.get_v() + row_min;

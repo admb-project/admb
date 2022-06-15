@@ -230,7 +230,7 @@ dvariable sum(const dvar_matrix& m)
   int min = m.rowmin();
   int max = m.rowmax();
   dvariable tmp = 0.0;
-  if (min > max)
+  if (min <= max)
   {
     const dvar_vector* pmi = &m(min);
     for (int i = min; i <= max; ++i)

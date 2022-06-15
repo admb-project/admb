@@ -177,26 +177,29 @@ dvar_matrix_position::dvar_matrix_position(const dvar_matrix& m,int x):
   row_min=m.rowmin();
   row_max=m.rowmax();
 
-  const dvar_vector* pm = &m(row_min);
-  int* plb = lb.get_v() + row_min;
-  int* pub = ub.get_v() + row_min;
-  for (int i=row_min;i<=row_max;i++)
+  if (row_min > row_max)
   {
-    if (allocated(*pm))
+    const dvar_vector* pm = &m(row_min);
+    int* plb = lb.get_v() + row_min;
+    int* pub = ub.get_v() + row_min;
+    for (int i=row_min;i<=row_max;i++)
     {
-      *plb = pm->indexmin();
-      *pub = pm->indexmax();
-      ptr(i) = pm->get_va();
+      if (allocated(*pm))
+      {
+        *plb = pm->indexmin();
+        *pub = pm->indexmax();
+        ptr(i) = pm->get_va();
+      }
+      else
+      {
+        *plb = 0;
+        *pub = -1;
+        ptr(i) = 0;
+      }
+      ++pm;
+      ++plb;
+      ++pub;
     }
-    else
-    {
-      *plb = 0;
-      *pub = -1;
-      ptr(i) = 0;
-    }
-    ++pm;
-    ++plb;
-    ++pub;
   }
 }
 

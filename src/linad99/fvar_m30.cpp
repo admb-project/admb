@@ -37,14 +37,17 @@ dvar_matrix operator/(const dvar_matrix& m, const double e)
   dvar_matrix tmp;
   int min = m.indexmin();
   int max = m.indexmax();
-  tmp.allocate(min, max);
-  dvar_vector* ptmp = &tmp(min);
-  const dvar_vector* pm = &m(min);
-  for (int i = min; i <= max; ++i)
+  if (min > max)
   {
-    *ptmp = *pm / e;
-    ++pm;
-    ++ptmp;
+    tmp.allocate(min, max);
+    dvar_vector* ptmp = &tmp(min);
+    const dvar_vector* pm = &m(min);
+    for (int i = min; i <= max; ++i)
+    {
+      *ptmp = *pm / e;
+      ++pm;
+      ++ptmp;
+    }
   }
   return tmp;
 }
@@ -58,14 +61,17 @@ dvar_matrix operator/(const dvar_matrix& m, const prevariable& e)
   dvar_matrix tmp;
   int min = m.indexmin();
   int max = m.indexmax();
-  tmp.allocate(min, max);
-  dvar_vector* ptmp = &tmp(min);
-  const dvar_vector* pm = &m(min);
-  for (int i = min; i <= max; ++i)
+  if (min > max)
   {
-    *ptmp = *pm / e;
-    ++pm;
-    ++ptmp;
+    tmp.allocate(min, max);
+    dvar_vector* ptmp = &tmp(min);
+    const dvar_vector* pm = &m(min);
+    for (int i = min; i <= max; ++i)
+    {
+      *ptmp = *pm / e;
+      ++pm;
+      ++ptmp;
+    }
   }
   return tmp;
 }
@@ -80,13 +86,16 @@ dvar_matrix operator/(const dmatrix& m, const prevariable& e)
   int min = m.indexmin();
   int max = m.indexmax();
   tmp.allocate(min, max);
-  dvar_vector* ptmp = &tmp(min);
-  const dvector* pm = &m(min);
-  for (int i = min; i <= max; ++i)
+  if (min > max)
   {
-    *ptmp = *pm / e;
-    ++pm;
-    ++ptmp;
+    dvar_vector* ptmp = &tmp(min);
+    const dvector* pm = &m(min);
+    for (int i = min; i <= max; ++i)
+    {
+      *ptmp = *pm / e;
+      ++pm;
+      ++ptmp;
+    }
   }
   return tmp;
 }

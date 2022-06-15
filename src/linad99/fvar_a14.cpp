@@ -230,11 +230,14 @@ dvariable sum(const dvar_matrix& m)
   int min = m.rowmin();
   int max = m.rowmax();
   dvariable tmp = 0.0;
-  const dvar_vector* pmi = &m(min);
-  for (int i = min; i <= max; ++i)
+  if (min > max)
   {
-    tmp += sum(*pmi);
-    ++pmi;
+    const dvar_vector* pmi = &m(min);
+    for (int i = min; i <= max; ++i)
+    {
+      tmp += sum(*pmi);
+      ++pmi;
+    }
   }
   gs->RETURN_ARRAYS_DECREMENT();
   return tmp;

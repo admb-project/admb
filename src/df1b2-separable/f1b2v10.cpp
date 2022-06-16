@@ -347,32 +347,45 @@ void read_pass2_1_prod_vector(void)
   double_ptr_vector ydot(mmin,mmax);
   dvector xu(mmin,mmax);
   dvector yu(mmin,mmax);
+
+  df1b2_header** ppxi = &px(mmin);
+  df1b2_header** ppyi = &py(mmin);
   for (int i=mmin;i<=mmax;i++)
   {
     // df1b2_header *
-    px(i)=(df1b2_header *) bptr;
+    *ppxi = (df1b2_header*)bptr;
     bptr+=sizeof(df1b2_header);
     // df1b2_header *
-    py(i)=(df1b2_header *) bptr;
+    *ppyi = (df1b2_header*)bptr;
     bptr+=sizeof(df1b2_header);
+
+    ++ppxi;
+    ++ppyi;
   }
   df1b2_header * pz=(df1b2_header *) bptr;
   bptr+=sizeof(df1b2_header);
+
+  double* pxui = xu.get_v() + mmin;
+  double* pyui = yu.get_v() + mmin;
   for (int i=mmin;i<=mmax;i++)
   {
-    memcpy(&(xu(i)),bptr,sizeofdouble);
+    memcpy(pxui, bptr, sizeofdouble);
     bptr+=sizeofdouble;
-    memcpy(&(yu(i)),bptr,sizeofdouble);
+    memcpy(pyui, bptr, sizeofdouble);
     bptr+=sizeofdouble;
+
+    ++pxui;
+    ++pyui;
   }
+  size_t nvarsizeofdouble = nvar * sizeofdouble;
   for (int i=mmin;i<=mmax;i++)
   {
     // double *
     xdot(i)=(double*)bptr;
-    bptr+=nvar*sizeofdouble;
+    bptr += nvarsizeofdouble;
     // double *
     ydot(i)=(double*)bptr;
-    bptr+=nvar*sizeofdouble;
+    bptr += nvarsizeofdouble;
   }
 
   list.restoreposition(); // save pointer to beginning of record;
@@ -408,16 +421,19 @@ void read_pass2_1_prod_vector(void)
   ++nlist2;
 
   // Do first reverse pass calculations
+  ppxi = &px(mmin);
+  ppyi = &py(mmin);
   double* pyu = yu.get_v() + mmin;
   double* pxu = xu.get_v() + mmin;
   for (int i=mmin;i<=mmax;i++)
   {
     double yui = *pyu;
     double* pz_u_bar = pz->u_bar;
-    double* pxi_u_bar = px(i)->u_bar;
+    double* pxi_u_bar = (*ppxi)->u_bar;
     for (size_t j = 0; j < nvar; ++j)
     {
       *pxi_u_bar += yui * *pz_u_bar;
+
       ++pz_u_bar;
       ++pxi_u_bar;
     }
@@ -425,26 +441,32 @@ void read_pass2_1_prod_vector(void)
 
     double xui = *pxu;
     pz_u_bar = pz->u_bar;
-    double* pyi_u_bar = py(i)->u_bar;
+    double* pyi_u_bar = (*ppyi)->u_bar;
     for (size_t j = 0; j < nvar; ++j)
     {
       *pyi_u_bar += xui * *pz_u_bar;
+
       ++pz_u_bar;
       ++pyi_u_bar;
     }
     ++pxu;
+    ++ppxi;
+    ++ppyi;
   }
 
+  ppxi = &px(mmin);
+  ppyi = &py(mmin);
   pyu = yu.get_v() + mmin;
   pxu = xu.get_v() + mmin;
   for (int i=mmin;i<=mmax;i++)
   {
     double* pydoti = ydot(i);
     double* pz_u_dot_bar = pz->u_dot_bar;
-    double* pxi_u_bar = px(i)->u_bar;
+    double* pxi_u_bar = (*ppxi)->u_bar;
     for (size_t j=0;j<nvar;j++)
     {
       *pxi_u_bar += *pydoti * *pz_u_dot_bar;
+
       ++pydoti;
       ++pz_u_dot_bar;
       ++pxi_u_bar;
@@ -452,10 +474,11 @@ void read_pass2_1_prod_vector(void)
 
     pz_u_dot_bar = pz->u_dot_bar;
     double* pxdoti = xdot(i);
-    double* pyi_u_bar = py(i)->u_bar;
+    double* pyi_u_bar = (*ppyi)->u_bar;
     for (size_t j=0;j<nvar;j++)
     {
       *pyi_u_bar += *pxdoti * *pz_u_dot_bar;
+
       ++pxdoti;
       ++pz_u_dot_bar;
       ++pyi_u_bar;
@@ -463,10 +486,11 @@ void read_pass2_1_prod_vector(void)
 
     double yui = *pyu;
     pz_u_dot_bar = pz->u_dot_bar;
-    double* pxi_u_dot_bar = px(i)->u_dot_bar;
+    double* pxi_u_dot_bar = (*ppxi)->u_dot_bar;
     for (size_t j=0;j<nvar;j++)
     {
       *pxi_u_dot_bar += yui * *pz_u_dot_bar;
+
       ++pz_u_dot_bar;
       ++pxi_u_dot_bar;
     }
@@ -474,27 +498,20 @@ void read_pass2_1_prod_vector(void)
 
     double xui = *pxu;
     pz_u_dot_bar = pz->u_dot_bar;
-    double* pyi_u_dot_bar = py(i)->u_dot_bar;
+    double* pyi_u_dot_bar = (*ppyi)->u_dot_bar;
     for (size_t j=0;j<nvar;j++)
     {
       *pyi_u_dot_bar += xui * *pz_u_dot_bar;
+
       ++pz_u_dot_bar;
       ++pyi_u_dot_bar;
     }
     ++pxu;
+    ++ppyi;
+    ++ppxi;
   }
 
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  /*
-  for (size_t j=0;j<nvar;j++)
-  {
-    pz->u_bar[j]=0;
-  }
-  for (size_t j=0;j<nvar;j++)
-  {
-    pz->u_dot_bar[j]=0;
-  }
-  */
   memset(pz->u_bar, 0, size);
   memset(pz->u_dot_bar, 0, size);
 }
@@ -567,72 +584,73 @@ void read_pass2_2_prod_vector(void)
   double_ptr_vector ydot(mmin,mmax);
   dvector xu(mmin,mmax);
   dvector yu(mmin,mmax);
-  int i;
 
-  for (i=mmin;i<=mmax;i++)
+  df1b2_header** ppxi = &px(mmin);
+  df1b2_header** ppyi = &py(mmin);
+  for (int i=mmin;i<=mmax;i++)
   {
     // df1b2_header * //
-    px(i)=(df1b2_header *) list.bptr;
+    *ppxi = (df1b2_header*)list.bptr;
     list.bptr+=sizeof(df1b2_header);
     // df1b2_header *
-    py(i)=(df1b2_header *) list.bptr;
+    *ppyi = (df1b2_header*)list.bptr;
     list.bptr+=sizeof(df1b2_header);
+
+    ++ppxi;
+    ++ppyi;
   }
 
   df1b2_header * pz=(df1b2_header *) list.bptr;
   list.bptr+=sizeof(df1b2_header);
 
-  for (i=mmin;i<=mmax;i++)
+  constexpr size_t sizeofdouble = sizeof(double);
+  double* pxui = xu.get_v() + mmin;
+  double* pyui = yu.get_v() + mmin;
+  for (int i=mmin;i<=mmax;i++)
   {
-    memcpy(&(xu(i)),list.bptr,sizeof(double));
-    list.bptr+=sizeof(double);
-    memcpy(&(yu(i)),list.bptr,sizeof(double));
-    list.bptr+=sizeof(double);
+    memcpy(pxui,list.bptr, sizeofdouble);
+    list.bptr += sizeofdouble;
+    memcpy(pyui,list.bptr, sizeofdouble);
+    list.bptr += sizeofdouble;
+
+    ++pxui;
+    ++pyui;
   }
-  for (i=mmin;i<=mmax;i++)
+
+  size_t nvarsizeofdouble = nvar * sizeofdouble;
+  for (int i=mmin;i<=mmax;i++)
   {
     xdot(i)=(double*)list.bptr;
-    list.bptr+=nvar*sizeof(double);
+    list.bptr += nvarsizeofdouble;
     ydot(i)=(double*)list.bptr;
-    list.bptr+=nvar*sizeof(double);
+    list.bptr += nvarsizeofdouble;
   }
   list.restoreposition(total_bytes); // save pointer to beginning of record;
 
-  double * zbar;
-  double * zdotbar;
-
-
-  zbar=(double*)list2.bptr;
-  zdotbar=(double*)(list2.bptr+nvar*sizeof(double));
+  double* zbar=(double*)list2.bptr;
+  double* zdotbar=(double*)(list2.bptr + nvarsizeofdouble);
   list2.restoreposition(); // save pointer to beginning of record;
 
   double* z_bar_tilde=pz->get_u_bar_tilde();
   double* z_dot_bar_tilde=pz->get_u_dot_bar_tilde();
 
-  /*
-  for (size_t j=0;j<nvar;j++)
-  {
-    z_bar_tilde[j]=0;
-    z_dot_bar_tilde[j]=0;
-  }
-  */
-  constexpr size_t sizeofdouble = sizeof(double);
-  size_t size = nvar * sizeofdouble;
-  memset(z_bar_tilde, 0, size);
-  memset(z_dot_bar_tilde, 0, size);
+  memset(z_bar_tilde, 0, nvarsizeofdouble);
+  memset(z_dot_bar_tilde, 0, nvarsizeofdouble);
 
+  ppxi = &px(mmin);
+  ppyi = &py(mmin);
   double* pyu = yu.get_v() + mmin;
   double* pxu = xu.get_v() + mmin;
-  for (i=mmin;i<=mmax;i++)
+  for (int i=mmin;i<=mmax;i++)
   {
-    double * x_tilde=px(i)->get_u_tilde();
-    double * x_dot_tilde=px(i)->get_u_dot_tilde();
-    double * x_bar_tilde=px(i)->get_u_bar_tilde();
-    double * x_dot_bar_tilde=px(i)->get_u_dot_bar_tilde();
-    double * y_tilde=py(i)->get_u_tilde();
-    double * y_dot_tilde=py(i)->get_u_dot_tilde();
-    double * y_bar_tilde=py(i)->get_u_bar_tilde();
-    double * y_dot_bar_tilde=py(i)->get_u_dot_bar_tilde();
+    double* x_tilde= (*ppxi)->get_u_tilde();
+    double* x_dot_tilde= (*ppxi)->get_u_dot_tilde();
+    double* x_bar_tilde= (*ppxi)->get_u_bar_tilde();
+    double* x_dot_bar_tilde= (*ppxi)->get_u_dot_bar_tilde();
+    double* y_tilde= (*ppyi)->get_u_tilde();
+    double* y_dot_tilde= (*ppyi)->get_u_dot_tilde();
+    double* y_bar_tilde= (*ppyi)->get_u_bar_tilde();
+    double* y_dot_bar_tilde= (*ppyi)->get_u_dot_bar_tilde();
 
     double yui = *pyu;
     // start wjth x and add y
@@ -686,6 +704,8 @@ void read_pass2_2_prod_vector(void)
       z_dot_bar_tilde[j]+=xdot(i)[j]* *py_bar_tilde;
       ++py_bar_tilde;
     }
+    ++ppxi;
+    ++ppyi;
   }
 }
 
@@ -728,59 +748,88 @@ void read_pass2_3_prod_vector(void)
   dvector xu(mmin,mmax);
   dvector yu(mmin,mmax);
   int i;
+  df1b2_header** ppxi = &px(mmin);
+  df1b2_header** ppyi = &py(mmin);
   for (i=mmin;i<=mmax;i++)
   {
     // df1b2_header *
-    px(i)=(df1b2_header *) list.bptr;
+    *ppxi = (df1b2_header*)list.bptr;
     list.bptr+=sizeof(df1b2_header);
     // df1b2_header *
-    py(i)=(df1b2_header *) list.bptr;
+    *ppyi = (df1b2_header*)list.bptr;
     list.bptr+=sizeof(df1b2_header);
+
+    ++ppxi;
+    ++ppyi;
   }
   df1b2_header * pz=(df1b2_header *) list.bptr;
   list.bptr+=sizeof(df1b2_header);
+
+  constexpr size_t sizeofdouble = sizeof(double);
+
+  double* pxui = xu.get_v() + mmin;
+  double* pyui = yu.get_v() + mmin;
   for (i=mmin;i<=mmax;i++)
   {
-    memcpy(&(xu(i)),list.bptr,sizeof(double));
-    list.bptr+=sizeof(double);
-    memcpy(&(yu(i)),list.bptr,sizeof(double));
-    list.bptr+=sizeof(double);
+    memcpy(pxui, list.bptr, sizeofdouble);
+    list.bptr+=sizeofdouble;
+    memcpy(pyui, list.bptr, sizeofdouble);
+    list.bptr+=sizeofdouble;
+
+    ++pxui;
+    ++pyui;
   }
+
+  size_t nvarsizeofdouble = nvar * sizeofdouble;
   for (i=mmin;i<=mmax;i++)
   {
     // double *
     xdot(i)=(double*)list.bptr;
-    list.bptr+=nvar*sizeof(double);
+    list.bptr += nvarsizeofdouble;
     // double *
     ydot(i)=(double*)list.bptr;
-    list.bptr+=nvar*sizeof(double);
+    list.bptr += nvarsizeofdouble;
   }
 
   list.restoreposition(); // save pointer to beginning of record;
 
+  pxui = xu.get_v() + mmin;
+  pyui = yu.get_v() + mmin;
+  ppxi = &px(mmin);
+  ppyi = &py(mmin);
   for (i=mmin;i<=mmax;i++)
   {
-    *(px(i)->u_tilde)+=yu(i) * *(pz->u_tilde);
-    *(py(i)->u_tilde)+=xu(i) * *(pz->u_tilde);
+    *((*ppxi)->u_tilde) += *pyui * *(pz->u_tilde);
+    *((*ppyi)->u_tilde) += *pxui * *(pz->u_tilde);
+
+    double* pz_u_dot_tildej = pz->u_dot_tilde;
     for (size_t j=0;j<nvar;j++)
     {
-      *(py(i)->u_tilde)+=xdot(i)[j]*pz->u_dot_tilde[j];
-      *(px(i)->u_tilde)+=ydot(i)[j]*pz->u_dot_tilde[j];
+      *((*ppyi)->u_tilde) += xdot(i)[j]* *pz_u_dot_tildej;
+      *((*ppxi)->u_tilde) += ydot(i)[j]* *pz_u_dot_tildej;
+
+      ++pz_u_dot_tildej;
     }
+
+    double* ppxi_u_dot_tildej = (*ppxi)->u_dot_tilde;
+    double* ppyi_u_dot_tildej = (*ppyi)->u_dot_tilde;
+    pz_u_dot_tildej = pz->u_dot_tilde;
     for (size_t j=0;j<nvar;j++)
     {
-      px(i)->u_dot_tilde[j]+=yu(i)*pz->u_dot_tilde[j];
-      py(i)->u_dot_tilde[j]+=xu(i)*pz->u_dot_tilde[j];
+      *ppxi_u_dot_tildej += *pyui * *pz_u_dot_tildej;
+      *ppyi_u_dot_tildej += *pxui * *pz_u_dot_tildej;
+
+      ++ppxi_u_dot_tildej;
+      ++ppyi_u_dot_tildej;
+      ++pz_u_dot_tildej;
     }
+
+    ++pxui;
+    ++pyui;
+    ++ppxi;
+    ++ppyi;
   }
   *(pz->u_tilde)=0;
-  /*
-  for (size_t j=0;j<nvar;j++)
-  {
-    pz->u_dot_tilde[j]=0;
-  }
-  */
-  constexpr size_t sizeofdouble = sizeof(double);
-  size_t size = nvar * sizeofdouble;
-  memset(pz->u_dot_tilde, 0, size);
+
+  memset(pz->u_dot_tilde, 0, nvarsizeofdouble);
 }

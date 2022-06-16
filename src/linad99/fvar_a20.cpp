@@ -189,28 +189,32 @@ void dv_assign(void)
   dvar_vector_position t_pos=fp->restore_dvar_vector_position();
   verify_identifier_string("bbbb");
   dvector dft(dftmp.indexmin(),dftmp.indexmax());
-#ifdef DEBUG
-  assert(dftmp.indexmax() >= dftmp.indexmin());
-#endif
-#ifdef OPT_LIB
+
   int mmin=dftmp.indexmin();
   int mmax=dftmp.indexmax();
+
+#ifdef DEBUG
+  assert(mmax >= mmin);
+#endif
+
+#ifdef OPT_LIB
   size_t size = (size_t)(mmax - mmin + 1);
   memcpy(&dft.elem(mmin),&dftmp.elem(mmin), size * sizeof(double));
-
 #else
-  #ifndef USE_ASSEMBLER
-  int mmin=dftmp.indexmin();
-  int mmax=dftmp.indexmax();
+  #ifdef USE_ASSEMBLER
+  int n=dftmp.indexmax()-mmin+1;
+  dw_block_move(&(dft.elem(mmin)),&(dftmp.elem(mmin)),n);
+  #else
+  double* pdfti = dft.get_v() + mmin;
+  double* pdftmpi = dftmp.get_v() + mmin;
   for (int i=mmin;i<=mmax;i++)
   {
     //vtmp.elem(i)=value(v1.elem(i))+value(v2.elem(i));
-    dft.elem(i)=dftmp.elem(i);
+    *pdfti = *pdftmpi;
+
+    ++pdfti;
+    ++pdftmpi;
   }
-  #else
-  int mmin=dftmp.indexmin();
-  int n=dftmp.indexmax()-mmin+1;
-     dw_block_move(&(dft.elem(mmin)),&(dftmp.elem(mmin)),n);
   #endif
 #endif
 

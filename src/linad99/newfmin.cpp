@@ -498,7 +498,7 @@ label20: /* check for convergence */
           double fabsgi = fabs(gi);
           if(fabsgi > crit) iconv = 2;
           if(fabsgi > fabs(gmax)) gmax = gi;
-	  ++pg;
+            ++pg;
         }
       }
       /* exit if either convergence or no improvement has been achieved
@@ -970,8 +970,9 @@ label70:  // Hessian update
            for (j=1;j<=i1;j++)
            {
              z -= *ph * *pw;
-	     ++ph;
-	     ++pw;
+
+             ++ph;
+             ++pw;
            }
            w.elem(iv+i)=z;
         }
@@ -980,28 +981,39 @@ label70:  // Hessian update
 #if defined(DIAG)
       cout << __FILE__ << ':' << __LINE__ << ' ' << fmintime.get_elapsed_time_and_reset() << endl;
 #endif
-
-      for (i=1;i<=n;i++)
-      {  /* BFGS updating formula */
-         z=h.elem(i,i)+sig*w.elem(iv+i)*w.elem(iv+i);
-         if(z <= 0.0)
-            z=dmin;
-         if(z<dmin)
-            dmin=z;
-         h.elem(i,i)=z;
-         w.elem(ib+i)=w.elem(iv+i)*sig/z;
-         sig-=w.elem(ib+i)*w.elem(ib+i)*z;
-       }
-      for (j=2;j<=n;j++)
       {
-         double * pd=&(h.elem(j,1));
-         double * qd=&(w.elem(iu+j));
-         double * rd=&(w.elem(iv+1));
-         for (i=1;i<j;i++)
-         {
-            *qd-=*pd * *rd++;
-            *pd++ +=w.elem(ib+i)* *qd;
-         }
+        double* pwiv = w.get_v() + iv + 1;
+        for (i=1;i<=n;i++)
+        {  /* BFGS updating formula */
+          z = h.elem(i,i) + sig * *pwiv * *pwiv;
+          if (z <= 0.0)
+            z=dmin;
+          if (z < dmin)
+            dmin=z;
+          h.elem(i,i)=z;
+          w.elem(ib+i) = *pwiv * sig / z;
+          sig-=w.elem(ib+i)*w.elem(ib+i)*z;
+
+          ++pwiv;
+        }
+        double* qd = w.get_v() + iu + 2;//&(w.elem(iu+j));
+        for (j=2;j<=n;j++)
+        {
+          double* pd=&(h.elem(j,1));
+          double* rd = w.get_v() + iv + 1;//&(w.elem(iv+1));
+          double* pwib = w.get_v() + ib + 1;
+          for (i=1;i<j;i++)
+          {
+            *qd-=*pd * *rd;
+            *pd += *pwib * *qd;
+
+            ++pd;
+            ++rd;
+            ++pwib;
+          }
+
+          ++qd;
+        }
       }
       if (xxlink == 1) goto label60;
       if (xxlink == 2) goto label65;

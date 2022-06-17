@@ -79,6 +79,7 @@ dvar_matrix inv(const dvar_matrix& aa)
 
   d=1.0;
   dvector* pbbi = &bb.elem(lb);
+  double* pvvi = vv.get_v() + lb;
   for (int i=lb;i<=ub;i++)
   {
     big=0.0;
@@ -97,8 +98,10 @@ dvar_matrix inv(const dvar_matrix& aa)
       cerr << "Error in matrix inverse -- matrix singular in inv(dmatrix)\n";
       ad_exit(1);
     }
-    vv[i]=1.0/big;
+    *pvvi = 1.0 / big;
+
     ++pbbi;
+    ++pvvi;
   }
 
   for (int j=lb;j<=ub;j++)

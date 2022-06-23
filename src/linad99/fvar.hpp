@@ -1321,9 +1321,7 @@ protected:
   }
 
 public:
-  prevariable(const prevariable& other): prevariable(other.get_v())
-  {
-  }
+  prevariable(const prevariable&);
 
   double_and_int* v; ///< pointer to the data
 
@@ -1530,6 +1528,7 @@ class dvariable:public prevariable
 #  define double dd_real
 #endif
    dvariable(const dvariable &);
+   dvariable& operator=(const dvariable&);
 //#  if (__BORLANDC__  > 0x0520)
 //     dvariable& operator+=(const prevariable&);
 //#  endif
@@ -1842,23 +1841,38 @@ class predvar_vector
  * Description not yet available.
  * \param
  */
-class independent_variables:public dvector
+class independent_variables: public dvector
 {
- public:
-   independent_variables(const independent_variables & v):dvector(v)
-   {
-   }
+public:
+  /// Default Constructor
+  independent_variables(): dvector() {}
 
-   independent_variables(int ncl, int ncu):dvector(ncl, ncu)
-   {
-   }
-   // makes an array [ncl..ncu]
+  independent_variables(const independent_variables& other):
+    independent_variables(other.indexmin(), other.indexmax())
+  {
+    independent_variables::operator=(other);
+  }
 
-   independent_variables(unsigned int sz, double *x):dvector(sz, x)
-   {
-   }
+  independent_variables(int ncl, int ncu): dvector(ncl, ncu)
+  {
+  }
+  // makes an array [ncl..ncu]
 
-   independent_variables & operator=(const dvector & t);
+  independent_variables(unsigned int sz, double* x): dvector(sz, x)
+  {
+  }
+
+  independent_variables& operator=(const dvector& t);
+  independent_variables& operator=(const independent_variables& other)
+  {
+    if (get_v() == nullptr)
+    {
+      int min = other.indexmin();
+      int max = other.indexmax();
+      dvector::allocate(min, max);
+    }
+    return independent_variables::operator=(static_cast<const dvector&>(other));
+  }
 };
 
 dvariable dfatan1(dvariable, double, double, const prevariable & fpen);

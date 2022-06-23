@@ -17,7 +17,12 @@ TEST_F(test_prevariable, copy_constructor)
   dvar_vector v(1, 1);
 
   const prevariable& a = v(1);
-  prevariable p(a);
 
-  ASSERT_TRUE(v(1).v == p.v);
+  ASSERT_EQ(0, gradient_structure::get()->GRAD_STACK1->total());
+  ASSERT_EQ(1750, gradient_structure::get()->GRAD_LIST->total_addresses());
+  prevariable p(a);
+  ASSERT_EQ(1, gradient_structure::get()->GRAD_STACK1->total());
+  ASSERT_EQ(1751, gradient_structure::get()->GRAD_LIST->total_addresses());
+
+  ASSERT_TRUE(v(1).v != p.v);
 }

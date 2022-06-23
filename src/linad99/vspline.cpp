@@ -15,7 +15,7 @@
 dvar_vector spline(const dvector &x,const dvar_vector&y,double yp1,double ypn);
 dvar_vector spline(const dvector &x,const dvar_vector&y,dvariable yp1,
   dvariable ypn);
-dvariable spline_cubic_val2(int n, const dvector& t, const prevariable tval,
+dvariable spline_cubic_val2(int n, const dvector& t, const prevariable& tval,
   const dvar_vector& y, const dvar_vector& ypp);
 dvariable spline_cubic_val(int n, const dvector& t, double tval,
   const dvar_vector& y, const dvar_vector& ypp);
@@ -406,7 +406,7 @@ dvariable spline_cubic_val(int n,  const dvector& _t, double tval,
  * \param ypp the second derivatives of the spline at the knots
  * \return the value of the spline at tval
 */
-dvariable spline_cubic_val2(int n, const dvector& _t, const prevariable tval,
+dvariable spline_cubic_val2(int n, const dvector& _t, const prevariable& tval,
   const dvar_vector& _y, const dvar_vector& _ypp)
 //
 //  Purpose:

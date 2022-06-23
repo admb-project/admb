@@ -63,12 +63,13 @@ prevariable& prevariable::operator=(const prevariable& t) const
   \return prevariable reference
  */
 prevariable& prevariable::operator=(const prevariable& t)
-    {
-      (*v).x=(*t.v).x;
-      gradient_structure::get()->GRAD_STACK1->
-        set_gradient_stack1(default_evaluation1,&(v->x),&(t.v->x));
-      return(*this);
-    }
+{
+  (*v).x = (*t.v).x;
+  gradient_structure::get()->GRAD_STACK1->
+    set_gradient_stack1(default_evaluation1,&(v->x),&(t.v->x));
+
+  return *this;
+}
 
 /**
   Assigns a value to a dvariable object.

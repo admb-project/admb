@@ -123,11 +123,11 @@
  * Description not yet available.
  * \param
  */
-  void default_evaluation0(void)
-  {
-    // there is one independent variable
-    * gradient_structure::get()->GRAD_STACK1->ptr->dep_addr=0.;
-  }
+void default_evaluation0(void)
+{
+  // there is one independent variable
+  *gradient_structure::get()->GRAD_STACK1->ptr->dep_addr = 0.0;
+}
 
 /**
  * Description not yet available.

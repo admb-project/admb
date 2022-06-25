@@ -60,11 +60,11 @@ void laplace_approximation_calculator::
       for (int i=1;i<=num_local_re;i++)
       {
         int lrei=lre_index(i);
+        int i1=list(lrei,1)-xsize;
+        int i2=list(lrei,2);
         for (int j=1;j<=num_local_re;j++)
         {
           int lrej=lre_index(j);
-          int i1=list(lrei,1)-xsize;
-          int i2=list(lrei,2);
           int j1=list(lrej,1)-xsize;
           int j2=list(lrej,2);
           if (i1>=j1) (*bHess)(i1,j1)+=locy(i2).u_bar[j2-1];
@@ -78,11 +78,11 @@ void laplace_approximation_calculator::
         for (int i=1;i<=num_local_re;i++)
         {
           int lrei=lre_index(i);
+          int i1=list(lrei,1)-xsize;
+          int i2=list(lrei,2);
           for (int j=1;j<=num_local_re;j++)
           {
             int lrej=lre_index(j);
-            int i1=list(lrei,1)-xsize;
-            int i2=list(lrei,2);
             int j1=list(lrej,1)-xsize;
             int j2=list(lrej,2);
             Hess(i1,j1)+=locy(i2).u_bar[j2-1];
@@ -94,11 +94,11 @@ void laplace_approximation_calculator::
         for (int i=1;i<=num_local_re;i++)
         {
           int lrei=lre_index(i);
+          int i1=list(lrei,1)-xsize;
+          int i2=list(lrei,2);
           for (int j=1;j<=num_local_re;j++)
           {
             int lrej=lre_index(j);
-            int i1=list(lrei,1)-xsize;
-            int i2=list(lrei,2);
             int j1=list(lrej,1)-xsize;
             int j2=list(lrej,2);
 
@@ -123,11 +123,11 @@ void laplace_approximation_calculator::
       for (int i=1;i<=num_local_re;i++)
       {
         int lrei=lre_index(i);
+        int i1=list(lrei,1)-xsize;
+        int i2=list(lrei,2);
         for (int j=1;j<=num_local_re;j++)
         {
           int lrej=lre_index(j);
-          int i1=list(lrei,1)-xsize;
-          int i2=list(lrei,2);
           int j1=list(lrej,1)-xsize;
           int j2=list(lrej,2);
           if (i1>=j1)
@@ -145,11 +145,11 @@ void laplace_approximation_calculator::
         for (int i=1;i<=num_local_re;i++)
         {
           int lrei=lre_index(i);
+          int i1=list(lrei,1)-xsize;
+          int i2=list(lrei,2);
           for (int j=1;j<=num_local_re;j++)
           {
             int lrej=lre_index(j);
-            int i1=list(lrei,1)-xsize;
-            int i2=list(lrei,2);
             int j1=list(lrej,1)-xsize;
             int j2=list(lrej,2);
             {
@@ -166,11 +166,11 @@ void laplace_approximation_calculator::
         for (int i=1;i<=num_local_re;i++)
         {
           int lrei=lre_index(i);
+          int i1=list(lrei,1)-xsize;
+          int i2=list(lrei,2);
           for (int j=1;j<=num_local_re;j++)
           {
             int lrej=lre_index(j);
-            int i1=list(lrei,1)-xsize;
-            int i2=list(lrei,2);
             int j1=list(lrej,1)-xsize;
             int j2=list(lrej,2);
             {

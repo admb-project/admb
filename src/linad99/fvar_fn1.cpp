@@ -54,6 +54,7 @@ prevariable& exp(const prevariable& v1)
 #endif
 
   gradient_structure* gs = gradient_structure::get();
+  //dvariable* RETURN_PTR = gs->next_RETURN_PTR();
   dvariable* RETURN_PTR = gs->RETURN_PTR == gs->MAX_RETURN ? gs->RETURN_PTR = gs->MIN_RETURN : ++gs->RETURN_PTR;
 
   RETURN_PTR->v->x=tmp;

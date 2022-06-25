@@ -453,6 +453,10 @@ gradient_structure::gradient_structure(const long int _size, const unsigned int 
     RETURN_PTR_CONTAINER = nullptr;
   }
 }
+dvariable* gradient_structure::next_RETURN_PTR()
+{
+  return RETURN_PTR == MAX_RETURN ? RETURN_PTR = MIN_RETURN : ++RETURN_PTR;
+}
 
 /**
 Increments gradient_structure::RETURN_ARRAYS_PTR.

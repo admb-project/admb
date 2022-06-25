@@ -93,10 +93,9 @@ prevariable::prevariable(const prevariable& t): prevariable(gradnew())
   Allocates memory and assigns value of argument to new object.
   \param t constant prevariable object
  */
-dvariable::dvariable(const prevariable& t): prevariable(gradnew())
+dvariable::dvariable(const prevariable& t): prevariable(t)
 {
   //(*v).nc=0;
-  dvariable::operator=(t);
 }
 /**
   Copy constructor for dvariable object; deep copy.
@@ -109,20 +108,15 @@ dvariable::dvariable(const dvariable& t): prevariable(gradnew())
 }
 dvariable& dvariable::operator=(const dvariable& t)
 {
-  v->x = t.v->x;
-  gradient_structure::get()->GRAD_STACK1->
-    set_gradient_stack(default_evaluation1,&(v->x),&(t.v->x));
-
-  return *this;
+  return static_cast<dvariable&>(prevariable::operator=(t));
 }
 /**
 Default constructor.
 
 Creates new zero value dvariable object.
 */
-dvariable::dvariable()
+dvariable::dvariable(): prevariable(gradnew())
 {
-  v = gradnew();
   (*v).x = 0.0;
 
 #ifdef SAFE_INITIALIZE
@@ -134,9 +128,8 @@ dvariable::dvariable()
 Specialized constructor that does not create unnecessary entries
 in the gradient structure; see function \ref nograd_assign.
 */
-dvariable::dvariable(kkludge_object)
+dvariable::dvariable(kkludge_object): prevariable(gradnew())
 {
-  v = gradnew();
   //(*v).nc=0;
 }
 /** Destructor; frees memory on gradient stack.  */
@@ -147,13 +140,9 @@ dvariable::~dvariable() { gradfree((dlink*)v); }
    Sets Value to the argument and initializes derivative information.
    \param t constant double passed by value.
  */
-dvariable::dvariable(const double t)
+dvariable::dvariable(const double t): prevariable(gradnew())
 {
-  v = gradnew();
-  v->x = t;
-  //(*v).nc=0;
-  gradient_structure::get()->GRAD_STACK1->set_gradient_stack0(default_evaluation0,
-    &(v->x));
+  prevariable::operator=(t);
 }
 /**
    Creates dvariable instance from a int constant.
@@ -161,11 +150,6 @@ dvariable::dvariable(const double t)
    Sets value to the argument and initializes derivatve information.
    \param t constant integer passed by reference.
  */
-dvariable::dvariable(const int& t)
+dvariable::dvariable(const int& t): dvariable(static_cast<double>(t))
 {
-  v = gradnew();
-  v->x = t;
-  //(*v).nc=0;
-  gradient_structure::get()->GRAD_STACK1->set_gradient_stack0(default_evaluation0,
-    &(v->x) );
 }

@@ -1508,27 +1508,28 @@ class df1_three_variable;
   Fundamental data type for reverse mode automatic differentiation.
   \ingroup BAD
  */
-class dvariable:public prevariable
+class dvariable: public prevariable
 {
- public:
-   dvariable();
-   ~dvariable();
-   dvariable(double t);
-   dvariable(const int &t);
-   dvariable(kkludge_object);
-   dvariable(const prevariable &);
-   dvariable & operator=(const prevariable &);
-   dvariable & operator =(const df1_one_variable & v);
-   dvariable & operator =(const df1_two_variable & v);
-   dvariable & operator =(const df1_three_variable & v);
-   dvariable & operator=(double);
+public:
+  dvariable();
+  dvariable(const dvariable&);
+  dvariable(double t);
+  dvariable(const int &t);
+  dvariable(kkludge_object);
+  dvariable(const prevariable&);
+  ~dvariable();
+
+  dvariable& operator=(const dvariable&);
+  dvariable& operator=(double);
+  dvariable& operator=(const prevariable&);
+  dvariable& operator=(const df1_one_variable&);
+  dvariable& operator=(const df1_two_variable&);
+  dvariable& operator=(const df1_three_variable&);
+
 #if defined(USE_DDOUBLE)
 #  undef double
-   dvariable & operator=(double);
 #  define double dd_real
 #endif
-   dvariable(const dvariable &);
-   dvariable& operator=(const dvariable&);
 //#  if (__BORLANDC__  > 0x0520)
 //     dvariable& operator+=(const prevariable&);
 //#  endif

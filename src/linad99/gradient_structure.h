@@ -104,6 +104,7 @@ public:
   thread_local static gradient_structure* _instance;
   static gradient_structure* get();
   static gradient_structure* reset(gradient_structure*);
+  dvariable* next_RETURN_PTR();
 
   gradient_structure** gradients;
   unsigned int gradients_size;

@@ -832,12 +832,16 @@ void funnel_init_df1b2vector::set_index(imatrix& y,int& ii)
   df1b2_init_vector * vp = (df1b2_init_vector *) p;
   int mmin=vp->indexmin();
   int mmax=vp->indexmax();
-  int i;
-  for (i=mmin;i<=mmax;i++)
+
+  ivector* pyii = &y(ii);
+  for (int i=mmin;i<=mmax;i++)
   {
-    y(ii,1)= ( *vp)(i).get_ind_index();
-    y(ii,2)= ii;
+    
+    *(pyii->get_v() + 1) = ( *vp)(i).get_ind_index();
+    *(pyii->get_v() + 2) = ii;
     ii++;
+
+    ++pyii;
   }
 }
 

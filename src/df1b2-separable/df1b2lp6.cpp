@@ -701,16 +701,19 @@ void laplace_approximation_calculator::
   ivector lre_index(1, (int)funnel_init_var::num_active_parameters);
   ivector lfe_index(1, (int)funnel_init_var::num_active_parameters);
 
+  ivector* plisti = &list(1);
   for (int i=1;i<=(int)funnel_init_var::num_active_parameters;i++)
   {
-    if (list(i,1)>xsize)
+    int listi1 = *(plisti->get_v() + 1);
+    if (listi1 > xsize)
     {
       lre_index(++num_local_re)=i;
     }
-    else if (list(i,1)>0)
+    else if (listi1 > 0)
     {
       lfe_index(++num_fixed_effects)=i;
     }
+    ++plisti;
   }
 
   if (num_local_re > 0)
@@ -721,11 +724,11 @@ void laplace_approximation_calculator::
       for (int i=1;i<=num_local_re;i++)
       {
         int lrei=lre_index(i);
+        int i1=list(lrei,1)-xsize;
+        int i2=list(lrei,2);
         for (int j=1;j<=num_local_re;j++)
         {
           int lrej=lre_index(j);
-          int i1=list(lrei,1)-xsize;
-          int i2=list(lrei,2);
           int j1=list(lrej,1)-xsize;
           int j2=list(lrej,2);
           if (i1>=j1) (*bHess)(i1,j1)+=locy(i2).u_bar[j2-1];
@@ -738,11 +741,11 @@ void laplace_approximation_calculator::
         for (int i=1;i<=num_local_re;i++)
         {
           int lrei=lre_index(i);
+          int i1=list(lrei,1)-xsize;
+          int i2=list(lrei,2);
           for (int j=1;j<=num_local_re;j++)
           {
             int lrej=lre_index(j);
-            int i1=list(lrei,1)-xsize;
-            int i2=list(lrei,2);
             int j1=list(lrej,1)-xsize;
             int j2=list(lrej,2);
             Hess(i1,j1)+=locy(i2).u_bar[j2-1];
@@ -754,11 +757,11 @@ void laplace_approximation_calculator::
         for (int i=1;i<=num_local_re;i++)
         {
           int lrei=lre_index(i);
+          int i1=list(lrei,1)-xsize;
+          int i2=list(lrei,2);
           for (int j=1;j<=num_local_re;j++)
           {
             int lrej=lre_index(j);
-            int i1=list(lrei,1)-xsize;
-            int i2=list(lrei,2);
             int j1=list(lrej,1)-xsize;
             int j2=list(lrej,2);
 
@@ -898,23 +901,33 @@ void laplace_approximation_calculator::
   ivector lre_index(1,(int)funnel_init_var::num_active_parameters);
   ivector lfe_index(1,(int)funnel_init_var::num_active_parameters);
 
+  ivector* plisti = &list(1);
   for (int i=1;i<=(int)funnel_init_var::num_active_parameters;i++)
   {
-    if (list(i,1)>xsize)
+    int val = *(plisti->get_v() + 1);
+    if (val > xsize)
     {
       lre_index(++us)=i;
     }
-    else if (list(i,1)>0)
+    else if (val > 0)
     {
       lfe_index(++xs)=i;
     }
+    ++plisti;
   }
 
-  for (int j=1;j<=xs;j++)
   {
-    int j1=list(lfe_index(j),1);
-    int j2=list(lfe_index(j),2);
-    xadjoint(j1)+=ff.u_dot[j2-1];
+    int* plfe_indexj = lfe_index.get_v() + 1;
+    for (int j=1;j<=xs;j++)
+    {
+      int lfe_indexj = lfe_index(j);
+      int* plistlfe_indexj = list(lfe_indexj).get_v();
+      int j1 = *(plistlfe_indexj + 1);//list(lfe_index(j),1);
+      int j2 = *(plistlfe_indexj + 2);//list(lfe_index(j),2);
+      xadjoint(j1)+=ff.u_dot[j2-1];
+
+      ++plfe_indexj;
+    }
   }
 
   if (us>0)
@@ -923,10 +936,10 @@ void laplace_approximation_calculator::
     {
       for (int i=1;i<=us;i++)
       {
+        int i1=list(lre_index(i),1)-xsize;
+        int i2=list(lre_index(i),2);
         for (int j=1;j<=us;j++)
         {
-          int i1=list(lre_index(i),1)-xsize;
-          int i2=list(lre_index(i),2);
           int j1=list(lre_index(j),1)-xsize;
           int j2=list(lre_index(j),2);
           if (i1>=j1) (*bHess)(i1,j1)+=locy(i2).u_bar[j2-1];
@@ -939,10 +952,10 @@ void laplace_approximation_calculator::
       {
         for (int i=1;i<=us;i++)
         {
+          int i1=list(lre_index(i),1)-xsize;
+          int i2=list(lre_index(i),2);
           for (int j=1;j<=us;j++)
           {
-            int i1=list(lre_index(i),1)-xsize;
-            int i2=list(lre_index(i),2);
             int j1=list(lre_index(j),1)-xsize;
             int j2=list(lre_index(j),2);
             Hess(i1,j1)+=locy(i2).u_bar[j2-1];
@@ -953,10 +966,10 @@ void laplace_approximation_calculator::
       {
         for (int i=1;i<=us;i++)
         {
+          int i1=list(lre_index(i),1)-xsize;
+          int i2=list(lre_index(i),2);
           for (int j=1;j<=us;j++)
           {
-            int i1=list(lre_index(i),1)-xsize;
-            int i2=list(lre_index(i),2);
             int j1=list(lre_index(j),1)-xsize;
             int j2=list(lre_index(j),2);
 
@@ -980,10 +993,10 @@ void laplace_approximation_calculator::
 
     for (int i=1;i<=us;i++)
     {
+      int i1=list(lre_index(i),1)-xsize;
+      int i2=list(lre_index(i),2);
       for (int j=1;j<=xs;j++)
       {
-        int i1=list(lre_index(i),1)-xsize;
-        int i2=list(lre_index(i),2);
         int j1=list(lfe_index(j),1);
         int j2=list(lfe_index(j),2);
         Dux(i1,j1)+=locy(i2).u_bar[j2-1];

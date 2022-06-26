@@ -10,7 +10,7 @@
  */
 #include <df1b2fun.h>
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
   #include <climits>
 #endif
@@ -35,7 +35,7 @@ void laplace_approximation_calculator::
   int num_local_re=0;
   int num_local_fe=0;
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(funnel_init_var::num_active_parameters <= INT_MAX);
 #endif
   ivector lre_index(1,(int)funnel_init_var::num_active_parameters);
@@ -75,18 +75,28 @@ void laplace_approximation_calculator::
     {
       if (sparse_hessian_flag==0)
       {
+        int* plre_indexi = lre_index.get_v() + 1;
         for (int i=1;i<=num_local_re;i++)
         {
-          int lrei=lre_index(i);
-          int i1=list(lrei,1)-xsize;
-          int i2=list(lrei,2);
+          int lrei = *plre_indexi;
+          ivector* plisti = &list(lrei);
+          int i1 = *(plisti->get_v() + 1) - xsize;
+          int i2 = *(plisti->get_v() + 2);
+
+
+          int* plre_indexj = lre_index.get_v() + 1;
           for (int j=1;j<=num_local_re;j++)
           {
-            int lrej=lre_index(j);
-            int j1=list(lrej,1)-xsize;
-            int j2=list(lrej,2);
+            int lrej = *plre_indexj;
+            ivector* plistj = &list(lrej);
+            int j1 = *(plistj->get_v() + 1) - xsize;
+            int j2 = *(plistj->get_v() + 2);
             Hess(i1,j1)+=locy(i2).u_bar[j2-1];
+
+            ++plre_indexj;
           }
+
+          ++plre_indexi;
         }
       }
       else

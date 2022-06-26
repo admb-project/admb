@@ -266,16 +266,6 @@ void read_pass2_1_prod(void)
   }
 
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  /*
-  for (size_t i=0;i<nvar;i++)
-  {
-    pz->u_bar[i]=0;
-  }
-  for (size_t i=0;i<nvar;i++)
-  {
-    pz->u_dot_bar[i]=0;
-  }
-  */
   memset(pz->u_bar, 0, nvar * sizeofdouble);
   memset(pz->u_dot_bar, 0, nvar * sizeofdouble);
 }
@@ -339,6 +329,7 @@ void read_pass2_2_prod(void)
   checkidentiferstring("DL",list);
   checkidentiferstring("QK",list2);
 #endif
+  constexpr size_t sizeofdouble = sizeof(double);
   df1b2_header * px=(df1b2_header *) list.bptr;
   list.bptr+=sizeof(df1b2_header);
   df1b2_header * py=(df1b2_header *) list.bptr;
@@ -347,12 +338,12 @@ void read_pass2_2_prod(void)
   list.bptr+=sizeof(df1b2_header);
   //pf=*(df1b2function2 **) list.bptr;
   //list.bptr+=sizeof(char*);
-  memcpy(&xu,list.bptr,sizeof(double));
+  memcpy(&xu,list.bptr,sizeofdouble);
   list.bptr+=sizeof(double);
-  memcpy(&yu,list.bptr,sizeof(double));
+  memcpy(&yu,list.bptr,sizeofdouble);
   list.bptr+=sizeof(double);
   xdot=(double*)list.bptr;
-  list.bptr+=nvar*sizeof(double);
+  list.bptr+=nvar*sizeofdouble;
   ydot=(double*)list.bptr;
   list.restoreposition(num_bytes); // save pointer to beginning of record;
 
@@ -375,14 +366,6 @@ void read_pass2_2_prod(void)
   double * z_dot_bar_tilde=pz->get_u_dot_bar_tilde();
   // Do second "reverse-reverse" pass calculations
 
-  /*
-  for (size_t i=0;i<nvar;i++)
-  {
-    z_bar_tilde[i]=0;
-    z_dot_bar_tilde[i]=0;
-  }
-  */
-  constexpr size_t sizeofdouble = sizeof(double);
   memset(z_bar_tilde, 0, nvar * sizeofdouble);
   memset(z_dot_bar_tilde, 0, nvar * sizeofdouble);
 

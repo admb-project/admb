@@ -127,9 +127,11 @@ Allocate integer matrix with the dimensions
 void imatrix::allocate(int nrl, int nrh, int ncl, int nch)
 {
   allocate(nrl, nrh);
-  for (int i = rowmin(); i <= rowmax(); ++i)
+  ivector* pv = m + nrl;
+  for (int i = nrl; i <= nrh; ++i)
   {
-    elem(i).allocate(ncl, nch);
+    pv->allocate(ncl, nch);
+    ++pv;
   }
 }
 /// Does not allocate, but initializes imatrix members.
@@ -153,9 +155,15 @@ column indexes.
 void imatrix::allocate(int nrl, int nrh, const ivector& ncl, const ivector& nch)
 {
   allocate(nrl, nrh);
-  for (int i = rowmin(); i <= rowmax(); ++i)
+  ivector* pv = m + nrl;
+  int* pncli = ncl.get_v() + nrl;
+  int* pnchi = nch.get_v() + nrl;
+  for (int i = nrl; i <= nrh; ++i)
   {
-    elem(i).allocate(ncl(i), nch(i));
+    pv->allocate(*pncli, *pnchi);
+    ++pv;
+    ++pncli;
+    ++pnchi;
   }
 }
 /**
@@ -170,9 +178,13 @@ Allocate ragged matrix with dimensions
 void imatrix::allocate(int nrl, int nrh, int ncl, const ivector& nch)
 {
   allocate(nrl, nrh);
-  for (int i = rowmin(); i <= rowmax(); ++i)
+  ivector* pv = m + nrl;
+  int* pnchi = nch.get_v() + nrl;
+  for (int i = nrl; i <= nrh; ++i)
   {
-    elem(i).allocate(ncl, nch(i));
+    pv->allocate(ncl, *pnchi);
+    ++pv;
+    ++pnchi;
   }
 }
 /// Copy constructor - Shallow

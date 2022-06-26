@@ -214,16 +214,6 @@ void read_pass1_1(void)
   }
 
   // !!!!!!!!!!!!!!!!!!!!!!
-  /*
-  for (size_t i=0;i<nvar;i++)
-  {
-    pz->u_bar[i]=0;
-  }
-  for (size_t i=0;i<nvar;i++)
-  {
-    pz->u_dot_bar[i]=0;
-  }
-  */
   memset(pz->u_bar, 0, nvar * sizeofdouble);
   memset(pz->u_dot_bar, 0, nvar * sizeofdouble);
 
@@ -318,14 +308,6 @@ void read_pass1_2(void)
 #endif
   // Do second "reverse-reverse" pass calculations
 
-  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  /*
-  for (size_t i=0;i<nvar;i++)
-  {
-    z_bar_tilde[i]=0;
-    z_dot_bar_tilde[i]=0;
-  }
-  */
   constexpr size_t sizeofdouble = sizeof(double);
   memset(z_bar_tilde, 0, nvar * sizeofdouble);
   memset(z_dot_bar_tilde, 0, nvar * sizeofdouble);
@@ -426,12 +408,6 @@ void read_pass1_3(void)
     px->u_dot_tilde[i]+=df*pz->u_dot_tilde[i];
   }
   *(pz->u_tilde)=0;
-  /*
-  for (size_t i=0;i<nvar;i++)
-  {
-    pz->u_dot_tilde[i]=0;
-  }
-  */
   constexpr size_t sizeofdouble = sizeof(double);
   memset(pz->u_dot_tilde, 0, nvar * sizeofdouble);
 #if defined(PRINT_DERS)

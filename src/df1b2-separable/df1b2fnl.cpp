@@ -706,9 +706,10 @@ void funnel_init_df1b2variable::xinit(dvector& y,int& ii)
  */
 void funnel_init_df1b2variable::set_index(imatrix& y,int& ii)
 {
+  ivector* pyii = &y(ii);
   //cout << ind_index << " " << ii << endl;
-  y(ii,1)= ind_index;
-  y(ii,2)= ii;
+  *(pyii->get_v() + 1) = ind_index;
+  *(pyii->get_v() + 2) = ii;
   ii++;
 }
 

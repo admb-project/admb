@@ -151,6 +151,8 @@ void gradient_structure::gradcalc(int nvar, const dvector& _g)
 
   *GRAD_STACK1->ptr->dep_addr = 1;
 
+  constexpr size_t sizeofgrad_stack_entry = sizeof(grad_stack_entry);
+
   //int icount=0;
   int break_flag=1;
   do
@@ -163,18 +165,11 @@ void gradient_structure::gradcalc(int nvar, const dvector& _g)
     while (GRAD_STACK1->ptr-- > grad_ptr_first)
     {
       (*(GRAD_STACK1->ptr->func))();
-/*
-      icount++;
-      if (icount%1000==0)
-      {
-        //cout << "icount = " << icount << endl;
-      }
-*/
     }
 #endif
 
    // back up the file one buffer size and read forward
-   OFF_T offset = (OFF_T)(sizeof(grad_stack_entry) * GRAD_STACK1->length);
+   OFF_T offset = (OFF_T)(sizeofgrad_stack_entry * GRAD_STACK1->length);
    OFF_T lpos = LSEEK(GRAD_STACK1->_GRADFILE_PTR,
       -offset,SEEK_CUR);
 
@@ -185,16 +180,18 @@ void gradient_structure::gradcalc(int nvar, const dvector& _g)
 #ifdef GRAD_DIAG
     long int ttmp =
 #endif
-    LSEEK(GRAD_STACK1->_GRADFILE_PTR, 0,SEEK_CUR);
+    LSEEK(GRAD_STACK1->_GRADFILE_PTR, 0, SEEK_CUR);
 #ifdef GRAD_DIAG
     cout << "Offset in file at end of gradcalc is " << ttmp
          << " bytes from the beginning\n";
 #endif
   }
 
-  for (int i=0, j=g.indexmin(); i < nvar; ++i, ++j)
+  double* pgj = g.get_v() + g.indexmin();
+  for (int i = 0; i < nvar; ++i)
   {
-    g[j] = *gradient_structure::INDVAR_LIST->get_address(i);
+    *pgj = *gradient_structure::INDVAR_LIST->get_address(i);
+    ++pgj;
   }
 
   GRAD_STACK1->ptr = GRAD_STACK1->ptr_first;

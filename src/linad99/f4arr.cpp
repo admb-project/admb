@@ -87,9 +87,7 @@ void dvar4_array::deallocate()
 #endif
 }
 
-/**
-Destructor
-*/
+/// Destructor
 dvar4_array::~dvar4_array()
 {
   deallocate();

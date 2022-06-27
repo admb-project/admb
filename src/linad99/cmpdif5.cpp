@@ -27,10 +27,15 @@ void DF_FILE::save_dmatrix_value(const dmatrix& m)
 {
   // saves the size, address, and value information for a dvar_matrix
   //int ierr;
-  for (int i=m.rowmin();i<=m.rowmax();i++)
+  int min = m.rowmin();
+  int max = m.rowmax();
+  const dvector* pmi = &m(min);
+  for (int i = min; i <= max; ++i)
   {
-    save_dvector_value(m(i));
-    save_dvector_position(m(i));
+    save_dvector_value(*pmi);
+    save_dvector_position(*pmi);
+
+    ++pmi;
   }
 }
 
@@ -46,10 +51,15 @@ void DF_FILE::save_d3_array_value(const d3_array& a)
 {
   // saves the size, address, and value information for a dvar_matrix
   //int ierr;
-  for (int i=a.indexmin();i<=a.indexmax();i++)
+  int min = a.indexmin();
+  int max = a.indexmax();
+  const dmatrix* pai = &a(min);
+  for (int i = min; i <= max; ++i)
   {
-    save_dmatrix_value(a(i));
-    save_dmatrix_position(a(i));
+    save_dmatrix_value(*pai);
+    save_dmatrix_position(*pai);
+
+    ++pai;
   }
 }
 
@@ -66,12 +76,15 @@ dmatrix DF_FILE::restore_dvar_matrix_value(const dvar_matrix_position& mpos)
   // restores the size, address, and value information for a dvar_matrix
   dmatrix out((const dvar_matrix_position&)mpos);
   //int ierr;
-  int min=out.rowmin();
-  int max=out.rowmax();
-  for (int i=max;i>=min;i--)
+  int min = out.rowmin();
+  int max = out.rowmax();
+  dvector* pouti = &out(max);
+  for (int i = max;i >= min; --i)
   {
-    dvar_vector_position vpos=restore_dvar_vector_position();
-    out(i)=restore_dvar_vector_value(vpos);
+    dvar_vector_position vpos = restore_dvar_vector_position();
+    *pouti = restore_dvar_vector_value(vpos);
+
+    --pouti;
   }
   return out;
 }
@@ -88,14 +101,17 @@ dmatrix DF_FILE::restore_dmatrix_value(const dmatrix_position& mpos)
 {
   // restores the size, address, and value information for a dvar_matrix
   //  the size, address, and value information for a dvar_matrix
-  dmatrix out((const dmatrix_position&) mpos);
+  dmatrix out((const dmatrix_position&)mpos);
   //int ierr;
   int min=out.rowmin();
   int max=out.rowmax();
-  for (int i=max;i>=min;i--)
+  dvector* pouti = &out(max);
+  for (int i = max; i >= min; --i)
   {
-    dvector_position vpos=restore_dvector_position();
-    out(i)=restore_dvector_value(vpos);
+    dvector_position vpos = restore_dvector_position();
+    *pouti = restore_dvector_value(vpos);
+
+    --pouti;
   }
   return out;
 }
@@ -114,12 +130,15 @@ d3_array DF_FILE::restore_d3_array_value(const d3_array_position& mpos)
   //  the size, address, and value information for a dvar_matrix
   d3_array out((const d3_array_position&) mpos);
   //int ierr;
-  int min=out.indexmin();
-  int max=out.indexmax();
-  for (int i=max;i>=min;i--)
+  int min = out.indexmin();
+  int max = out.indexmax();
+  dmatrix* pouti = &out(max);
+  for (int i = max; i >= min; --i)
   {
     dmatrix_position vpos=restore_dmatrix_position();
-    out(i)=restore_dmatrix_value(vpos);
+    *pouti = restore_dmatrix_value(vpos);
+
+    --pouti;
   }
   return out;
 }
@@ -343,12 +362,17 @@ void DF_FILE::save_dvar_matrix_position(const dvar_matrix& m)
 
   int min=m.rowmin();
   int max=m.rowmax();
+  int* ptmplbi = tmp.lb.get_v() + min;
+  int* ptmpubi = tmp.ub.get_v() + min;
   for (int i=min;i<=max;++i)
   {
-    fwrite(&(tmp.lb(i)),wsize);
-    fwrite(&(tmp.ub(i)),wsize);
-    fwrite(&(tmp.ptr(i)),wsize1);
+    fwrite(ptmplbi, wsize);
+    fwrite(ptmpubi, wsize);
+    fwrite(&(tmp.ptr(i)), wsize1);
+
+    ++ptmplbi;
+    ++ptmpubi;
   }
-  fwrite(&(tmp.row_min),wsize);
-  fwrite(&(tmp.row_max),wsize);
+  fwrite(&(tmp.row_min), wsize);
+  fwrite(&(tmp.row_max), wsize);
 }

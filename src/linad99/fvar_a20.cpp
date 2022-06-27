@@ -56,30 +56,18 @@ dvar_vector& dvar_vector::operator=(const dvar_vector& t)
      }
      if (va != t.va)
      {
-#ifdef OPT_LIB
+       constexpr size_t sizeofdouble = sizeof(double);
        size_t size = (size_t)(mmax - mmin + 1);
-       memcpy(&elem_value(mmin), &t.elem_value(mmin), size * sizeof(double));
-#else
-       #ifndef USE_ASSEMBLER
-         for (int i=mmin; i<=mmax; i++)
-         {
-           va[i].x = (t.va[i]).x;
-         }
-       #else
-         int min=t.indexmin();
-         int n=t.indexmax()-min+1;
-         dw_block_move(&(this->elem_value(min)),&(t.elem_value(min)),n);
-       #endif
-#endif
+       memcpy(va + mmin, t.va + mmin, size * sizeofdouble);
 
        gradient_structure* gs = gradient_structure::get();
        DF_FILE* fp = gs->fp;
 
        // The derivative list considerations
-       save_identifier_string("bbbb");
+       //save_identifier_string("bbbb");
        fp->save_dvar_vector_position(t);
        fp->save_dvar_vector_position(*this);
-       save_identifier_string("aaaa");
+       //save_identifier_string("aaaa");
        gs->GRAD_STACK1->set_gradient_stack(dv_assign);
      }
    }
@@ -183,12 +171,11 @@ void dv_assign(void)
   DF_FILE* fp = gs->fp;
 
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
-  verify_identifier_string("aaaa");
+  //verify_identifier_string("aaaa");
   dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();
   dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
   dvar_vector_position t_pos=fp->restore_dvar_vector_position();
-  verify_identifier_string("bbbb");
-  dvector dft(dftmp.indexmin(),dftmp.indexmax());
+  //verify_identifier_string("bbbb");
 
   int mmin=dftmp.indexmin();
   int mmax=dftmp.indexmax();
@@ -197,26 +184,11 @@ void dv_assign(void)
   assert(mmax >= mmin);
 #endif
 
-#ifdef OPT_LIB
-  size_t size = (size_t)(mmax - mmin + 1);
-  memcpy(&dft.elem(mmin),&dftmp.elem(mmin), size * sizeof(double));
-#else
-  #ifdef USE_ASSEMBLER
-  int n=dftmp.indexmax()-mmin+1;
-  dw_block_move(&(dft.elem(mmin)),&(dftmp.elem(mmin)),n);
-  #else
-  double* pdfti = dft.get_v() + mmin;
-  double* pdftmpi = dftmp.get_v() + mmin;
-  for (int i=mmin;i<=mmax;i++)
-  {
-    //vtmp.elem(i)=value(v1.elem(i))+value(v2.elem(i));
-    *pdfti = *pdftmpi;
+  dvector dft(mmin, mmax);
 
-    ++pdfti;
-    ++pdftmpi;
-  }
-  #endif
-#endif
+  constexpr size_t sizeofdouble = sizeof(double);
+  size_t size = (size_t)(mmax - mmin + 1);
+  memcpy(dft.get_v() + mmin, dftmp.get_v() + mmin, size * sizeofdouble);
 
   dft.save_dvector_derivatives(t_pos);
 }

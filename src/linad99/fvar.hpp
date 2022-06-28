@@ -1530,6 +1530,7 @@ public:
 #  undef double
 #  define double dd_real
 #endif
+
 //#  if (__BORLANDC__  > 0x0520)
 //     dvariable& operator+=(const prevariable&);
 //#  endif

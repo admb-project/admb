@@ -17,14 +17,20 @@
  * Description not yet available.
  * \param
  */
-dvar_matrix operator + (const dvariable& x,const dmatrix& m)
+dvar_matrix operator+(const dvariable& x, const dmatrix& m)
 {
-  int mmin=m.indexmin();
-  int mmax=m.indexmax();
-  dvar_matrix tmp(mmin,mmax);
+  int mmin = m.indexmin();
+  int mmax = m.indexmax();
+  dvar_matrix tmp(mmin, mmax);
+
+  dvar_vector* ptmpi = &tmp(mmin);
+  const dvector* pmi = &m(mmin);
   for (int i=mmin;i<=mmax;i++)
   {
-    tmp(i)=x+m(i);
+    *ptmpi = x + *pmi;
+
+    ++ptmpi;
+    ++pmi;
   }
   return tmp;
 }
@@ -33,14 +39,20 @@ dvar_matrix operator + (const dvariable& x,const dmatrix& m)
  * Description not yet available.
  * \param
  */
-dvar_matrix operator - (const dvariable& x,const dmatrix& m)
+dvar_matrix operator-(const dvariable& x, const dmatrix& m)
 {
   int mmin=m.indexmin();
   int mmax=m.indexmax();
-  dvar_matrix tmp(mmin,mmax);
+  dvar_matrix tmp(mmin, mmax);
+
+  dvar_vector* ptmpi = &tmp(mmin);
+  const dvector* pmi = &m(mmin);
   for (int i=mmin;i<=mmax;i++)
   {
-    tmp(i)=x-m(i);
+    *ptmpi = x - *pmi;
+
+    ++ptmpi;
+    ++pmi;
   }
   return tmp;
 }

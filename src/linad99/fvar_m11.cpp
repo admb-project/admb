@@ -15,77 +15,117 @@
  * \param
  */
 dvar_matrix& dvar_matrix::operator+=(const dvar_matrix& m1)
- {
-   if (rowmin() != m1.rowmin() || rowmax() != m1.rowmax() )
-   {
+{
+  int min = rowmin();
+  int max = rowmax();
+
+#ifndef OPT_LIB
+  if (min != m1.rowmin() || max != m1.rowmax())
+  {
      cerr << " Incompatible array bounds in "
      "dvar_matrix& operator += (const dvar_vector&)\n";
      ad_exit(21);
-   }
+  }
+#endif
 
-   for (int i=rowmin();i<=rowmax();i++)
-   {
-     elem(i) += m1.elem(i);
-   }
-   return(*this);
- }
+  dvar_vector* pmi = m + min;
+  const dvar_vector* pm1i = &m1(min);
+  for (int i = min; i <= max; ++i)
+  {
+     *pmi += *pm1i;
+
+     ++pmi;
+     ++pm1i;
+  }
+  return *this;
+}
 
 /**
  * Description not yet available.
  * \param
  */
 dvar_matrix& dvar_matrix::operator+=(const dmatrix& m1)
- {
-   if (rowmin() != m1.rowmin() || rowmax() != m1.rowmax() )
-   {
+{
+  int min = rowmin();
+  int max = rowmax();
+
+#ifndef OPT_LIB
+  if (min != m1.rowmin() || max != m1.rowmax())
+  {
      cerr << " Incompatible array bounds in "
      "dvar_matrix& operator+=(const dvar_vector&)\n";
      ad_exit(21);
-   }
+  }
+#endif
 
-   for (int i=rowmin();i<=rowmax();i++)
-   {
-     elem(i) += m1.elem(i);
-   }
-   return(*this);
- }
+  dvar_vector* pmi = m + min;
+  const dvector* pm1i = &m1(min);
+  for (int i = min; i <= max; ++i)
+  {
+     *pmi += *pm1i;
+
+     ++pmi;
+     ++pm1i;
+  }
+  return *this;
+}
 
 /**
  * Description not yet available.
  * \param
  */
 dvar_matrix& dvar_matrix::operator-=(const dvar_matrix& m1)
- {
-   if (rowmin() != m1.rowmin() || rowmax() != m1.rowmax() )
-   {
+{
+  int min = rowmin();
+  int max = rowmax();
+
+#ifndef OPT_LIB
+  if (min != m1.rowmin() || max != m1.rowmax())
+  {
      cerr << " Incompatible array bounds in "
      "dvar_matrix& operator -= (const dvar_vector&)\n";
      ad_exit(21);
-   }
+  }
+#endif
 
-   for (int i=rowmin();i<=rowmax();i++)
-   {
-     elem(i) -= m1.elem(i);
-   }
-   return(*this);
- }
+  dvar_vector* pmi = m + min;
+  const dvar_vector* pm1i = &m1(min);
+  for (int i = min; i <= max; ++i)
+  {
+     *pmi -= *pm1i;
+
+     ++pmi;
+     ++pm1i;
+  }
+  return *this;
+}
 
 /**
  * Description not yet available.
  * \param
  */
 dvar_matrix& dvar_matrix::operator-=(const dmatrix& m1)
- {
-   if (rowmin() != m1.rowmin() || rowmax() != m1.rowmax() )
-   {
+{
+  int min = rowmin();
+  int max = rowmax();
+
+#ifndef OPT_LIB
+  if (min != m1.rowmin() || max != m1.rowmax())
+  {
      cerr << " Incompatible array bounds in "
      "dvar_matrix& operator-=(const dvar_vector&)\n";
      ad_exit(21);
-   }
+  }
+#endif
 
-   for (int i=rowmin();i<=rowmax();i++)
-   {
-     elem(i) -= m1.elem(i);
-   }
-   return(*this);
- }
+  dvar_vector* pmi = m + min;
+  const dvector* pm1i = &m1(min);
+  for (int i = min; i <= max; ++i)
+  {
+     *pmi -= *pm1i;
+
+     ++pmi;
+     ++pm1i;
+  }
+  return *this;
+}

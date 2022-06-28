@@ -11,15 +11,24 @@ Add values to dvector element-wise.
 */
 dvector& dvector::operator+=(const dvector& values)
 {
-  if (indexmin() != values.indexmin() || indexmax() != values.indexmax())
+  int min = indexmin();
+  int max = indexmax();
+#ifndef OPT_LIB
+  if (min != values.indexmin() || max != values.indexmax())
   {
     cerr << " Incompatible array bounds in "
          << "dvector& operator+=(const dvector&)\n";
     ad_exit(1);
   }
-  for (int i = indexmin(); i <= indexmax(); ++i)
+#endif
+
+  double* pvi = v + min;
+  const double* pvaluesi = values.get_v() + min;
+  for (int i = min; i <= max; ++i)
   {
-    elem(i) += values.elem(i);
+    *pvi += *pvaluesi;
+    ++pvi;
+    ++pvaluesi;
   }
   return *this;
 }
@@ -30,15 +39,23 @@ Subtract values from dvector element-wise.
  */
 dvector& dvector::operator-=(const dvector& values)
 {
-  if (indexmin() != values.indexmin() || indexmax() != values.indexmax())
+  int min = indexmin();
+  int max = indexmax();
+#ifndef OPT_LIB
+  if (min != values.indexmin() || max != values.indexmax())
   {
     cerr << " Incompatible array bounds in "
          << "dvector& operator-=(const dvector&)\n";
     ad_exit(1);
   }
-  for (int i = indexmin(); i <= indexmax(); ++i)
+#endif
+  double* pvi = v + min;
+  const double* pvaluesi = values.get_v() + min;
+  for (int i = min; i <= max; ++i)
   {
-    elem(i) -= values.elem(i);
+    *pvi -= *pvaluesi;
+    ++pvi;
+    ++pvaluesi;
   }
   return *this;
 }
@@ -49,9 +66,13 @@ Add value to each element of dvector.
 */
 dvector& dvector::operator+=(const double value)
 {
-  for (int i = indexmin(); i <= indexmax(); ++i)
+  int min = indexmin();
+  int max = indexmax();
+  double* pvi = v + min;
+  for (int i = min; i <= max; ++i)
   {
-    elem(i) += value;
+    *pvi += value;
+    ++pvi;
   }
   return *this;
 }
@@ -62,9 +83,13 @@ Subtract value to each element of dvector.
 */
 dvector& dvector::operator-=(const double value)
 {
-  for (int i = indexmin(); i <= indexmax(); ++i)
+  int min = indexmin();
+  int max = indexmax();
+  double* pvi = v + min;
+  for (int i = min; i <= max; ++i)
   {
-    elem(i) -= value;
+    *pvi -= value;
+    ++pvi;
   }
   return *this;
 }

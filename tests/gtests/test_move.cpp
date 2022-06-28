@@ -469,3 +469,14 @@ TEST_F(test_move, DISABLED_independents2x_async_gradcalc)
 
   ASSERT_DOUBLE_EQ(value(result), 0.5);
 }
+TEST_F(test_move, dvector)
+{
+  dvector v(1, 2);
+  v(1) = 3.4;
+  v(2) = -1.4;
+
+  dvector result = v * -2.0;
+  ASSERT_EQ(result.get_ncopies(), 0);
+  ASSERT_EQ(result(1), -2.0 * v(1));
+  ASSERT_EQ(result(2), -2.0 * v(2));
+}

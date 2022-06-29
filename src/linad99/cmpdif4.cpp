@@ -115,7 +115,7 @@ void DF_FILE::save_dvar_vector_value(const dvar_vector& v)
   {
     //double tmp=value((*this)(i));
     //gradient_structure::get_fp()->fwrite(&tmp,wsize);
-    fwrite(&(pvi->x));
+    fwrite(pvi->x);
     ++pvi;
   }
 }
@@ -237,7 +237,7 @@ dvector DF_FILE::restore_dvar_vector_value(const dvar_vector_position& tmp)
   for (int i = max; i >= min; --i)
   {
     //gradient_structure::get_fp()->fread(&ttmp,sizeof(double));
-    fread(ptemp_veci);
+    fread(*ptemp_veci);
     --ptemp_veci;
   }
   return temp_vec;

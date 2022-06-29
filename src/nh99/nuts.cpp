@@ -490,7 +490,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 
   std::clock_t start0 = clock();
   double nll=get_hybrid_monte_carlo_value(nvar,y0,gr);
-  double time_gradient = ( std::clock()-start0)/(double) CLOCKS_PER_SEC;
+  double time_gradient = static_cast<double>(std::clock()-start0) / CLOCKS_PER_SEC;
   gr2=rotate_gradient(gr, chd);
   // Can now inverse rotate y0 to be x0 (algorithm space)
   independent_variables x0(1,nvar); // inits in algorithm space
@@ -774,8 +774,8 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     adaptation <<  alpha << "," <<  eps <<"," << j <<","
 	       << _nfevals <<"," << _divergent <<"," << -H << "," << -nll << endl;
     print_mcmc_progress(is, nmcmc, warmup, chain, refresh);
-    if(is ==warmup) time_warmup = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
-    time_total = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
+    if(is ==warmup) time_warmup = static_cast<double>(std::clock()-start) / CLOCKS_PER_SEC;
+    time_total = static_cast<double>(std::clock()-start) / CLOCKS_PER_SEC;
     nsamples=is;
     if(use_duration==1 && time_total > duration){
       // If duration option used, break loop after <duration> minutes.

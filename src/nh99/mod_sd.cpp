@@ -51,7 +51,7 @@ std::string get_elapsed_time(
   */
   auto elapsed = to - from;
   auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(elapsed);
-  int count = ms.count();
+  auto count = ms.count();
 
   if (count >= 86400000)
   {

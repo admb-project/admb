@@ -84,7 +84,7 @@ void tracing_message(int traceflag,const char *s);
     int allphases=initial_params::max_number_phases;
     if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-maxph",nopt))>-1)
     {
-      int origMPs = initial_params::max_number_phases;
+      //int origMPs = initial_params::max_number_phases;
       int jj=0;
       if (!nopt)
       {

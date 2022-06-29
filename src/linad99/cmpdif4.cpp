@@ -200,12 +200,17 @@ ivector DF_FILE::restore_ivector_value(const ivector_position& tmp)
   // restores the size, address, and value information for a ivector
   // Back up the stream and read the number of bytes written in the
   // ``write function'' corresponding to this ``read function''
-  ivector temp_vec(tmp.indexmin(),tmp.indexmax());
-  for (int i=tmp.indexmax();i>=tmp.indexmin();i--)
+  constexpr size_t sizeofint = sizeof(int);
+  int min = tmp.indexmin();
+  int max = tmp.indexmax();
+  ivector temp_vec(min, max);
+  int* ptemp_veci = temp_vec.get_v() + max;
+  for (int i = max; i >= min; --i)
   {
     int n = 0;
-    fread(&n, sizeof(int));
-    temp_vec(i) = n;
+    fread(&n, sizeofint);
+    *ptemp_veci = n;
+    --ptemp_veci;
   }
   return temp_vec;
   // Back up the stream again for the next function
@@ -223,13 +228,17 @@ dvector restore_dvar_vector_value(const dvar_vector_position& tmp)
 }
 dvector DF_FILE::restore_dvar_vector_value(const dvar_vector_position& tmp)
 {
-  dvector temp_vec(tmp.indexmin(),tmp.indexmax());
-  for (int i=tmp.indexmax();i>=tmp.indexmin();i--)
+  int min = tmp.indexmin();
+  int max = tmp.indexmax();
+  dvector temp_vec(min, max);
+  double* ptemp_veci = temp_vec.get_v() + max;
+  for (int i = max; i >= min; --i)
   {
     double ttmp = 0.0;
     //gradient_structure::get_fp()->fread(&ttmp,sizeof(double));
     fread(ttmp);
-    temp_vec(i)=ttmp;
+    *ptemp_veci = ttmp;
+    --ptemp_veci;
   }
   return temp_vec;
 }
@@ -244,9 +253,11 @@ void DF_FILE::save_dvar_matrix_value(const dvar_matrix& m)
 {
   int min=m.rowmin();
   int max=m.rowmax();
+  const dvar_vector* pmi = &m(min);
   for (int i=min;i<=max;++i)
   {
-    save_dvar_vector_value(m(i));
-    save_dvar_vector_position(m(i));
+    save_dvar_vector_value(*pmi);
+    save_dvar_vector_position(*pmi);
+    ++pmi;
   }
 }

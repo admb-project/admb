@@ -52,43 +52,26 @@ dvariable operator*(const dvar_vector& v1, const dvar_vector& v2)
   }
 #endif
 
-  double tmp=0;
-
-#ifdef USE_ASSEMBLER
-    int mmin=v1.indexmin();
-    int n=v1.indexmax()-mmin+1;
-    dp_dotproduct(&tmp,&(v1.elem_value(mmin)),&(v2.elem_value(mmin)),n);
-#else
-    /*
-    double * pt1=&v1.elem_value(mmin);
-    double * pt1m=&v1.elem_value(mmax);
-    double * pt2=&v2.elem_value(mmin);
-    do
-    {
-      tmp+= *pt1++ * *pt2++;
-    }
-    while (pt1<=pt1m);
-    */
-    double_and_int* pva1 = v1.va + min;
-    double_and_int* pva2 = v2.va + min;
-    for (int i = min; i <= max; ++i)
-    {
-      tmp += pva1->x * pva2->x;
-      ++pva1;
-      ++pva2;
-    }
-#endif
+  double tmp{0};
+  double_and_int* pva1 = v1.va + min;
+  double_and_int* pva2 = v2.va + min;
+  for (int i = min; i <= max; ++i)
+  {
+    tmp += pva1->x * pva2->x;
+    ++pva1;
+    ++pva2;
+  }
 
   dvariable vtmp=nograd_assign(tmp);
 
   // The derivative list considerations
-  save_identifier_string("bbbb");
+  //save_identifier_string("bbbb");
   fp->save_dvar_vector_value(v1);
   fp->save_dvar_vector_position(v1);
   fp->save_dvar_vector_value(v2);
   fp->save_dvar_vector_position(v2);
   fp->save_prevariable_position(vtmp);
-  save_identifier_string("aaaa");
+  //save_identifier_string("aaaa");
   GRAD_STACK1->set_gradient_stack(dvdv_dot);
   gs->RETURN_ARRAYS_DECREMENT();
   return vtmp;
@@ -100,16 +83,15 @@ dvariable operator*(const dvar_vector& v1, const dvar_vector& v2)
  */
 void dvdv_dot(void)
 {
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+  DF_FILE* fp = gradient_structure::get_fp();
 
-  verify_identifier_string("aaaa");
+  //verify_identifier_string("aaaa");
   double dftmp=fp->restore_prevariable_derivative();
   dvar_vector_position v2pos=fp->restore_dvar_vector_position();
   dvector cv2=restore_dvar_vector_value(v2pos);
   dvar_vector_position v1pos=fp->restore_dvar_vector_position();
   dvector cv1=restore_dvar_vector_value(v1pos);
-  verify_identifier_string("bbbb");
+  //verify_identifier_string("bbbb");
 
   int min = cv1.indexmin();
   int max = cv1.indexmax();
@@ -120,19 +102,7 @@ void dvdv_dot(void)
 
   dvector dfv1(min, max);
   dvector dfv2(min, max);
-  /*
-  double * pdf1=&dfv1(cv1.indexmin());
-  double * pdf1m=&dfv1(cv1.indexmax());
-  double * pdf2=&dfv2(cv1.indexmin());
-  double * pc1=&cv1(cv1.indexmin());
-  double * pc2=&cv2(cv1.indexmin());
-  do
-  {
-    *pdf1++ = dftmp * *pc2++;
-    *pdf2++ = dftmp * *pc1++;
-  }
-  while (pdf1<=pdf1m);
-  */
+
   double* pcv1 = cv1.get_v() + min;
   double* pcv2 = cv2.get_v() + min;
   double* pdfv1 = dfv1.get_v() + min;

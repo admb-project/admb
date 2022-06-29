@@ -314,10 +314,12 @@ void dmatrix::save_dmatrix_derivatives(const dvar_matrix_position& _pos) const
     "void dmatrix::save_dmatrix__derivatives(const dvar_matrix_position& pos)"
     << endl;
   }
+  dvector* pmi = m + min;
   for (int i=min;i<=max;i++)
   {
-    if (allocated((*this)(i)))
-      (*this)(i).save_dvector_derivatives(pos(i));
+    if (allocated(*pmi))
+      pmi->save_dvector_derivatives(pos(i));
+    ++pmi;
   }
 }
 
@@ -332,16 +334,21 @@ void dmatrix::save_dmatrix_derivatives_na(const dvar_matrix_position& _pos)
   // puts the derivative values in a dvector into a dvar_vector's guts
   int min=rowmin();
   int max=rowmax();
+#ifndef OPT_LIB
   if (min!=pos.row_min||max!=pos.row_max)
   {
     cerr << "Incompatible array sizes in " <<
     "void dmatrix::save_dmatrix__derivatives(const dvar_matrix_position& pos)"
     << endl;
   }
-  for (int i=min;i<=max;i++)
+#endif
+
+  dvector* pmi = m + min;
+  for (int i = min; i <= max; ++i)
   {
-    if (allocated((*this)(i)))
-      (*this)(i).save_dvector_derivatives_na(pos(i));
+    if (allocated(*pmi))
+      pmi->save_dvector_derivatives_na(pos(i));
+    ++pmi;
   }
 }
 

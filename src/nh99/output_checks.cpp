@@ -8,7 +8,7 @@ adstring_array get_param_names();
   Feature to try and get closer to the optimal point
   (minimum) using Newton steps with the inverse Hessian. If
   successful it gives evidence that the mode has been reached and
-  the nearby curvature is well approximated by a quadratic form. 
+  the nearby curvature is well approximated by a quadratic form.
 
   Let x be the current MLE parameter vector. Then a single step
   consists of calculating x'=x-inv(Hessian)*gradient. This
@@ -52,7 +52,7 @@ void function_minimizer::hess_step(){
   int _N_hess_steps;
   int on, nopt;
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-hess_step",nopt))>-1) {
-    if (!nopt){ 
+    if (!nopt){
       //cout << "Number of hess_steps not specified, using default of 1" << endl;
     } else {			
       istringstream ist(ad_comm::argv[on+1]);
@@ -68,7 +68,7 @@ void function_minimizer::hess_step(){
   double eps=1e-12;
   double _eps;
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-hess_step_tol",nopt))>-1) {
-    if (!nopt){ 
+    if (!nopt){
       cout << "No tolerance given, using default of 1e-12" << endl;
     } else {			
       istringstream ist(ad_comm::argv[on+1]);
@@ -95,7 +95,7 @@ void function_minimizer::hess_step(){
     cout << "         It is recommended to add option '-binp " << m << ".bar' when using -hess_step." << endl;
     cout << "         Otherwise inactive parameters (and thus gradients) may not initialize correctly." << endl << endl;
   }
-    
+
   // Let x'=x-inv(Hessian)*gradient, where x is MLE in
   // unbounded space and it's corresponding gradient and
   // Hessian. Need to calculate x' then push through
@@ -105,12 +105,13 @@ void function_minimizer::hess_step(){
   independent_variables x(1,nvar); // original unbounded MLE
   independent_variables x2(1,nvar); // updated unbounded MLE
   dvector gr0(1,nvar);		// original gradients
-  dvector gr(1,nvar);		// 
+  dvector gr(1,nvar);		//
   dvector gr2(1,nvar);		// updated gradients
   dvariable nll,nll2;		// minimal values
-  double maxgrad0, mingrad0,maxgrad, maxgrad2, mingrad2;
+  //double maxgrad;
+  double maxgrad0, mingrad0, maxgrad2, mingrad2;
   read_mle_hmc(nvar, mle); // takes MLE from admodel.hes file
- 
+
   // Push the original bounded MLE through the model
   initial_params::restore_all_values(mle,1);
   gradient_structure::set_YES_DERIVATIVES(); // don't know what this does
@@ -135,7 +136,7 @@ void function_minimizer::hess_step(){
       maxpar=i;
     }
   }
-  
+
   if(maxgrad0<eps) {
     cout << "Initial max gradient already below threshold of " << eps << " so quitting now" << endl;
     return;
@@ -148,7 +149,7 @@ void function_minimizer::hess_step(){
   int hbf; // dummy var
 
   // Initial for first iteration
-  gr=gr0; maxgrad=maxgrad0; 
+  gr=gr0; //maxgrad=maxgrad0;
   int Nstep=0;
   for(int ii=1; ii<=N_hess_steps; ii++){
     Nstep++;
@@ -184,8 +185,8 @@ void function_minimizer::hess_step(){
     }
     // Was successful but not good enough to break early
     cout << "Hess step " << ii << ": Max gradient=" << maxgrad2 << " (" << pars[maxpar] <<
-      ") and min gradient= " << mingrad2 << endl; 
-    x=x2; gr=gr2; maxgrad=maxgrad2; 
+      ") and min gradient= " << mingrad2 << endl;
+    x=x2; gr=gr2; //maxgrad=maxgrad2;
     // If not the last step then want to skip the sd_calcs
     // which are slow so manually update admodel.cov whereas
     // below computations1() runs everything so do that if last
@@ -201,10 +202,10 @@ void function_minimizer::hess_step(){
       cout << "done" << endl;
     }
   } // end loop over hess_steps
-  
+
   if(maxgrad2>maxgrad0){
     // worse gradient
-    cerr << "Experimental feature -hess_step resulted in worse gradients." << endl <<  
+    cerr << "Experimental feature -hess_step resulted in worse gradients." << endl <<
       "Consider reoptimizing model to reset files. This suggests that the" << endl <<
       "the negative log-likelihood is not quadratic at the mode, or that the" << endl <<
       "Hessian does not approximate it well. In short, it suggests the model is" << endl <<
@@ -244,7 +245,7 @@ adstring_array get_param_names() {
   if (nvar>0){
     par_names.allocate(1,nvar);
 
-    //loop over parameters and vectors and create names  
+    //loop over parameters and vectors and create names
     int kk = 0;
     for (int i = 0; i < initial_params::num_initial_params; ++i) {
       initial_params* varptr = initial_params::varsptr[i];
@@ -264,7 +265,7 @@ adstring_array get_param_names() {
   }
   return(par_names);
 }
-  
+
 bool has_bounds(initial_params* p)
 {
   constexpr const std::type_info& typeid_param_init_bounded_number = typeid(param_init_bounded_number);
@@ -284,9 +285,9 @@ bool has_bounds(initial_params* p)
 
   return false;
 }
-/** 
+/**
  * check for active parameters near bounds
- * 
+ *
  * @param os - ostream object to write results to
  */
 void check_for_params_on_bounds(ostream& os){
@@ -296,8 +297,8 @@ void check_for_params_on_bounds(ostream& os){
   if (debug) os<<"--num active  params = "<<nvar<<endl;
   int counter=0;
   if (nvar>0){
-    //loop over parameters and vectors and create names  
-    int kk = 0;
+    //loop over parameters and vectors and create names
+    //int kk = 0;
     for (int i = 0; i < initial_params::num_initial_params; ++i) {
       initial_params* varptr = initial_params::varsptr[i];
       adstring par_name_base = varptr->label();

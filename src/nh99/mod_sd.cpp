@@ -68,7 +68,7 @@ std::string get_elapsed_time(
     ss << (count / 60000) << " m ";
     count %= 60000;
   }
-  ss << setprecision(2) << (count / 1000.0) << " s";
+  ss << setprecision(2) << (static_cast<double>(count) * 0.001) << " s";
 
 /*
   double runtime = ( std::clock()-start)/(double) CLOCKS_PER_SEC;

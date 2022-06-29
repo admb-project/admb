@@ -162,7 +162,7 @@ void fmmc::fmin(const double& fret, const dvector& _p, const dvector& _gg)
   dvector& g=*(this->g);
   double& fp=this->fp;
   //int& its=this->its;
-  int& J=this->J;
+  //int& J=this->J;
   if (this->frp_flag > 0) this->ifn++;
 
   if (ireturn >= 3)
@@ -608,7 +608,8 @@ label555:
     }
     goto label1100;
   label1120:
-    int itemp=1;;
+  //  int itemp=1;;
+    ;;
   }
   theta=theta+cs.rho_i* *(cs.d) ;
   return cs.converge_flag;
@@ -634,7 +635,7 @@ double do_interpolate(const double& _fret, const double& _left_bracket,
   double rho_min=1.e-10;
   int& J = (int&) _J;
   static double rho_star;
-  static double dir_deriv;
+  //static double dir_deriv;
   //double Psi_2;
   //dvector g1(1,d.size());
   static double gamma;
@@ -712,7 +713,7 @@ label200:
     //Psi_2=fcomp(theta+rho_star*d,g1);
     //J+=1;
 
-    dir_deriv=d*g1;
+    //dir_deriv=d*g1;
 
     //cout << "Check2 " << Psi_2 << " " << left_bracket_value << "  " <<
     //   d*g1 << "\n";
@@ -913,9 +914,8 @@ double cubic_interpolation(const double& u, const double& v, const double& aa,
     x1=q/a;       // x1 and x2 are the two roots of the quadratic
     x2=c/q;       // equation that is the max andmin of the cubic
                   // polynomial
-    double sgn1,sgn2;
-    sgn1=b+2*a*x1;
-    sgn2=b+2*a*x2;
+    double sgn1=b+2*a*x1;
+    //double sgn2=b+2*a*x2;
     if (sgn1>0)
     {
       return x1;
@@ -1012,10 +1012,11 @@ void derch(const double& _f, const dvector& _x, const dvector& _gg, int n,
   int& ireturn=(int&) _ireturn;
   dvector& x = (dvector&) _x;
   dvector& gg = (dvector&) _gg;
-  static long int i, n1 ,n2;
+  static long int n2;
+  static int i, n1;
   static double fsave;
   static double s, f1, f2, g2, xsave;
-  static long int j = 1;
+  static int j = 1;
   static int si;
   si=gg.indexmax();
   static dvector g(1,si);

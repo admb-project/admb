@@ -156,12 +156,6 @@ dvector restore_dvar_vector_derivatives(const dvar_vector_position& tmp)
   dvector tempvec(min, max);
   double_and_int* va = tmp.va + min;
 
-#ifdef USE_ASSEMBLER
-     int min=tmp.indexmin();
-     int n=tmp.max-min+1;
-     dw_block_move(&(tempvec.elem(min)),&(va[min].xvalue()),n);
-     dp_block_initialize(&(va[min].xvalue()),n);
-#else
   double* ptmpvec = tempvec.get_v() + min;
   for (int i = min; i <= max; ++i)
   {
@@ -172,7 +166,6 @@ dvector restore_dvar_vector_derivatives(const dvar_vector_position& tmp)
     ++va;
     ++ptmpvec;
   }
-#endif
 
 //  _dp_vector_add
 //  _dp_vector_elem_div
@@ -226,12 +219,6 @@ void dvector::save_dvector_derivatives(const dvar_vector_position& pos) const
   assert(min == pos.indexmin() && max == pos.indexmax());
 #endif
 
-#ifdef USE_ASSEMBLER
-  double_and_int* ptr = pos.va;
-  int n=max-min+1;
-  dp_vector_add(&(ptr[min].xvalue()), &(ptr[min].xvalue()),
-    &(this->elem(min)), n);
-#else
   double_and_int* dest = pos.va + min;
   double* source = v + min;
   for (int i = min; i <= max; ++i)
@@ -240,7 +227,6 @@ void dvector::save_dvector_derivatives(const dvar_vector_position& pos) const
     ++source;
     ++dest;
   }
-#endif
 }
 
 /**
@@ -262,11 +248,6 @@ void dvector::save_dvector_derivatives_na(const dvar_vector_position& pos) const
   }
 #endif
 
-#ifdef USE_ASSEMBLER
-  double_and_int* ptr = pos.va;
-  int n=max-min+1;
-  dw_block_move(&(ptr[min].xvalue()),&(this->elem(min)),n);
-#else
   double_and_int* dest = pos.va + min;
   double* source = v + min;
   for (int i = min; i <= max; ++i)
@@ -275,7 +256,6 @@ void dvector::save_dvector_derivatives_na(const dvar_vector_position& pos) const
     ++dest;
     ++source;
   }
-#endif
 }
 
 /**
@@ -308,12 +288,14 @@ void dmatrix::save_dmatrix_derivatives(const dvar_matrix_position& _pos) const
   // puts the derivative values in a dvector into a dvar_vector's guts
   int min=rowmin();
   int max=rowmax();
-  if (min!=pos.row_min||max!=pos.row_max)
+#ifndef OPT_LIB
+  if (min != pos.row_min || max != pos.row_max)
   {
     cerr << "Incompatible array sizes in " <<
     "void dmatrix::save_dmatrix__derivatives(const dvar_matrix_position& pos)"
     << endl;
   }
+#endif
   dvector* pmi = m + min;
   for (int i=min;i<=max;i++)
   {

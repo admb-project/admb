@@ -165,8 +165,7 @@ dvariable sum(const dvar_vector& v1)
  */
 void X_dv_sum(void)
 {
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+  DF_FILE* fp = gradient_structure::get_fp();
 
   verify_identifier_string("aaaa");
   double dftmp=fp->restore_prevariable_derivative();
@@ -199,7 +198,7 @@ dvariable sum(const dvar_matrix& m)
 
   int min = m.rowmin();
   int max = m.rowmax();
-  dvariable tmp = 0.0;
+  dvariable tmp{0.0};
   if (min <= max)
   {
     const dvar_vector* pmi = &m(min);

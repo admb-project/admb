@@ -7143,7 +7143,7 @@ inline d6_array& d7_array::elem(int i)
   if (i < indexmin() || i > indexmax())
   {
     cerr << "Error index out of bounds in\n"
-            "d5_array& d6_array::elem(int)" << endl;
+            "d5_array& d7_array::elem(int)" << endl;
     ad_exit(1);
   }
 #endif
@@ -7155,7 +7155,7 @@ inline const d6_array& d7_array::elem(int i) const
   if (i < indexmin() || i > indexmax())
   {
     cerr << "Error index out of bounds in\n"
-            "d5_array& d6_array::elem(int)" << endl;
+            "d5_array& d7_array::elem(int)" << endl;
     ad_exit(1);
   }
 #endif

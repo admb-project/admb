@@ -355,7 +355,7 @@ void function_minimizer::shmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
       eps=adapt_eps(is, is, eps,  alpha, adapt_delta, mu, epsvec, epsbar, Hbar);
     }
     adaptation << alpha << "," <<  eps << "," << eps*L << "," << H0 << "," << -nll << endl;
-    if(is ==nwarmup) time_warmup = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
+    if(is ==nwarmup) time_warmup = static_cast<double>(std::clock()-start) / CLOCKS_PER_SEC;
     print_mcmc_progress(is, nmcmc, nwarmup, chain, refresh);
   } // end of MCMC chain
 
@@ -367,7 +367,7 @@ void function_minimizer::shmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
     cout << "Final acceptance ratio=" << iaccept/nmcmc << endl;
   }
 
-  time_total = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
+  time_total = static_cast<double>(std::clock() - start) / CLOCKS_PER_SEC;
   print_mcmc_timing(time_warmup, time_total, chain);
  
   // I assume this closes the connection to the file??

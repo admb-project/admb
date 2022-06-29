@@ -51,9 +51,10 @@ ivector_position DF_FILE::restore_ivector_position()
   // reads back the size and address information for a ivector
   // Back up the stream and read the number of bytes written in the
   // ``write function'' corresponding to this ``read function''
+  constexpr size_t wsize = sizeof(dvector_position);
   ivector_position tmp;
   //int ierr;
-  fread(&tmp,sizeof(ivector_position));
+  fread(&tmp, wsize);
   return tmp;
 }
 
@@ -109,11 +110,13 @@ void DF_FILE::save_dvar_vector_value(const dvar_vector& v)
   //int num_rec;
   int min=v.indexmin();
   int max=v.indexmax();
+  const double_and_int* pvi = v.va + min;
   for (int i=min;i<=max;++i)
   {
     //double tmp=value((*this)(i));
     //gradient_structure::get_fp()->fwrite(&tmp,wsize);
-    fwrite(v.elem_value(i));
+    fwrite(&(pvi->x));
+    ++pvi;
   }
 }
 
@@ -152,10 +155,11 @@ void DF_FILE::save_ivector_value(const ivector& v)
   constexpr size_t wsize=sizeof(int);
   int min=v.indexmin();
   int max=v.indexmax();
+  const int* pvi = v.get_v() + min;
   for (int i=min;i<=max;i++)
   {
-    int tmp=v(i);
-    fwrite(&tmp, wsize);
+    fwrite(pvi, wsize);
+    ++pvi;
   }
 }
 
@@ -207,9 +211,7 @@ ivector DF_FILE::restore_ivector_value(const ivector_position& tmp)
   int* ptemp_veci = temp_vec.get_v() + max;
   for (int i = max; i >= min; --i)
   {
-    int n = 0;
-    fread(&n, sizeofint);
-    *ptemp_veci = n;
+    fread(ptemp_veci, sizeofint);
     --ptemp_veci;
   }
   return temp_vec;
@@ -234,10 +236,8 @@ dvector DF_FILE::restore_dvar_vector_value(const dvar_vector_position& tmp)
   double* ptemp_veci = temp_vec.get_v() + max;
   for (int i = max; i >= min; --i)
   {
-    double ttmp = 0.0;
     //gradient_structure::get_fp()->fread(&ttmp,sizeof(double));
-    fread(ttmp);
-    *ptemp_veci = ttmp;
+    fread(ptemp_veci);
     --ptemp_veci;
   }
   return temp_vec;

@@ -15,9 +15,13 @@ and incrementing with offset.
 double d3_array::fill_seqadd(double initial, double offset)
 {
   double last = initial;
-  for (int i = indexmin(); i <= indexmax(); ++i)
+  int min = indexmin();
+  int max = indexmax();
+  dmatrix* pti = t + min;
+  for (int i = min; i <= max; ++i)
   {
-    last = elem(i).fill_seqadd(last, offset);
+    last = pti->fill_seqadd(last, offset);
+    ++pti;
   }
   return last;
 }

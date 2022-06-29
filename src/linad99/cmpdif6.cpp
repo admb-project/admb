@@ -162,8 +162,8 @@ dmatrix_position DF_FILE::restore_dmatrix_position()
   for (int i=max;i>=min;i--)
   {
     fread(&(tmp.ptr(i)), wsize2);
-    fread(&(tmp.ub(i)), wsize);
-    fread(&(tmp.lb(i)), wsize);
+    fread(pubi, wsize);
+    fread(plbi, wsize);
 
     --pubi;
     --plbi;

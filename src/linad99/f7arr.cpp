@@ -190,8 +190,8 @@ Allocate dvar7_array using dimensions from m1.
 */
 void dvar7_array::allocate(const dvar7_array& m1)
 {
-  int mmin=indexmin();
-  int mmax=indexmax();
+  int mmin = m1.indexmin();
+  int mmax = m1.indexmax();
   if ((shape = new vector_shape(mmin, mmax)) == 0)
   {
     cerr << " Error allocating memory in dvar6_array contructor" << endl;
@@ -219,8 +219,8 @@ Allocate d7_array using dimensions from m1.
 */
 void dvar7_array::allocate(const d7_array& m1)
 {
-  int mmin=indexmin();
-  int mmax=indexmax();
+  int mmin = m1.indexmin();
+  int mmax = m1.indexmax();
   if ((shape = new vector_shape(mmin, mmax)) == 0)
   {
     cerr << " Error allocating memory in dvar6_array contructor" << endl;

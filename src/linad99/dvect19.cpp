@@ -10,30 +10,6 @@
  */
 #include "fvar.hpp"
 
-/**
- * Safe version of exp that interpolates values greater than equal to 60 in each element 
- * of a vector v1.
- * \param v1 a data vector
- */
-dvector mfexp(const dvector& v1)
-{
-  int mmin=v1.indexmin();
-  int mmax=v1.indexmax();
-  dvector vtmp(mmin,mmax);
-  for (int i=mmin;i<=mmax;i++)
-  {
-    if (v1.elem(i)<60.)
-    {
-      vtmp.elem(i)=exp(v1.elem(i));
-    }
-    else
-    {
-      double x=v1.elem(i)-60.;
-      vtmp.elem(i)=exp(60.)*(1.+2.*x)/(1.+x);
-    }
-  }
-  return vtmp;
-}
 
 /**
  * Safe version of exp that interpolates values greater than equal to 60 in each element 
@@ -46,17 +22,31 @@ dvector mfexp(const dvector& v1, const double d)
   int mmin=v1.indexmin();
   int mmax=v1.indexmax();
   dvector vtmp(mmin,mmax);
+  double* pvtmpi = vtmp.get_v() + mmin;
+  double* pv1i = v1.get_v() + mmin;
   for (int i=mmin;i<=mmax;i++)
   {
-    if (v1.elem(i)<d)
+    if (*pv1i < d)
     {
-      vtmp.elem(i)=exp(v1.elem(i));
+      *pvtmpi = exp(*pv1i);
     }
     else
     {
-      double x=v1.elem(i)-d;
-      vtmp.elem(i)=exp(d)*(1.+2.*x)/(1.+x);
+      double x = *pv1i - d;
+      *pvtmpi = exp(d) * (1.0 + 2.0 * x)/(1.0 + x);
     }
+    ++pvtmpi;
+    ++pv1i;
   }
   return vtmp;
+}
+
+/**
+ * Safe version of exp that interpolates values greater than equal to 60 in each element 
+ * of a vector v1.
+ * \param v1 a data vector
+ */
+dvector mfexp(const dvector& v1)
+{
+  return mfexp(v1, 60.0);
 }

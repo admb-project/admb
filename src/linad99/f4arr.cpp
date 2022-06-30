@@ -246,44 +246,52 @@ const prevariable dvar4_array::operator()(int i, int j, int k, int l) const
  * \param
  */
 dvar4_array& dvar4_array::operator=(const d4_array& m)
- {
-   int mmin=hslicemin();
-   int mmax=hslicemax();
-   if (mmin!=m.hslicemin() || mmax!=m.hslicemax())
-   {
-     cerr << "Incompatible bounds in"
-      " dvar4_array& dvar4_array:: operator =  (const dvar4_array& m)"
-      << endl;
-     ad_exit(1);
-    }
-   for (int i=mmin; i<=mmax; i++)
-   {
-     (*this)(i)=m(i);
-   }
-   return *this;
- }
+{
+  int mmin = hslicemin();
+  int mmax = hslicemax();
+#ifndef OPT_LIB
+  if (mmin!=m.hslicemin() || mmax!=m.hslicemax())
+  {
+    cerr << "Incompatible bounds in dvar4_array& dvar4_array::operator=(const d4_array&)\n";
+    ad_exit(1);
+  }
+#endif
+  dvar3_array* pti = t + mmin;
+  const d3_array* pmi = &m(mmin);
+  for (int i=mmin; i<=mmax; ++i)
+  {
+    *pti = *pmi;
+    ++pti;
+    ++pmi;
+  }
+  return *this;
+}
 
 /**
  * Description not yet available.
  * \param
  */
- dvar4_array& dvar4_array::operator=(const dvar4_array& m)
- {
-   int mmin=hslicemin();
-   int mmax=hslicemax();
-   if (mmin!=m.hslicemin() || mmax!=m.hslicemax())
-   {
-     cerr << "Incompatible bounds in"
-      " dvar4_array& dvar4_array:: operator =  (const dvar4_array& m)"
-      << endl;
-     ad_exit(1);
-    }
-   for (int i=mmin; i<=mmax; i++)
-   {
-     (*this)(i)=m(i);
-   }
-   return *this;
- }
+dvar4_array& dvar4_array::operator=(const dvar4_array& m)
+{
+  int mmin = hslicemin();
+  int mmax = hslicemax();
+#ifndef OPT_LIB
+  if (mmin!=m.hslicemin() || mmax!=m.hslicemax())
+  {
+    cerr << "Incompatible bounds in dvar4_array& dvar4_array::operator=(const dvar4_array&)\n";
+    ad_exit(1);
+  }
+#endif
+  dvar3_array* pti = t + mmin;
+  const dvar3_array* pmi = &m(mmin);
+  for (int i=mmin; i<=mmax; ++i)
+  {
+    *pti = *pmi;
+    ++pti;
+    ++pmi;
+  }
+  return *this;
+}
 
 /**
 Allocate variable array with dimensions
@@ -317,9 +325,11 @@ void dvar4_array::allocate(
     ad_exit(1);
   }
   t -= hslicemin();
+  dvar3_array* pti = t + hsl;
   for (int i = hsl; i <= hsu; ++i)
   {
-    (*this)(i).allocate(sl, sh, nrl, nrh, ncl, nch);
+    pti->allocate(sl, sh, nrl, nrh, ncl, nch);
+    ++pti;
   }
 }
 /**
@@ -354,9 +364,11 @@ void dvar4_array::allocate(
     ad_exit(1);
   }
   t -= hslicemin();
-  for (int i=hsl; i<=hsu; i++)
+  dvar3_array* pti = t + hsl;
+  for (int i=hsl; i<=hsu; ++i)
   {
-    (*this)(i).allocate(sl, sh, nrl, nrh, ncl, nch);
+    pti->allocate(sl, sh, nrl, nrh, ncl, nch);
+    ++pti;
   }
 }
 
@@ -396,9 +408,11 @@ void dvar4_array::allocate(
 
   int il = hsl;
   int iu = hsu;
+  dvar3_array* pti = t + il;
   for (int i = il; i <= iu; ++i)
   {
-    (*this)(i).allocate(sl(i), sh(i), nrl(i), nrh(i), ncl(i), nch(i));
+    pti->allocate(sl(i), sh(i), nrl(i), nrh(i), ncl(i), nch(i));
+    ++pti;
   }
 }
 /**
@@ -425,9 +439,11 @@ void dvar4_array::allocate(
   t -= hslicemin();
   int il = hsl;
   int iu = hsu;
+  dvar3_array* pti = t + il;
   for (int i = il; i <= iu; ++i)
   {
-    (*this)(i).allocate(sl(i), sh(i), nrl(i), nrh(i));
+    pti->allocate(sl(i), sh(i), nrl(i), nrh(i));
+    ++pti;
   }
 }
 /**
@@ -453,9 +469,11 @@ void dvar4_array::allocate(
   t -= hslicemin();
   int il=hsl;
   int iu=hsu;
+  dvar3_array* pti = t + il;
   for (int i = il; i <= iu; ++i)
   {
-    (*this)(i).allocate(sl(i), sh(i));
+    pti->allocate(sl(i), sh(i));
+    ++pti;
   }
 }
 /**
@@ -482,9 +500,11 @@ void dvar4_array::allocate(ad_integer hsl, ad_integer hsu)
 
   int il = hsl;
   int iu = hsu;
+  dvar3_array* pti = t + il;
   for (int i = il; i <= iu; ++i)
   {
-    (*this)(i).allocate();
+    pti->allocate();
+    ++pti;
   }
 }
 /**
@@ -519,9 +539,11 @@ void dvar4_array::allocate(
     ad_exit(1);
   }
   t -= hslicemin();
+  dvar3_array* pti = t + hsl;
   for (int i = hsl; i <= hsu; ++i)
   {
-    (*this)(i).allocate(sl, sh, nrl(i), nrh(i), ncl(i), nch(i));
+    pti->allocate(sl, sh, nrl(i), nrh(i), ncl(i), nch(i));
+    ++pti;
   }
 }
 /**
@@ -559,16 +581,20 @@ void dvar4_array::allocate(
  * Description not yet available.
  * \param
  */
- void dvar4_array::initialize()
- {
-   if (!(!(*this)))  // only initialize allocated objects
-   {
-     for (int i=hslicemin();i<=hslicemax();i++)
-     {
-       elem(i).initialize();
-     }
-   }
- }
+void dvar4_array::initialize()
+{
+  if (!(!(*this)))  // only initialize allocated objects
+  {
+    int min = hslicemin();
+    int max = hslicemax();
+    dvar3_array* pti = t + min;
+    for (int i = min; i <= max; ++i)
+    {
+       pti->initialize();
+       ++pti;
+    }
+  }
+}
 
 /**
  * Description not yet available.
@@ -603,9 +629,12 @@ void dvar4_array::allocate(
     ad_exit(1);
   }
   t -= hslicemin();
+
+  dvar3_array* pti = t + hsl;
   for (int i = hsl; i <= hsu; ++i)
   {
-    (*this)(i).allocate(sl,sh(i),nrl,nrh(i),ncl,nch);
+    pti->allocate(sl,sh(i),nrl,nrh(i),ncl,nch);
+    ++pti;
   }
 }
 
@@ -613,14 +642,22 @@ void dvar4_array::allocate(
  * Description not yet available.
  * \param
  */
- dvar4_array::dvar4_array(const d4_array& m1)
- {
-   allocate(m1);
-   for (int i=hslicemin(); i<=hslicemax(); i++)
-   {
-     t[i]=m1[i];
-   }
- }
+dvar4_array::dvar4_array(const d4_array& m1)
+{
+  allocate(m1);
+  int min = hslicemin();
+  int max = hslicemax();
+
+  dvar3_array* pti = t + min;
+  const d3_array* pm1i = &m1(min);
+  for (int i = min; i <= max; ++i)
+  {
+    *pti = *pm1i;
+
+    ++pti;
+    ++pm1i;
+  }
+}
 
 /**
 Allocate dvar4_array with same dimensions as m1.
@@ -639,10 +676,17 @@ void dvar4_array::allocate(const d4_array& m1)
          << __FILE__ << ':' << __LINE__ << '\n';
     ad_exit(1);
   }
-  t -= hslicemin();
-  for (int i = hslicemin(); i <= hslicemax(); ++i)
+  int min = hslicemin();
+  int max = hslicemax();
+  t -= min;
+
+  dvar3_array* pti = t + min;
+  const d3_array* pm1i = &m1(min);
+  for (int i = min; i <= max; ++i)
   {
-     t[i].allocate(m1[i]);
+    pti->allocate(*pm1i);
+    ++pti;
+    ++pm1i;
   }
 }
 /**
@@ -662,10 +706,17 @@ void dvar4_array::allocate(const dvar4_array& m1)
          << __FILE__ << ':' << __LINE__ << '\n';
     ad_exit(1);
   }
-  t -= hslicemin();
-  for (int i = hslicemin(); i <= hslicemax(); ++i)
+  int min = hslicemin();
+  int max = hslicemax();
+  t -= min;
+
+  dvar3_array* pti = t + min;
+  const dvar3_array* pm1i = &m1(min);
+  for (int i = min; i <= max; ++i)
   {
-    t[i].allocate(m1[i]);
+    pti->allocate(*pm1i);
+    ++pti;
+    ++pm1i;
   }
 }
 

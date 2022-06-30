@@ -23,7 +23,6 @@ dvector dvector::operator-(void)
   double* ptmpi = tmp.get_v() + mmin;
   for (int i=mmin;i<=mmax;i++)
   {
-    tmp(i)=-elem(i);
     *ptmpi = -(*pvi);
 
     ++pvi;

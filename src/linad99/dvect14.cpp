@@ -52,12 +52,17 @@ double sfabs(const double v1)
  * \param
  */
 dvector sfabs(const dvector& t1)
+{
+  int min = t1.indexmin();
+  int max = t1.indexmax();
+  dvector tmp(min, max);
+  double* ptmpi = tmp.get_v() + min;
+  double* pt1i = t1.get_v() + min;
+  for (int i = min; i <= max; ++i)
   {
-     dvector tmp(t1.indexmin(),t1.indexmax());
-
-     for (int i=t1.indexmin(); i<=t1.indexmax(); i++)
-     {
-       tmp.elem(i)=sfabs(t1.elem(i));
-     }
-     return(tmp);
+    *ptmpi = sfabs(*pt1i);
+    ++pt1i;
+    ++ptmpi;
   }
+  return tmp;
+}

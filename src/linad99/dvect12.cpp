@@ -38,12 +38,17 @@ dvector colsum(const dmatrix& matrix)
 
   dvector sums(cmin, cmax);
   sums.initialize();
+  double* psumsj = sums.get_v() + cmin;
   for (int j=cmin; j<=cmax; ++j)
   {
+    const dvector* pmatrixi = &matrix(rmin);
     for (int i=rmin; i<=rmax; ++i)
     {
-      sums(j) += matrix(i, j);
+      *psumsj += *(pmatrixi->get_v() + j);
+
+      ++pmatrixi;
     }
+    ++psumsj;
   }
   return sums;
 }
@@ -59,9 +64,14 @@ dvector rowsum(const dmatrix& matrix)
   int max = matrix.rowmax();
 
   dvector sums(min, max);
+  double* psumsi = sums.get_v() + min;
+  const dvector* pmatrixi = &matrix(min);
   for (int i = min; i <= max; ++i)
   {
-    sums(i) = sum(matrix(i));
+    *psumsi = sum(*pmatrixi);
+
+    ++psumsi;
+    ++pmatrixi;
   }
   return sums;
 }

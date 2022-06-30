@@ -16,11 +16,15 @@
  */
 dvector& dvector::operator/=(const double x)
 {
-  for (int i=indexmin(); i<=indexmax(); i++)
+  int min = indexmin();
+  int max = indexmax();
+  double* pvi = v + min;
+  for (int i = min; i <= max; ++i)
   {
-    elem(i)/=x;
+    *pvi /= x;
+    ++pvi;
   }
-  return(*this);
+  return *this;
 }
 
 /**
@@ -29,9 +33,13 @@ dvector& dvector::operator/=(const double x)
  */
 dvector& dvector::operator*=(const double x)
 {
-  for (int i=indexmin(); i<=indexmax(); i++)
+  int min = indexmin();
+  int max = indexmax();
+  double* pvi = v + min;
+  for (int i = min; i <= max; ++i)
   {
-    elem(i)*=x;
+    *pvi *= x;
+    ++pvi;
   }
-  return(*this);
+  return *this;
 }

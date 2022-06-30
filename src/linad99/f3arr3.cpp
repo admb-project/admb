@@ -40,9 +40,13 @@ void d3_array::allocate(const dvar3_array& d3v)
          << __FILE__ << ':' << __LINE__ << '\n';
     ad_exit(1);
   }
-  t -= slicemin();
+  t -= sl;
+  dvar_matrix* pti = t + sl;
+  dvar_matrix* pd3vi = &d3v(sl);
   for (int i = sl; i <= sh; ++i)
   {
-    t[i].allocate(d3v(i));
+    pti->allocate(*pd3vi);
+    ++pti;
+    ++pd3vi;
   }
 }

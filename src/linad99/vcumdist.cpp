@@ -187,6 +187,8 @@ prevariable& cumd_norm(const prevariable& _x)
   if (++gs->RETURN_PTR > gs->MAX_RETURN)
     gs->RETURN_PTR = gs->MIN_RETURN;
 
+  dvariable* RETURN_PTR = gs->RETURN_PTR;
+
   double x=value(_x);
   const double b1=0.319381530;
   const double b2=-0.356563782;
@@ -204,7 +206,7 @@ prevariable& cumd_norm(const prevariable& _x)
     double y=  ((((b5*u+b4)*u+b3)*u+b2)*u+b1)*u;
     double tmp1=-0.3989422804*exp(-.5*x*x);
     double z=1.0+tmp1*y;
-    gs->RETURN_PTR->v->x=z;
+    RETURN_PTR->v->x=z;
 
 
     // double z=1.0+tmp1*y;
@@ -221,7 +223,7 @@ prevariable& cumd_norm(const prevariable& _x)
     dfx-=u*u*p*dfu;
 
     gs->GRAD_STACK1->set_gradient_stack(default_evaluation,
-       &(gs->RETURN_PTR->v->x), &(_x.v->x), dfx);
+       &(RETURN_PTR->v->x), &(_x.v->x), dfx);
   }
   else
   {
@@ -247,11 +249,11 @@ prevariable& cumd_norm(const prevariable& _x)
     //double w=-value(x);
     dfx-=dfw;
 
-    gs->RETURN_PTR->v->x=z;
+    RETURN_PTR->v->x=z;
     gs->GRAD_STACK1->set_gradient_stack(default_evaluation,
-       &(gs->RETURN_PTR->v->x), &(_x.v->x),dfx);
+       &(RETURN_PTR->v->x), &(_x.v->x),dfx);
   }
-  return *(gs->RETURN_PTR);
+  return *RETURN_PTR;
 }
 
 /**

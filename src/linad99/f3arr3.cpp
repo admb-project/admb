@@ -41,8 +41,8 @@ void d3_array::allocate(const dvar3_array& d3v)
     ad_exit(1);
   }
   t -= sl;
-  dvar_matrix* pti = t + sl;
-  dvar_matrix* pd3vi = &d3v(sl);
+  dmatrix* pti = t + sl;
+  const dvar_matrix* pd3vi = &d3v(sl);
   for (int i = sl; i <= sh; ++i)
   {
     pti->allocate(*pd3vi);

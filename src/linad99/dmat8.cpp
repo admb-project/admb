@@ -35,8 +35,10 @@ Bounds checking is performed.
 */
 dvector& dmatrix::operator()(int i)
 {
+#ifndef OPT_LIB
   //check that index i is in range
-  assert((index_min <= i && i <= index_max) || is_valid_row(i));
+  assert(index_min <= i && i <= index_max);
+#endif
 
   return *(m + i);
 }
@@ -52,15 +54,19 @@ Bounds checking is performed.
 */
 double& dmatrix::operator()(int i, int j)
 {
+#ifndef OPT_LIB
   //check that index i is in range
-  assert((index_min <= i && i <= index_max) || is_valid_row(i));
+  assert(index_min <= i && i <= index_max);
+#endif
 
-  dvector& dvi = elem(i);
+  dvector* pmi =  m + i;
 
+#ifndef OPT_LIB
   //check that index j is in range
-  assert(dvi.is_valid_index(j));
+  assert(pmi->is_valid_index(j));
+#endif
 
-  return *(dvi.v + j);
+  return *(pmi->get_v() + j);
 }
 /**
 Returns a const reference to the element at specified location (i, j) in dmatrix.
@@ -71,14 +77,18 @@ Bounds checking is performed.
 */
 const double& dmatrix::operator()(int i, int j) const
 {
+#ifndef OPT_LIB
   //check that index i is in range
-  assert((index_min <= i && i <= index_max) || is_valid_row(i));
+  assert(index_min <= i && i <= index_max);
+#endif
 
-  const dvector& dvi = elem(i);
+  dvector* pmi =  m + i;
 
+#ifndef OPT_LIB
   //check that index j is in range
-  assert(dvi.is_valid_index(j));
+  assert(pmi->is_valid_index(j));
+#endif
 
-  return *(dvi.v + j);
+  return *(pmi->get_v() + j);
 }
 #endif

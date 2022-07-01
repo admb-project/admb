@@ -264,18 +264,35 @@ dmatrix laplace_approximation_calculator::get_gradient_for_hessian_calcs
   int nvar=us*us;
   independent_variables cy(1,nvar);
   cy.initialize();
-  int ii=1;
+
+  double* pcyii = cy.get_v() + 1;
+  const dvector* plocal_Hessi = &local_Hess(1);
   for (int i=1;i<=us;i++)
+  {
+    double* plocal_Hessij = plocal_Hessi->get_v() + 1;
     for (int j=1;j<=us;j++)
-      cy(ii++)=local_Hess(i,j);
+    {
+      *pcyii = *plocal_Hessij;
+
+      ++pcyii;
+      ++plocal_Hessij;
+    }
+    ++plocal_Hessi;
+  }
 
   dvar_vector vy=dvar_vector(cy);
   dvar_matrix vHess(1,us,1,us);
 
-  ii=1;
+  int ii=1;
+  dvar_vector* pvHessi = &vHess(1);
   for (int i=1;i<=us;i++)
+  {
     for (int j=1;j<=us;j++)
-      vHess(i,j)=vy(ii++);
+    {
+      (*pvHessi)(j) = vy(ii++);
+    }
+    ++pvHessi;
+  }
 
   dvariable vf=0.0;
   int sgn=0;
@@ -294,11 +311,24 @@ dmatrix laplace_approximation_calculator::get_gradient_for_hessian_calcs
   f=value(vf);
   dvector g(1,nvar);
   gradcalc(nvar,g);
+
   dmatrix hessadjoint(1,us,1,us);
-  ii=1;
+
+  dvector* phessadjointi = &hessadjoint(1);
+  double* pgii = g.get_v() + 1;
   for (int i=1;i<=us;i++)
+  {
+    double* phessadjointij = phessadjointi->get_v() + 1;
     for (int j=1;j<=us;j++)
-      hessadjoint(i,j)=g(ii++);
+    {
+      *phessadjointij = *pgii;
+
+      ++phessadjointij;
+      ++pgii;
+    }
+
+    ++phessadjointi;
+  }
 
   return hessadjoint;
 }

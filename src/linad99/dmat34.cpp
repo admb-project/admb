@@ -118,6 +118,8 @@ dvector solve(const dmatrix& aa,const dvector& z,
     ++pbbi;
   }
 
+  dvector* pbbj = &bb(lb);
+  double* pvvj = &vv(lb);
   for (int j=lb;j<=ub;j++)
   {
     dvector* pbbi = &bb(lb);
@@ -130,8 +132,8 @@ dvector solve(const dmatrix& aa,const dvector& z,
       {
         sum -= *pbbik * *(pbbk->get_v() + j);
 
-	++pbbik;
-	++pbbk;
+        ++pbbik;
+        ++pbbk;
       }
       //a[i][j]=sum;
       *(pbbi->get_v() + j) = sum;
@@ -142,6 +144,7 @@ dvector solve(const dmatrix& aa,const dvector& z,
     big=0.0;
 
     pbbi = &bb(j);
+    pvvi = &vv(j);
     for (int i=j;i<=ub;i++)
     {
       sum = *(pbbi->get_v() + j);
@@ -151,28 +154,34 @@ dvector solve(const dmatrix& aa,const dvector& z,
       {
         sum -= *pbbik * *(pbbk->get_v() + j);
 
-	++pbbik;
-	++pbbk;
+        ++pbbik;
+        ++pbbk;
       }
       *(pbbi->get_v() + j) = sum;
-      dum=vv[i]*fabs(sum);
+      dum = *pvvi * fabs(sum);
       if (dum >= big)
       {
         big = dum;
         imax = i;
       }
       ++pbbi;
+      ++pvvi;
     }
     if (j != imax)
     {
+      double* pbbjk = pbbj->get_v() + lb;
+      double* pbbimaxk = bb(imax).get_v() + lb;
       for (int k=lb;k<=ub;k++)
       {
-        dum=bb(imax,k);
-        bb(imax,k)=bb(j,k);
-        bb(j,k)=dum;
+        dum = *pbbimaxk;
+        *pbbimaxk = *pbbjk;
+        *pbbjk = dum;
+
+        ++pbbjk;
+        ++pbbimaxk;
       }
       d = -1.*d;
-      vv[imax]=vv[j];
+      vv[imax] = *pvvj;
 
       //if (j<ub)
       {
@@ -182,20 +191,26 @@ dvector solve(const dmatrix& aa,const dvector& z,
       }
       //cout << "indx= " <<indx<<endl;
     }
-
-    if (bb(j,j) == 0.0)
+  
+    double* pbbjj = pbbj->get_v() + j;
+    if (*pbbjj == 0.0)
     {
-      bb(j,j)=TINY;
+      *pbbjj = TINY;
     }
 
     if (j != n)
     {
-      dum=1.0/bb(j,j);
+      dum = 1.0 / *pbbjj;
+      pbbi = &bb(j + 1);
       for (int i=j+1;i<=ub;i++)
       {
-        bb(i,j) = bb(i,j) * dum;
+        *(pbbi->get_v() + j) = *(pbbi->get_v() + j) * dum;
+
+        ++pbbi;
       }
     }
+    ++pbbj;
+    ++pvvj;
   }
 
   // get the determinant
@@ -203,10 +218,15 @@ dvector solve(const dmatrix& aa,const dvector& z,
   dvector part_prod(lb,ub);
   part_prod(lb)=log(fabs(bb(lb,lb)));
   if (bb(lb,lb)<0) sign=-sign;
+
+  pbbj = &bb(lb + 1);
   for (int j=lb+1;j<=ub;j++)
   {
-    if (bb(j,j)<0) sign=-sign;
-    part_prod(j)=part_prod(j-1)+log(fabs(bb(j,j)));
+    double* pbbjj = pbbj->get_v() + j;
+    if (*pbbjj < 0) sign=-sign;
+    part_prod(j)=part_prod(j-1)+log(fabs(*pbbjj));
+
+    ++pbbj;
   }
   ln_unsigned_det=part_prod(ub);
 

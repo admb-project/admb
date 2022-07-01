@@ -74,16 +74,21 @@ dvariable ln_det(const dvar_matrix& aa, int& sgn)
   dvector part_prod(lb,ub);
 
   ld=0.0;
+
+  dvector* pbbi = &bb(lb);
+  double* pvvi = vv.get_v() + lb;
   for (i=lb;i<=ub;i++)
   {
     big=0.0;
+    double* pbbij = pbbi->get_v() + lb;
     for (j=lb;j<=ub;j++)
     {
-      temp=fabs(bb.elem(i,j));
+      temp=fabs(*pbbij);
       if (temp > big)
       {
         big=temp;
       }
+      ++pbbij;
     }
     if (big == 0.0)
     {
@@ -92,49 +97,77 @@ dvariable ln_det(const dvar_matrix& aa, int& sgn)
       big=1.e+10;
       errflag=1;
     }
-    vv[i]=1.0/big;
+    *pvvi = 1.0 / big;
+
+    ++pbbi;
+    ++pvvi;
   }
 
+  dvector* pbbj = &bb(lb);
+  double* pvvj = vv.get_v() + lb;
   for (j=lb;j<=ub;j++)
   {
+    pbbi = &bb(lb);
     for (i=lb;i<j;i++)
     {
-      sum=bb.elem(i,j);
+      sum = *(pbbi->get_v() + j);
+
+      double* pbbik = pbbi->get_v() + lb;
+      dvector* pbbk = &bb(lb);
       for (k=lb;k<i;k++)
       {
-        sum = sum - bb.elem(i,k)*bb.elem(k,j);
+        sum = sum - *pbbik * *(pbbk->get_v() + j);
+
+        ++pbbik;
+        ++pbbk;
       }
       //a[i][j]=sum;
-      bb(i,j)=sum;
+      *(pbbi->get_v() + j) = sum;
+
+      ++pbbi;
     }
     int imax = j;
     big=0.0;
+    pbbi = &bb(j);
+    pvvi = vv.get_v() + j;
     for (i=j;i<=ub;i++)
     {
-      sum=bb.elem(i,j);
+      sum = *(pbbi->get_v() + j);
+
+      double* pbbik = pbbi->get_v() + lb;
+      dvector* pbbk = &bb(lb);
       for (k=lb;k<j;k++)
       {
-        sum = sum - bb(i,k)*bb(k,j);
+        sum = sum - *pbbik * *(pbbk->get_v() + j);
+        ++pbbik;
+        ++pbbk;
       }
-      bb(i,j)=sum;
-      dum=vv.elem(i)*fabs(sum);
+      *(pbbi->get_v() + j) = sum;
+      dum = *pvvi * fabs(sum);
       if ( dum >= big)
       {
         big=dum;
         imax=i;
       }
+      ++pbbi;
+      ++pvvi;
     }
     if (j != imax)
     {
+      double* pbbimaxk = bb(imax).get_v() + lb;
+      double* pbbjk = pbbj->get_v() + lb;
       for (k=lb;k<=ub;k++)
       {
-        dum=bb.elem(imax,k);
-        bb.elem(imax,k)=bb.elem(j,k);
-        bb.elem(j,k)=dum;
+        dum = *pbbimaxk;
+        *pbbimaxk = *pbbjk;
+        *pbbjk = dum;
+
+        ++pbbimaxk;
+        ++pbbjk;
       }
       //d = -1.*d;
       sgn=-1*sgn;
-      vv.elem(imax)=vv.elem(j);
+      vv.elem(imax) = *pvvj;
 
       //if (j<ub)
       {
@@ -145,36 +178,47 @@ dvariable ln_det(const dvar_matrix& aa, int& sgn)
       //cout << "indx= " <<indx<<endl;
     }
 
-    if (bb.elem(j,j) == 0.0)
+    double* pbbjj = pbbj->get_v() + j;
+    if (*pbbjj == 0.0)
     {
-      bb(j,j)=TINY;
+      *pbbjj = TINY;
     }
 
     if (j != n)
     {
-      dum=1.0/bb(j,j);
+      dum = 1.0 / *pbbjj;
+
+      dvector* pbbi = &bb(j + 1);
       for (i=j+1;i<=ub;i++)
       {
-        bb.elem(i,j) *= dum;
+        *(pbbi->get_v() + j) *= dum;
+        ++pbbi;
       }
     }
+    ++pvvj;
+    ++pbbj;
   }
-  if (bb(1,1)>0)
-    part_prod(1)=ld+log(bb(1,1));
+  double bb11 = bb(1, 1);
+  if (bb11 > 0)
+    part_prod(1)=ld+log(bb11);
   else
   {
-    part_prod(1)=ld+log(-bb(1,1));
+    part_prod(1)=ld+log(-bb11);
     sgn=-sgn;
   }
+  pbbj = &bb(lb + 1);
   for (j=lb+1;j<=ub;j++)
   {
-    if (bb(j,j)>0)
-      part_prod(j)=part_prod(j-1)+log(bb(j,j));
+    double* pbbjj = pbbj->get_v() + j;
+    if (*pbbjj > 0)
+      part_prod(j)=part_prod(j-1)+log(*pbbjj);
     else
     {
-      part_prod(j)=part_prod(j-1)+log(-bb(j,j));
+      part_prod(j)=part_prod(j-1)+log(-(*pbbjj));
       sgn=-sgn;
     }
+
+    ++pbbj;
   }
   double ldet=part_prod(ub);
   dvariable rdet=nograd_assign(ldet);
@@ -202,8 +246,7 @@ dvariable ln_det(const dvar_matrix& aa, int& sgn)
 /// Adjoint code for dvariable ln_det(const dvar_matrix& aa, int& sgn).
 void df_xldet(void)
 {
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+  DF_FILE* fp = gradient_structure::get_fp();
 
   verify_identifier_string("PLACE0");
   /*double ld=*/fp->restore_double_value();
@@ -231,46 +274,59 @@ void df_xldet(void)
     dfpart_prod.initialize();
   #endif
 
-
   dfpart_prod(ub)=dfdet;
-  int j;
-  for (j=ub;j>=lb+1;j--)
+
+  double* pdfpart_prodj = dfpart_prod.get_v() + ub;
+  double* pdfpart_prodj_1 = dfpart_prod.get_v() + ub - 1;
+  dvector* pbj = &b(ub);
+  dvector* pdfbj = &dfb(ub);
+  for (int j=ub;j>=lb+1;j--)
   {
-    if (b(j,j)>0)
+    double bjj = *(pbj->get_v() + j);
+    double* pdfbjj = pdfbj->get_v() + j;
+    if (bjj > 0)
     {
       // part_prod(j)=part_prod(j-1)+log(b(j,j));
-      dfpart_prod(j-1)+=dfpart_prod(j);
-      dfb(j,j)+=dfpart_prod(j)/b(j,j);
+      *pdfpart_prodj_1 += *pdfpart_prodj;
+      *pdfbjj += *pdfpart_prodj / bjj;
     }
     else
     {
       // part_prod(j)=part_prod(j-1)+log(-b(j,j));
-      dfpart_prod(j-1)+=dfpart_prod(j);
-      dfb(j,j)+=dfpart_prod(j)/b(j,j);
+      *pdfpart_prodj_1 += *pdfpart_prodj;
+      *pdfbjj += *pdfpart_prodj / bjj;
     }
-    dfpart_prod(j)=0.;
+    *pdfpart_prodj = 0.0;
+
+    --pdfpart_prodj;
+    --pdfpart_prodj_1;
+    --pbj;
+    --pdfbj;
   }
   //part_prod(1)=ld+log(b(lb,lb));
   dfb(lb,lb)+=dfpart_prod(lb)/b(lb,lb);
-  dfpart_prod(lb)=0.;
+  dfpart_prod(lb) = 0.0;
 
-  double dfsum=0.;
-  for (j=ub;j>=lb;j--)
+  double dfsum = 0.0;
+  for (int j=ub;j>=lb;j--)
   {
+    dvector* pdfbi = &dfb(ub);
     for (int i=ub;i>=lb;i--)
     {
+      double* pdfbij = pdfbi->get_v() + j;
       if (i<=j)
       {
         // b(i,j)=sum;
-        dfsum+=dfb(i,j);
-        dfb(i,j)=0.;
+        dfsum += *pdfbij;
+        *pdfbij = 0.0;
       }
       else
       {
+        double bjj = b(j, j);
         // b(i,j)=sum/b(j,j);
-        dfsum+=dfb(i,j)/b(j,j);
-        dfb(j,j)-=dfb(i,j)*b(i,j)/b(j,j);
-        dfb(i,j)=0.;
+        dfsum += *pdfbij / bjj;
+        dfb(j,j) -= *pdfbij * b(i,j) / bjj;
+        *pdfbij = 0.0;
       }
 
       for (int k=min(i-1,j-1);k>=lb;k--)
@@ -281,7 +337,9 @@ void df_xldet(void)
       }
       // sum=value(a(indx(i),j);
       save_dmatrix_derivatives(a_pos,dfsum,indx(i),j); // like this
-      dfsum=0.;
+      dfsum = 0.0;
+
+      --pdfbi;
     }
   }
 }

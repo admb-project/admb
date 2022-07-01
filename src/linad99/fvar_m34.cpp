@@ -94,7 +94,7 @@ void dmcv_prod(void)
   int mmax = dfm.rowmax();
   int jmin = x.indexmin();
   int jmax = x.indexmax();
-  double* pdftmpi = dftmp.get_v() + mmax; 
+  double* pdftmpi = dftmp.get_v() + mmax;
   dvector* pdfmi = &dfm(mmax);
   for (int i=mmax; i>=mmin; i--)
   {

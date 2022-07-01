@@ -107,13 +107,18 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
   for (int ii=1;ii<=2;ii++)
   {
     // get the initial u into the uu's
+    dvector* puui = &uu(1);
     for (int i=1;i<=num_separable_calls;i++)
     {
       int m=(*derindex)(i).indexmax();
+      double* puuij = puui->get_v() + 1;
       for (int j=1;j<=m;j++)
       {
-        uu(i,j)=u((*derindex)(i)(j));
+        *puuij = u((*derindex)(i)(j));
+
+        ++puuij;
       }
+      ++puui;
     }
 
 #ifdef DIAG
@@ -197,13 +202,19 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
         vf+=pen;
 
         gradcalc(usize,g);
+        dvector* pggi = &gg(1);
         for (int i=1;i<=num_separable_calls;i++)
         {
           int m=(*derindex)(i).indexmax();
+          double* pggij = pggi->get_v() + 1;
           for (int j=1;j<=m;j++)
           {
-            gg(i,j)=g((*derindex)(i)(j));
+            *pggij = g((*derindex)(i)(j));
+
+            ++pggij;
           }
+
+          ++pggi;
         }
         {
           ofstream ofs("l:/temp1.dat");

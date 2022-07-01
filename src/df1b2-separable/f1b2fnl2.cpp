@@ -161,16 +161,20 @@ void laplace_approximation_calculator::
   ivector lre_index(1, (int)funnel_init_var::num_active_parameters);
   ivector lfe_index(1, (int)funnel_init_var::num_active_parameters);
 
+  ivector* plisti = &list(1);
   for (int i=1;i<=(int)funnel_init_var::num_active_parameters;i++)
   {
-    if (list(i,1)>xsize)
+    double listi1 = *(plisti->get_v() + 1);
+    if (listi1 > xsize)
     {
       lre_index(++num_local_re)=i;
     }
-    else if (list(i,1)>0)
+    else if (listi1 > 0)
     {
       lfe_index(++num_fixed_effects)=i;
     }
+
+    ++plisti;
   }
 
   if (num_local_re > 0)
@@ -188,19 +192,25 @@ void laplace_approximation_calculator::
     //dmatrix Hess1(1,funnel_init_var::num_vars,1,funnel_init_var::num_vars);
     local_Hess.initialize();
 
+    dvector* plocal_Hessi = &local_Hess(1);
     for (int i=1;i<=num_local_re;i++)
     {
       int lrei=lre_index(i);
+      double* plocal_Hessij = plocal_Hessi->get_v() + 1;
       for (int j=1;j<=num_local_re;j++)
       {
         int lrej=lre_index(j);
         int i2=list(lrei,2);
         int j2=list(lrej,2);
         //Hess(i1-xsize,j1-xsize)+=locy(i2).u_bar[j2-1];
-        local_Hess(i,j)+=locy(i2).u_bar[j2-1];
+        *plocal_Hessij += locy(i2).u_bar[j2-1];
+
+        ++plocal_Hessij;
       }
+      ++plocal_Hessi;
     }
      // i<=funnel_init_var::num_vars;i++)
+    double* plocal_gradi = local_grad.get_v() + 1;
     for (int i=1;i<=num_local_re;i++)
     {
       int lrei=lre_index(i);
@@ -208,36 +218,51 @@ void laplace_approximation_calculator::
       int i2=list(lrei,2);
       //grad(i1-xsize)= re_objective_function_value::pobjfun->u_dot[i2-1];
       //grad(i1-xsize)= ff.u_dot[i2-1];
-      local_grad(i)= ff.u_dot[i2-1];
+      *plocal_gradi = ff.u_dot[i2-1];
+
+      ++plocal_gradi;
     }
 
     have_bounded_random_effects=0;
     if (have_bounded_random_effects)
     {
+      plocal_Hessi = &local_Hess(1);
       for (int i=1;i<=num_local_re;i++)
       {
         int lrei=lre_index(i);
         int i1=list(lrei,1);
+        double* plocal_Hessij = plocal_Hessi->get_v() + 1;
         for (int j=1;j<=num_local_re;j++)
         {
           int lrej=lre_index(j);
           int j1=list(lrej,1);
-          local_Hess(i,j)*=scale(i1-xsize)*scale(j1-xsize);
+          *plocal_Hessij *= scale(i1-xsize)*scale(j1-xsize);
+
+          ++plocal_Hessij;
         }
+        ++plocal_Hessi;
       }
 
+      plocal_Hessi = &local_Hess(1);
+      plocal_gradi = local_grad.get_v() + 1;
       for (int i=1;i<=num_local_re;i++)
       {
         int lrei=lre_index(i);
         int i1=list(lrei,1);
-        local_Hess(i,i)+=local_grad(i)*curv(i1-xsize);
+        *(plocal_Hessi->get_v() + i) += *plocal_gradi * curv(i1-xsize);
+
+        ++plocal_gradi;
+       ++plocal_Hessi;
       }
 
+      plocal_gradi = local_grad.get_v() + 1;
       for (int i=1;i<=num_local_re;i++)
       {
         int lrei=lre_index(i);
         int i1=list(lrei,1);
-        local_grad(i)*=scale(i1-xsize);
+        *plocal_gradi *= scale(i1-xsize);
+
+        ++plocal_gradi;
       }
     }
 
@@ -245,12 +270,15 @@ void laplace_approximation_calculator::
     if (max_separable_g< mg) max_separable_g=mg;
     dvector local_step=-solve(local_Hess,local_grad);
 
+    double* plocal_stepi = local_step.get_v() + 1;
     for (int i=1;i<=num_local_re;i++)
     {
       int lrei=lre_index(i);
       int i1=list(lrei,1);
       //int i2=list(lrei,2);
-      step(i1-xsize)=local_step(i);
+      step(i1-xsize) = *plocal_stepi;
+
+      ++plocal_stepi;
     }
   }
 

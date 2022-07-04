@@ -206,19 +206,16 @@ dvariable ln_det(const dvar_matrix& aa, int& sgn)
     part_prod(1)=ld+log(-bb11);
     sgn=-sgn;
   }
-  pbbj = &bb(lb + 1);
   for (j=lb+1;j<=ub;j++)
   {
-    double* pbbjj = pbbj->get_v() + j;
-    if (*pbbjj > 0)
-      part_prod(j)=part_prod(j-1)+log(*pbbjj);
+    double bbjj = bb(j, j);
+    if (bbjj > 0)
+      part_prod(j)=part_prod(j-1)+log(bbjj);
     else
     {
-      part_prod(j)=part_prod(j-1)+log(-(*pbbjj));
+      part_prod(j)=part_prod(j-1)+log(-(bbjj));
       sgn=-sgn;
     }
-
-    ++pbbj;
   }
   double ldet=part_prod(ub);
   dvariable rdet=nograd_assign(ldet);

@@ -160,11 +160,9 @@ void laplace_approximation_calculator::
 #endif
   ivector lre_index(1, (int)funnel_init_var::num_active_parameters);
   ivector lfe_index(1, (int)funnel_init_var::num_active_parameters);
-
-  ivector* plisti = &list(1);
   for (int i=1;i<=(int)funnel_init_var::num_active_parameters;i++)
   {
-    double listi1 = *(plisti->get_v() + 1);
+    double listi1 = list(i, 1);
     if (listi1 > xsize)
     {
       lre_index(++num_local_re)=i;
@@ -173,8 +171,6 @@ void laplace_approximation_calculator::
     {
       lfe_index(++num_fixed_effects)=i;
     }
-
-    ++plisti;
   }
 
   if (num_local_re > 0)

@@ -191,7 +191,7 @@ dvector solve(const dmatrix& aa,const dvector& z,
       }
       //cout << "indx= " <<indx<<endl;
     }
-  
+
     double* pbbjj = pbbj->get_v() + j;
     if (*pbbjj == 0.0)
     {
@@ -219,14 +219,11 @@ dvector solve(const dmatrix& aa,const dvector& z,
   part_prod(lb)=log(fabs(bb(lb,lb)));
   if (bb(lb,lb)<0) sign=-sign;
 
-  pbbj = &bb(lb + 1);
   for (int j=lb+1;j<=ub;j++)
   {
-    double* pbbjj = pbbj->get_v() + j;
-    if (*pbbjj < 0) sign=-sign;
-    part_prod(j)=part_prod(j-1)+log(fabs(*pbbjj));
-
-    ++pbbj;
+    double bbjj = bb(j, j);
+    if (bbjj < 0) sign=-sign;
+    part_prod(j)=part_prod(j-1)+log(fabs(bbjj));
   }
   ln_unsigned_det=part_prod(ub);
 
@@ -234,7 +231,7 @@ dvector solve(const dmatrix& aa,const dvector& z,
   dvector y(lb,ub);
   //int lb=rowmin;
   //int ub=rowmax;
-  dmatrix& b=bb;
+  //dmatrix& b=bb;
   ivector indxinv(lb,ub);
 
   int* pindxi = indx.get_v() + lb;
@@ -251,45 +248,45 @@ dvector solve(const dmatrix& aa,const dvector& z,
     ++pindxinvi;
   }
 
-  dvector* pbi = &b(lb);
+  pbbi = &bb(lb);
   double* pyi = &y(lb);
   for (int i=lb;i<=ub;i++)
   {
     sum = *pyi;
 
-    double* pbij = pbi->get_v() + lb;
+    double* pbbij = pbbi->get_v() + lb;
     double* pyj = &y(lb);
     for (int j=lb;j<=i-1;j++)
     {
-      sum -= *pbij * *pyj;
+      sum -= *pbbij * *pyj;
 
       ++pyj;
-      ++pbij;
+      ++pbbij;
     }
     *pyi = sum;
 
     ++pyi;
-    ++pbi;
+    ++pbbi;
   }
-  pbi = &b(ub);
+  pbbi = &bb(ub);
   pyi = &y(ub);
   double* pxi = x.get_v() + ub;
   for (int i=ub;i>=lb;i--)
   {
     sum = *pyi;
 
-    double* pbij = pbi->get_v() + i + 1;
+    double* pbbij = pbbi->get_v() + i + 1;
     double* pxj = x.get_v() + i + 1;
     for (int j=i+1;j<=ub;j++)
     {
-      sum -= *pbij * *pxj;
+      sum -= *pbbij * *pxj;
 
-      ++pbij;
+      ++pbbij;
       ++pxj;
     }
-    *pxi = sum / *(pbi->get_v() + i);
+    *pxi = sum / *(pbbi->get_v() + i);
 
-    --pbi;
+    --pbbi;
     --pyi;
     --pxi;
   }

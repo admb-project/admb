@@ -11,7 +11,7 @@
 #include <admodel.h>
 #include <df1b2fun.h>
 #include <adrndeff.h>
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
 #endif
 
@@ -38,7 +38,7 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
     delete separable_function_difference;
     separable_function_difference=0;
   }
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(num_separable_calls > 0);
 #endif
 
@@ -216,10 +216,12 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
 
           ++pggi;
         }
+	/*
         {
           ofstream ofs("l:/temp1.dat");
           ofs << g.indexmax() << " " << setprecision(15) << g << endl;
         }
+	*/
         if (saddlepointflag==2)
         {
           ff[1]=-(*separable_function_difference)(1);

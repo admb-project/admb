@@ -22,12 +22,8 @@
   #include <iostream.hpp>
 #endif
 
-
 #include <stdio.h>
 #include <math.h>
-
-  void df_eq_pvdoub(void);
-  void df_eq_pvpv(void);
 
 #if defined(__BORLANDC__)
 #  if (__BORLANDC__  >= 0x0540)
@@ -63,12 +59,13 @@ prevariable& prevariable::operator=(const prevariable& t) const
   \return prevariable reference
  */
 prevariable& prevariable::operator=(const prevariable& t)
-    {
-      (*v).x=(*t.v).x;
-      gradient_structure::get()->GRAD_STACK1->
-        set_gradient_stack1(default_evaluation1,&(v->x),&(t.v->x));
-      return(*this);
-    }
+{
+  (*v).x = (*t.v).x;
+  gradient_structure::get()->GRAD_STACK1->
+    set_gradient_stack1(default_evaluation1,&(v->x),&(t.v->x));
+
+  return *this;
+}
 
 /**
   Assigns a value to a dvariable object.
@@ -76,19 +73,9 @@ prevariable& prevariable::operator=(const prevariable& t)
   \return dvariable reference
  */
 dvariable& dvariable::operator=(const prevariable& t)
-    {
-      (*v).x=(*t.v).x;
-      gradient_structure::get()->GRAD_STACK1->
-        set_gradient_stack1(default_evaluation1,&(v->x),&(t.v->x));
-      return(*this);
-    }
-dvariable& dvariable::operator=(const dvariable& t)
-    {
-      (*v).x=(*t.v).x;
-      gradient_structure::get()->GRAD_STACK1->
-        set_gradient_stack1(default_evaluation1,&(v->x),&(t.v->x));
-      return(*this);
-    }
+{
+  return static_cast<dvariable&>(prevariable::operator=(t));
+}
 
 /**
   Assigns a value to a dvariable object.
@@ -96,12 +83,9 @@ dvariable& dvariable::operator=(const dvariable& t)
   \return prevariable reference
  */
 dvariable& dvariable::operator=(const double t)
-    {
-      (*v).x=t;
-      gradient_structure::get()->GRAD_STACK1->
-        set_gradient_stack0(df_eq_pvdoub,&(v->x));
-      return(*this);
-    }
+{
+  return static_cast<dvariable&>(prevariable::operator=(t));
+}
 
 /**
   Assigns a value to a prevariable object.
@@ -109,18 +93,9 @@ dvariable& dvariable::operator=(const double t)
   \return prevariable reference
  */
 prevariable& prevariable::operator=(const double t)
-    {
-      (*v).x=t;
-      gradient_structure::get()->GRAD_STACK1->
-        set_gradient_stack0(df_eq_pvdoub,&(v->x));
-      return(*this);
-    }
-
-/**
-  ?
- */
-  void df_eq_pvdoub(void)
-  {
-    * gradient_structure::get()->GRAD_STACK1->ptr->dep_addr=0.;
-  }
-
+{
+  (*v).x = t;
+  gradient_structure::get()->GRAD_STACK1->
+    set_gradient_stack0(default_evaluation0, &(v->x));
+  return *this;
+}

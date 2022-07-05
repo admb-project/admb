@@ -318,12 +318,13 @@ void check_derivative_values(const char * _s)
  */
 void check_derivative_values(const char * _s,int i)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
   char * s = (char *) _s;
   //char label[20];
   save_identifier_string(s);
-  save_int_value(i);
-  gradient_structure::get()->GRAD_STACK1->
-    set_gradient_stack(df_check_derivative_values_indexed);
+  fp->save_int_value(i);
+  gs->GRAD_STACK1->set_gradient_stack(df_check_derivative_values_indexed);
 }
 
 void df_print_identifier_string(void);
@@ -346,13 +347,14 @@ void insert_identifier_string(const char * _s)
  */
 void check_derivative_values_break(const char * _s,int i,int b)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
   char * s = (char *) _s;
   //char label[20];
   save_identifier_string(s);
-  save_int_value(i);
-  save_int_value(b);
-  gradient_structure::get()->GRAD_STACK1->
-    set_gradient_stack(df_check_derivative_values_indexed_break);
+  fp->save_int_value(i);
+  fp->save_int_value(b);
+  gs->GRAD_STACK1->set_gradient_stack(df_check_derivative_values_indexed_break);
 }
 
 /**
@@ -425,8 +427,11 @@ void df_print_identifier_string(void)
  */
 void df_check_derivative_values_indexed(void)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   //char label[20];
-  int index=restore_int_value();
+  int index=fp->restore_int_value();
   adstring str=get_string_marker();
   double* temp_ptr = (double*)(gradient_structure::get()->ARR_LIST1->ARRAY_MEMBLOCK_BASE);
   unsigned long int max_last_offset =
@@ -474,9 +479,12 @@ void df_check_derivative_values_indexed(void)
  */
 void df_check_derivative_values_indexed_break(void)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   //char label[20];
-  int b=restore_int_value();
-  int index=restore_int_value();
+  int b=fp->restore_int_value();
+  int index=fp->restore_int_value();
   adstring str=get_string_marker();
   double* temp_ptr = (double*)(gradient_structure::get()->ARR_LIST1->ARRAY_MEMBLOCK_BASE);
   unsigned long int max_last_offset =

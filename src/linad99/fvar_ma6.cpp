@@ -54,12 +54,12 @@ dvar_matrix empirical_covariance(const dvar_matrix& _v1,
   DF_FILE* fp = gs->fp;
 
   save_identifier_string("ru");
-  missflags.save_imatrix_value();
-  missflags.save_imatrix_position();
-  save_int_value(nobs);
-  tmp.save_dvar_matrix_position();
-  v1.save_dvar_matrix_value(fp);
-  v1.save_dvar_matrix_position();
+  fp->save_imatrix_value(missflags);
+  fp->save_imatrix_position(missflags);
+  fp->save_int_value(nobs);
+  fp->save_dvar_matrix_position(tmp);
+  fp->save_dvar_matrix_value(v1);
+  fp->save_dvar_matrix_position(v1);
   save_identifier_string("rv");
   gs->GRAD_STACK1->set_gradient_stack(dfempirical_covarv_partial);
    return(tmp);
@@ -71,14 +71,17 @@ dvar_matrix empirical_covariance(const dvar_matrix& _v1,
  */
 void dfempirical_covarv_partial(void)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   verify_identifier_string("rv");
-  dvar_matrix_position v1pos=restore_dvar_matrix_position();
-  dmatrix v1=restore_dvar_matrix_value(v1pos);
-  dvar_matrix_position tmppos=restore_dvar_matrix_position();
+  dvar_matrix_position v1pos=fp->restore_dvar_matrix_position();
+  dmatrix v1=fp->restore_dvar_matrix_value(v1pos);
+  dvar_matrix_position tmppos=fp->restore_dvar_matrix_position();
   dmatrix dftmp=restore_dvar_matrix_derivatives(tmppos);
-  int nobs=restore_int_value();
-  imatrix_position mfpos=restore_imatrix_position();
-  imatrix missflags=restore_imatrix_value(mfpos);
+  int nobs=fp->restore_int_value();
+  imatrix_position mfpos=fp->restore_imatrix_position();
+  imatrix missflags=fp->restore_imatrix_value(mfpos);
   verify_identifier_string("ru");
   int mmin=v1(v1.indexmin()).indexmin();
   int mmax=v1(v1.indexmin()).indexmax();
@@ -153,9 +156,9 @@ dvar_matrix empirical_covariance(const dvar_matrix& v1)
   DF_FILE* fp = gs->fp;
 
   save_identifier_string("ru");
-  tmp.save_dvar_matrix_position();
-  v1.save_dvar_matrix_value(fp);
-  v1.save_dvar_matrix_position();
+  fp->save_dvar_matrix_position(tmp);
+  fp->save_dvar_matrix_value(v1);
+  fp->save_dvar_matrix_position(v1);
   save_identifier_string("rv");
   gs->GRAD_STACK1->set_gradient_stack(dfempirical_covarv);
    return(tmp);
@@ -167,10 +170,13 @@ dvar_matrix empirical_covariance(const dvar_matrix& v1)
  */
 void dfempirical_covarv(void)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   verify_identifier_string("rv");
-  dvar_matrix_position v1pos=restore_dvar_matrix_position();
-  dmatrix v1=restore_dvar_matrix_value(v1pos);
-  dvar_matrix_position tmppos=restore_dvar_matrix_position();
+  dvar_matrix_position v1pos=fp->restore_dvar_matrix_position();
+  dmatrix v1=fp->restore_dvar_matrix_value(v1pos);
+  dvar_matrix_position tmppos=fp->restore_dvar_matrix_position();
   dmatrix dftmp=restore_dvar_matrix_derivatives(tmppos);
   verify_identifier_string("ru");
   int mmin=v1(v1.indexmin()).indexmin();
@@ -225,11 +231,11 @@ dvar_matrix outer_prod(const dvar_vector& v1, const dvar_vector& v2)
   DF_FILE* fp = gs->fp;
 
   save_identifier_string("tu");
-  tmp.save_dvar_matrix_position();
-  v1.save_dvar_vector_value(fp);
-  v1.save_dvar_vector_position(fp);
-  v2.save_dvar_vector_value(fp);
-  v2.save_dvar_vector_position(fp);
+  fp->save_dvar_matrix_position(tmp);
+  fp->save_dvar_vector_value(v1);
+  fp->save_dvar_vector_position(v1);
+  fp->save_dvar_vector_value(v2);
+  fp->save_dvar_vector_position(v2);
   save_identifier_string("tv");
   gs->GRAD_STACK1->set_gradient_stack(dfouter_prodvv);
    return(tmp);
@@ -241,12 +247,15 @@ dvar_matrix outer_prod(const dvar_vector& v1, const dvar_vector& v2)
  */
 void dfouter_prodvv(void)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   verify_identifier_string("tv");
-  dvar_vector_position v2pos=restore_dvar_vector_position();
+  dvar_vector_position v2pos=fp->restore_dvar_vector_position();
   dvector v2=restore_dvar_vector_value(v2pos);
-  dvar_vector_position v1pos=restore_dvar_vector_position();
+  dvar_vector_position v1pos=fp->restore_dvar_vector_position();
   dvector v1=restore_dvar_vector_value(v1pos);
-  dvar_matrix_position tmppos=restore_dvar_matrix_position();
+  dvar_matrix_position tmppos=fp->restore_dvar_matrix_position();
   dmatrix dftmp=restore_dvar_matrix_derivatives(tmppos);
   verify_identifier_string("tu");
   dvector dfv1(v1pos.indexmin(),v1pos.indexmax());

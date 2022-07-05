@@ -59,7 +59,7 @@ public:
   ivector_position operator()(int i);
 };
 
-imatrix_position restore_imatrix_position(void);
+imatrix_position restore_imatrix_position();
 imatrix restore_imatrix_value(const imatrix_position &);
 
 /**
@@ -103,8 +103,8 @@ public:
    ~imatrix();
    void shallow_copy(const imatrix &);
 
-   void save_imatrix_value(void);
-   void save_imatrix_position(void);
+   void save_imatrix_value();
+   void save_imatrix_position();
    imatrix restore_imatrix_value(const imatrix_position & mpos);
    imatrix_position restore_imatrix_position(void);
 

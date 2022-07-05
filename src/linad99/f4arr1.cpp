@@ -18,9 +18,15 @@ dvar4_array sqrt(const dvar4_array& m)
 {
   dvar4_array tmp;
   tmp.allocate(m);
-  for (int i=tmp.hslicemin();i<=tmp.hslicemax();i++)
+  int min = m.slicemin();
+  int max = m.slicemax();
+  dvar3_array* ptmpi = &tmp(min);
+  const dvar3_array* pmi = &m(min);
+  for (int i = min; i <= max; ++i)
   {
-    tmp(i)=sqrt(m(i));
+    *ptmpi = sqrt(*pmi);
+    ++ptmpi;
+    ++pmi;
   }
   return tmp;
 }
@@ -33,9 +39,15 @@ dvar4_array exp(const dvar4_array& m)
 {
   dvar4_array tmp;
   tmp.allocate(m);
-  for (int i=tmp.hslicemin();i<=tmp.hslicemax();i++)
+  int min = m.slicemin();
+  int max = m.slicemax();
+  dvar3_array* ptmpi = &tmp(min);
+  const dvar3_array* pmi = &m(min);
+  for (int i = min; i <= max; ++i)
   {
-    tmp(i)=exp(m(i));
+    *ptmpi = exp(*pmi);
+    ++ptmpi;
+    ++pmi;
   }
   return tmp;
 }
@@ -48,9 +60,15 @@ dvar4_array mfexp(const dvar4_array& m)
 {
   dvar4_array tmp;
   tmp.allocate(m);
-  for (int i=tmp.hslicemin();i<=tmp.hslicemax();i++)
+  int min = m.slicemin();
+  int max = m.slicemax();
+  dvar3_array* ptmpi = &tmp(min);
+  const dvar3_array* pmi = &m(min);
+  for (int i = min; i <= max; ++i)
   {
-    tmp(i)=mfexp(m(i));
+    *ptmpi = mfexp(*pmi);
+    ++ptmpi;
+    ++pmi;
   }
   return tmp;
 }
@@ -63,9 +81,15 @@ dvar4_array log(const dvar4_array& m)
 {
   dvar4_array tmp;
   tmp.allocate(m);
-  for (int i=tmp.hslicemin();i<=tmp.hslicemax();i++)
+  int min = m.indexmin();
+  int max = m.indexmax();
+  dvar3_array* ptmpi = &tmp(min);
+  const dvar3_array* pmi = &m(min);
+  for (int i = min; i <= max; ++i)
   {
-    tmp(i)=log(m(i));
+    *ptmpi = log(*pmi);
+    ++ptmpi;
+    ++pmi;
   }
   return tmp;
 }
@@ -79,10 +103,14 @@ dvariable sum(const dvar4_array& m)
   gradient_structure* gs = gradient_structure::get();
   gs->RETURN_ARRAYS_INCREMENT();
 
-  dvariable tmp=0.;
-  for (int i=m.indexmin();i<=m.indexmax();i++)
+  int min = m.indexmin();
+  int max = m.indexmax();
+  dvariable tmp = 0.0;
+  const dvar3_array* pmi = &m(min);
+  for (int i = min; i <= max; ++i)
   {
-    tmp+=sum(m.elem(i));
+    tmp += sum(*pmi);
+    ++pmi;
   }
   gs->RETURN_ARRAYS_DECREMENT();
   return tmp;

@@ -28,10 +28,8 @@ Float tweedie_logW(double y, Float& phi, Float& p){
   Float a = - p2 / p1, a1 = 1.0 / p1;
   Float cc, w, sum_ww = 0.0;
   double ww_max = -INFINITY ;
-  double j;
 
   /* only need the lower bound and the # terms to be stored */
-  int jh, jl, jd;
   double jmax = 0;
   Float logz = 0;
 
@@ -43,14 +41,14 @@ Float tweedie_logW(double y, Float& phi, Float& p){
   /* find bounds in the summation */
   /* locate upper bound */
   cc = logz + a1 + a * log(-a);
-  j = jmax ;
+  double j = jmax ;
   w = a1 * j ;
   while (1) {
     j += TWEEDIE_INCRE ;
     if (j * (cc - a1 * log(j)) < (w - TWEEDIE_DROP))
       break ;
   }
-  jh = ceil(j);
+  int jh = static_cast<int>(ceil(j));
   /* locate lower bound */
   j = jmax;
   while (1) {
@@ -58,8 +56,8 @@ Float tweedie_logW(double y, Float& phi, Float& p){
     if (j < 1 || j * (cc - a1 * log(j)) < w - TWEEDIE_DROP)
       break ;
   }
-  jl = imax2(1, floor(j)) ;
-  jd = jh - jl + 1;
+  int jl = imax2(1, floor(j)) ;
+  int jd = jh - jl + 1;
 
   /* set limit for # terms in the sum */
   int nterms = imin2(jd, TWEEDIE_NTERM) ;

@@ -36,7 +36,7 @@ Returns a reference to the element at index __i__ in the array.
 */
 double& dvector::operator[](int i)
 {
-  assert((index_min <= i && i <= index_max) || is_valid_index(i));
+  assert((index_min <= i && i <= index_max));
 
   return *(v + i);
 }
@@ -47,7 +47,7 @@ Returns a reference to the element at index __i__ in the array.
 */
 double& dvector::operator()(int i)
 {
-  assert((index_min <= i && i <= index_max) || is_valid_index(i));
+  assert((index_min <= i && i <= index_max));
 
   return *(v + i);
 }
@@ -58,7 +58,7 @@ Returns a reference to the element at index __i__ in the array.
 */
 const double& dvector::operator[](int i) const
 {
-  assert((index_min <= i && i <= index_max) || is_valid_index(i));
+  assert((index_min <= i && i <= index_max));
 
   return *(v + i);
 }
@@ -69,7 +69,7 @@ Returns a reference to the element at index __i__ in the array.
 */
 const double& dvector::operator()(int i) const
 {
-  assert((index_min <= i && i <= index_max) || is_valid_index(i));
+  assert((index_min <= i && i <= index_max));
 
   return *(v + i);
 }

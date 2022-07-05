@@ -24,9 +24,9 @@ dvar_vector XXX(const dvar_vector& v1)
   DF_FILE* fp = gs->fp;
 
   save_identifier_string("ddd");
-  v1.save_dvar_vector_value();
-  v1.save_dvar_vector_position();
-  vtmp.save_dvar_vector_position();
+  fp->save_dvar_vector_value(v1);
+  fp->save_dvar_vector_position(v1);
+  fp->save_dvar_vector_position(vtmp);
   save_identifier_string("eee");
   gs->GRAD_STACK1->set_gradient_stack(DF_dvXXX);
   return vtmp;
@@ -34,11 +34,14 @@ dvar_vector XXX(const dvar_vector& v1)
 
 void DF_dvXXX(void)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("eee");
-  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();
   dvector dfvtmp=restore_dvar_vector_derivatives(tmp_pos);
-  dvar_vector_position v1pos=restore_dvar_vector_position();
+  dvar_vector_position v1pos=fp->restore_dvar_vector_position();
   dvector v1=restore_dvar_vector_value(v1pos);
   verify_identifier_string("ddd");
   dvector dfv1(dfvtmp.indexmin(),dfvtmp.indexmax());
@@ -73,9 +76,9 @@ dvar_vector sin(const dvar_vector& v1)
   gradient_structure* gs = gradient_structure::get();
   DF_FILE* fp = gs->fp;
   save_identifier_string("ddd");
-  v1.save_dvar_vector_value(fp);
-  v1.save_dvar_vector_position(fp);
-  vtmp.save_dvar_vector_position(fp);
+  fp->save_dvar_vector_value(v1);
+  fp->save_dvar_vector_position(v1);
+  fp->save_dvar_vector_position(vtmp);
   save_identifier_string("eee");
   gs->GRAD_STACK1->set_gradient_stack(DF_dvsin);
   return vtmp;
@@ -85,11 +88,14 @@ Adjoint function to compute gradients for sin(const dvar_vector&)
 */
 void DF_dvsin(void)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("eee");
-  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();
   dvector dfvtmp=restore_dvar_vector_derivatives(tmp_pos);
-  dvar_vector_position v1pos=restore_dvar_vector_position();
+  dvar_vector_position v1pos=fp->restore_dvar_vector_position();
   dvector v1=restore_dvar_vector_value(v1pos);
   verify_identifier_string("ddd");
   dvector dfv1(dfvtmp.indexmin(),dfvtmp.indexmax());
@@ -110,19 +116,25 @@ void DF_dvexp(void);
  */
 dvar_vector exp(const dvar_vector& v1)
 {
+  int min = v1.indexmin();
+  int max = v1.indexmax();
   //dvector cv1=value(v1);
-  dvar_vector vtmp(v1.indexmin(),v1.indexmax());
-  for (int i=v1.indexmin();i<=v1.indexmax();i++)
+  dvar_vector vtmp(min, max);
+  double_and_int* pvtmp = vtmp.va + min;
+  double_and_int* pv1 = v1.va + min;
+  for (int i = min; i <= max; ++i)
   {
-    vtmp.elem_value(i)=exp(v1.elem_value(i));
+    pvtmp->x = exp(pv1->x);
+    ++pvtmp;
+    ++pv1;
   }
 
   gradient_structure* gs = gradient_structure::get();
   DF_FILE* fp = gs->fp;
   save_identifier_string("ddd");
-  v1.save_dvar_vector_position(fp);
-  vtmp.save_dvar_vector_value(fp);
-  vtmp.save_dvar_vector_position(fp);
+  fp->save_dvar_vector_position(v1);
+  fp->save_dvar_vector_value(vtmp);
+  fp->save_dvar_vector_position(vtmp);
   save_identifier_string("hee");
   gs->GRAD_STACK1->set_gradient_stack(DF_dvexp);
   return vtmp;
@@ -134,18 +146,29 @@ dvar_vector exp(const dvar_vector& v1)
  */
 void DF_dvexp(void)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("hee");
-  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();
   dvector dfvtmp=restore_dvar_vector_derivatives(tmp_pos);
   dvector vtmp=restore_dvar_vector_value(tmp_pos);
-  dvar_vector_position v1pos=restore_dvar_vector_position();
+  dvar_vector_position v1pos=fp->restore_dvar_vector_position();
   verify_identifier_string("ddd");
-  dvector dfv1(dfvtmp.indexmin(),dfvtmp.indexmax());
-  for (int i=dfvtmp.indexmin();i<=dfvtmp.indexmax();i++)
+  int min = dfvtmp.indexmin();
+  int max = dfvtmp.indexmax();
+  dvector dfv1(min, max);
+  double* pdfv1 = dfv1.get_v() + min;
+  double* pvtmp = vtmp.get_v() + min;
+  double* pdfvtmp = dfvtmp.get_v() + min;
+  for (int i = min; i <= max; ++i)
   {
     //vtmp.elem(i)=sin(value(v1.elem(i))));
-    dfv1(i)=dfvtmp(i)*vtmp.elem(i);
+    *pdfv1 = *pdfvtmp * *pvtmp;
+    ++pdfv1;
+    ++pvtmp;
+    ++pdfvtmp;
   }
   dfv1.save_dvector_derivatives(v1pos);
   //ierr=fsetpos(gradient_structure::get_fp(),&filepos);
@@ -170,9 +193,9 @@ dvar_vector cos(const dvar_vector& v1)
   gradient_structure* gs = gradient_structure::get();
   DF_FILE* fp = gs->fp;
   save_identifier_string("ddd");
-  v1.save_dvar_vector_value(fp);
-  v1.save_dvar_vector_position(fp);
-  vtmp.save_dvar_vector_position(fp);
+  fp->save_dvar_vector_value(v1);
+  fp->save_dvar_vector_position(v1);
+  fp->save_dvar_vector_position(vtmp);
   save_identifier_string("cee");
   gs->GRAD_STACK1->set_gradient_stack(DF_dvcos);
   return vtmp;
@@ -184,11 +207,14 @@ dvar_vector cos(const dvar_vector& v1)
  */
 void DF_dvcos(void)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("cee");
-  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();
   dvector dfvtmp=restore_dvar_vector_derivatives(tmp_pos);
-  dvar_vector_position v1pos=restore_dvar_vector_position();
+  dvar_vector_position v1pos=fp->restore_dvar_vector_position();
   dvector v1=restore_dvar_vector_value(v1pos);
   verify_identifier_string("ddd");
   dvector dfv1(dfvtmp.indexmin(),dfvtmp.indexmax());
@@ -210,24 +236,32 @@ void DF_dvlog(void);
 dvar_vector log(const dvar_vector& v1)
 {
   //dvector cv1=value(v1);
-  dvar_vector vtmp(v1.indexmin(),v1.indexmax());
-  for (int i=v1.indexmin();i<=v1.indexmax();i++)
+  int min = v1.indexmin();
+  int max = v1.indexmax();
+  dvar_vector vtmp(min, max);
+  double_and_int* pvtmp = vtmp.va + min;
+  double_and_int* pv1 = v1.va + min;
+  for (int i = min; i <= max; ++i)
   {
-    vtmp.elem_value(i)=log(v1.elem_value(i));
+    pvtmp->x = log(pv1->x);
+    ++pvtmp;
+    ++pv1;
   }
 
   gradient_structure* gs = gradient_structure::get();
   DF_FILE* fp = gs->fp;
   save_identifier_string("cdd");
-  v1.save_dvar_vector_value(fp);
-  v1.save_dvar_vector_position(fp);
-  vtmp.save_dvar_vector_position(fp);
+  fp->save_dvar_vector_value(v1);
+  fp->save_dvar_vector_position(v1);
+  fp->save_dvar_vector_position(vtmp);
   save_identifier_string("eee");
   gs->GRAD_STACK1->set_gradient_stack(DF_dvlog);
   return vtmp;
 }
 
+#ifdef DEBUG
 int ad_debug_arithmetic=1;
+#endif
 
 /**
  * Description not yet available.
@@ -235,25 +269,37 @@ int ad_debug_arithmetic=1;
  */
 void DF_dvlog(void)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("eee");
-  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();
   dvector dfvtmp=restore_dvar_vector_derivatives(tmp_pos);
-  dvar_vector_position v1pos=restore_dvar_vector_position();
+  dvar_vector_position v1pos=fp->restore_dvar_vector_position();
   dvector v1=restore_dvar_vector_value(v1pos);
   verify_identifier_string("cdd");
-  dvector dfv1(dfvtmp.indexmin(),dfvtmp.indexmax());
-  for (int i=dfvtmp.indexmin();i<=dfvtmp.indexmax();i++)
+
+  int min = dfvtmp.indexmin();
+  int max = dfvtmp.indexmax();
+  dvector dfv1(min, max);
+  double* pdfv1 = dfv1.get_v() + min;
+  double* pv1 = v1.get_v() + min;
+  double* pdfvtmp = dfvtmp.get_v() + min;
+  for (int i = min; i <= max; ++i)
   {
-#    ifndef OPT_LIB
+#ifdef DEBUG
      if (ad_debug_arithmetic==1)
       if (v1.elem(i)==0.0 || fabs(v1.elem(i))<1.e-150 ||
         dfvtmp(i) > 1.e+150)
       {
-        // cerr << "Possible overflow in DF_dvlog" << endl;
+        cerr << "Possible overflow in DF_dvlog" << endl;
       }
-#    endif
-    dfv1(i)=dfvtmp(i)/(v1.elem(i));
+#endif
+    *pdfv1 = *pdfvtmp / *pv1;
+    ++pdfv1;
+    ++pv1;
+    ++pdfvtmp;
   }
   dfv1.save_dvector_derivatives(v1pos);
   //ierr=fsetpos(gradient_structure::get_fp(),&filepos);
@@ -278,9 +324,9 @@ dvar_vector tan(const dvar_vector& v1)
   gradient_structure* gs = gradient_structure::get();
   DF_FILE* fp = gs->fp;
   save_identifier_string("ddd");
-  v1.save_dvar_vector_value(fp);
-  v1.save_dvar_vector_position(fp);
-  vtmp.save_dvar_vector_position(fp);
+  fp->save_dvar_vector_value(v1);
+  fp->save_dvar_vector_position(v1);
+  fp->save_dvar_vector_position(vtmp);
   save_identifier_string("xee");
   gs->GRAD_STACK1-> set_gradient_stack(DF_dvtan);
 
@@ -291,11 +337,14 @@ Adjoint function to compute gradients for tan(const dvar_vector&).
 */
 void DF_dvtan(void)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("xee");
-  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();
   dvector dfvtmp=restore_dvar_vector_derivatives(tmp_pos);
-  dvar_vector_position v1pos=restore_dvar_vector_position();
+  dvar_vector_position v1pos=fp->restore_dvar_vector_position();
   dvector v1=restore_dvar_vector_value(v1pos);
   verify_identifier_string("ddd");
   dvector dfv1(dfvtmp.indexmin(),dfvtmp.indexmax());
@@ -327,9 +376,9 @@ dvar_vector atan(const dvar_vector& v1)
   gradient_structure* gs = gradient_structure::get();
   DF_FILE* fp = gs->fp;
   save_identifier_string("udd");
-  v1.save_dvar_vector_value(fp);
-  v1.save_dvar_vector_position(fp);
-  vtmp.save_dvar_vector_position(fp);
+  fp->save_dvar_vector_value(v1);
+  fp->save_dvar_vector_position(v1);
+  fp->save_dvar_vector_position(vtmp);
   save_identifier_string("eee");
   gs->GRAD_STACK1->set_gradient_stack(DF_dvatan);
   return vtmp;
@@ -339,11 +388,14 @@ Adjoint function to compute gradients for tan(const dvar_vector&).
 */
 void DF_dvatan(void)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("eee");
-  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();
   dvector dfvtmp=restore_dvar_vector_derivatives(tmp_pos);
-  dvar_vector_position v1pos=restore_dvar_vector_position();
+  dvar_vector_position v1pos=fp->restore_dvar_vector_position();
   dvector v1=restore_dvar_vector_value(v1pos);
   verify_identifier_string("udd");
   dvector dfv1(dfvtmp.indexmin(),dfvtmp.indexmax());
@@ -375,9 +427,9 @@ dvar_vector sqrt(const dvar_vector& v1)
   gradient_structure* gs = gradient_structure::get();
   DF_FILE* fp = gs->fp;
   save_identifier_string("ddd");
-  v1.save_dvar_vector_value(fp);
-  v1.save_dvar_vector_position(fp);
-  vtmp.save_dvar_vector_position(fp);
+  fp->save_dvar_vector_value(v1);
+  fp->save_dvar_vector_position(v1);
+  fp->save_dvar_vector_position(vtmp);
   save_identifier_string("eve");
   gs->GRAD_STACK1->set_gradient_stack(DF_dvsqrt);
   return vtmp;
@@ -400,9 +452,9 @@ dvar_vector sqr(const dvar_vector& v1)
   gradient_structure* gs = gradient_structure::get();
   DF_FILE* fp = gs->fp;
   save_identifier_string("ddd");
-  v1.save_dvar_vector_value(fp);
-  v1.save_dvar_vector_position();
-  vtmp.save_dvar_vector_position();
+  fp->save_dvar_vector_value(v1);
+  fp->save_dvar_vector_position(v1);
+  fp->save_dvar_vector_position(vtmp);
   save_identifier_string("eve");
   gs->GRAD_STACK1->set_gradient_stack(DF_dvsqrt);
   return vtmp;
@@ -415,11 +467,14 @@ Adjoint function to compute gradients for sqrt(const dvar_vector&).
 */
 void DF_dvsqrt(void)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("eve");
-  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();
   dvector dfvtmp=restore_dvar_vector_derivatives(tmp_pos);
-  dvar_vector_position v1pos=restore_dvar_vector_position();
+  dvar_vector_position v1pos=fp->restore_dvar_vector_position();
   dvector v1=restore_dvar_vector_value(v1pos);
   verify_identifier_string("ddd");
   dvector dfv1(dfvtmp.indexmin(),dfvtmp.indexmax());
@@ -451,10 +506,10 @@ dvar_vector pow(const dvar_vector& v1, const double e)
   gradient_structure* gs = gradient_structure::get();
   DF_FILE* fp = gs->fp;
   save_identifier_string("ddf");
-  v1.save_dvar_vector_value(fp);
-  save_double_value(e);
-  v1.save_dvar_vector_position(fp);
-  vtmp.save_dvar_vector_position(fp);
+  fp->save_dvar_vector_value(v1);
+  fp->save_double_value(e);
+  fp->save_dvar_vector_position(v1);
+  fp->save_dvar_vector_position(vtmp);
   save_identifier_string("eef");
   gs->GRAD_STACK1->set_gradient_stack(DF_dvpow);
   return vtmp;
@@ -464,12 +519,15 @@ Adjoint function to compute gradients for pow(const dvar_vector&, const double).
 */
 void DF_dvpow(void)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("eef");
-  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();
   dvector dfvtmp=restore_dvar_vector_derivatives(tmp_pos);
-  dvar_vector_position v1pos=restore_dvar_vector_position();
-  double e=restore_double_value();
+  dvar_vector_position v1pos=fp->restore_dvar_vector_position();
+  double e=fp->restore_double_value();
   dvector v1=restore_dvar_vector_value(v1pos);
   verify_identifier_string("ddf");
   dvector dfv1(dfvtmp.indexmin(),dfvtmp.indexmax());
@@ -505,11 +563,11 @@ dvar_vector pow(const dvar_vector& v1, const prevariable& e)
   gradient_structure* gs = gradient_structure::get();
   DF_FILE* fp = gs->fp;
   save_identifier_string("ddg");
-  e.save_prevariable_value();
-  e.save_prevariable_position();
-  v1.save_dvar_vector_value(fp);
-  v1.save_dvar_vector_position(fp);
-  vtmp.save_dvar_vector_position(fp);
+  fp->save_prevariable_value(e);
+  fp->save_prevariable_position(e);
+  fp->save_dvar_vector_value(v1);
+  fp->save_dvar_vector_position(v1);
+  fp->save_dvar_vector_position(vtmp);
   save_identifier_string("eeg");
   gs->GRAD_STACK1->set_gradient_stack(DF_dvdvpow);
   return vtmp;
@@ -522,14 +580,16 @@ dvar_vector pow(const dvar_vector& v1, const prevariable& e)
 void DF_dvdvpow(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
 
   verify_identifier_string("eeg");
-  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();
   dvector dfvtmp=restore_dvar_vector_derivatives(tmp_pos);
-  dvar_vector_position v1pos=restore_dvar_vector_position();
+  dvar_vector_position v1pos=fp->restore_dvar_vector_position();
   dvector v1=restore_dvar_vector_value(v1pos);
-  prevariable_position epos=restore_prevariable_position();
-  double e=restore_prevariable_value();
+  prevariable_position epos=fp->restore_prevariable_position();
+  double e=fp->restore_prevariable_value();
   verify_identifier_string("ddg");
   dvector dfv1(dfvtmp.indexmin(),dfvtmp.indexmax());
   double dfe=0.;
@@ -563,10 +623,10 @@ dvar_vector pow(const dvar_vector& v1,int e)
   gradient_structure* gs = gradient_structure::get();
   DF_FILE* fp = gs->fp;
   save_identifier_string("ddf");
-  v1.save_dvar_vector_value(fp);
-  save_double_value(double(e));
-  v1.save_dvar_vector_position(fp);
-  vtmp.save_dvar_vector_position(fp);
+  fp->save_dvar_vector_value(v1);
+  fp->save_double_value(double(e));
+  fp->save_dvar_vector_position(v1);
+  fp->save_dvar_vector_position(vtmp);
   save_identifier_string("eef");
   gs->GRAD_STACK1->set_gradient_stack(DF_dvcpow);
   return vtmp;
@@ -578,12 +638,14 @@ dvar_vector pow(const dvar_vector& v1,int e)
  */
 void DF_dvcpow(void)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("eef");
-  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();
   dvector dfvtmp=restore_dvar_vector_derivatives(tmp_pos);
-  dvar_vector_position v1pos=restore_dvar_vector_position();
-  double e=restore_double_value();
+  dvar_vector_position v1pos=fp->restore_dvar_vector_position();
+  double e=fp->restore_double_value();
   dvector v1=restore_dvar_vector_value(v1pos);
   verify_identifier_string("ddf");
   dvector dfv1(dfvtmp.indexmin(),dfvtmp.indexmax());
@@ -616,11 +678,11 @@ dvar_vector pow(const dvector& v1,const prevariable& e)
   DF_FILE* fp = gs->fp;
 
   save_identifier_string("eddg");
-  e.save_prevariable_value();
-  e.save_prevariable_position();
-  v1.save_dvector_value();
-  v1.save_dvector_position();
-  vtmp.save_dvar_vector_position(fp);
+  fp->save_prevariable_value(e);
+  fp->save_prevariable_position(e);
+  fp->save_dvector_value(v1);
+  fp->save_dvector_position(v1);
+  fp->save_dvar_vector_position(vtmp);
   save_identifier_string("feeg");
   gs->GRAD_STACK1->set_gradient_stack(DF_cdvpow);
   return vtmp;
@@ -633,14 +695,16 @@ dvar_vector pow(const dvector& v1,const prevariable& e)
 void DF_cdvpow(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
 
   verify_identifier_string("feeg");
-  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();
   dvector dfvtmp=restore_dvar_vector_derivatives(tmp_pos);
-  dvector_position v1pos=restore_dvector_position();
-  dvector v1=restore_dvector_value(v1pos);
-  prevariable_position epos=restore_prevariable_position();
-  double e=restore_prevariable_value();
+  dvector_position v1pos=fp->restore_dvector_position();
+  dvector v1=fp->restore_dvector_value(v1pos);
+  prevariable_position epos=fp->restore_prevariable_position();
+  double e=fp->restore_prevariable_value();
   verify_identifier_string("eddg");
   //dvector dfv1(dfvtmp.indexmin(),dfvtmp.indexmax());
   double dfe=0.;

@@ -98,7 +98,7 @@ void function_minimizer::rwm_mcmc_routine(int nmcmc,int iseed0, double dscale,
   //int mcmc_save_index=1;
   //int mcmc_wrap_flag=0;
   //int mcmc_gui_length=10000;
-  int nvar=initial_params::nvarcalc(); // get the number of active parameters
+  //int nvar=initial_params::nvarcalc(); // get the number of active parameters
 
   // Cole set this to 1 to essentially turn this feature off since no one seems to use it.
   int no_sd_mcmc=1;
@@ -449,7 +449,7 @@ void function_minimizer::rwm_mcmc_routine(int nmcmc,int iseed0, double dscale,
 
       std::clock_t start0 = clock();
       llbest=-get_monte_carlo_value(nvar,y);
-      double time_nll = ( std::clock()-start0)/(double) CLOCKS_PER_SEC;
+      double time_nll = static_cast<double>(std::clock()-start0)/CLOCKS_PER_SEC;
       lbmax=llbest;
       // store current mcmc variable values in param_values
       //void store_mcmc_values(const ofstream& ofs);
@@ -490,7 +490,7 @@ void function_minimizer::rwm_mcmc_routine(int nmcmc,int iseed0, double dscale,
       int iac=0;
       int liac=0;
       int isim=0;
-      int itmp=0;
+      //int itmp=0;
       double logr;
       int u_option=0;
       double ll;
@@ -907,8 +907,8 @@ void function_minimizer::rwm_mcmc_routine(int nmcmc,int iseed0, double dscale,
 		  }
 	      }
 	    if(i==change_ball)
-	      time_warmup = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
-	    time_total = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
+	      time_warmup = static_cast<double>(std::clock()-start)/CLOCKS_PER_SEC;
+	    time_total = static_cast<double>(std::clock()-start)/CLOCKS_PER_SEC;
 	    if(use_duration==1 && time_total > duration){
 	      // If duration option used, break loop after <duration> hours.
 	      cout << "Chain " << chain << ": " << i << " samples generated after " << duration/60 <<

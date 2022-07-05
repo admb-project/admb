@@ -249,13 +249,13 @@ void gradient_structure::jacobcalc(int nvar, const dmatrix& _jac)
        break_flag = GRAD_STACK1->read_grad_stack_buffer(lpos);
     }  while (break_flag); // do
 
-    int mindx = g.indexmin();
-    dvector & gg=(dvector&)(g);
-    for (int i=0; i<nvar; i++)
+    double* pgj = g.get_v() + g.indexmin();
+    for (int i = 0; i < nvar; ++i)
     {
-      gg[i+mindx] =  * gradient_structure::INDVAR_LIST->get_address(i);
-      //g[i+mindx] =  * gradient_structure::INDVAR_LIST->get_address(i);
+      *pgj = *gradient_structure::INDVAR_LIST->get_address(i);
+      ++pgj;
     }
+
     GRAD_STACK1->ptr = GRAD_STACK1->ptr_first;
   }// loop over dep vars
   DEPVARS_INFO->depvar_count=0;

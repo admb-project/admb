@@ -174,6 +174,7 @@ GTESTS_ALL=\
  test_dll_param_init_bounded_vector.cpp\
  test_ad_double.cpp\
  test_prevariable.cpp\
+ test_independent_variables.cpp\
  main.cpp
 
 ERRORS=\

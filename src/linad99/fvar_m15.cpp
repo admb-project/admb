@@ -78,60 +78,88 @@ dvar_matrix inv(const dvar_matrix& aa)
   dvector vv(lb,ub);
 
   d=1.0;
+  dvector* pbbi = &bb.elem(lb);
+  double* pvvi = vv.get_v() + lb;
   for (int i=lb;i<=ub;i++)
   {
     big=0.0;
+    double* pbbij = pbbi->get_v() + lb;
     for (int j=lb;j<=ub;j++)
     {
-      temp=fabs(bb.elem(i,j));
+      temp = fabs(*pbbij);
       if (temp > big)
       {
         big=temp;
       }
+      ++pbbij;
     }
     if (big == 0.0)
     {
       cerr << "Error in matrix inverse -- matrix singular in inv(dmatrix)\n";
       ad_exit(1);
     }
-    vv[i]=1.0/big;
+    *pvvi = 1.0 / big;
+
+    ++pbbi;
+    ++pvvi;
   }
 
   for (int j=lb;j<=ub;j++)
   {
+    dvector* pbbi = &bb.elem(lb);
     for (int i=lb;i<j;i++)
     {
-      sum=bb.elem(i,j);
+      sum = *(pbbi->get_v() +j);
+
+      double* pbbik = pbbi->get_v() + lb;
+      dvector* pbbk = &bb.elem(lb);
       for (int k=lb;k<i;k++)
       {
-        sum = sum - bb.elem(i,k)*bb.elem(k,j);
+        sum = sum - *pbbik * *(pbbk->get_v() + j);
+        ++pbbik;
+        ++pbbk;
       }
       //a[i][j]=sum;
-      bb.elem(i,j)=sum;
+      *(pbbi->get_v() +j) = sum;
+
+      ++pbbi;
     }
     big=0.0;
+    pbbi = &bb.elem(j);
     for (int i=j;i<=ub;i++)
     {
-      sum=bb.elem(i,j);
+      sum = *(pbbi->get_v() + j);
+
+      double* pbbik = pbbi->get_v() + lb;
+      dvector* pbbk = &bb.elem(lb);
       for (int k=lb;k<j;k++)
       {
-        sum = sum - bb.elem(i,k)*bb.elem(k,j);
+        sum = sum - *pbbik * *(pbbk->get_v() + j);
+        ++pbbik;
+        ++pbbk;
       }
-      bb.elem(i,j)=sum;
+      *pbbik = sum;
+
       dum=vv[i]*fabs(sum);
       if ( dum >= big)
       {
         big=dum;
         imax=i;
       }
+      ++pbbi;
     }
     if (j != imax)
     {
+      double* pbbimaxk = bb.elem(imax).get_v() + lb;
+      double* pbbjk = bb.elem(j).get_v() + lb;
       for (int k=lb;k<=ub;k++)
       {
-        dum=bb.elem(imax,k);
-        bb.elem(imax,k)=bb.elem(j,k);
-        bb.elem(j,k)=dum;
+        dum = *pbbimaxk;
+        *pbbimaxk = *pbbjk;
+        *pbbjk = dum;
+
+        ++pbbimaxk;
+        ++pbbjk;
       }
       d = -1.*d;
       vv[imax]=vv[j];
@@ -153,12 +181,17 @@ dvar_matrix inv(const dvar_matrix& aa)
     if (j != n)
     {
       dum=1.0/bb.elem(j,j);
+      pbbi = &bb.elem(j + 1);
       for (int i=j+1;i<=ub;i++)
       {
-        bb.elem(i,j) = bb.elem(i,j) * dum;
+        *(pbbi->get_v() + j) *= dum;
+        ++pbbi;
       }
     }
   }
+
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
 
   dvector y(lb,ub);
   dvector x(lb,ub);
@@ -166,18 +199,27 @@ dvar_matrix inv(const dvar_matrix& aa)
   //int ub=rowmax;
   dmatrix& b=bb;
   ivector indxinv(lb,ub);
+  int* pindx = indx.get_v() + lb;
+  int* pindxinv = indxinv.get_v();
   for (int i=lb;i<=ub;i++)
   {
-    indxinv(indx.elem(i))=i;
+    *(pindxinv + *pindx)=i;
+    ++pindx;
   }
+
+  pindxinv = indxinv.get_v() + lb;
   for (int ii=lb;ii<=ub;ii++)
   {
     y.initialize();
-    y(indxinv(ii))=1.;
-    for (int i=indxinv(ii);i<=ub;i++)
+    const int indxinvii = *pindxinv;
+    y(indxinvii) = 1.;
+
+    dvector* pbi = &b.elem(indxinvii);
+    double* pyi = y.get_v() + indxinvii;
+    for (int i=indxinvii;i<=ub;i++)
     {
       // sum=y(ii,i);
-      if (i==indxinv(ii))
+      if (i==indxinvii)
       {
         sum=1.;
       }
@@ -185,37 +227,56 @@ dvar_matrix inv(const dvar_matrix& aa)
       {
         sum=0.;
       }
-      for (int j=indxinv(ii);j<=i-1;j++)
+      double* pbij = pbi->get_v() + indxinvii;
+      double* pyj = y.get_v() + indxinvii;
+      for (int j=indxinvii;j<=i-1;j++)
       {
-        sum-=b.elem(i,j)*y.elem(j);
+        sum -= *pbij * *pyj;
+
+        ++pbij;
+        ++pyj;
       }
-      y.elem(i)=sum;
+      *pyi = sum;
+
+      ++pbi;
+      ++pyi;
     }
+    pyi = y.get_v() + ub;
+    double* pxi = x.get_v() + ub;
+    pbi = &b.elem(ub);
     for (int i=ub;i>=lb;i--)
     {
-      sum=y.elem(i);
+      sum = *pyi;
+      double* pxj = x.get_v() + i + 1;
+      double* pbij = pbi->get_v() + i + 1;
       for (int j=i+1;j<=ub;j++)
       {
-        sum-=b.elem(i,j)*x.elem(j);
+        sum -= *pbij * *pxj;
+
+        ++pxj;
+        ++pbij;
       }
-      x.elem(i)=sum/b.elem(i,i);
+      *pxi = sum / *(pbi->get_v() + i);
+
+      --pyi;
+      --pbi;
+      --pxi;
     }
-    y.save_dvector_value();
-    x.save_dvector_value();
+    fp->save_dvector_value(y);
+    fp->save_dvector_value(x);
     nograd_assign_column(vc,x,ii);
+    ++pindxinv;
   }
 
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
   save_identifier_string("P5");
-  x.save_dvector_position();
-  y.save_dvector_position();
-  indx.save_ivector_value();
-  indx.save_ivector_position();
-  aa.save_dvar_matrix_position();
-  vc.save_dvar_matrix_position();
-  bb.save_dmatrix_value();
-  bb.save_dmatrix_position();
+  fp->save_dvector_position(x);
+  fp->save_dvector_position(y);
+  fp->save_ivector_value(indx);
+  fp->save_ivector_position(indx);
+  fp->save_dvar_matrix_position(aa);
+  fp->save_dvar_matrix_position(vc);
+  fp->save_dmatrix_value(bb);
+  fp->save_dmatrix_position(bb);
   save_identifier_string("P1");
   gs->GRAD_STACK1->set_gradient_stack(dfinvpret);
   return vc;
@@ -225,23 +286,30 @@ dvar_matrix inv(const dvar_matrix& aa)
 */
 void dfinvpret(void)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   verify_identifier_string("P1");
-  dmatrix_position bpos=restore_dmatrix_position();
-  dmatrix b=restore_dmatrix_value(bpos);
-  dvar_matrix_position v_pos=restore_dvar_matrix_position();
-  dvar_matrix_position a_pos=restore_dvar_matrix_position();
-  ivector_position indx_pos=restore_ivector_position();
+  dmatrix_position bpos=fp->restore_dmatrix_position();
+  dmatrix b=fp->restore_dmatrix_value(bpos);
+  dvar_matrix_position v_pos=fp->restore_dvar_matrix_position();
+  dvar_matrix_position a_pos=fp->restore_dvar_matrix_position();
+  ivector_position indx_pos=fp->restore_ivector_position();
   ivector indx=restore_ivector_value(indx_pos);
-  dvector_position y_pos=restore_dvector_position();
-  dvector_position x_pos=restore_dvector_position();
+  dvector_position y_pos=fp->restore_dvector_position();
+  dvector_position x_pos=fp->restore_dvector_position();
   verify_identifier_string("P5");
   int lb=b.colmin();
   int ub=b.colmax();
   dmatrix dfb(lb,ub,lb,ub);
   ivector indxinv(lb,ub);
+
+  int* pindx = indx.get_v() + lb;
+  int* pindxinv = indxinv.get_v();
   for (int i=lb;i<=ub;i++)
   {
-    indxinv(indx.elem(i))=i;
+    *(pindxinv + *pindx) = i;
+    ++pindx;
   }
 
   double dfsum=0.;
@@ -253,44 +321,72 @@ void dfinvpret(void)
   for (int ii=ub;ii>=lb;ii--)
   {
     //x.save_dvector_value();
-    dvector x=restore_dvector_value(x_pos);
+    dvector x=fp->restore_dvector_value(x_pos);
     //y.save_dvector_value();
-    dvector y=restore_dvector_value(y_pos);
+    dvector y=fp->restore_dvector_value(y_pos);
     dvector dfx=restore_dvar_matrix_derivative_column(v_pos,ii);
+
+    double* pdfxi = dfx.get_v() + lb;
+    double* pxi = x.get_v() + lb;
+    dvector* pdfbi = &dfb.elem(lb);
+    dvector* pbi = &b.elem(lb);
     for (int i=lb;i<=ub;i++)
     {
       // x.elem(i)=sum/b.elem(i,i);
-      dfsum+=dfx.elem(i)/b.elem(i,i);
-      dfb.elem(i,i)-=dfx.elem(i)*x.elem(i)/b.elem(i,i);
-      dfx.elem(i)=0.;
+      dfsum+= *pdfxi / b.elem(i,i);
+      *(pdfbi->get_v() + i) -= *pdfxi * *pxi / b.elem(i,i);
+      *pdfxi = 0.0;
+
+      double* pdfxj = dfx.get_v() + ub;
+      double* pxj = x.get_v() + ub;
+      double* pdfbij = pdfbi->get_v() + ub;
+      double* pbij = pbi->get_v() + ub;
       for (int j=ub;j>=i+1;j--)
       {
         // sum -=b.elem(i,j)*x.elem(j);
-        dfb.elem(i,j)-=dfsum*x.elem(j);
-        dfx.elem(j)-=dfsum*b.elem(i,j);
+        *pdfbij -= dfsum * *pxj;
+        *pdfxj -= dfsum * *pbij;
+
+        --pdfxj;
+        --pxj;
+        --pdfbij;
+        --pbij;
       }
       // sum=y.elem(i);
       dfy.elem(i)+=dfsum;
       dfsum=0.;
+
+      ++pdfxi;
+      ++pxi;
+      ++pdfbi;
+      ++pbi;
     }
 
     //for (i=ub;i>=lb;i--)
-    int i2;
-    for (i2=ub;i2>=indxinv(ii);i2--)
+    int indxinvii = indxinv(ii);
+    double* pdfyi2 = dfy.get_v() + ub;
+    for (int i2=ub;i2>=indxinvii;i2--)
     {
       // y.elem(i)=sum;
-      dfsum+=dfy.elem(i2);
-      dfy.elem(i2)=0.;
+      dfsum += *pdfyi2;
+      *pdfyi2 = 0.0;
       // for (int j=i-1;j>=lb;j--)
-      for (int j=i2-1;j>=indxinv(ii);j--)
+      double* pyj = y.get_v() + i2 - 1;
+      double* pdfyj = dfy.get_v() + i2 - 1;
+      for (int j=i2-1;j>=indxinvii;j--)
       {
         // sum-=b.elem(i,j)*y.elem(j);
-        dfb.elem(i2,j)-=dfsum*y.elem(j);
-        dfy.elem(j)-=dfsum*b.elem(i2,j);
+        dfb.elem(i2,j) -= dfsum * *pyj;
+        *pdfyj -= dfsum*b.elem(i2,j);
+
+        --pyj;
+        --pdfyj;
       }
       //sum=y.elem(i);
-      dfy.elem(i2)=dfsum;
-      dfsum=0.;
+      *pdfyi2 = dfsum;
+      dfsum = 0.0;
+
+      --pdfyi2;
     }
     //x.initialize()
     //y.initialize()
@@ -300,20 +396,24 @@ void dfinvpret(void)
 
   for (int j=ub;j>=lb;j--)
   {
+    double bjj = b.elem(j, j);
+    dvector* pdfbi = &dfb.elem(ub);
+    int* pindxi = indx.get_v() + ub;
     for (int i=ub;i>=lb;i--)
     {
+      double* pdfbij = pdfbi->get_v() + j;
       if (i<=j)
       {
         // b.elem(i,j)=sum;
-        dfsum+=dfb.elem(i,j);
-        dfb.elem(i,j)=0.;
+        dfsum+= *pdfbij;
+        *pdfbij = 0.0;
       }
       else
       {
         // b.elem(i,j)=sum/b.elem(j,j);
-        dfsum+=dfb.elem(i,j)/b.elem(j,j);
-        dfb.elem(j,j)-=dfb.elem(i,j)*b.elem(i,j)/b.elem(j,j);
-        dfb.elem(i,j)=0.;
+        dfsum += *pdfbij / bjj;
+        dfb.elem(j,j) -= *pdfbij * b.elem(i,j) / bjj;
+        *pdfbij = 0.0;
       }
 
       for (int k=min(i-1,j-1);k>=lb;k--)
@@ -323,8 +423,11 @@ void dfinvpret(void)
         dfb.elem(k,j)-=dfsum*b.elem(i,k);
       }
       // sum=value(a(indx.elem(i),j);
-      save_dmatrix_derivatives(a_pos,dfsum,indx.elem(i),j); // like this
+      save_dmatrix_derivatives(a_pos,dfsum, *pindxi, j); // like this
       dfsum=0.;
+
+      --pindxi;
+      --pdfbi;
     }
   }
 }

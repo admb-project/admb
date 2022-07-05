@@ -27,7 +27,7 @@
       DF_FILE* fp = gs->fp;
 
       save_identifier_string("b");
-      this->save_dvar_vector_position(fp);
+      fp->save_dvar_vector_position(*this);
       save_identifier_string("a");
       gs->GRAD_STACK1->set_gradient_stack(dv_init);
     }
@@ -40,9 +40,12 @@
  */
 void dv_init(void)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("a");
-  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();
   verify_identifier_string("b");
   dvector dftmp(tmp_pos.indexmin(),tmp_pos.indexmax());
   for (int i=dftmp.indexmin();i<=dftmp.indexmax();i++)
@@ -77,8 +80,7 @@ void dvar_vector::initialize(const dvector& ww)
     DF_FILE* fp = gs->fp;
 
     save_identifier_string("b");
-    this->save_dvar_vector_position(fp);
+    fp->save_dvar_vector_position(*this);
     save_identifier_string("a");
-    gradient_structure::get()->GRAD_STACK1->
-      set_gradient_stack(dv_init);
+    gs->GRAD_STACK1->set_gradient_stack(dv_init);
   }

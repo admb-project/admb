@@ -1321,9 +1321,7 @@ protected:
   }
 
 public:
-  prevariable(const prevariable& other): prevariable(other.get_v())
-  {
-  }
+  prevariable(const prevariable&);
 
   double_and_int* v; ///< pointer to the data
 
@@ -1395,9 +1393,9 @@ public:
 
 
  public:
-   void save_prevariable_position(void) const;
+   void save_prevariable_position() const;
    prevariable_position restore_prevariable_position(void);
-   void save_prevariable_value(void) const;
+   void save_prevariable_value() const;
    double restore_prevariable_value(void);
    double restore_prevariable_derivative(void);
 
@@ -1510,27 +1508,29 @@ class df1_three_variable;
   Fundamental data type for reverse mode automatic differentiation.
   \ingroup BAD
  */
-class dvariable:public prevariable
+class dvariable: public prevariable
 {
- public:
-   dvariable();
-   ~dvariable();
-   dvariable(double t);
-   dvariable(const int &t);
-   dvariable(kkludge_object);
-   dvariable(const prevariable &);
-   dvariable & operator=(const prevariable &);
-   dvariable & operator =(const df1_one_variable & v);
-   dvariable & operator =(const df1_two_variable & v);
-   dvariable & operator =(const df1_three_variable & v);
-   dvariable & operator=(double);
+public:
+  dvariable();
+  dvariable(const dvariable&);
+  dvariable(double t);
+  dvariable(const int &t);
+  dvariable(kkludge_object);
+  dvariable(const prevariable&);
+  ~dvariable();
+
+  dvariable& operator=(const dvariable&);
+  dvariable& operator=(double);
+  dvariable& operator=(const prevariable&);
+  dvariable& operator=(const df1_one_variable&);
+  dvariable& operator=(const df1_two_variable&);
+  dvariable& operator=(const df1_three_variable&);
+
 #if defined(USE_DDOUBLE)
 #  undef double
-   dvariable & operator=(double);
 #  define double dd_real
 #endif
-   dvariable(const dvariable&);
-   dvariable& operator=(const dvariable&);
+
 //#  if (__BORLANDC__  > 0x0520)
 //     dvariable& operator+=(const prevariable&);
 //#  endif
@@ -1843,23 +1843,38 @@ class predvar_vector
  * Description not yet available.
  * \param
  */
-class independent_variables:public dvector
+class independent_variables: public dvector
 {
- public:
-   independent_variables(const independent_variables & v):dvector(v)
-   {
-   }
+public:
+  /// Default Constructor
+  independent_variables(): dvector() {}
 
-   independent_variables(int ncl, int ncu):dvector(ncl, ncu)
-   {
-   }
-   // makes an array [ncl..ncu]
+  independent_variables(const independent_variables& other):
+    independent_variables(other.indexmin(), other.indexmax())
+  {
+    independent_variables::operator=(other);
+  }
 
-   independent_variables(unsigned int sz, double *x):dvector(sz, x)
-   {
-   }
+  independent_variables(int ncl, int ncu): dvector(ncl, ncu)
+  {
+  }
+  // makes an array [ncl..ncu]
 
-   independent_variables & operator=(const dvector & t);
+  independent_variables(unsigned int sz, double* x): dvector(sz, x)
+  {
+  }
+
+  independent_variables& operator=(const dvector& t);
+  independent_variables& operator=(const independent_variables& other)
+  {
+    if (get_v() == nullptr)
+    {
+      int min = other.indexmin();
+      int max = other.indexmax();
+      dvector::allocate(min, max);
+    }
+    return independent_variables::operator=(static_cast<const dvector&>(other));
+  }
 };
 
 dvariable dfatan1(dvariable, double, double, const prevariable & fpen);
@@ -2171,8 +2186,8 @@ public:
    void allocate(const ad_integer &, const ad_integer &);
    void initialize(const dvector & ww);
    void initialize(void);
-   void save_dvar_vector_position(DF_FILE* fp) const;
-   void save_dvar_vector_value(DF_FILE* fp) const;
+   void save_dvar_vector_position() const;
+   void save_dvar_vector_value() const;
    void write_on(const ostream &) const;
    void write_on(const uostream &) const;
    void read_from(const istream &);
@@ -2514,8 +2529,8 @@ class dvar_matrix
 
    ~dvar_matrix();
 
-   void save_dvar_matrix_position(void) const;
-   void save_dvar_matrix_value(DF_FILE* fp) const;
+   void save_dvar_matrix_position() const;
+   void save_dvar_matrix_value() const;
 
    void fill(const char *);
    //void colfill(const int&n,...);
@@ -2801,10 +2816,11 @@ class dmatrix
   }
 
    void save_dmatrix_derivatives(const dvar_matrix_position & pos) const;
-   void save_dmatrix_derivatives_na(const dvar_matrix_position & pos)
-      const;
-   void save_dmatrix_value(void) const;
-   void save_dmatrix_position(void) const;
+   void save_dmatrix_derivatives_na(const dvar_matrix_position & pos) const;
+
+  void save_dmatrix_value() const;
+  void save_dmatrix_position() const;
+
    //void save_dmatrix_derivatives(void);
 
   int indexmin() const
@@ -3629,7 +3645,7 @@ class d3_array
    }
    // conclass cgors
    d3_array(void);
-   void save_d3_array_value(void) const;
+   void save_d3_array_value() const;
    void shallow_copy(const d3_array &);
    d3_array sub(int, int);
    d3_array(int sl, int sh, int nrl, int nrh, int ncl, int nch);
@@ -3638,7 +3654,7 @@ class d3_array
    d3_array(int sl, int sh);
    d3_array(const d3_array_position &);
 
-   void save_d3_array_position(void) const;
+   void save_d3_array_position() const;
 
    d3_array(int sl, int sh, int nrl, int nrh, const ivector & ncl, int nch);
 
@@ -4349,8 +4365,7 @@ class prevariable_position
 };
 
 double restore_prevariable_derivative(const prevariable_position & pre);
-double restore_prevariable_derivative(void);
-prevariable_position restore_prevariable_position(void);
+prevariable_position restore_prevariable_position();
 void save_double_derivative(double x, const prevariable_position & pos);
 double restore_prevariable_value(void);
 void save_double_value(double x);
@@ -4603,15 +4618,15 @@ void verify_identifier_string(const char *);
 
 
 ivector restore_ivector_value(const ivector_position &);
-ivector_position restore_ivector_position(void);
-dvar_matrix_position restore_dvar_matrix_position(void);
+ivector_position restore_ivector_position();
+dvar_matrix_position restore_dvar_matrix_position();
 dvector restore_dvar_matrix_derivative_row(const dvar_matrix_position& pos,
   const int &ii);
 dvector restore_dvar_matrix_derivative_column(const dvar_matrix_position& pos,
   const int &ii);
 dmatrix restore_dvar_matrix_derivatives(const dvar_matrix_position & pos);
 dmatrix restore_dvar_matrix_derivatives(void);
-double restore_prevariable_derivative(void);
+double restore_prevariable_derivative();
 double restore_double_value(void);
 int restore_int_value(void);
 void save_double_value(double x);
@@ -4623,7 +4638,7 @@ dvar_matrix nograd_assign(const dmatrix &);
 dvariable nograd_assign(double tmp);
 dvar_vector nograd_assign(dvector tmp);
 dmatrix restore_dvar_matrix_value(const dvar_matrix_position & mpos);
-dmatrix_position restore_dmatrix_position(void);
+dmatrix_position restore_dmatrix_position();
 dvector_position restore_dvector_position(void);
 dvector restore_dvector_value(const dvector_position &);
 dmatrix restore_dmatrix_value(const dmatrix_position &);
@@ -4636,7 +4651,7 @@ void save_dmatrix_derivatives(const dvar_matrix_position & pos, double x,
 dmatrix restore_dvar_matrix_der_nozero(const dvar_matrix_position & pos);
 dvector restore_dvar_vector_der_nozero(const dvar_vector_position & tmp);
 d3_array_position restore_d3_array_position(void);
-d3_array restore_d3_array_value(const d3_array_position &);
+d3_array restore_d3_array_value(const d3_array_position&);
 void nograd_assign_row(const dvar_matrix & m, const dvector & v,
   const int &ii);
 void nograd_assign_column(const dvar_matrix & m, const dvector & v,
@@ -7128,7 +7143,7 @@ inline d6_array& d7_array::elem(int i)
   if (i < indexmin() || i > indexmax())
   {
     cerr << "Error index out of bounds in\n"
-            "d5_array& d6_array::elem(int)" << endl;
+            "d5_array& d7_array::elem(int)" << endl;
     ad_exit(1);
   }
 #endif
@@ -7140,7 +7155,7 @@ inline const d6_array& d7_array::elem(int i) const
   if (i < indexmin() || i > indexmax())
   {
     cerr << "Error index out of bounds in\n"
-            "d5_array& d6_array::elem(int)" << endl;
+            "d5_array& d7_array::elem(int)" << endl;
     ad_exit(1);
   }
 #endif
@@ -7916,7 +7931,7 @@ class banded_symmetric_dmatrix
    banded_symmetric_dmatrix(int _min, int _max, int _bw);
 
    banded_symmetric_dmatrix(const dvar_matrix_position & mpos);
-   void save_dmatrix_value(void) const;
+   void save_dmatrix_value() const;
    void save_dmatrix_position(void) const;
    void save_dmatrix_derivatives(const dvar_matrix_position &) const;
 
@@ -7958,9 +7973,9 @@ class banded_symmetric_dmatrix
  */
 class banded_symmetric_dvar_matrix
 {
+ public:
    int bw;
    dvar_matrix d;
- public:
    void initialize(void);
    int bandwidth(void) const
    {
@@ -7983,8 +7998,8 @@ class banded_symmetric_dvar_matrix
       return d.rowmax();
    }
 
-   void save_dvar_matrix_value(DF_FILE* fp) const;
-   void save_dvar_matrix_position(void) const;
+   void save_dvar_matrix_value() const;
+   void save_dvar_matrix_position() const;
    banded_symmetric_dvar_matrix(int _min, int _max, int _bw);
    banded_symmetric_dvar_matrix(const banded_symmetric_dvar_matrix &);
 
@@ -8083,9 +8098,9 @@ class banded_lower_triangular_dmatrix
  */
 class banded_lower_triangular_dvar_matrix
 {
+public:
    int bw;
    dvar_matrix d;
- public:
    int bandwidth(void) const
    {
       return bw;
@@ -8107,8 +8122,8 @@ class banded_lower_triangular_dvar_matrix
       return d.rowmax();
    }
    void initialize(void);
-   void save_dvar_matrix_value(DF_FILE* fp) const;
-   void save_dvar_matrix_position(void) const;
+   void save_dvar_matrix_value() const;
+   void save_dvar_matrix_position() const;
 
    banded_lower_triangular_dvar_matrix(int _min, int _max, int _bw);
    banded_lower_triangular_dvar_matrix
@@ -8145,8 +8160,6 @@ class banded_lower_triangular_dvar_matrix
    {
       return *(double *) ((d.m[i - j]).va + i);
    }
-   friend banded_lower_triangular_dmatrix value
-      (const banded_lower_triangular_dvar_matrix & v);
 };
 
 ostream & operator<<(const ostream & ofs,

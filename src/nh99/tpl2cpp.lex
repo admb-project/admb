@@ -3707,7 +3707,7 @@ PARAMETER_SECTION {
     fprintf(fdat,"%s", "  static int last_phase(void)\n"
       "  {\n    return (initial_params::current_phase\n"
       "      >=initial_params::max_number_phases);\n  }\n");
-   fprintf(fdat,"%s", "  static prevariable current_feval(void)\n"
+   fprintf(fdat,"%s", "  static prevariable& current_feval(void)\n"
       "  {\n    return *objective_function_value::pobjfun;\n  }\n");
     fprintf(fdat,"%s","private:\n");
     fprintf(fdat,"%s","  dvariable adromb(dvariable(model_parameters::*f)(const dvariable&), double a, double b, int ns)\n"

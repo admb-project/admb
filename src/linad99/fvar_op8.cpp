@@ -21,14 +21,13 @@ prevariable& cube(const prevariable& v1)
   double x2=x*x;
 
   gradient_structure* gs = gradient_structure::get();
-  if (++gs->RETURN_PTR > gs->MAX_RETURN)
-    gs->RETURN_PTR = gs->MIN_RETURN;
+  dvariable* RETURN_PTR = gs->RETURN_PTR == gs->MAX_RETURN ? gs->RETURN_PTR = gs->MIN_RETURN : ++gs->RETURN_PTR;
 
-  gs->RETURN_PTR->v->x=x2*x;
+  RETURN_PTR->v->x=x2*x;
   gs->GRAD_STACK1->set_gradient_stack(default_evaluation2,
-    &(gs->RETURN_PTR->v->x), &(v1.v->x), 3.0*x2);
+    &(RETURN_PTR->v->x), &(v1.v->x), 3.0*x2);
 
-  return (*gs->RETURN_PTR);
+  return *RETURN_PTR;
 }
 /**
 Returns variable result of v1 raised to the power of four.
@@ -43,12 +42,11 @@ prevariable& fourth(const prevariable& v1)
   double x2=x*x;
 
   gradient_structure* gs = gradient_structure::get();
-  if (++gs->RETURN_PTR > gs->MAX_RETURN)
-    gs->RETURN_PTR = gs->MIN_RETURN;
+  dvariable* RETURN_PTR = gs->RETURN_PTR == gs->MAX_RETURN ? gs->RETURN_PTR = gs->MIN_RETURN : ++gs->RETURN_PTR;
 
-  gs->RETURN_PTR->v->x=x2*x2;
+  RETURN_PTR->v->x=x2*x2;
   gs->GRAD_STACK1->set_gradient_stack(default_evaluation2,
-    &(gs->RETURN_PTR->v->x), &(v1.v->x), 4.0*x2*x);
+    &(RETURN_PTR->v->x), &(v1.v->x), 4.0*x2*x);
 
-  return (*gs->RETURN_PTR);
+  return *RETURN_PTR;
 }

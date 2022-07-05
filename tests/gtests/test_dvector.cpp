@@ -401,7 +401,7 @@ TEST_F(test_dvector, allocate)
   }
 #endif
 }
-TEST_F(test_dvector, save_dvector_derivatives_not_matching)
+TEST_F(test_dvector, DISABLED_save_dvector_derivatives_not_matching)
 {
   dvar_vector_position pos;
   dvector dv(1, 4);

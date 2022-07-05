@@ -64,6 +64,8 @@ class dependent_variables_information;
 class grad_stack;
 class uostream;
 class dlist;
+class imatrix_position;
+class prevariable_position;
 
 /**
  * Description not yet available.
@@ -102,6 +104,7 @@ public:
   thread_local static gradient_structure* _instance;
   static gradient_structure* get();
   static gradient_structure* reset(gradient_structure*);
+  dvariable* next_RETURN_PTR();
 
   gradient_structure** gradients;
   unsigned int gradients_size;
@@ -302,6 +305,60 @@ public:
 
   void write_cmpdif_stack_buffer();
   void read_cmpdif_stack_buffer(OFF_T & lpos);
+
+  void save_double_value(double x);
+  double restore_double_value();
+
+  void save_int_value(int x);
+  int restore_int_value();
+
+  void save_pointer_value(void *ptr);
+  void* restore_pointer_value();
+
+  double restore_prevariable_value();
+
+  d3_array_position restore_d3_array_position();
+
+  void save_dvar_vector_value(const dvar_vector& v);
+
+  dvector restore_dvector_value(const dvector_position& tmp);
+  dmatrix restore_dmatrix_value(const dmatrix_position& mpos);
+  d3_array restore_d3_array_value(const d3_array_position& mpos);
+  dmatrix_position restore_dmatrix_position();
+  dvector restore_dvar_vector_value(const dvar_vector_position& tmp);
+  ivector restore_ivector_value(const ivector_position& tmp);
+  dvector_position restore_dvector_position();
+
+  void save_dvector_value(const dvector& v);
+  void save_dvector_position(const dvector& v);
+
+  void save_dvar_vector_position(const dvar_vector& v);
+  dvar_vector_position restore_dvar_vector_position();
+
+  dmatrix restore_dvar_matrix_value(const dvar_matrix_position& mpos);
+  imatrix restore_imatrix_value(const imatrix_position& mpos);
+  imatrix_position restore_imatrix_position();
+  dvar_matrix_position restore_dvar_matrix_position();
+  double restore_prevariable_derivative();
+  prevariable_position restore_prevariable_position();
+  void save_dmatrix_value(const dmatrix& m);
+  void save_d3_array_value(const d3_array& a);
+  void save_dmatrix_position(const dmatrix& m);
+
+  void save_ivector_position(const ivector& v);
+  ivector_position restore_ivector_position();
+
+  void save_ivector_value(const ivector& v);
+  void save_imatrix_value(const imatrix& m);
+
+  void save_imatrix_position(const imatrix& m);
+  void save_dvar_matrix_position(const dvar_matrix& m);
+  void save_dvar_matrix_value(const dvar_matrix& m);
+
+  void save_prevariable_position(const prevariable& v);
+  void save_prevariable_value(const prevariable& v);
+
+  void save_d3_array_position(const d3_array& a);
 
 private:
   OFF_T buff_end;

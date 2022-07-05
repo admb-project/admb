@@ -35,8 +35,8 @@ void dv_minuseq(void);
    DF_FILE* fp = gs->fp;
 
    save_identifier_string("uuvv");
-   save_dvar_vector_position(fp);  // for this->
-   v1.save_dvar_vector_position(fp);
+   fp->save_dvar_vector_position(*this);  // for this->
+   fp->save_dvar_vector_position(v1);
    save_identifier_string("wwxx");
    gs->GRAD_STACK1->set_gradient_stack(dv_minuseq);
    return(*this);
@@ -48,10 +48,13 @@ void dv_minuseq(void);
  */
 void dv_minuseq(void)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("wwxx");
-  dvar_vector_position v1_pos=restore_dvar_vector_position();
-  dvar_vector_position this_pos=restore_dvar_vector_position();
+  dvar_vector_position v1_pos=fp->restore_dvar_vector_position();
+  dvar_vector_position this_pos=fp->restore_dvar_vector_position();
   verify_identifier_string("uuvv");
   dvector dfthis=-1.*restore_dvar_vector_der_nozero(this_pos);
   dfthis.save_dvector_derivatives(v1_pos);

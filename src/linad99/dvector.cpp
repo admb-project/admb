@@ -28,7 +28,7 @@
 #ifdef _MSC_VER
 #include <memory.h>
 #endif
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
   #include <climits>
 #endif
@@ -254,22 +254,24 @@ dvector& dvector::operator=(const dvector& t)
 #endif
   else
   {
-    if (indexmin() != t.indexmin() ||  indexmax() != t.indexmax() )
+    int min = indexmin();
+
+#ifndef OPT_LIB
+    int max = indexmax();
+    if (min != t.indexmin() || max != t.indexmax())
     {
        cerr << "Index bounds do not match in "
        "dvector& operator = (const dvector&)\n";
        ad_exit(1);
     }
+#endif
 
     if (v != t.v)
     {
-      int min=indexmin();
-      int max=indexmax();
-#ifndef OPT_LIB
-      assert(max >= min);
-#endif
-      size_t size = (size_t)(max - min + 1);
-      memcpy(&elem(min), &t.elem(min), size * sizeof(double));
+      constexpr size_t sizeofdouble = sizeof(double);
+      double* pv = v + min;
+      double* pt = t.get_v() + min;
+      memcpy(pv, pt, size() * sizeofdouble);
     }
   }
   return *this;
@@ -285,32 +287,36 @@ dvector& dvector::operator=(const dvector& t)
   \param t A %dvector constant
   \return Reference to a %independent_variables object.
  */
- independent_variables& independent_variables::operator=(const dvector& t)
- {
-   #ifdef DIAG
-     myheapcheck("Entering dvector =");
-   #endif
+independent_variables& independent_variables::operator=(const dvector& t)
+{
+#ifdef DIAG
+  myheapcheck("Entering dvector =");
+#endif
 
-   if (indexmin() != t.indexmin() ||  indexmax() != t.indexmax() )
-   {
-     cerr << "Index bounds do not match in "
-  "independent_variables& independent_variables::operator=(const dvector& t)\n";
-     ad_exit(1);
-   }
+  int min = indexmin();
+#ifndef OPT_LIB
+  int max = indexmax();
+  if (min != t.indexmin() || max != t.indexmax())
+  {
+    cerr << "Index bounds do not match in "
+            "independent_variables& independent_variables::operator=(const dvector& t)\n";
+    ad_exit(1);
+  }
+#endif
      //double tmp;
    // disconnect dvector  pointer  from old array
-   if (v != t.address())
-   {
-     for (int i=indexmin();i<=indexmax();i++)
-     {
-       (*this)[i]=t[i];
-     }
-   }
-   #ifdef DIAG
-     myheapcheck("Leaving dvector =");
-   #endif
-   return (*this);
- }
+  if (v != t.address())
+  {
+    constexpr size_t sizeofdouble = sizeof(double);
+    double* pv = v + min;
+    double* pt = t.get_v() + min;
+    memcpy(pv, pt, size() * sizeofdouble);
+  }
+#ifdef DIAG
+  myheapcheck("Leaving dvector =");
+#endif
+  return *this;
+}
 
 /**
 Construct a %dvector object from a C style array of doubles.
@@ -320,7 +326,7 @@ The range of valid subscripts for the %dvector object will be [0,sz-1].
 */
 dvector::dvector(unsigned int sz, double* x)
 {
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(sz > 0 && sz - 1 <= INT_MAX);
 #endif
   allocate(0, (int)(sz - 1));
@@ -504,42 +510,37 @@ void dvector::allocate()
   the value of the dot product of the two arguments.
   */
 double operator*(const dvector& t1, const dvector& t2)
+{
+  int min = t1.indexmin();
+  int max = t1.indexmax();
+#ifndef OPT_LIB
+  if (min != t2.indexmin() || max != t2.indexmax())
   {
-     if (t1.indexmin() != t2.indexmin() ||  t1.indexmax() != t2.indexmax())
-     {
-       cerr << "Index bounds do not match in "
-       "dvector operator * (const dvector&, const dvector&)\n";
-       ad_exit(1);
-     }
-     double tmp;
-     tmp=0;
-   #ifdef OPT_LIB
-     const double * pt1=&t1[t1.indexmin()];
-     const double * pt1m=&t1[t1.indexmax()];
-     const double * pt2=&t2[t2.indexmin()];
-     do
-     {
-       tmp+=*pt1++ * *pt2++;
-     }
-     while (pt1<=pt1m);
-
-   #else
-     #ifndef USE_ASSEMBLER
-       int min=t1.indexmin();
-       int max=t1.indexmax();
-       for (int i=min; i<=max; i++)
-       {
-         tmp+=t1[i]*t2[i];
-       }
-     #else
-       int min=t1.indexmin();
-       int n=t1.indexmax()-min+1;
-       dp_dotproduct(&tmp,&(t1(min)),&(t2(min)),n);
-     #endif
-   #endif
-
-     return(tmp);
+    cerr << "Index bounds do not match in "
+            "dvector operator * (const dvector&, const dvector&)\n";
+    ad_exit(1);
   }
+#endif
+
+  double tmp{0};
+
+#ifdef USE_ASSEMBLER
+  int min=t1.indexmin();
+  int n=t1.indexmax()-min+1;
+  dp_dotproduct(&tmp,&(t1(min)),&(t2(min)),n);
+#else
+  double* pt1 = t1.get_v() + min;
+  double* pt2 = t2.get_v() + min;
+  for (int i = min; i <= max; ++i)
+  {
+    tmp += *pt1 * *pt2;
+    ++pt1;
+    ++pt2;
+  }
+#endif
+
+  return tmp;
+}
 
   /**
   \ingroup matop
@@ -551,34 +552,34 @@ double operator*(const dvector& t1, const dvector& t2)
   the value of the sum of the two arguments.
   */
 dvector operator+(const dvector& t1, const dvector& t2)
+{
+  int min = t1.indexmin();
+  int max = t1.indexmax();
+
+#ifndef OPT_LIB
+  if (min != t2.indexmin() || max != t2.indexmax())
   {
-     if (t1.indexmin() != t2.indexmin() ||  t1.indexmax() != t2.indexmax())
-     {
-       cerr << "Index bounds do not match in "
+    cerr << "Index bounds do not match in "
        "dvector operator+(const dvector&, const dvector&)\n";
-       ad_exit(1);
-     }
-     dvector tmp(t1.indexmin(),t1.indexmax());
-   #ifdef OPT_LIB
-     const double * pt1=&t1[t1.indexmin()];
-     const double * pt1m=&t1[t1.indexmax()];
-     const double * pt2=&t2[t2.indexmin()];
-     double * ptmp=&tmp[t1.indexmin()];
-     do
-     {
-       *ptmp++=*pt1++ + *pt2++;
-     }
-     while (pt1<=pt1m);
-
-   #else
-
-     for (int i=t1.indexmin(); i<=t1.indexmax(); i++)
-     {
-       tmp[i]=t1[i]+t2[i];
-     }
-   #endif
-     return(tmp);
+    ad_exit(1);
   }
+#endif
+  dvector tmp(min, max);
+
+  double* pt1 = t1.get_v() + min;
+  double* pt2 = t2.get_v() + min;
+  double* ptmp = tmp.get_v() + min;
+  for (int i = min; i <= max; ++i)
+  {
+    *ptmp += *pt1 + *pt2;
+
+    ++pt1;
+    ++pt2;
+    ++ptmp;
+  }
+
+  return tmp;
+}
 
   /**
   \ingroup matop
@@ -590,34 +591,34 @@ dvector operator+(const dvector& t1, const dvector& t2)
   the value of the difference of the two arguments.
   */
 dvector operator-(const dvector& t1, const dvector& t2)
+{
+  int min = t1.indexmin();
+  int max = t1.indexmax();
+
+#ifndef OPT_LIB
+  if (min != t2.indexmin() || max != t2.indexmax())
   {
-     if (t1.indexmin() != t2.indexmin() ||  t1.indexmax() != t2.indexmax())
-     {
-       cerr << "Index bounds do not match in "
-       "dvector operator - (const dvector&, const dvector&)\n";
-       ad_exit(1);
-     }
-     dvector tmp(t1.indexmin(),t1.indexmax());
-   #ifdef OPT_LIB
-     const double * pt1=&t1[t1.indexmin()];
-     const double * pt1m=&t1[t1.indexmax()];
-     const double * pt2=&t2[t2.indexmin()];
-     double * ptmp=&tmp[t1.indexmin()];
-     do
-     {
-       *ptmp++=*pt1++ - *pt2++;
-     }
-     while (pt1<=pt1m);
-
-   #else
-
-     for (int i=t1.indexmin(); i<=t1.indexmax(); i++)
-     {
-       tmp[i]=t1[i]-t2[i];
-     }
-   #endif
-     return(tmp);
+    cerr << "Index bounds do not match in "
+       "dvector operator+(const dvector&, const dvector&)\n";
+    ad_exit(1);
   }
+#endif
+  dvector tmp(min, max);
+
+  double* pt1 = t1.get_v() + min;
+  double* pt2 = t2.get_v() + min;
+  double* ptmp = tmp.get_v() + min;
+  for (int i = min; i <= max; ++i)
+  {
+    *ptmp += *pt1 - *pt2;
+
+    ++pt1;
+    ++pt2;
+    ++ptmp;
+  }
+
+  return tmp;
+}
 
   /**
   \ingroup matop
@@ -627,27 +628,24 @@ dvector operator-(const dvector& t1, const dvector& t2)
   \return A %dvector \f$z_i = x*y_i\f$.
   */
 dvector operator*(const double x, const dvector& t1)
+{
+  int min = t1.indexmin();
+  int max = t1.indexmax();
+
+  dvector tmp(min, max);
+
+  double* pt1 = t1.get_v() + min;
+  double* ptmp = tmp.get_v() + min;
+  for (int i = min; i <= max; ++i)
   {
-     dvector tmp(t1.indexmin(),t1.indexmax());
-   #ifdef OPT_LIB
-     const double * pt1=&t1[t1.indexmin()];
-     const double * pt1m=&t1[t1.indexmax()];
-     double * ptmp=&tmp[t1.indexmin()];
-     do
-     {
-       *ptmp++=x * *pt1++;
-     }
-     while (pt1<=pt1m);
+    *ptmp = x * *pt1;
 
-   #else
-
-     for (int i=t1.indexmin(); i<=t1.indexmax(); i++)
-     {
-       tmp[i]=x*t1[i];
-     }
-   #endif
-     return(tmp);
+    ++pt1;
+    ++ptmp;
   }
+
+  return tmp;
+}
 /*
 #ifdef __TURBOC__
    void myheapcheck(char * msg)

@@ -51,7 +51,7 @@
 
 #include <math.h>
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
   #include <climits>
 #endif
@@ -130,9 +130,7 @@ void gradient_structure::funnel_gradcalc()
 
   unsigned long int max_last_offset = ARR_LIST1->get_max_last_offset();
 
-  size_t size = sizeof(double_and_int);
-
-  double * zptr;
+  constexpr size_t size = sizeof(double_and_int);
 
    for (unsigned int i = 0; i < (max_last_offset/size); i++)
    {
@@ -145,7 +143,7 @@ void gradient_structure::funnel_gradcalc()
    }
 
     *GRAD_STACK1->ptr->dep_addr = 1;
-    zptr = GRAD_STACK1->ptr->dep_addr;
+    double* zptr = GRAD_STACK1->ptr->dep_addr;
 
 int break_flag=1;
 int funnel_flag=0;
@@ -193,13 +191,14 @@ do
    }
  }
 
+  constexpr size_t sizeofdouble = sizeof(double);
   //if (gradient_structure::save_var_flag)
   {
     unsigned long bytes_needed = min(
       gradient_structure::ARR_LIST1->get_last_offset() + 1,
       gradient_structure::ARRAY_MEMBLOCK_SIZE);
-    size_t _dsize = bytes_needed/sizeof(double);
-#ifndef OPT_LIB
+    size_t _dsize = bytes_needed / sizeofdouble;
+#ifdef DEBUG
     assert(_dsize <= INT_MAX);
 #endif
     int dsize = (int)_dsize;
@@ -219,7 +218,7 @@ do
     save_identifier_string("ue");
     if (!ISZERO(*(++dptr)))
     {
-      save_double_value(*dptr);
+      fp->save_double_value(*dptr);
       dcount++;
       zero_flag=0;
       offset(ii++)=0;
@@ -235,7 +234,7 @@ do
     {
       if (!ISZERO(*(++dptr)))
       {
-        save_double_value(*dptr);
+        fp->save_double_value(*dptr);
         dcount++;
         nnzero++;
         if (zero_flag)
@@ -256,32 +255,34 @@ do
         }
       }
     }
-    save_int_value(dcount);
+    fp->save_int_value(dcount);
 
     for (int i=0;i<ii;i++)
     {
-      save_int_value(offset(i));
+      fp->save_int_value(offset(i));
     }
-    save_int_value(ii);
+    fp->save_int_value(ii);
 
-    unsigned int ssize = GRAD_LIST->nlinks;
-#ifndef OPT_LIB
-    assert(ssize > 0);
-    assert(ssize <= INT_MAX);
-#endif
-    dvector stmp(0,(int)(ssize-1));
-
-#ifndef OPT_LIB
+    int nlinks = static_cast<int>(GRAD_LIST->nlinks);
+#ifdef DEBUG
     assert(GRAD_LIST->nlinks <= INT_MAX);
+    assert(nlinks > 0);
 #endif
-    for (int i=0; i < (int)GRAD_LIST->nlinks; i++)
+    dvector stmp(0, nlinks - 1);
+
+    double* pstmpi = stmp.get_v();
+    dlink** dlink_addresses = GRAD_LIST->dlink_addresses;
+    for (int i=0; i < nlinks; ++i)
     {
-      memcpy((char*)&(stmp(i)), GRAD_LIST->dlink_addresses[i],sizeof(double));
+      memcpy((char*)pstmpi, *dlink_addresses, sizeofdouble);
+
+      ++pstmpi;
+      ++dlink_addresses;
     }
     //dtmp.save_dvector_value();
     //dtmp.save_dvector_position();
-    stmp.save_dvector_value();
-    stmp.save_dvector_position();
+    fp->save_dvector_value(stmp);
+    fp->save_dvector_position(stmp);
 
     // save the address of the dependent variable for the funnel
     size_t wsize=sizeof(double_and_int*);
@@ -300,13 +301,16 @@ do
  */
 void funnel_derivatives(void)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   verify_identifier_string("ae");
-  prevariable_position deppos=restore_prevariable_position();
-  dvector_position stmp_pos=restore_dvector_position();
-  dvector stmp=restore_dvector_value(stmp_pos);
-  //dvector_position dtmp_pos=restore_dvector_position();
+  prevariable_position deppos=fp->restore_prevariable_position();
+  dvector_position stmp_pos=fp->restore_dvector_position();
+  dvector stmp=fp->restore_dvector_value(stmp_pos);
+  //dvector_position dtmp_pos=fp->restore_dvector_position();
   //dvector dtmp=restore_dvector_value(dtmp_pos);
-  int ii=restore_int_value();
+  int ii=fp->restore_int_value();
   int i;
   int ip=ii;
   if (!ip) ip=1;
@@ -315,15 +319,15 @@ void funnel_derivatives(void)
   //ivector offset(0,ip-1);
   for (i=ii-1;i>=0;i--)
   {
-    offset(i)=restore_int_value();
+    offset(i)=fp->restore_int_value();
   }
-  int dcount=restore_int_value();
+  int dcount=fp->restore_int_value();
   int dc=dcount;
   if (!dc) dc=1;
   dvector dx(0,dc-1);
   for (i=dcount-1;i>=0;i--)
   {
-    dx(i)=restore_double_value();
+    dx(i)=fp->restore_double_value();
   }
 
   verify_identifier_string("ue");
@@ -351,13 +355,16 @@ void funnel_derivatives(void)
   }
 
   int smax=stmp.indexmax();
+  double* pstmpi = stmp.get_v();
+  dlink** dlink_addresses = gs->GRAD_LIST->dlink_addresses;
   for (i=0;i<smax;i++)
   {
-    if (!ISZERO(stmp(i)))
+    if (!ISZERO(*pstmpi))
     {
-      *(double*)(gradient_structure::get()->GRAD_LIST->dlink_addresses[i])
-        +=stmp(i)*df;
+      *((double*)(*dlink_addresses)) += *pstmpi * df;
     }
+    ++pstmpi;
+    ++dlink_addresses;
   }
 }
 

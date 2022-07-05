@@ -1294,7 +1294,7 @@ void initial_params::set_random_effects_inactive(void) {;}
 pinitial_params& adlist_ptr::operator[](int i)
 {
 #ifdef DEBUG
-  assert(i < current);
+  assert(static_cast<unsigned int>(i) < current);
 #endif
 
   unsigned int index = static_cast<unsigned int>(i);

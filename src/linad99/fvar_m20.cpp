@@ -161,20 +161,20 @@ dvariable det(const dvar_matrix& aa)
   gradient_structure* gs = gradient_structure::get();
   DF_FILE* fp = gs->fp;
   save_identifier_string("PLACE7");
-  part_prod.save_dvector_value();
-  part_prod.save_dvector_position();
-  indx.save_ivector_value();
-  indx.save_ivector_position();
+  fp->save_dvector_value(part_prod);
+  fp->save_dvector_position(part_prod);
+  fp->save_ivector_value(indx);
+  fp->save_ivector_position(indx);
   save_identifier_string("PLACE3");
-  aa.save_dvar_matrix_position();
+  fp->save_dvar_matrix_position(aa);
   save_identifier_string("PLACE2b");
-  rdet.save_prevariable_position();
+  fp->save_prevariable_position(rdet);
   save_identifier_string("PLACE2a");
-  bb.save_dmatrix_value();
+  fp->save_dmatrix_value(bb);
   save_identifier_string("PLACE2");
-  bb.save_dmatrix_position();
+  fp->save_dmatrix_position(bb);
   save_identifier_string("PLACE1");
-  save_double_value(d);
+  fp->save_double_value(d);
   save_identifier_string("PLACE0");
   gs->GRAD_STACK1->set_gradient_stack(df_xdet);
   return rdet;
@@ -183,22 +183,25 @@ dvariable det(const dvar_matrix& aa)
 /** Adjoint code for dvariable det(const dvar_matrix& aa) */
 void df_xdet(void)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   verify_identifier_string("PLACE0");
-  double d=restore_double_value();
+  double d=fp->restore_double_value();
   verify_identifier_string("PLACE1");
-  dmatrix_position bpos=restore_dmatrix_position();
+  dmatrix_position bpos=fp->restore_dmatrix_position();
   verify_identifier_string("PLACE2");
-  dmatrix b=restore_dmatrix_value(bpos);
+  dmatrix b=fp->restore_dmatrix_value(bpos);
   verify_identifier_string("PLACE2a");
   //dvar_matrix_position rdet_pos=restore_prevariable_position();
-  double dfdet=restore_prevariable_derivative();
+  double dfdet=fp->restore_prevariable_derivative();
   verify_identifier_string("PLACE2b");
-  dvar_matrix_position a_pos=restore_dvar_matrix_position();
+  dvar_matrix_position a_pos=fp->restore_dvar_matrix_position();
   verify_identifier_string("PLACE3");
-  ivector_position indx_pos=restore_ivector_position();
+  ivector_position indx_pos=fp->restore_ivector_position();
   ivector indx=restore_ivector_value(indx_pos);
-  dvector_position part_prod_pos=restore_dvector_position();
-  dvector part_prod=restore_dvector_value(part_prod_pos);
+  dvector_position part_prod_pos=fp->restore_dvector_position();
+  dvector part_prod=fp->restore_dvector_value(part_prod_pos);
   verify_identifier_string("PLACE7");
   int lb=b.colmin();
   int ub=b.colmax();

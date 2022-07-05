@@ -93,63 +93,95 @@ dvector solve(const dmatrix& aa,const dvector& z,
   dvector vv(lb,ub);
 
   d=1.0;
+  dvector* pbbi = &bb(lb);
+  double* pvvi = &vv(lb);
   for (int i=lb;i<=ub;i++)
   {
     big=0.0;
+    double* pbbij = pbbi->get_v() + lb;
     for (int j=lb;j<=ub;j++)
     {
-      temp=fabs(bb(i,j));
+      temp=fabs(*pbbij);
       if (temp > big)
       {
         big=temp;
       }
+      ++pbbij;
     }
     if (big == 0.0)
     {
       cerr << "Error in matrix inverse -- matrix singular in inv(dmatrix)\n";
     }
-    vv[i]=1.0/big;
+    *pvvi = 1.0 / big;
+
+    ++pvvi;
+    ++pbbi;
   }
 
+  dvector* pbbj = &bb(lb);
+  double* pvvj = &vv(lb);
   for (int j=lb;j<=ub;j++)
   {
+    dvector* pbbi = &bb(lb);
     for (int i=lb;i<j;i++)
     {
-      sum=bb(i,j);
+      sum = *(pbbi->get_v() + j);
+      double* pbbik = pbbi->get_v() + lb;
+      dvector* pbbk = &bb(lb);
       for (int k=lb;k<i;k++)
       {
-        sum -= bb(i,k)*bb(k,j);
+        sum -= *pbbik * *(pbbk->get_v() + j);
+
+        ++pbbik;
+        ++pbbk;
       }
       //a[i][j]=sum;
-      bb(i,j)=sum;
+      *(pbbi->get_v() + j) = sum;
+
+      ++pbbi;
     }
     int imax = j;
     big=0.0;
+
+    pbbi = &bb(j);
+    pvvi = &vv(j);
     for (int i=j;i<=ub;i++)
     {
-      sum=bb(i,j);
+      sum = *(pbbi->get_v() + j);
+      double* pbbik = pbbi->get_v() + lb;
+      dvector* pbbk = &bb(lb);
       for (int k=lb;k<j;k++)
       {
-        sum -= bb(i,k)*bb(k,j);
+        sum -= *pbbik * *(pbbk->get_v() + j);
+
+        ++pbbik;
+        ++pbbk;
       }
-      bb(i,j)=sum;
-      dum=vv[i]*fabs(sum);
-      if ( dum >= big)
+      *(pbbi->get_v() + j) = sum;
+      dum = *pvvi * fabs(sum);
+      if (dum >= big)
       {
-        big=dum;
-        imax=i;
+        big = dum;
+        imax = i;
       }
+      ++pbbi;
+      ++pvvi;
     }
     if (j != imax)
     {
+      double* pbbjk = pbbj->get_v() + lb;
+      double* pbbimaxk = bb(imax).get_v() + lb;
       for (int k=lb;k<=ub;k++)
       {
-        dum=bb(imax,k);
-        bb(imax,k)=bb(j,k);
-        bb(j,k)=dum;
+        dum = *pbbimaxk;
+        *pbbimaxk = *pbbjk;
+        *pbbjk = dum;
+
+        ++pbbjk;
+        ++pbbimaxk;
       }
       d = -1.*d;
-      vv[imax]=vv[j];
+      vv[imax] = *pvvj;
 
       //if (j<ub)
       {
@@ -160,19 +192,25 @@ dvector solve(const dmatrix& aa,const dvector& z,
       //cout << "indx= " <<indx<<endl;
     }
 
-    if (bb(j,j) == 0.0)
+    double* pbbjj = pbbj->get_v() + j;
+    if (*pbbjj == 0.0)
     {
-      bb(j,j)=TINY;
+      *pbbjj = TINY;
     }
 
     if (j != n)
     {
-      dum=1.0/bb(j,j);
+      dum = 1.0 / *pbbjj;
+      pbbi = &bb(j + 1);
       for (int i=j+1;i<=ub;i++)
       {
-        bb(i,j) = bb(i,j) * dum;
+        *(pbbi->get_v() + j) = *(pbbi->get_v() + j) * dum;
+
+        ++pbbi;
       }
     }
+    ++pbbj;
+    ++pvvj;
   }
 
   // get the determinant
@@ -180,10 +218,12 @@ dvector solve(const dmatrix& aa,const dvector& z,
   dvector part_prod(lb,ub);
   part_prod(lb)=log(fabs(bb(lb,lb)));
   if (bb(lb,lb)<0) sign=-sign;
+
   for (int j=lb+1;j<=ub;j++)
   {
-    if (bb(j,j)<0) sign=-sign;
-    part_prod(j)=part_prod(j-1)+log(fabs(bb(j,j)));
+    double bbjj = bb(j, j);
+    if (bbjj < 0) sign=-sign;
+    part_prod(j)=part_prod(j-1)+log(fabs(bbjj));
   }
   ln_unsigned_det=part_prod(ub);
 
@@ -191,35 +231,64 @@ dvector solve(const dmatrix& aa,const dvector& z,
   dvector y(lb,ub);
   //int lb=rowmin;
   //int ub=rowmax;
-  dmatrix& b=bb;
+  //dmatrix& b=bb;
   ivector indxinv(lb,ub);
+
+  int* pindxi = indx.get_v() + lb;
   for (int i=lb;i<=ub;i++)
   {
-    indxinv(indx(i))=i;
+    indxinv(*pindxi) = i;
+    ++pindxi;
   }
 
+  int* pindxinvi = indxinv.get_v() + lb;
   for (int i=lb;i<=ub;i++)
   {
-    y(indxinv(i))=z(i);
+    y(*pindxinvi)=z(i);
+    ++pindxinvi;
   }
 
+  pbbi = &bb(lb);
+  double* pyi = &y(lb);
   for (int i=lb;i<=ub;i++)
   {
-    sum=y(i);
+    sum = *pyi;
+
+    double* pbbij = pbbi->get_v() + lb;
+    double* pyj = &y(lb);
     for (int j=lb;j<=i-1;j++)
     {
-      sum-=b(i,j)*y(j);
+      sum -= *pbbij * *pyj;
+
+      ++pyj;
+      ++pbbij;
     }
-    y(i)=sum;
+    *pyi = sum;
+
+    ++pyi;
+    ++pbbi;
   }
+  pbbi = &bb(ub);
+  pyi = &y(ub);
+  double* pxi = x.get_v() + ub;
   for (int i=ub;i>=lb;i--)
   {
-    sum=y(i);
+    sum = *pyi;
+
+    double* pbbij = pbbi->get_v() + i + 1;
+    double* pxj = x.get_v() + i + 1;
     for (int j=i+1;j<=ub;j++)
     {
-      sum-=b(i,j)*x(j);
+      sum -= *pbbij * *pxj;
+
+      ++pbbij;
+      ++pxj;
     }
-    x(i)=sum/b(i,i);
+    *pxi = sum / *(pbbi->get_v() + i);
+
+    --pbbi;
+    --pyi;
+    --pxi;
   }
 
   return x;

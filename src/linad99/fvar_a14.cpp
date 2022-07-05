@@ -22,6 +22,9 @@
   #include <iostream.hpp>
 #endif
 
+#ifdef DEBUG
+  #include <cassert>
+#endif
 
 /** Compute the dot product of two variable type vectors. The minimum and maxium
   legal subscripts of the arguments must agree; otherwize an error message
@@ -36,52 +39,40 @@ dvariable operator*(const dvar_vector& v1, const dvar_vector& v2)
 {
   gradient_structure* gs = gradient_structure::get();
   gs->RETURN_ARRAYS_INCREMENT();
-  if (v1.indexmin()!=v2.indexmin()||v1.indexmax()!=v2.indexmax())
+  DF_FILE* fp = gs->fp;
+  grad_stack* GRAD_STACK1 = gs->GRAD_STACK1;
+
+  int min=v1.indexmin();
+  int max=v1.indexmax();
+#ifdef OPT_LIB
+  if (min != v2.indexmin() || max != v2.indexmax())
   {
-    cerr << "Incompatible bounds in "
-      "prevariable operator * (const dvar_vector& v1, const dvar_vector& v2)"
-    << endl;
+    cerr << "Incompatible bounds in prevariable operator*(const dvar_vector&, const dvar_vector&)\n";
     ad_exit(1);
   }
-  double tmp=0;
+#endif
 
-  #ifndef USE_ASSEMBLER
-    int mmin=v1.indexmin();
-    int mmax=v1.indexmax();
-  #ifdef OPT_LIB
-    double * pt1=&v1.elem_value(mmin);
-    double * pt1m=&v1.elem_value(mmax);
-    double * pt2=&v2.elem_value(mmin);
-    do
-    {
-      tmp+= *pt1++ * *pt2++;
-    }
-    while (pt1<=pt1m);
-  #else
-    for (int i=mmin;i<=mmax;i++)
-    {
-      tmp+=v1.elem_value(i)*v2.elem_value(i);
-    }
-  #endif
-  #else
-    int mmin=v1.indexmin();
-    int n=v1.indexmax()-mmin+1;
-    dp_dotproduct(&tmp,&(v1.elem_value(mmin)),&(v2.elem_value(mmin)),n);
-  #endif
+  double tmp{0};
+  double_and_int* pva1 = v1.va + min;
+  double_and_int* pva2 = v2.va + min;
+  for (int i = min; i <= max; ++i)
+  {
+    tmp += pva1->x * pva2->x;
+    ++pva1;
+    ++pva2;
+  }
 
   dvariable vtmp=nograd_assign(tmp);
 
-  DF_FILE* fp = gs->fp;
-
   // The derivative list considerations
-  save_identifier_string("bbbb");
-  v1.save_dvar_vector_value(fp);
-  v1.save_dvar_vector_position(fp);
-  v2.save_dvar_vector_value(fp);
-  v2.save_dvar_vector_position(fp);
-  vtmp.save_prevariable_position();
-  save_identifier_string("aaaa");
-  gs->GRAD_STACK1->set_gradient_stack(dvdv_dot);
+  //save_identifier_string("bbbb");
+  fp->save_dvar_vector_value(v1);
+  fp->save_dvar_vector_position(v1);
+  fp->save_dvar_vector_value(v2);
+  fp->save_dvar_vector_position(v2);
+  fp->save_prevariable_position(vtmp);
+  //save_identifier_string("aaaa");
+  GRAD_STACK1->set_gradient_stack(dvdv_dot);
   gs->RETURN_ARRAYS_DECREMENT();
   return vtmp;
 }
@@ -92,35 +83,40 @@ dvariable operator*(const dvar_vector& v1, const dvar_vector& v2)
  */
 void dvdv_dot(void)
 {
-  verify_identifier_string("aaaa");
-  double dftmp=restore_prevariable_derivative();
-  dvar_vector_position v2pos=restore_dvar_vector_position();
+  DF_FILE* fp = gradient_structure::get_fp();
+
+  //verify_identifier_string("aaaa");
+  double dftmp=fp->restore_prevariable_derivative();
+  dvar_vector_position v2pos=fp->restore_dvar_vector_position();
   dvector cv2=restore_dvar_vector_value(v2pos);
-  dvar_vector_position v1pos=restore_dvar_vector_position();
+  dvar_vector_position v1pos=fp->restore_dvar_vector_position();
   dvector cv1=restore_dvar_vector_value(v1pos);
-  verify_identifier_string("bbbb");
-  dvector dfv1(cv1.indexmin(),cv1.indexmax());
-  dvector dfv2(cv2.indexmin(),cv2.indexmax());
-#ifdef OPT_LIB
-  double * pdf1=&dfv1(cv1.indexmin());
-  double * pdf1m=&dfv1(cv1.indexmax());
-  double * pdf2=&dfv2(cv1.indexmin());
-  double * pc1=&cv1(cv1.indexmin());
-  double * pc2=&cv2(cv1.indexmin());
-  do
-  {
-    *pdf1++ = dftmp * *pc2++;
-    *pdf2++ = dftmp * *pc1++;
-  }
-  while (pdf1<=pdf1m);
-#else
-  for (int i=cv1.indexmin();i<=cv1.indexmax();i++)
+  //verify_identifier_string("bbbb");
+
+  int min = cv1.indexmin();
+  int max = cv1.indexmax();
+
+#ifdef DEBUG
+  assert(min == cv2.indexmin() && max == cv2.indexmax());
+#endif
+
+  dvector dfv1(min, max);
+  dvector dfv2(min, max);
+
+  double* pcv1 = cv1.get_v() + min;
+  double* pcv2 = cv2.get_v() + min;
+  double* pdfv1 = dfv1.get_v() + min;
+  double* pdfv2 = dfv2.get_v() + min;
+  for (int i = min; i <= max; ++i)
   {
     //tmp+=cv1(i)*cv2(i);
-    dfv1(i)=dftmp*cv2.elem(i);
-    dfv2(i)=dftmp*cv1.elem(i);
+    *pdfv1 = dftmp * *pcv2;
+    *pdfv2 = dftmp * *pcv1;
+    ++pdfv1;
+    ++pdfv2;
+    ++pcv2;
+    ++pcv1;
   }
-#endif
   dfv1.save_dvector_derivatives(v1pos);
   dfv2.save_dvector_derivatives(v2pos);
 }
@@ -137,11 +133,16 @@ dvariable sum(const dvar_vector& v1)
   dvariable vtmp = 0.0;
   if (allocated(v1))
   {
-    dvector cv1=value(v1);
+    int min = v1.indexmin();
+    int max = v1.indexmax();
+    //dvector cv1=value(v1);
+    double_and_int* pv1 = v1.va + min;
     double tmp=0;
-    for (int i=cv1.indexmin();i<=cv1.indexmax();i++)
+    for (int i = min; i <= max; ++i)
     {
-      tmp+=cv1.elem(i);
+      //tmp+=cv1.elem(i);
+      tmp += pv1->x;
+      ++pv1;
     }
 
     vtmp = nograd_assign(tmp);
@@ -150,8 +151,8 @@ dvariable sum(const dvar_vector& v1)
     DF_FILE* fp = gs->fp;
     // The derivative list considerations
     save_identifier_string("bbbb");
-    v1.save_dvar_vector_position(fp);
-    vtmp.save_prevariable_position();
+    fp->save_dvar_vector_position(v1);
+    fp->save_prevariable_position(vtmp);
     save_identifier_string("aaaa");
     gs->GRAD_STACK1->set_gradient_stack(X_dv_sum);
   }
@@ -164,15 +165,22 @@ dvariable sum(const dvar_vector& v1)
  */
 void X_dv_sum(void)
 {
+  DF_FILE* fp = gradient_structure::get_fp();
+
   verify_identifier_string("aaaa");
-  double dftmp=restore_prevariable_derivative();
-  dvar_vector_position v1pos=restore_dvar_vector_position();
+  double dftmp=fp->restore_prevariable_derivative();
+  dvar_vector_position v1pos=fp->restore_dvar_vector_position();
   verify_identifier_string("bbbb");
-  dvector dfv1(v1pos.indexmin(),v1pos.indexmax());
-  for (int i=dfv1.indexmin();i<=dfv1.indexmax();i++)
+  int min = v1pos.indexmin();
+  int max = v1pos.indexmax();
+  dvector dfv1(min, max);
+  double* pdfv1 = dfv1.get_v() + min;
+  for (int i = min; i <= max; ++i)
   {
     //tmp+=cv1(i)*cv2(i);
-    dfv1(i)=dftmp;
+    //dfv1(i)=dftmp;
+    *pdfv1 = dftmp;
+    ++pdfv1;
   }
   dfv1.save_dvector_derivatives(v1pos);
 }
@@ -187,10 +195,18 @@ dvariable sum(const dvar_matrix& m)
 {
   gradient_structure* gs = gradient_structure::get();
   gs->RETURN_ARRAYS_INCREMENT();
-  dvariable tmp=0.;
-  for (int i=m.rowmin();i<=m.rowmax();i++)
+
+  int min = m.rowmin();
+  int max = m.rowmax();
+  dvariable tmp{0.0};
+  if (min <= max)
   {
-    tmp+=sum(m.elem(i));
+    const dvar_vector* pmi = &m(min);
+    for (int i = min; i <= max; ++i)
+    {
+      tmp += sum(*pmi);
+      ++pmi;
+    }
   }
   gs->RETURN_ARRAYS_DECREMENT();
   return tmp;

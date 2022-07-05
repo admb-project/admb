@@ -38,8 +38,8 @@ dvar_vector operator-(const dvar_vector& v1, const dvector& v2)
 
   // The derivative list considerations
   save_identifier_string("bbbb");
-  v1.save_dvar_vector_position(fp);
-  vtmp.save_dvar_vector_position(fp);
+  fp->save_dvar_vector_position(v1);
+  fp->save_dvar_vector_position(vtmp);
   save_identifier_string("aaaa");
   gs->GRAD_STACK1->set_gradient_stack(dvcv_sub);
   return vtmp;
@@ -51,11 +51,14 @@ dvar_vector operator-(const dvar_vector& v1, const dvector& v2)
  */
 void dvcv_sub(void)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("aaaa");
-  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();
   dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
-  dvar_vector_position v1pos=restore_dvar_vector_position();
+  dvar_vector_position v1pos=fp->restore_dvar_vector_position();
   verify_identifier_string("bbbb");
   dvector dfv1(dftmp.indexmin(),dftmp.indexmax());
   for (int i=dftmp.indexmin();i<=dftmp.indexmax();i++)

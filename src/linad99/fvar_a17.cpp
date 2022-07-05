@@ -12,7 +12,7 @@
 #ifdef _MSC_VER
   #include <memory.h>
 #endif
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
 #endif
 
@@ -24,44 +24,39 @@ void dvdv_add(void);
  */
 dvar_vector operator+(const dvar_vector& v1, const dvar_vector& v2)
 {
-  if (v1.indexmin()!=v2.indexmin()||v1.indexmax()!=v2.indexmax())
+  int mmin=v1.indexmin();
+  int mmax=v1.indexmax();
+#ifdef OPT_LIB
+  if (mmin != v2.indexmin() || mmax != v2.indexmax())
   {
     cerr << "Incompatible bounds in "
     "prevariable operator + (const dvar_vector& v1, const dvar_vector& v2)"
     << endl;
     ad_exit(1);
   }
+#endif
   //dvector cv1=value(v1);
   //dvector cv2=value(v2);
   kkludge_object kkk;
-  dvar_vector vtmp(v1.indexmin(),v1.indexmax(),kkk);
-#ifdef OPT_LIB
-    int mmin=v1.indexmin();
-    int mmax=v1.indexmax();
-    const double * pv1=&v1.elem_value(mmin);
-    const double * pv1m=&v1.elem_value(mmax);
-    const double * pv2=&v2.elem_value(mmin);
-    double * pt=&vtmp.elem_value(mmin);
-    do
-    {
-      *pt++ = *pv1++ + *pv2++;
-    }
-    while (pv1<=pv1m);
+  dvar_vector vtmp(mmin, mmax, kkk);
 
+#ifdef USE_ASSEMBLER
+  int min=v1.indexmin();
+  int n=v1.indexmax()-min+1;
+  dp_vector_add(&(vtmp.elem_value(min)),&(v1.elem_value(min)),
+    &(v2.elem_value(min)),n);
 #else
-  #ifndef USE_ASSEMBLER
-    int mmin=v1.indexmin();
-    int mmax=v1.indexmax();
-    for (int i=mmin;i<=mmax;i++)
-    {
-      vtmp.elem_value(i)=v1.elem_value(i)+v2.elem_value(i);
-    }
-  #else
-    int min=v1.indexmin();
-    int n=v1.indexmax()-min+1;
-    dp_vector_add(&(vtmp.elem_value(min)),&(v1.elem_value(min)),
-      &(v2.elem_value(min)),n);
-  #endif
+  double_and_int* pvtmp = vtmp.va + mmin;
+  double_and_int* pv1 = v1.va + mmin;
+  double_and_int* pv2 = v2.va + mmin;
+  for (int i = mmin; i <= mmax; ++i)
+  {
+    //vtmp.elem_value(i)=v1.elem_value(i)+v2.elem_value(i);
+    pvtmp->x = pv1->x + pv2->x;
+    ++pvtmp;
+    ++pv1;
+    ++pv2;
+  }
 #endif
 
   //dvar_vector vtmp=nograd_assign(tmp);
@@ -71,9 +66,9 @@ dvar_vector operator+(const dvar_vector& v1, const dvar_vector& v2)
 
   // The derivative list considerations
   save_identifier_string("bbbb");
-  v1.save_dvar_vector_position(fp);
-  v2.save_dvar_vector_position(fp);
-  vtmp.save_dvar_vector_position(fp);
+  fp->save_dvar_vector_position(v1);
+  fp->save_dvar_vector_position(v2);
+  fp->save_dvar_vector_position(vtmp);
   save_identifier_string("aaaa");
   gs->GRAD_STACK1->set_gradient_stack(dvdv_add);
   return vtmp;
@@ -85,24 +80,27 @@ dvar_vector operator+(const dvar_vector& v1, const dvar_vector& v2)
  */
 void dvdv_add(void)
 {
+  DF_FILE* fp = gradient_structure::get_fp();
+
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("aaaa");
-  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();
   dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
-  dvar_vector_position v2pos=restore_dvar_vector_position();
-  dvar_vector_position v1pos=restore_dvar_vector_position();
+  dvar_vector_position v2pos=fp->restore_dvar_vector_position();
+  dvar_vector_position v1pos=fp->restore_dvar_vector_position();
   verify_identifier_string("bbbb");
   int mmin=dftmp.indexmin();
   int mmax=dftmp.indexmax();
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(mmax >= mmin);
 #endif
   dvector dfv1(mmin,mmax);
   dvector dfv2(mmin,mmax);
 #ifdef OPT_LIB
-  size_t size = (size_t)(mmax - mmin + 1);
-  memcpy(&dfv1.elem(mmin),&dftmp.elem(mmin), size * sizeof(double));
-  memcpy(&dfv2.elem(mmin),&dftmp.elem(mmin), size * sizeof(double));
+  constexpr size_t sizeofdouble = sizeof(double);
+  size_t size = (size_t)(mmax - mmin + 1) * sizeofdouble;
+  memcpy(&dfv1.elem(mmin),&dftmp.elem(mmin), size);
+  memcpy(&dfv2.elem(mmin),&dftmp.elem(mmin), size);
 #else
   for (int i=dftmp.indexmin();i<=dftmp.indexmax();i++)
   {

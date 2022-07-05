@@ -19,11 +19,19 @@ dvar4_array operator/(const d4_array& m, const prevariable& d)
      gradient_structure* gs = gradient_structure::get();
      gs->RETURN_ARRAYS_INCREMENT();
 
+     int min = m.indexmin();
+     int max = m.indexmax();
      dvar4_array tmp;
      tmp.allocate(m);
-     for (int i=tmp.indexmin();i<=tmp.indexmax();i++)
+
+     dvar3_array* ptmpi = &tmp(min);
+     const d3_array* pmi = &m(min);
+     for (int i = min; i <= max; ++i)
      {
-       tmp(i)=m(i)/d;
+       *ptmpi = *pmi / d;
+
+       ++pmi;
+       ++ptmpi;
      }
      gs->RETURN_ARRAYS_DECREMENT();
      return tmp;
@@ -37,11 +45,22 @@ dvar4_array operator/(const dvar4_array& m, const double d)
    {
      gradient_structure* gs = gradient_structure::get();
      gs->RETURN_ARRAYS_INCREMENT();
+
+     int min = m.indexmin();
+     int max = m.indexmax();
      dvar4_array tmp;
      tmp.allocate(m);
-     for (int i=tmp.indexmin();i<=tmp.indexmax();i++)
+
+     double invd = 1.0 / d;
+
+     dvar3_array* ptmpi = &tmp(min);
+     const dvar3_array* pmi = &m(min);
+     for (int i = min; i <= max; ++i)
      {
-       tmp(i)=m(i)/d;
+       *ptmpi = *pmi * invd;
+
+       ++pmi;
+       ++ptmpi;
      }
      gs->RETURN_ARRAYS_DECREMENT();
      return tmp;
@@ -55,11 +74,18 @@ dvar4_array operator/(const dvar4_array& m, const prevariable& d)
    {
      gradient_structure* gs = gradient_structure::get();
      gs->RETURN_ARRAYS_INCREMENT();
+     int min = m.indexmin();
+     int max = m.indexmax();
      dvar4_array tmp;
      tmp.allocate(m);
-     for (int i=tmp.indexmin();i<=tmp.indexmax();i++)
+     dvar3_array* ptmpi = &tmp(min);
+     const dvar3_array* pmi = &m(min);
+     for (int i = min; i <= max; ++i)
      {
-       tmp(i)=m(i)/d;
+       *ptmpi = *pmi / d;
+
+       ++pmi;
+       ++ptmpi;
      }
      gs->RETURN_ARRAYS_DECREMENT();
      return tmp;
@@ -73,9 +99,14 @@ void dvar4_array::operator/=(const prevariable& d)
    {
      gradient_structure* gs = gradient_structure::get();
      gs->RETURN_ARRAYS_INCREMENT();
-     for (int i=indexmin();i<=indexmax();i++)
+     int min = indexmin();
+     int max = indexmax();
+     dvar3_array* pti = t + min;
+     for (int i = min; i <= max; ++i)
      {
-       (*this)(i)/=d;
+       *pti /= d;
+
+       ++pti;
      }
      gs->RETURN_ARRAYS_DECREMENT();
    }
@@ -88,9 +119,14 @@ void dvar4_array::operator/=(const double& d)
    {
      gradient_structure* gs = gradient_structure::get();
      gs->RETURN_ARRAYS_INCREMENT();
-     for (int i=indexmin();i<=indexmax();i++)
+     int min = indexmin();
+     int max = indexmax();
+     dvar3_array* pti = t + min;
+     for (int i = min; i <= max; ++i)
      {
-       (*this)(i)/=d;
+       *pti /= d;
+
+       ++pti;
      }
      gs->RETURN_ARRAYS_DECREMENT();
    }

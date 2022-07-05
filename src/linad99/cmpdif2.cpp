@@ -169,26 +169,36 @@ dvector_position dmatrix_position::operator () (int i)
  * Description not yet available.
  * \param
  */
-dvar_matrix_position::dvar_matrix_position(const dvar_matrix& m,int x)
-  : lb(m.rowmin(),m.rowmax()), ub(m.rowmin(),m.rowmax()),
+dvar_matrix_position::dvar_matrix_position(const dvar_matrix& m,int x):
+  lb(m.rowmin(),m.rowmax()),
+  ub(m.rowmin(),m.rowmax()),
   ptr(m.rowmin(),m.rowmax())
-
 {
   row_min=m.rowmin();
   row_max=m.rowmax();
-  for (int i=row_min;i<=row_max;i++)
+
+  if (row_min <= row_max)
   {
-    if (allocated(m(i)))
+    const dvar_vector* pm = &m(row_min);
+    int* plb = lb.get_v() + row_min;
+    int* pub = ub.get_v() + row_min;
+    for (int i=row_min;i<=row_max;i++)
     {
-      lb(i)=m(i).indexmin();
-      ub(i)=m(i).indexmax();
-      ptr(i)=m(i).get_va();
-    }
-    else
-    {
-      lb(i)=0;
-      ub(i)=-1;
-      ptr(i)=0;
+      if (allocated(*pm))
+      {
+        *plb = pm->indexmin();
+        *pub = pm->indexmax();
+        ptr(i) = pm->get_va();
+      }
+      else
+      {
+        *plb = 0;
+        *pub = -1;
+        ptr(i) = 0;
+      }
+      ++pm;
+      ++plb;
+      ++pub;
     }
   }
 }
@@ -203,11 +213,18 @@ dmatrix_position::dmatrix_position(const dmatrix& m)
 {
   row_min=m.rowmin();
   row_max=m.rowmax();
-  for (int i=row_min;i<=row_max;i++)
+  const dvector* pmi = &m(row_min);
+  int* plbi = lb.get_v() + row_min;
+  int* pubi = ub.get_v() + row_min;
+  for (int i = row_min; i <= row_max; ++i)
   {
-    lb(i)=m(i).indexmin();
-    ub(i)=m(i).indexmax();
-    ptr(i)=m(i).get_v();
+    *plbi = pmi->indexmin();
+    *pubi = pmi->indexmax();
+    ptr(i) = pmi->get_v();
+
+    ++pmi;
+    ++plbi;
+    ++pubi;
   }
 }
 
@@ -220,11 +237,16 @@ dvar_matrix_position::dvar_matrix_position(int min,int max)
 {
   row_min=min;
   row_max=max;
+  int* plbi = lb.get_v() + row_min;
+  int* pubi = ub.get_v() + row_min;
   for (int i=row_min;i<=row_max;i++)
   {
-    lb(i)=0;
-    ub(i)=-1;
+    *plbi = 0;
+    *pubi = -1;
     ptr(i)=0;
+
+    ++plbi;
+    ++pubi;
   }
 }
 
@@ -237,11 +259,16 @@ dmatrix_position::dmatrix_position(int min,int max)
 {
   row_min=min;
   row_max=max;
+  int* plbi = lb.get_v() + row_min;
+  int* pubi = ub.get_v() + row_min;
   for (int i=row_min;i<=row_max;i++)
   {
-    lb(i)=0;
-    ub(i)=-1;
+    *plbi = 0;
+    *pubi = -1;
     ptr(i)=0;
+
+    ++plbi;
+    ++pubi;
   }
 }
 

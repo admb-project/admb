@@ -34,8 +34,8 @@ dvar_matrix trans(const dvar_matrix& m1)
   gradient_structure* gs = gradient_structure::get();
   DF_FILE* fp = gs->fp;
   save_identifier_string("uu");
-  m1.save_dvar_matrix_position();
-  t1.save_dvar_matrix_position();
+  fp->save_dvar_matrix_position(m1);
+  fp->save_dvar_matrix_position(t1);
   save_identifier_string("vv");
   gs->GRAD_STACK1->set_gradient_stack(dfmattrans);
   return (t1);
@@ -47,9 +47,12 @@ dvar_matrix trans(const dvar_matrix& m1)
  */
 void dfmattrans(void)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   verify_identifier_string("vv");
-  dvar_matrix_position t1pos=restore_dvar_matrix_position();
-  dvar_matrix_position m1pos=restore_dvar_matrix_position();
+  dvar_matrix_position t1pos=fp->restore_dvar_matrix_position();
+  dvar_matrix_position m1pos=fp->restore_dvar_matrix_position();
   verify_identifier_string("uu");
   dmatrix dftmp=restore_dvar_matrix_derivatives(t1pos);
   dmatrix dfm1(m1pos);

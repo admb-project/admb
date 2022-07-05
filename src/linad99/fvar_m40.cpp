@@ -375,11 +375,11 @@ banded_lower_triangular_dvar_matrix choleski_decomp(
 
   //banded_lower_triangular_dvar_matrix vc=nograd_assign(L);
   save_identifier_string("rs");
-  L.save_dvar_matrix_position();
+  fp->save_dvar_matrix_position(L.d);
   save_identifier_string("rt");
-  MM.save_dvar_matrix_value(fp);
+  fp->save_dvar_matrix_value(MM.d);
   save_identifier_string("rl");
-  MM.save_dvar_matrix_position();
+  fp->save_dvar_matrix_position(MM.d);
   save_identifier_string("ro");
   gs->GRAD_STACK1->set_gradient_stack(dfcholeski_decomp_banded);
 
@@ -392,13 +392,16 @@ banded_lower_triangular_dvar_matrix choleski_decomp(
  */
 void dfcholeski_decomp_banded(void)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   verify_identifier_string("ro");
-  dvar_matrix_position MMpos=restore_dvar_matrix_position();
+  dvar_matrix_position MMpos=fp->restore_dvar_matrix_position();
   verify_identifier_string("rl");
   banded_symmetric_dmatrix M=
     restore_banded_symmetric_dvar_matrix_value(MMpos);
   verify_identifier_string("rt");
-  dvar_matrix_position vcpos=restore_dvar_matrix_position();
+  dvar_matrix_position vcpos=fp->restore_dvar_matrix_position();
   verify_identifier_string("rs");
   banded_lower_triangular_dmatrix dfL=
     restore_banded_lower_triangular_dvar_matrix_derivatives(vcpos);
@@ -612,6 +615,9 @@ int max(int i,int j,int k)
 dmatrix restore_lower_triangular_dvar_matrix_value(
   const dvar_matrix_position& mpos)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   // restores the size, address, and value information for a dvar_matrix
   banded_lower_triangular_dmatrix out((const dvar_matrix_position&)mpos);
   //int ierr;
@@ -619,7 +625,7 @@ dmatrix restore_lower_triangular_dvar_matrix_value(
   int max=out.rowmax();
   for (int i=max;i>=min;i--)
   {
-    dvar_vector_position vpos=restore_dvar_vector_position();
+    dvar_vector_position vpos=fp->restore_dvar_vector_position();
     out(i)=restore_dvar_vector_value(vpos);
   }
   return out;

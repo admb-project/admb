@@ -167,7 +167,7 @@ void DF_FILE::fwrite(const int& x)
       return;
     }
   #endif
-  const size_t num_bytes = sizeof(int);
+  constexpr size_t num_bytes = sizeof(int);
   toffset+=num_bytes; //increment the temporary offset count
   if (toffset>buff_end)
   {
@@ -175,7 +175,7 @@ void DF_FILE::fwrite(const int& x)
     toffset=num_bytes;
     offset=0;
   }
-  memcpy(buff+offset, &x, sizeof(int));
+  memcpy(buff+offset, &x, num_bytes);
   offset=toffset;
 }
 
@@ -191,7 +191,7 @@ void DF_FILE::fwrite(void * ptr)
       return;
     }
   #endif
-  const size_t num_bytes = sizeof(void*);
+  constexpr size_t num_bytes = sizeof(void*);
   toffset+=num_bytes; //increment the temporary offset count
   if (toffset>buff_end)
   {
@@ -199,6 +199,6 @@ void DF_FILE::fwrite(void * ptr)
     toffset=num_bytes;
     offset=0;
   }
-  memcpy(buff+offset, &ptr, sizeof(void*));
+  memcpy(buff+offset, &ptr, num_bytes);
   offset=toffset;
 }

@@ -273,13 +273,21 @@ void read_pass1_plus_eq_1(void)
  print_derivatives(pz,"z");
 #endif
 
-  for (unsigned int i=0;i<nvar;i++)
+  double* pz_u_bar = pz->u_bar;
+  double* px_u_bar = px->u_bar;
+  for (unsigned int i = 0; i < nvar; ++i)
   {
-    px->u_bar[i]+=pz->u_bar[i];
+    *px_u_bar += *pz_u_bar;
+    ++pz_u_bar;
+    ++px_u_bar;
   }
-  for (unsigned int i=0;i<nvar;i++)
+  double* pz_u_dot_bar = pz->u_dot_bar;
+  double* px_u_dot_bar = px->u_dot_bar;
+  for (unsigned int i = 0; i < nvar; ++i)
   {
-    px->u_dot_bar[i]+=pz->u_dot_bar[i];
+    *px_u_dot_bar += *pz_u_dot_bar;
+    ++pz_u_dot_bar;
+    ++px_u_dot_bar;
   }
 #if defined(PRINT_DERS)
  print_derivatives(px,"x");
@@ -340,7 +348,6 @@ void read_pass1_plus_eq_2(void)
 
   list.restoreposition(num_bytes); // save pointer to beginning of record;
 
-
   //double * zbar=(double*)list2.bptr;
   //double * zdotbar=(double*)(list2.bptr+nvar*sizeof(double));
 
@@ -349,14 +356,17 @@ void read_pass1_plus_eq_2(void)
   double * z_bar_tilde=pz->get_u_bar_tilde();
   double * z_dot_bar_tilde=pz->get_u_dot_bar_tilde();
   // Do second "reverse-reverse" pass calculations
-  for (unsigned int i=0;i<nvar;i++)
+  for (unsigned int i = 0; i < nvar; ++i)
   {
-    z_bar_tilde[i]+=x_bar_tilde[i];
+    *z_bar_tilde += *x_bar_tilde;
+    ++z_bar_tilde;
+    ++x_bar_tilde;
   }
-
-  for (unsigned int i=0;i<nvar;i++)
+  for (unsigned int i = 0; i < nvar; ++i)
   {
-    z_dot_bar_tilde[i]+=x_dot_bar_tilde[i];
+    *z_dot_bar_tilde += *x_dot_bar_tilde;
+    ++x_dot_bar_tilde;
+    ++z_dot_bar_tilde;
   }
   //list2.restoreposition(); // save pointer to beginning of record;
 #if defined(PRINT_DERS)
@@ -396,9 +406,14 @@ void read_pass1_plus_eq_3(void)
   list.restoreposition(); // save pointer to beginning of record;
 
   *(px->u_tilde)+=*pz->u_tilde;
-  for (unsigned int i=0;i<nvar;i++)
+
+  double* px_u_dot_tilde = px->u_dot_tilde;
+  double* pz_u_dot_tilde = pz->u_dot_tilde;
+  for (unsigned int i = 0; i < nvar; ++i)
   {
-    px->u_dot_tilde[i]+=pz->u_dot_tilde[i];
+    *px_u_dot_tilde += *pz_u_dot_tilde;
+    ++pz_u_dot_tilde;
+    ++px_u_dot_tilde;
   }
 #if defined(PRINT_DERS)
  print_derivatives(px,"x");

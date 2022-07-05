@@ -15,102 +15,151 @@
  * \param
  */
 dvector operator*(const dvector& t1, const double x)
-  {
-     dvector tmp(t1.indexmin(),t1.indexmax());
+{
+  int min = t1.indexmin();
+  int max = t1.indexmax();
+  dvector tmp(min, max);
 
-     for (int i=t1.indexmin(); i<=t1.indexmax(); i++)
-     {
-       tmp.elem(i)=x*t1.elem(i);
-     }
-     return(tmp);
+  double* ptmpi = tmp.get_v() + min;
+  double* pt1i = t1.get_v() + min;
+  for (int i = min; i <= max; ++i)
+  {
+    *ptmpi = *pt1i * x;
+
+    ++ptmpi;
+    ++pt1i;
   }
+  return tmp;
+}
 
 /**
  * Description not yet available.
  * \param
  */
 dvector operator/(const double x, const dvector& t1)
-  {
-     dvector tmp(t1.indexmin(),t1.indexmax());
+{
+  int min = t1.indexmin();
+  int max = t1.indexmax();
+  dvector tmp(min, max);
 
-     for (int i=t1.indexmin(); i<=t1.indexmax(); i++)
-     {
-       tmp.elem(i)=x/t1.elem(i);
-     }
-     return(tmp);
+  double* ptmpi = tmp.get_v() + min;
+  double* pt1i = t1.get_v() + min;
+  for (int i = min; i <= max; ++i)
+  {
+    *ptmpi = x / *pt1i;
+
+    ++ptmpi;
+    ++pt1i;
   }
+  return tmp;
+}
 
 /**
  * Description not yet available.
  * \param
  */
 dvector operator/(const dvector& t1, const double x)
-  {
-     dvector tmp(t1.indexmin(),t1.indexmax());
+{
+  int min = t1.indexmin();
+  int max = t1.indexmax();
+  dvector tmp(min, max);
 
-     for (int i=t1.indexmin(); i<=t1.indexmax(); i++)
-     {
-       tmp.elem(i)=t1.elem(i)/x;
-     }
-     return(tmp);
+  double* ptmpi = tmp.get_v() + min;
+  double* pt1i = t1.get_v() + min;
+  for (int i = min; i <= max; ++i)
+  {
+    *ptmpi = *pt1i / x;
+
+    ++ptmpi;
+    ++pt1i;
   }
+  return tmp;
+}
 
 /**
  * Description not yet available.
  * \param
  */
 dvector operator+(const double x, const dvector& t1)
-  {
-     dvector tmp(t1.indexmin(),t1.indexmax());
+{
+  int min = t1.indexmin();
+  int max = t1.indexmax();
+  dvector tmp(min, max);
 
-     for (int i=t1.indexmin(); i<=t1.indexmax(); i++)
-     {
-       tmp.elem(i)=x+t1.elem(i);
-     }
-     return(tmp);
+  double* ptmpi = tmp.get_v() + min;
+  double* pt1i = t1.get_v() + min;
+  for (int i = min; i <= max; ++i)
+  {
+    *ptmpi = x + *pt1i;
+
+    ++ptmpi;
+    ++pt1i;
   }
+  return tmp;
+}
 
 /**
  * Description not yet available.
  * \param
  */
 dvector operator+(const dvector& t1, const double x)
-  {
-     dvector tmp(t1.indexmin(),t1.indexmax());
+{
+  int min = t1.indexmin();
+  int max = t1.indexmax();
+  dvector tmp(min, max);
 
-     for (int i=t1.indexmin(); i<=t1.indexmax(); i++)
-     {
-       tmp.elem(i)=t1.elem(i)+x;
-     }
-     return(tmp);
+  double* ptmpi = tmp.get_v() + min;
+  double* pt1i = t1.get_v() + min;
+  for (int i = min; i <= max; ++i)
+  {
+    *ptmpi = *pt1i + x;
+
+    ++ptmpi;
+    ++pt1i;
   }
+  return tmp;
+}
 
 /**
  * Description not yet available.
  * \param
  */
 dvector operator-(const double x, const dvector& t1)
-  {
-     dvector tmp(t1.indexmin(),t1.indexmax());
+{
+  int min = t1.indexmin();
+  int max = t1.indexmax();
+  dvector tmp(min, max);
 
-     for (int i=t1.indexmin(); i<=t1.indexmax(); i++)
-     {
-       tmp.elem(i)=x-t1.elem(i);
-     }
-     return(tmp);
+  double* ptmpi = tmp.get_v() + min;
+  double* pt1i = t1.get_v() + min;
+  for (int i = min; i <= max; ++i)
+  {
+    *ptmpi = x - *pt1i;
+
+    ++ptmpi;
+    ++pt1i;
   }
+  return tmp;
+}
 
 /**
  * Description not yet available.
  * \param
  */
 dvector operator-(const dvector& t1, const double x)
-  {
-     dvector tmp(t1.indexmin(),t1.indexmax());
+{
+  int min = t1.indexmin();
+  int max = t1.indexmax();
+  dvector tmp(min, max);
 
-     for (int i=t1.indexmin(); i<=t1.indexmax(); i++)
-     {
-       tmp.elem(i)=t1.elem(i)-x;
-     }
-     return(tmp);
+  double* ptmpi = tmp.get_v() + min;
+  double* pt1i = t1.get_v() + min;
+  for (int i = min; i <= max; ++i)
+  {
+    *ptmpi = *pt1i - x;
+
+    ++ptmpi;
+    ++pt1i;
   }
+  return tmp;
+}

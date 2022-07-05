@@ -17,43 +17,58 @@ void dmcv_prod(void);
  * \param
  */
 dvar_vector operator*(const dvar_matrix& m, const dvector& x)
- {
-   gradient_structure* gs = gradient_structure::get();
-   DF_FILE* fp = gs->fp;
+{
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
 
-   gs->RETURN_ARRAYS_INCREMENT();
+  gs->RETURN_ARRAYS_INCREMENT();
 
-   if (x.indexmin() != m.colmin() || x.indexmax() != m.colmax())
-   {
-     cerr << " Incompatible array bounds in "
+  int imin = m.rowmin();
+  int imax = m.rowmax();
+  int jmin = x.indexmin();
+  int jmax = x.indexmax();
+
+#ifndef OPT_LIB
+  if (x.indexmin() != m.colmin() || x.indexmax() != m.colmax())
+  {
+    cerr << " Incompatible array bounds in "
      "dvar_vector operator * (const dvar_matrix& m, const dvar_vector& x)\n";
-     ad_exit(21);
-   }
+    ad_exit(21);
+  }
+#endif
 
-   kkludge_object kkk;
-   dvar_vector tmp(m.rowmin(),m.rowmax(),kkk);
-   double sum;
+  kkludge_object kludge;
+  dvar_vector tmp(imin, imax, kludge);
 
-   for (int i=m.rowmin(); i<=m.rowmax(); i++)
-   {
-     sum=0.0;
-     const dvar_vector& tt=m.elem(i);
-     for (int j=x.indexmin(); j<=x.indexmax(); j++)
-     {
-       //sum+=m[i][j]*x[j];
-       sum+=tt.elem_value(j)*x.elem(j);
-     }
-     tmp.elem_value(i)=sum;
-   }
+  double_and_int* ptmpi = tmp.va + imin;
+  const dvar_vector* pmi = &m(imin);
+  for (int i = imin; i <= imax; ++i)
+  {
+    double sum = 0.0;
+    const double_and_int* pmij = pmi->va + jmin;
+    double* pxj = x.get_v() + jmin;
+    for (int j = jmin; j <= jmax; ++j)
+    {
+      //sum+=m[i][j]*x[j];
+      sum += pmij->x  * *pxj;
+      ++pxj;
+      ++pmij;
+    }
+    ptmpi->x = sum;
+
+    ++pmi;
+    ++ptmpi;
+  }
   save_identifier_string("PL4");
-  x.save_dvector_value();
-  x.save_dvector_position();
-  m.save_dvar_matrix_position();
-  tmp.save_dvar_vector_position(fp);
+  fp->save_dvector_value(x);
+  fp->save_dvector_position(x);
+  fp->save_dvar_matrix_position(m);
+  fp->save_dvar_vector_position(tmp);
   save_identifier_string("PLX");
-   gs->GRAD_STACK1->set_gradient_stack(dmcv_prod);
-   gs->RETURN_ARRAYS_DECREMENT();
-   return(tmp);
+  gs->GRAD_STACK1->set_gradient_stack(dmcv_prod);
+  gs->RETURN_ARRAYS_DECREMENT();
+
+  return tmp;
  }
 
 /**
@@ -62,10 +77,12 @@ dvar_vector operator*(const dvar_matrix& m, const dvector& x)
  */
 void dmcv_prod(void)
 {
+  DF_FILE* fp = gradient_structure::get_fp();
+
   verify_identifier_string("PLX");
-  dvar_vector_position tmp_pos=restore_dvar_vector_position();
-  dvar_matrix_position m_pos=restore_dvar_matrix_position();
-  dvar_vector_position x_pos=restore_dvar_vector_position();
+  dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();
+  dvar_matrix_position m_pos=fp->restore_dvar_matrix_position();
+  dvar_vector_position x_pos=fp->restore_dvar_vector_position();
   dvector x=restore_dvar_vector_value(x_pos);
   verify_identifier_string("PL4");
   dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
@@ -73,21 +90,31 @@ void dmcv_prod(void)
   dmatrix dfm(m_pos);
   dfm.initialize();
 
-   double dfsum;
-   int mmin=dfm.rowmin();
-   int mmax=dfm.rowmax();
-   for (int i=mmax; i>=mmin; i--)
-   {
+  int mmin = dfm.rowmin();
+  int mmax = dfm.rowmax();
+  int jmin = x.indexmin();
+  int jmax = x.indexmax();
+  double* pdftmpi = dftmp.get_v() + mmax;
+  dvector* pdfmi = &dfm(mmax);
+  for (int i=mmax; i>=mmin; i--)
+  {
      // tmp.elem_value(i)=sum;
-     dfsum=dftmp.elem(i);
-     dvector& tt=dfm.elem(i);
-     for (int j=x.indexmax(); j>=x.indexmin(); j--)
+     double dfsum = *pdftmpi;
+     double* pdfmij = pdfmi->get_v() + jmax;
+     double* pxj = x.get_v() + jmax;
+     for (int j = jmax; j >= jmin; --j)
      {
        //sum+=(m.elem(i)).elem_value(j)*x.elem_value(j);
-       tt.elem(j)+=dfsum*x.elem(j);
+       *pdfmij += dfsum * *pxj;
+
+       --pdfmij;
+       --pxj;
      }
      //sum=0.0;
-     dfsum=0.0;
-   }
-   dfm.save_dmatrix_derivatives(m_pos);
+     dfsum = 0.0;
+
+     --pdfmi;
+     --pdftmpi;
+  }
+  dfm.save_dmatrix_derivatives(m_pos);
 }

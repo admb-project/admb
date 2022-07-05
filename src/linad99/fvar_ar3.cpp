@@ -19,12 +19,19 @@ dvar_vector fabs(const dvar_vector& t1)
      gradient_structure* gs = gradient_structure::get();
      gs->RETURN_ARRAYS_INCREMENT();
 
-     dvar_vector tmp(t1.indexmin(),t1.indexmax());
+     int min = t1.indexmin();
+     int max = t1.indexmax();
 
-     for (int i=t1.indexmin(); i<=t1.indexmax(); i++)
+     dvar_vector tmp(min, max);
+     double_and_int* ptmp = tmp.va + min;
+     double_and_int* pt1 = t1.va + min;
+     for (int i = min; i <= max; ++i)
      {
-       tmp.elem(i)=fabs(t1.elem(i));
+       ptmp->x = fabs(pt1->x);
+       ++ptmp;
+       ++pt1;
      }
+
      gs->RETURN_ARRAYS_DECREMENT();
      return(tmp);
   }
@@ -38,12 +45,19 @@ dvector value(const dvar_vector& t1)
      gradient_structure* gs = gradient_structure::get();
      gs->RETURN_ARRAYS_INCREMENT();
 
-     dvector tmp(t1.indexmin(),t1.indexmax());
+     int min = t1.indexmin();
+     int max = t1.indexmax();
 
-     for (int i=t1.indexmin(); i<=t1.indexmax(); i++)
+     dvector tmp(min, max);
+     double* ptmp = tmp.get_v() + min;
+     double_and_int* pt1 = t1.va + min;
+     for (int i = min; i <= max; ++i)
      {
-       tmp.elem(i)=value(t1.elem(i));
+       *ptmp = pt1->x;
+       ++ptmp;
+       ++pt1;
      }
+
      gs->RETURN_ARRAYS_DECREMENT();
      return(tmp);
   }

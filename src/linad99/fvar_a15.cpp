@@ -31,6 +31,7 @@ void cvdv_dot(void);
  */
 dvariable operator*(const dvector& cv1, const dvar_vector& v2)
 {
+#ifndef OPT_LIB
   if (cv1.indexmin()!=v2.indexmin()||cv1.indexmax()!=v2.indexmax())
   {
     cerr << "Incompatible bounds in "
@@ -38,6 +39,7 @@ dvariable operator*(const dvector& cv1, const dvar_vector& v2)
     << endl;
     ad_exit(1);
   }
+#endif
     double tmp=0;
     int mmin=cv1.indexmin();
     int mmax=cv1.indexmax();
@@ -69,10 +71,10 @@ dvariable operator*(const dvector& cv1, const dvar_vector& v2)
 
   // The derivative list considerations
   save_identifier_string("bbbb");
-  cv1.save_dvector_value();
-  cv1.save_dvector_position();
-  v2.save_dvar_vector_position(fp);
-  vtmp.save_prevariable_position();
+  fp->save_dvector_value(cv1);
+  fp->save_dvector_position(cv1);
+  fp->save_dvar_vector_position(v2);
+  fp->save_prevariable_position(vtmp);
   save_identifier_string("aaaa");
   gs->GRAD_STACK1->set_gradient_stack(cvdv_dot);
   return vtmp;
@@ -84,11 +86,14 @@ dvariable operator*(const dvector& cv1, const dvar_vector& v2)
  */
 void cvdv_dot(void)
 {
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
   verify_identifier_string("aaaa");
-  double dftmp=restore_prevariable_derivative();
-  dvar_vector_position v2pos=restore_dvar_vector_position();
-  dvector_position dpos=restore_dvector_position();
-  dvector cv1=restore_dvector_value(dpos);
+  double dftmp=fp->restore_prevariable_derivative();
+  dvar_vector_position v2pos=fp->restore_dvar_vector_position();
+  dvector_position dpos=fp->restore_dvector_position();
+  dvector cv1=fp->restore_dvector_value(dpos);
   dvector dfv2(cv1.indexmin(),cv1.indexmax());
   verify_identifier_string("bbbb");
 #ifdef OPT_LIB

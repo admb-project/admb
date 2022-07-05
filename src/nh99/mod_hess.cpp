@@ -645,6 +645,7 @@ bool function_minimizer::hess_inv(void)
         {
           if (percentage > defaults::percentage) cout << ", ";
           cout << percentage << "%";
+          cout.flush();
           percentage += 20;
           index += num;
         }
@@ -653,6 +654,7 @@ bool function_minimizer::hess_inv(void)
       {
         if (i > 1) cout << ", ";
         cout << i;
+        cout.flush();
       }
     }
   }

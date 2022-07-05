@@ -32,13 +32,13 @@ dvar_vector operator+(const prevariable& x, const dvar_vector& t1)
     gs->RETURN_ARRAYS_INCREMENT();
     dvar_vector tmp(t1.indexmin(),t1.indexmax());
     save_identifier_string("wcbf");
-    x.save_prevariable_position();
+    fp->save_prevariable_position(x);
     for (int i=t1.indexmin(); i<=t1.indexmax(); i++)
     {
       tmp.elem_value(i)=t1.elem_value(i)+value(x);
     }
-    tmp.save_dvar_vector_position(fp);
-    t1.save_dvar_vector_position(fp);
+    fp->save_dvar_vector_position(tmp);
+    fp->save_dvar_vector_position(t1);
     save_identifier_string("dduu");
     gs->RETURN_ARRAYS_DECREMENT();
     gs->GRAD_STACK1->set_gradient_stack(DF_dble_dv_add);
@@ -51,10 +51,13 @@ dvar_vector operator+(const prevariable& x, const dvar_vector& t1)
  */
  void DF_dble_dv_add(void)
  {
+    gradient_structure* gs = gradient_structure::get();
+    DF_FILE* fp = gs->fp;
+
     verify_identifier_string("dduu");
-    dvar_vector_position t1_pos=restore_dvar_vector_position();
-    dvar_vector_position tmp_pos=restore_dvar_vector_position();
-    prevariable_position xpos=restore_prevariable_position();
+    dvar_vector_position t1_pos=fp->restore_dvar_vector_position();
+    dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();
+    prevariable_position xpos=fp->restore_prevariable_position();
     dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
     dvector dft1(t1_pos.indexmin(),t1_pos.indexmax());
     verify_identifier_string("wcbf");

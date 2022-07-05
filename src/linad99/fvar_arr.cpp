@@ -40,12 +40,18 @@ dvar_vector& dvar_vector::shift(int min)
  */
 dvar_vector::dvar_vector(const independent_variables& t)
 {
-  allocate(t.indexmin(),t.indexmax());
+  int min = t.indexmin();
+  int max = t.indexmax();
+  allocate(min, max);
   if (va)
   {
-    for (int i=indexmin(); i<=indexmax(); i++)
+    double_and_int* pva = va + min;
+    double* pt = t.get_v() + min;
+    for (int i = min; i <= max; ++i)
     {
-      va[i].x=(t.v)[i];
+      pva->x = *pt;
+      ++pt;
+      ++pva;
     }
     make_indvar_list(*this);
   }
@@ -55,23 +61,29 @@ dvar_vector::dvar_vector(const independent_variables& t)
  * Description not yet available.
  * \param
  */
- dvar_vector::dvar_vector(const dvector& t)
- {
-   if (!t)
-   {
-     allocate();
-   }
-   else
-   {
-     va=NULL;
-     allocate(t.indexmin(),t.indexmax());
-     initialize();
-     for (int i = indexmin(); i <= indexmax(); i++)
-     {
-       va[i].x=(t.v)[i];
-     }
-   }
- }
+dvar_vector::dvar_vector(const dvector& t): va(nullptr)
+{
+  if (!t)
+  {
+    allocate();
+  }
+  else
+  {
+    int min = t.indexmin();
+    int max = t.indexmax();
+    allocate(min, max);
+    initialize();
+    double_and_int* pva = va + min;
+    double* pt = t.get_v() + min;
+    for (int i = min; i <= max; ++i)
+    {
+      va[i].x=(t.v)[i];
+      pva->x = *pt;
+      ++pt;
+      ++pva;
+    }
+  }
+}
 
 
 //#ifdef __BORLANDC__
@@ -150,7 +162,9 @@ void make_indvar_list(const dvar_vector& t)
 }
 void gradient_structure::make_indvar_list(const dvar_vector& t)
 {
-  unsigned int size = (unsigned int)(t.indexmax() - t.indexmin() + 1);
+  int min = t.indexmin();
+  int max = t.indexmax();
+  unsigned int size = (unsigned int)(max - min + 1);
   if (size > gradient_structure::MAX_NVAR_OFFSET)
   {
     ad_printf("Current maximum number of independent variables is %d\n",
@@ -175,10 +189,12 @@ void gradient_structure::make_indvar_list(const dvar_vector& t)
     ad_exit(1);
   }
 
-  for (int i = t.indexmin(); i <= t.indexmax(); ++i)
+  double_and_int* pt = t.va + min;
+  for (int i = min; i <= max; ++i)
   {
-    unsigned int tmp = (unsigned int)(i - t.indexmin());
-    INDVAR_LIST->put_address(tmp, &(t.va[i].x));
+    unsigned int tmp = (unsigned int)(i - min);
+    INDVAR_LIST->put_address(tmp, &(pt->x));
+    ++pt;
   }
   NVAR = size;
 }
@@ -261,11 +277,8 @@ void dvar_vector::allocate(int ncl, int nch)
   {
     index_min=ncl;
     index_max=nch;
-#ifndef OPT_LIB
-    assert(nch >= ncl);
-#endif
     unsigned int itemp = (unsigned int)(nch - ncl + 1);
-/*
+#ifdef DEBUG
     if (itemp<=0)
     {
          cerr << "Error in dvar_vector constructor max index must be"
@@ -273,7 +286,7 @@ void dvar_vector::allocate(int ncl, int nch)
             << "minindex = " << ncl << " maxindex = " << nch <<endl;
          ad_exit(1);
     }
-*/
+#endif
     gradient_structure* gs = gradient_structure::get();
     if (!gs)
     {

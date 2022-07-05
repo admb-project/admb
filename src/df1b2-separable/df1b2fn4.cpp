@@ -108,7 +108,8 @@ int df1b2_gradlist::write_pass1_eq(const df1b2variable * _px,
     ncount_checker(ncount,ncount_check);
 #endif
 
-  size_t total_bytes=sizeof(df1b2_header)+sizeof(df1b2_header);
+  constexpr size_t sizeofdf1b2_header = sizeof(df1b2_header);
+  size_t total_bytes = sizeofdf1b2_header + sizeofdf1b2_header;
 // string identifier debug stuff
 #if defined(SAFE_ALL)
   char ids[]="GV";
@@ -121,8 +122,8 @@ int df1b2_gradlist::write_pass1_eq(const df1b2variable * _px,
   memcpy(list,ids,slen);
 #endif
 
-  memcpy(list,(df1b2_header*)(px),sizeof(df1b2_header));
-  memcpy(list,(df1b2_header*)(pz),sizeof(df1b2_header));
+  memcpy(list,(df1b2_header*)(px), sizeofdf1b2_header);
+  memcpy(list,(df1b2_header*)(pz), sizeofdf1b2_header);
 
   nlist.bptr->numbytes=adptr_diff(list.bptr,tmpptr);
   nlist.bptr->pf=(ADrfptr)(&ad_read_pass1_eq);
@@ -177,11 +178,12 @@ void read_pass1_eq_1(void)
   checkidentiferstring("GV",list);
 #endif
 
+  constexpr size_t sizeofdf1b2_header = sizeof(df1b2_header);
   // get info from tape1
   df1b2_header * px=(df1b2_header *) list.bptr;
-  list.bptr+=sizeof(df1b2_header);
+  list.bptr += sizeofdf1b2_header;
   df1b2_header * pz=(df1b2_header *) list.bptr;
-  list.bptr+=sizeof(df1b2_header);
+  list.bptr += sizeofdf1b2_header;
   list.restoreposition(); // save pointer to beginning of record;
 
   // Do first reverse paSS calculations
@@ -194,7 +196,8 @@ void read_pass1_eq_1(void)
   fixed_smartlist2& nlist2=f1b2gradlist->nlist2;
   test_smartlist& list2=f1b2gradlist->list2;
 
-  size_t total_bytes=2*nvar*sizeof(double);
+  constexpr size_t sizeofdouble = sizeof(double);
+  size_t total_bytes = 2 * nvar * sizeofdouble;
 
 #if defined(SAFE_ALL)
   char ids[]="HT";
@@ -209,8 +212,8 @@ void read_pass1_eq_1(void)
   memcpy(list2,ids,slen);
 #endif
 
-  memcpy(list2,pz->get_u_bar(),nvar*(int)sizeof(double));
-  memcpy(list2,pz->get_u_dot_bar(),nvar*(int)sizeof(double));
+  memcpy(list2,pz->get_u_bar(), nvar * sizeofdouble);
+  memcpy(list2,pz->get_u_dot_bar(), nvar * sizeofdouble);
   *nlist2.bptr=adptr_diff(list2.bptr,tmpptr2);
   ++nlist2;
   // }
@@ -222,9 +225,14 @@ void read_pass1_eq_1(void)
   print_derivatives(px,"x");
 #endif
 
+  double* pxu_bar = px->u_bar;
+  double* pzu_bar = pz->u_bar;
   for (size_t i=0;i<nvar;i++)
   {
-    px->u_bar[i]+=pz->u_bar[i];
+    *pxu_bar += *pzu_bar;
+    ++pxu_bar;
+    ++pzu_bar;
+
 #if defined(ADDEBUG_PRINT)
     addebug_count++;
     if (addebug_count == 49)
@@ -234,18 +242,18 @@ void read_pass1_eq_1(void)
     cout << px->u_bar[i] << " " << pz->u_bar[i] << " " << addebug_count << endl;
 #endif
   }
+  double* pxu_dot_bar = px->u_dot_bar;
+  double* pzu_dot_bar = pz->u_dot_bar;
   for (size_t i=0;i<nvar;i++)
   {
-    px->u_dot_bar[i]+=pz->u_dot_bar[i];
+    *pxu_dot_bar += *pzu_dot_bar;
+    ++pxu_dot_bar;
+    ++pzu_dot_bar;
   }
-  for (size_t i=0;i<nvar;i++)
-  {
-    pz->u_bar[i]=0;
-  }
-  for (size_t i=0;i<nvar;i++)
-  {
-    pz->u_dot_bar[i]=0;
-  }
+
+  size_t size = nvar * sizeofdouble;
+  memset(pz->u_bar, 0, size);
+  memset(pz->u_dot_bar, 0, size);
 #if defined(PRINT_DERS)
   print_derivatives(px,"x");
   print_derivatives(pz,"z");
@@ -266,7 +274,8 @@ void read_pass1_eq_2(void)
   unsigned int nvar=df1b2variable::nvar;
   test_smartlist & list=f1b2gradlist->list;
 
-  size_t total_bytes=sizeof(df1b2_header)+sizeof(df1b2_header);
+  constexpr size_t sizeofdf1b2_header = sizeof(df1b2_header);
+  size_t total_bytes = sizeofdf1b2_header + sizeofdf1b2_header;
 #if defined(SAFE_ALL)
   char ids[]="GV";
   int slen=strlen(ids);
@@ -300,7 +309,7 @@ void read_pass1_eq_2(void)
 
   // get info from tape1
   df1b2_header * px=(df1b2_header *) list.bptr;
-  list.bptr+=sizeof(df1b2_header);
+  list.bptr += sizeofdf1b2_header;
   df1b2_header * pz=(df1b2_header *) list.bptr;
   list.restoreposition(num_bytes); // save pointer to beginning of record;
 
@@ -314,29 +323,38 @@ void read_pass1_eq_2(void)
   double * z_bar_tilde=pz->get_u_bar_tilde();
   double * z_dot_bar_tilde=pz->get_u_dot_bar_tilde();
   // Do second "reverse-reverse" pass calculations
+
 #if defined(PRINT_DERS)
- print_derivatives(" assign ", 1 ,1 ,0, 0,1);
- print_derivatives(pz,"z");
- print_derivatives(px,"x");
+  print_derivatives(" assign ", 1 ,1 ,0, 0,1);
+  print_derivatives(pz,"z");
+  print_derivatives(px,"x");
 #endif
 
+  constexpr size_t sizeofdouble = sizeof(double);
+  memset(z_bar_tilde, 0, nvar * sizeofdouble);
+  memset(z_dot_bar_tilde, 0, nvar * sizeofdouble);
+
+  double* pz_bar_tilde = z_bar_tilde;
+  double* px_bar_tilde = x_bar_tilde;
   for (size_t i=0;i<nvar;i++)
   {
-    z_bar_tilde[i]=0;
-    z_dot_bar_tilde[i]=0;
-  }
-  for (size_t i=0;i<nvar;i++)
-  {
-    z_bar_tilde[i]+=x_bar_tilde[i];
+    *pz_bar_tilde += *px_bar_tilde;
+    ++pz_bar_tilde;
+    ++px_bar_tilde;
   }
 
+  double* pz_dot_bar_tilde = z_dot_bar_tilde;
+  double* px_dot_bar_tilde = x_dot_bar_tilde;
   for (size_t i=0;i<nvar;i++)
   {
-    z_dot_bar_tilde[i]+=x_dot_bar_tilde[i];
+    *pz_dot_bar_tilde += *px_dot_bar_tilde;
+    ++pz_dot_bar_tilde;
+    ++px_dot_bar_tilde;
   }
+
 #if defined(PRINT_DERS)
- print_derivatives(px,"x");
- print_derivatives(pz,"z");
+  print_derivatives(px,"x");
+  print_derivatives(pz,"z");
 #endif
 }
 
@@ -363,40 +381,42 @@ void read_pass1_eq_3(void)
 #if defined(SAFE_ALL)
   checkidentiferstring("GV",list);
 #endif
+  constexpr size_t sizeofdf1b2_header = sizeof(df1b2_header);
   // get info from tape1
   df1b2_header * px=(df1b2_header *) list.bptr;
-  list.bptr+=sizeof(df1b2_header);
+  list.bptr+=sizeofdf1b2_header;
   df1b2_header * pz=(df1b2_header *) list.bptr;
   list.restoreposition(); // save pointer to beginning of record;
 
 #if defined(PRINT_DERS)
- print_derivatives(" assign ", 1 ,1 ,0, 0,1);
- print_derivatives(pz,"z");
- print_derivatives(px,"x");
+  print_derivatives(" assign ", 1 ,1 ,0, 0,1);
+  print_derivatives(pz,"z");
+  print_derivatives(px,"x");
 #endif
-
 
   *(px->u_tilde)+=*pz->u_tilde;
 #if defined(ADDEBUG_PRINT)
-    addebug_count++;
-    if (addebug_count == 49)
-    {
-      cout << "trap" << endl;
-    }
-    cout << *(px->u_tilde) << " " << *(pz->u_tilde) << " " << addebug_count
-         << endl;
+  addebug_count++;
+  if (addebug_count == 49)
+  {
+    cout << "trap" << endl;
+  }
+  cout << *(px->u_tilde) << " " << *(pz->u_tilde) << " " << addebug_count
+       << endl;
 #endif
+  double* px_u_dot_tilde = px->u_dot_tilde;
+  double* pz_u_dot_tilde = pz->u_dot_tilde;
   for (size_t i=0;i<nvar;i++)
   {
-    px->u_dot_tilde[i]+=pz->u_dot_tilde[i];
+    *px_u_dot_tilde += *pz_u_dot_tilde;
+    ++px_u_dot_tilde;
+    ++pz_u_dot_tilde;
   }
 #if defined(PRINT_DERS)
- print_derivatives(px,"x");
- print_derivatives(pz,"z");
+  print_derivatives(px,"x");
+  print_derivatives(pz,"z");
 #endif
   *(pz->u_tilde)=0;
-  for (size_t i=0;i<nvar;i++)
-  {
-    pz->u_dot_tilde[i]=0;
-  }
+  constexpr size_t sizeofdouble = sizeof(double);
+  memset(pz->u_dot_tilde, 0, nvar * sizeofdouble);
 }

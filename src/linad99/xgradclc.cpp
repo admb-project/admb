@@ -130,9 +130,7 @@ void gradient_structure::funnel_gradcalc()
 
   unsigned long int max_last_offset = ARR_LIST1->get_max_last_offset();
 
-  size_t size = sizeof(double_and_int);
-
-  double * zptr;
+  constexpr size_t size = sizeof(double_and_int);
 
    for (unsigned int i = 0; i < (max_last_offset/size); i++)
    {
@@ -145,7 +143,7 @@ void gradient_structure::funnel_gradcalc()
    }
 
     *GRAD_STACK1->ptr->dep_addr = 1;
-    zptr = GRAD_STACK1->ptr->dep_addr;
+    double* zptr = GRAD_STACK1->ptr->dep_addr;
 
 int break_flag=1;
 int funnel_flag=0;
@@ -193,12 +191,13 @@ do
    }
  }
 
+  constexpr size_t sizeofdouble = sizeof(double);
   //if (gradient_structure::save_var_flag)
   {
     unsigned long bytes_needed = min(
       gradient_structure::ARR_LIST1->get_last_offset() + 1,
       gradient_structure::ARRAY_MEMBLOCK_SIZE);
-    size_t _dsize = bytes_needed/sizeof(double);
+    size_t _dsize = bytes_needed / sizeofdouble;
 #ifdef DEBUG
     assert(_dsize <= INT_MAX);
 #endif
@@ -264,19 +263,21 @@ do
     }
     fp->save_int_value(ii);
 
-    unsigned int ssize = GRAD_LIST->nlinks;
-#ifdef DEBUG
-    assert(ssize > 0);
-    assert(ssize <= INT_MAX);
-#endif
-    dvector stmp(0,(int)(ssize-1));
-
+    int nlinks = static_cast<int>(GRAD_LIST->nlinks);
 #ifdef DEBUG
     assert(GRAD_LIST->nlinks <= INT_MAX);
+    assert(nlinks > 0);
 #endif
-    for (int i=0; i < (int)GRAD_LIST->nlinks; i++)
+    dvector stmp(0, nlinks - 1);
+
+    double* pstmpi = stmp.get_v();
+    dlink** dlink_addresses = GRAD_LIST->dlink_addresses;
+    for (int i=0; i < nlinks; ++i)
     {
-      memcpy((char*)&(stmp(i)), GRAD_LIST->dlink_addresses[i],sizeof(double));
+      memcpy((char*)pstmpi, *dlink_addresses, sizeofdouble);
+
+      ++pstmpi;
+      ++dlink_addresses;
     }
     //dtmp.save_dvector_value();
     //dtmp.save_dvector_position();
@@ -354,13 +355,16 @@ void funnel_derivatives(void)
   }
 
   int smax=stmp.indexmax();
+  double* pstmpi = stmp.get_v();
+  dlink** dlink_addresses = gs->GRAD_LIST->dlink_addresses;
   for (i=0;i<smax;i++)
   {
-    if (!ISZERO(stmp(i)))
+    if (!ISZERO(*pstmpi))
     {
-      *(double*)(gradient_structure::get()->GRAD_LIST->dlink_addresses[i])
-        +=stmp(i)*df;
+      *((double*)(*dlink_addresses)) += *pstmpi * df;
     }
+    ++pstmpi;
+    ++dlink_addresses;
   }
 }
 

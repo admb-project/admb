@@ -163,14 +163,21 @@ void laplace_approximation_calculator::
     dmatrix local_Dux(1,us,1,xs);
     local_Hess.initialize();
     dvector local_uadjoint(1,us);
+
+    dvector* plocal_Hessi = &local_Hess(1);
     for (int i=1;i<=us;i++)
     {
+      int i2=list(lre_index(i),2);
+
+      double* plocal_Hessij = plocal_Hessi->get_v() + 1;
       for (int j=1;j<=us;j++)
       {
-        int i2=list(lre_index(i),2);
         int j2=list(lre_index(j),2);
-        local_Hess(i,j)+=locy(i2).u_bar[j2-1];
+        *plocal_Hessij += locy(i2).u_bar[j2-1];
+
+	++plocal_Hessij;
       }
+      ++plocal_Hessi;
     }
 
     // First order derivative of separable function wrt u
@@ -181,14 +188,20 @@ void laplace_approximation_calculator::
     }
 
     // Mixed derivatives wrt x and u needed in the sensitivity of u_hat wrt x
+    dvector* plocal_Duxi = &local_Dux(1);
     for (int i=1;i<=us;i++)
     {
+      int i2=list(lre_index(i),2);
+
+      double* plocal_Duxij = plocal_Duxi->get_v() + 1;
       for (int j=1;j<=xs;j++)
       {
-        int i2=list(lre_index(i),2);
         int j2=list(lfe_index(j),2);
-        local_Dux(i,j)=locy(i2).u_bar[j2-1];
+        *plocal_Duxij = locy(i2).u_bar[j2-1];
+
+	++plocal_Duxij;
       }
+      ++plocal_Duxi;
     }
 
     // Enter calculations for the derivative of log(det(Hessian))
@@ -200,14 +213,21 @@ void laplace_approximation_calculator::
     dmatrix Hessadjoint=get_gradient_for_hessian_calcs(local_Hess,f);
     initial_df1b2params::cobjfun+=f;  // Adds 0.5*log(det(local_Hess))
 
+    dvector* pHessadjointi = &Hessadjoint(1);
     for (int i=1;i<=us;i++)
     {
+      int i2=list(lre_index(i),2);
+
+      double* pHessadjointij = pHessadjointi->get_v() + 1;
       for (int j=1;j<=us;j++)
       {
-        int i2=list(lre_index(i),2);
         int j2=list(lre_index(j),2);
-        locy(i2).get_u_bar_tilde()[j2-1]=Hessadjoint(i,j);
+        locy(i2).get_u_bar_tilde()[j2-1] = *pHessadjointij;
+
+        ++pHessadjointij;
       }
+
+      ++pHessadjointi;
     }
 
      df1b2variable::passnumber=2;

@@ -187,11 +187,13 @@ void gradient_structure::gradcalc(int nvar, const dvector& _g)
 #endif
   }
 
-  double* pgj = g.get_v() + g.indexmin();
+  double* pgi = g.get_v() + g.indexmin();
+  double** paddressi = gradient_structure::INDVAR_LIST->address;
   for (int i = 0; i < nvar; ++i)
   {
-    *pgj = *gradient_structure::INDVAR_LIST->get_address(i);
-    ++pgj;
+    *pgi = *(*paddressi);
+    ++pgi;
+    ++paddressi;
   }
 
   GRAD_STACK1->ptr = GRAD_STACK1->ptr_first;

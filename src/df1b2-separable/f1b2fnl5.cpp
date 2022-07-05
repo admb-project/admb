@@ -73,41 +73,57 @@ void laplace_approximation_calculator::
       local_fe_list(i)=list(lfe_index(i),1);
     }
 
+    dvector* plocal_Hessi = &local_Hess(1);
     for (int i=1;i<=num_local_re;i++)
     {
       int lrei=lre_index(i);
+      int i2=list(lrei,2);
+
+      double* plocal_Hessij = plocal_Hessi->get_v() + 1;
       for (int j=1;j<=num_local_re;j++)
       {
         int lrej=lre_index(j);
-        int i2=list(lrei,2);
         int j2=list(lrej,2);
-        local_Hess(i,j)+=locy(i2).u_bar[j2-1];
+
+        *plocal_Hessij += locy(i2).u_bar[j2-1];
+	++plocal_Hessij;
       }
+
+      ++plocal_Hessi;
     }
 
+    dvector* plocal_Duxi = &local_Dux(1);
     for (int i=1;i<=num_local_re;i++)
     {
+      int i2=list(lre_index(i),2);
+      double* plocal_Duxij = plocal_Duxi->get_v() + 1;
       for (int j=1;j<=num_fixed_effects;j++)
       {
-        int i2=list(lre_index(i),2);
         int j2=list(lfe_index(j),2);
-        local_Dux(i,j)=locy(i2).u_bar[j2-1];
+        *plocal_Duxij = locy(i2).u_bar[j2-1];
+
+	++plocal_Duxij;
       }
+      ++plocal_Duxi;
     }
 
     have_bounded_random_effects=0;
     if (have_bounded_random_effects)
     {
+      plocal_Hessi = &local_Hess(1);
       for (int i=1;i<=num_local_re;i++)
       {
         int lrei=lre_index(i);
         int i1=list(lrei,1);
+        double* plocal_Hessij = plocal_Hessi->get_v() + 1;
         for (int j=1;j<=num_local_re;j++)
         {
           int lrej=lre_index(j);
           int j1=list(lrej,1);
-          local_Hess(i,j)*=scale(i1-xsize)*scale(j1-xsize);
+          *plocal_Hessij *= scale(i1-xsize)*scale(j1-xsize);
+	  ++plocal_Hessij;
         }
+        ++plocal_Hessi;
       }
     }
   }

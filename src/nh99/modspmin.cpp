@@ -129,7 +129,7 @@ extern std::chrono::time_point<std::chrono::system_clock> start_time;
             << "." <<  endl;
 #else
        auto idx1 = model.rfind("/");
-       if (idx1 > 0) ++idx;
+       if (idx1 > 0) ++idx1;
        cout << "\nFinished running model '" << model.substr(idx1) << "' after "
             << get_elapsed_time(start_time, std::chrono::system_clock::now())
             << "." <<  endl;

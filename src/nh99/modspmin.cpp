@@ -119,7 +119,7 @@ extern std::chrono::time_point<std::chrono::system_clock> start_time;
 	!(option_match(ad_comm::argc,ad_comm::argv,"-hmc") > -1)){
 
        std::string model(argv[0]);
-#if define(_WIN64)
+#if defined(_WIN32)
        auto idx1 = model.rfind("\\");
        auto idx2 = model.rfind(".");
        auto total = idx2 - idx1 - 1;

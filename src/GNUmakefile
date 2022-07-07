@@ -408,9 +408,10 @@ ifeq ($(CMDSHELL),cmd)
 	$(DIST)\bin\sed.exe "s/\.md/\.txt/g" ..\README.md > ${DIST}\README.txt
 	copy /Y ..\CHANGES.md ${DIST}\CHANGES.txt
 	copy /Y ..\VERSION.txt ${DIST}
-	pushd $(DIST) & cscript ..\..\scripts\create-admb-command-prompt.vbs & popd
+	pushd $(DIST) & ..\..\scripts\create-admb-command-prompt.bat & popd
 	pushd $(DIST)\bin & copy ..\..\..\scripts\set-admb-command-prompt.bat & popd
 	pushd $(DIST)\bin & copy ..\..\..\scripts\admb-command-prompt.cmd & popd
+	pushd .. & scripts\create-admb-command-prompt.bat & popd
 else
 	cp -f ../LICENSE.txt ${DIST}
 	cat ../README.md | sed 's/\.md/\.txt/g' > ${DIST}/README.txt

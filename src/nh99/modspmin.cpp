@@ -118,22 +118,20 @@ extern std::chrono::time_point<std::chrono::system_clock> start_time;
 	!(option_match(ad_comm::argc,ad_comm::argv,"-rwm") > -1) &&
 	!(option_match(ad_comm::argc,ad_comm::argv,"-hmc") > -1)){
 
-       std::string model(argv[0]);
+       std::string fullpath(argv[0]);
 #if defined(_WIN32)
-       auto idx1 = model.rfind("\\");
-       auto idx2 = model.rfind(".");
+       auto idx1 = fullpath.rfind("\\");
+       auto idx2 = fullpath.rfind(".");
        auto total = idx2 - idx1 - 1;
-       std::string model_name = model.substr(idx1 + 1, total);
+       std::string model_name = fullpath.substr(idx1 + 1, total);
+#else
+       auto idx1 = fullpath.rfind("/");
+       if (idx1 > 0) ++idx1;
+       std::string model_name = fullpath.substr(idx1);
+#endif
        cout << "\nFinished running model '" << model_name << "' after "
             << get_elapsed_time(start_time, std::chrono::system_clock::now())
             << "." <<  endl;
-#else
-       auto idx1 = model.rfind("/");
-       if (idx1 > 0) ++idx1;
-       cout << "\nFinished running model '" << model.substr(idx1) << "' after "
-            << get_elapsed_time(start_time, std::chrono::system_clock::now())
-            << "." <<  endl;
-#endif
      }
   }
 

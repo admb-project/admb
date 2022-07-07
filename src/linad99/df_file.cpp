@@ -112,7 +112,12 @@ DF_FILE::DF_FILE(const size_t nbytes, const unsigned int id)
     ad_exit(1);
   }
   buff_end = static_cast<OFF_T>(nbytes);
-  buff_size = nbytes + sizeof(OFF_T);
+
+#if defined(_MSC_VER) || defined(__MINGW64__)
+  buff_size = static_cast<unsigned int>(static_cast<size_t>(nbytes) + sizeof(OFF_T));
+#else
+  buff_size = static_cast<size_t>(nbytes) + sizeof(OFF_T);
+#endif
 
 
   try

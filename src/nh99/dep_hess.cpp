@@ -52,7 +52,6 @@ dmatrix function_minimizer::dep_hess_routine(const dvariable& dep)
     output_stream << "Estimating row " << i << " out of " << nvar
                   << " for dependent variable hessian" << endl;
 
-    double f = 0.0;
     double xsave=x(i);
     sdelta1=x(i)+delta;
     sdelta1-=x(i);

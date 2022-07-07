@@ -224,7 +224,7 @@ extern std::chrono::time_point<std::chrono::system_clock> start_time;
         if (!function_minimizer::have_constraints)
         {
           minimize();
-	}
+        }
         else
         {
           constraints_minimize();
@@ -289,7 +289,7 @@ extern std::chrono::time_point<std::chrono::system_clock> start_time;
                 sd_routine();
               }
             }
-	    // if(function_minimizer::output_flag==1) function_minimizer::check_parameters_on_bounds();
+            // if(function_minimizer::output_flag==1) function_minimizer::check_parameters_on_bounds();
           }
           else
           {
@@ -544,25 +544,25 @@ void write_banner_stuff(void)
       // start addition
       // temporarily adding this here, need to fully merge in with other options still
       if (option_match(ad_comm::argc,ad_comm::argv,"-hmc") > -1)
-	{
-	  gradient_structure::Hybrid_bounded_flag=1;
-	  shmc_mcmc_routine(nmcmc,iseed0,dscale,0);
-	  return;
-	}
+      {
+        gradient_structure::Hybrid_bounded_flag=1;
+        shmc_mcmc_routine(nmcmc,iseed0,dscale,0);
+        return;
+      }
       if (option_match(ad_comm::argc,ad_comm::argv,"-nuts") > -1)
-	{
-	  gradient_structure::Hybrid_bounded_flag=1;
-	  nuts_mcmc_routine(nmcmc,iseed0,dscale,0);
-	  return;
-	}
+      {
+        gradient_structure::Hybrid_bounded_flag=1;
+        nuts_mcmc_routine(nmcmc,iseed0,dscale,0);
+        return;
+      }
       // This one is my modified version of the one Dave wrote. Mostly
       // cosmetic differences to get it to work with adnuts better.
       if (option_match(ad_comm::argc,ad_comm::argv,"-rwm") > -1)
-	{
-	  gradient_structure::Hybrid_bounded_flag=0;
-	  rwm_mcmc_routine(nmcmc,iseed0,dscale,0);
-	  return;
-	}
+      {
+        gradient_structure::Hybrid_bounded_flag=0;
+        rwm_mcmc_routine(nmcmc,iseed0,dscale,0);
+        return;
+      }
 
       // Temporarily turn off this chunk if using HMC
      else

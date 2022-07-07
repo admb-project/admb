@@ -118,8 +118,7 @@ extern std::chrono::time_point<std::chrono::system_clock> start_time;
 	!(option_match(ad_comm::argc,ad_comm::argv,"-rwm") > -1) &&
 	!(option_match(ad_comm::argc,ad_comm::argv,"-hmc") > -1)){
 
-       std::string m=get_filename((char*)ad_comm::adprogram_name);
-       cout << "\nFinished running model '" << m << "' after "
+       cout << "\nFinished running model '" << argv[0] << "' after "
             << get_elapsed_time(start_time, std::chrono::system_clock::now())
             << "." <<  endl;
      }

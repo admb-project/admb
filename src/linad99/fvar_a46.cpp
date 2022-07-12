@@ -181,21 +181,33 @@ dvar_vector elem_div(const dvector& v1, const dvar_vector& v2)
 
   gs->RETURN_ARRAYS_INCREMENT();
 
-  if (v1.indexmin()!=v2.indexmin()||v1.indexmax()!=v2.indexmax())
+  int min = v1.indexmin();
+  int max = v1.indexmax();
+#ifndef OPT_LIB
+  if (min != v2.indexmin() || max != v2.indexmax())
   {
     cerr << "Incompatible bounds in "
     "dvar_vector elem_prod(const dvar_vector& v1, const dvar_vector& v2)"
     << endl;
     ad_exit(1);
   }
-  dvar_vector tmp(v1.indexmin(),v1.indexmax());
-  dvector tmp_inv(v1.indexmin(),v1.indexmax());
+#endif
+  dvar_vector tmp(min, max);
+  dvector tmp_inv(min, max);
 
-  for (int i=v1.indexmin();i<=v1.indexmax();i++)
+  double* ptmp_invi = tmp_inv.get_v() + min;
+  const double* pv1i = v1.get_v() + min;
+  const double_and_int* pv2i = v2.va + min;
+  double_and_int* ptmpi = tmp.va + min;
+  for (int i = min; i <= max; ++i)
   {
-    double x=1./v2.elem_value(i);
-    tmp.elem_value(i)=v1.elem(i)*x;
-    tmp_inv.elem(i)=-tmp.elem_value(i)*x;
+    double x = 1.0 / pv2i->x;
+    ptmpi->x = *pv1i * x;
+    *ptmp_invi = -ptmpi->x * x;
+
+    ++ptmp_invi;
+    ++pv1i;
+    ++pv2i;
   }
 
   // The derivative list considerations
@@ -226,13 +238,22 @@ void cvdv_elem_div(void)
   dvector_position tmp_divpos=restore_dvector_position();
   dvector tmp_div=restore_dvector_value(tmp_divpos);
   verify_identifier_string("bbbb");
-  dvector dfv2(tmp_div.indexmin(),tmp_div.indexmax());
-  for (int i=dfv2.indexmin();i<=dfv2.indexmax();i++)
+
+  int min = tmp_div.indexmin();
+  int max = tmp_div.indexmax();
+  dvector dfv2(min, max);
+  double* pdfv2i = dfv2.get_v() + min;
+  double* ptmp_divi = tmp_div.get_v() + min;
+  double* pdftmpi = dftmp.get_v() + min;
+  for (int i = min; i <= max; ++i)
   {
     //tmp+=cv1(i)*cv2(i);
-    dfv2(i)=dftmp.elem(i)*tmp_div.elem(i);
+    *pdfv2i = *pdftmpi * *ptmp_divi;
+
+    ++pdftmpi;
+    ++ptmp_divi;
+    ++pdfv2i;
   }
   dfv2.save_dvector_derivatives(v2pos);
   //ierr=fsetpos(gradient_structure::get_fp(),&filepos);
 }
-

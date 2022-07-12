@@ -288,17 +288,22 @@ void dvar_matrix::save_dvar_matrix_position(void) const
 {
   // saves the size and address information for a dvar_vector
   dvar_matrix_position tmp(*this,1);
-  size_t wsize=sizeof(int);
-  size_t wsize1=sizeof(void*);
+  constexpr size_t wsize=sizeof(int);
+  constexpr size_t wsize1=sizeof(void*);
 
   DF_FILE* fp = gradient_structure::get_fp();
   int min=rowmin();
   int max=rowmax();
+  int* plbi = tmp.lb.get_v() + min;
+  int* pubi = tmp.ub.get_v() + min;
   for (int i=min;i<=max;i++)
   {
-    fp->fwrite(&(tmp.lb(i)),wsize);
-    fp->fwrite(&(tmp.ub(i)),wsize);
+    fp->fwrite(plbi, wsize);
+    fp->fwrite(pubi, wsize);
     fp->fwrite(&(tmp.ptr(i)),wsize1);
+
+    ++plbi;
+    ++pubi;
   }
   fp->fwrite(&(tmp.row_min),wsize);
   fp->fwrite(&(tmp.row_max),wsize);

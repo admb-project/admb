@@ -187,10 +187,16 @@ dvariable sum(const dvar_matrix& m)
 {
   gradient_structure* gs = gradient_structure::get();
   gs->RETURN_ARRAYS_INCREMENT();
-  dvariable tmp=0.;
-  for (int i=m.rowmin();i<=m.rowmax();i++)
+  dvariable tmp = 0.0;
+
+  int min = m.rowmin();
+  int max = m.rowmax();
+  const dvar_vector* pmi = &m(min);
+  for (int i = min; i <= max; ++i)
   {
-    tmp+=sum(m.elem(i));
+    tmp += sum(*pmi);
+
+    ++pmi;
   }
   gs->RETURN_ARRAYS_DECREMENT();
   return tmp;

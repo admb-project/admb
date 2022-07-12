@@ -12,9 +12,14 @@ Return the total sum of the elements in values.
 double sum(const dvector& values)
 {
   double total = 0.0;
-  for (int i = values.indexmin(); i <= values.indexmax(); ++i)
+  int min = values.indexmin();
+  int max = values.indexmax();
+  double* pvi = values.get_v() + min;
+  for (int i = min; i <= max; ++i)
   {
-    total += values.elem(i);
+    total += *pvi;
+
+    ++pvi;
   }
   return total;
 }
@@ -68,9 +73,14 @@ Return total sum of all elements in matrix.
 double sum(const dmatrix& matrix)
 {
   double total = 0.0;
-  for (int i = matrix.rowmin(); i <= matrix.rowmax(); ++i)
+  int min = matrix.rowmin();
+  int max = matrix.rowmax();
+  const dvector* pmi = &matrix(min);
+  for (int i = min; i <= max; ++i)
   {
-    total += sum(matrix.elem(i));
+    total += sum(*pmi);
+
+    ++pmi;
   }
   return total;
 }

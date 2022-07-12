@@ -133,12 +133,14 @@ ivector_position::ivector_position(void)
  */
 dvar_vector_position dvar_matrix_position::operator () (int i)
 {
+#ifndef OPT_LIB
   if (i<row_min||i>row_max)
   {
     cerr << "Index out of range in\n"
         "  dvar_vector_position dvar_matrix_position::operator () (int i)"
       << endl;
   }
+#endif
   dvar_vector_position tmp;
   tmp.min=lb(i);
   tmp.max=ub(i);

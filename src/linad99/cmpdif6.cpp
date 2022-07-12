@@ -27,18 +27,23 @@
 void dmatrix::save_dmatrix_position(void) const
 {
   dmatrix_position tmp(*this);
-  size_t wsize=sizeof(int);
-  size_t wsize1=sizeof(void*);
+  constexpr size_t wsize=sizeof(int);
+  constexpr size_t wsize1=sizeof(void*);
 
   DF_FILE* fp = gradient_structure::get_fp();
 
   int min=rowmin();
   int max=rowmax();
+  int* pubi = tmp.ub.get_v() + max;
+  int* plbi = tmp.lb.get_v() + max;
   for (int i=min;i<=max;i++)
   {
-    fp->fwrite(&(tmp.lb(i)),wsize);
-    fp->fwrite(&(tmp.ub(i)),wsize);
+    fp->fwrite(plbi, wsize);
+    fp->fwrite(pubi, wsize);
     fp->fwrite(&(tmp.ptr(i)),wsize1);
+
+    --pubi;
+    --plbi;
   }
   fp->fwrite(&(tmp.row_min),wsize);
   fp->fwrite(&(tmp.row_max),wsize);
@@ -53,7 +58,7 @@ void d3_array::save_d3_array_position() const
   // saves the size and address information for a dvar_vector
   int mmin=indexmin();
   int mmax=indexmax();
-  size_t wsize = sizeof(int);
+  constexpr size_t wsize = sizeof(int);
 /*
   dmatrix_position tmp(*this);
   const int wsize=sizeof(int);
@@ -66,8 +71,9 @@ void d3_array::save_d3_array_position() const
     gradient_structure::get_fp()->fwrite(&(tmp.ptr(i)),wsize1);
    }
 */
-  gradient_structure::get_fp()->fwrite(&(mmin),wsize);
-  gradient_structure::get_fp()->fwrite(&(mmax),wsize);
+  DF_FILE* fp = gradient_structure::get_fp();
+  fp->fwrite(&(mmin),wsize);
+  fp->fwrite(&(mmax),wsize);
 }
 
 /**
@@ -76,11 +82,13 @@ void d3_array::save_d3_array_position() const
  */
 d3_array_position restore_d3_array_position(void)
 {
+  constexpr size_t sizeofint = sizeof(int);
   // saves the size and address information for a dvar_vector
   int mmin;
   int mmax;
-  gradient_structure::get_fp()->fread(&mmax,sizeof(int));
-  gradient_structure::get_fp()->fread(&mmin,sizeof(int));
+  DF_FILE* fp = gradient_structure::get_fp();
+  fp->fread(&mmax, sizeofint);
+  fp->fread(&mmin, sizeofint);
   d3_array_position tmp(mmin,mmax);
   return tmp;
 }
@@ -93,17 +101,24 @@ dvar_matrix_position restore_dvar_matrix_position(void)
 {
   DF_FILE* fp = gradient_structure::get_fp();
 
+  constexpr size_t sizeofint = sizeof(int);
+  constexpr size_t sizeofptr = sizeof(void*);
   int min;
   int max;
-  fp->fread(&max,sizeof(int));
-  fp->fread(&min,sizeof(int));
+  fp->fread(&max, sizeofint);
+  fp->fread(&min, sizeofint);
   dvar_matrix_position tmp(min,max);
   // cout << "tmp.ptr= " << tmp.ptr ;
+  int* pubi = tmp.ub.get_v() + max;
+  int* plbi = tmp.lb.get_v() + max;
   for (int i=max;i>=min;i--)
   {
-    fp->fread(&(tmp.ptr(i)),sizeof(void*));
-    fp->fread(&(tmp.ub(i)),sizeof(int));
-    fp->fread(&(tmp.lb(i)),sizeof(int));
+    fp->fread(&(tmp.ptr(i)), sizeofptr);
+    fp->fread(pubi, sizeofint);
+    fp->fread(plbi, sizeofint);
+
+    --pubi;
+    --plbi;
   }
   return tmp;
 }

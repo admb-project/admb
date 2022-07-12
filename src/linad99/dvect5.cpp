@@ -11,7 +11,8 @@ void dvector::initialize()
 {
   if (allocated())  // only initialize allocated objects
   {
-    memset(&elem(indexmin()), 0, size() * sizeof(double));
+    constexpr size_t sizeofdouble = sizeof(double);
+    memset(v + index_min, 0, size() * sizeofdouble);
 /*
     for (int i=indexmin();i<=indexmax();i++)
     {

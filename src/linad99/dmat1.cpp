@@ -28,22 +28,36 @@ dvector operator*(const dvector& A, const dmatrix& B)
   }
 #endif
 
+  int jmin = B.colmin();
+  int jmax = B.colmax();
+  int imin = A.indexmin();
+  int imax = A.indexmax();
+
+#ifndef OPT_LIB
   if (A.indexmin() != B.rowmin() || A.indexmax() != B.rowmax())
   {
     cerr << " Incompatible array bounds in "
          << "dvector operator*(const dvector& A, const dmatrix& B)\n";
     ad_exit(1);
   }
+#endif
 
-  dvector results(B.colmin(), B.colmax());
+  dvector results(jmin, jmax);
   results.initialize();
 
-  for (int j = B.colmin(); j <= B.colmax(); ++j)
+  double* presultsj = results.get_v() + jmin;
+  for (int j = jmin; j <= jmax; ++j)
   {
-    for (int i = A.indexmin(); i <= A.indexmax(); ++i)
+    const dvector* pBi = &B(imin);
+    const double* pAi = A.get_v() + imin;
+    for (int i = imin; i <= imax; ++i)
     {
-       results[j] += A[i] * B[i][j];
+      *presultsj += *pAi * *(pBi->get_v() + j);
+
+      ++pAi;
+      ++pBi;
     }
+    ++presultsj;
   }
 #ifdef DIAG
   if (heapcheck() == _HEAPCORRUPT && ad_printf)

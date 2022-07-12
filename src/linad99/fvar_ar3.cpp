@@ -34,19 +34,24 @@ dvar_vector fabs(const dvar_vector& t1)
  * \param
  */
 dvector value(const dvar_vector& t1)
+{
+  gradient_structure* gs = gradient_structure::get();
+  gs->RETURN_ARRAYS_INCREMENT();
+
+  int min = t1.indexmin();
+  int max = t1.indexmax();
+  dvector tmp(min, max);
+
+  double* ptmpi = tmp.get_v() + min;
+  for (int i = min; i <= max; ++i)
   {
-     gradient_structure* gs = gradient_structure::get();
-     gs->RETURN_ARRAYS_INCREMENT();
+    *ptmpi = value(t1.elem(i));
 
-     dvector tmp(t1.indexmin(),t1.indexmax());
-
-     for (int i=t1.indexmin(); i<=t1.indexmax(); i++)
-     {
-       tmp.elem(i)=value(t1.elem(i));
-     }
-     gs->RETURN_ARRAYS_DECREMENT();
-     return(tmp);
+    ++ptmpi;
   }
+  gs->RETURN_ARRAYS_DECREMENT();
+  return(tmp);
+}
 
 /**
  * Description not yet available.

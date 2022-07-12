@@ -56,21 +56,18 @@ dvar_vector& dvar_vector::operator=(const dvar_vector& t)
      }
      if (va != t.va)
      {
-#ifdef OPT_LIB
+//#ifdef OPT_LIB
+       constexpr size_t sizeofdouble = sizeof(double);
        size_t size = (size_t)(mmax - mmin + 1);
-       memcpy(&elem_value(mmin), &t.elem_value(mmin), size * sizeof(double));
+       memcpy(va + mmin, t.va + mmin, size * sizeofdouble);
+       /*
 #else
-       #ifndef USE_ASSEMBLER
-         for (int i=mmin; i<=mmax; i++)
-         {
-           va[i].x = (t.va[i]).x;
-         }
-       #else
-         int min=t.indexmin();
-         int n=t.indexmax()-min+1;
-         dw_block_move(&(this->elem_value(min)),&(t.elem_value(min)),n);
-       #endif
+       for (int i=mmin; i<=mmax; i++)
+       {
+         va[i].x = (t.va[i]).x;
+       }
 #endif
+       */
 
        gradient_structure* gs = gradient_structure::get();
        DF_FILE* fp = gs->fp;
@@ -97,9 +94,14 @@ dvar_vector& dvar_vector::operator=(const prevariable& t)
  {
    int mmin=indexmin();
    int mmax=indexmax();
-   for (int i=mmin; i<=mmax; i++)
+
+   double valuet = value(t);
+   double_and_int* pvai = va + mmin;
+   for (int i=mmin; i<=mmax; ++i)
    {
-     va[i].x = value(t);
+     pvai->x = valuet;
+
+     ++pvai;
    }
 
    gradient_structure* gs = gradient_structure::get();
@@ -161,11 +163,16 @@ void dv_eqprev(void)
   dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
   prevariable_position t_pos=restore_prevariable_position();
   verify_identifier_string("dddd");
-  double dft=0.;
-  for (int i=dftmp.indexmin();i<=dftmp.indexmax();i++)
+  double dft = 0.0;
+  int min = dftmp.indexmin();
+  int max = dftmp.indexmax();
+  double* pdftmpi = dftmp.get_v() + min;
+  for (int i = min; i <= max; ++i)
   {
     //vtmp.elem(i)=t;
-    dft+=dftmp.elem(i);
+    dft += *pdftmpi;
+
+    ++pdftmpi;
   }
   save_double_derivative(dft,t_pos);
 }
@@ -181,30 +188,25 @@ void dv_assign(void)
   dvar_vector_position t_pos=restore_dvar_vector_position();
   verify_identifier_string("bbbb");
   dvector dft(dftmp.indexmin(),dftmp.indexmax());
-#ifndef OPT_LIB
-  assert(dftmp.indexmax() >= dftmp.indexmin());
-#endif
-#ifdef OPT_LIB
+
+//#ifdef OPT_LIB
+  constexpr size_t sizeofdouble = sizeof(double);
   int mmin=dftmp.indexmin();
   int mmax=dftmp.indexmax();
   size_t size = (size_t)(mmax - mmin + 1);
-  memcpy(&dft.elem(mmin),&dftmp.elem(mmin), size * sizeof(double));
+  memcpy(dft.get_v() + mmin, dftmp.get_v() + mmin, size * sizeofdouble);
 
+  /*
 #else
-  #ifndef USE_ASSEMBLER
   int mmin=dftmp.indexmin();
   int mmax=dftmp.indexmax();
-  for (int i=mmin;i<=mmax;i++)
+  for (int i=mmin;i<=mmax; ++i)
   {
     //vtmp.elem(i)=value(v1.elem(i))+value(v2.elem(i));
     dft.elem(i)=dftmp.elem(i);
   }
-  #else
-  int mmin=dftmp.indexmin();
-  int n=dftmp.indexmax()-mmin+1;
-     dw_block_move(&(dft.elem(mmin)),&(dftmp.elem(mmin)),n);
-  #endif
 #endif
+  */
 
   dft.save_dvector_derivatives(t_pos);
 }

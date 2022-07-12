@@ -36,46 +36,66 @@ void ludcmp(const dmatrix& a, const ivector& indx, const double& d);
 */
 dmatrix inv(const dmatrix& m1)
 {
-  double d;
-  if (m1.rowmin()!=m1.colmin() || m1.rowmax() != m1.colmax())
+  int rowmin = m1.rowmin();
+  int rowmax = m1.rowmax();
+#ifndef OPT_LIB
+  if (rowmin != m1.colmin() || rowmax != m1.colmax())
   {
     cerr << " Error in dmatrix inv(const dmatrix&) -- matrix not square \n";
   }
+#endif
 
-  dmatrix a(m1.rowmin(),m1.rowmax(),m1.rowmin(),m1.rowmax());
+  dmatrix a(rowmin, rowmax, rowmin, rowmax);
 
-  int i;
-  for (i=m1.rowmin(); i<=m1.rowmax(); i++)
+  dvector* pai = &a(rowmin);
+  const dvector* pm1i = &m1(rowmin);
+  for (int i = rowmin; i <= rowmax; ++i)
   {
-    for (int j=m1.rowmin(); j<=m1.rowmax(); j++)
+    double* paij = pai->get_v() + rowmin;
+    double* pm1ij = pm1i->get_v() + rowmin;
+    for (int j = rowmin; j <= rowmax; ++j)
     {
-      a[i][j]=m1[i][j];
+      *paij = *pm1ij;
+
+      ++pm1ij;
+      ++paij;
     }
+    ++pai;
+    ++pm1i;
   }
-  ivector indx(m1.rowmin(),m1.rowmax());
+  ivector indx(rowmin, rowmax);
   //int indx[30];
 
+  double d;
   ludcmp(a,indx,d);
 
-  dmatrix y(m1.rowmin(),m1.rowmax(),m1.rowmin(),m1.rowmax());
-  dvector col(m1.rowmin(),m1.rowmax());
+  dmatrix y(rowmin, rowmax, rowmin, rowmax);
+  dvector col(rowmin, rowmax);
 
-  for (int j=m1.rowmin(); j<=m1.rowmax(); j++)
+  for (int j = rowmin; j <= rowmax; ++j)
   {
-    for (i=m1.rowmin(); i<=m1.rowmax(); i++)
+    double* pcoli = col.get_v() + rowmin;
+    for (int i = rowmin; i <= rowmax; ++i)
     {
-      col[i]=0;
+      *pcoli = 0.0;
+
+      ++pcoli;
     }
-    col[j]=1;
+    col[j] = 1.0;
 
     lubksb(a,indx,col);
 
-    for (i=m1.rowmin(); i<=m1.rowmax(); i++)
+    dvector* pyi = &y(rowmin);
+    pcoli = col.get_v() + rowmin;
+    for (int i = rowmin; i <= rowmax; ++i)
     {
-      y[i][j]=col[i];
+      *(pyi->get_v() + j) = *pcoli;
+
+      ++pyi;
+      ++pcoli;
     }
   }
-  return(y);
+  return y;
 }
 
 /** Inverse of a constant matrix by LU decomposition.

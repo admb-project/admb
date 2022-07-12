@@ -211,16 +211,29 @@ void dfouter_prodvv(void);
  * \param
  */
 dvar_matrix outer_prod(const dvar_vector& v1, const dvar_vector& v2)
- {
-   dvar_matrix tmp(v1.indexmin(),v1.indexmax(), v2.indexmin(), v2.indexmax() );
+{
+  int imin = v1.indexmin();
+  int imax = v1.indexmax();
+  int jmin = v2.indexmin();
+  int jmax = v2.indexmax();
+  dvar_matrix tmp(imin, imax, jmin, jmax);
 
-   for (int i=v1.indexmin(); i<=v1.indexmax(); i++)
-   {
-     for (int j=v2.indexmin(); j<=v2.indexmax(); j++)
-     {
-       tmp.elem_value(i,j)=v1.elem_value(i)*v2.elem_value(j);
-     }
-   }
+  dvar_vector* ptmpi = &tmp(imin);
+  double_and_int* pv1i = v1.va + imin;
+  for (int i = imin; i <= imax; ++i)
+  {
+    double_and_int* ptmpij = ptmpi->va + jmin;
+    double_and_int* pv2j = v2.va + jmin;
+    for (int j = jmin; j <= jmax; ++j)
+    {
+      ptmpij->x = pv1i->x * pv2j->x;
+
+      ++ptmpij;
+      ++pv2j;
+    }
+    ++ptmpi;
+    ++pv1i;
+  }
   gradient_structure* gs = gradient_structure::get();
   DF_FILE* fp = gs->fp;
 
@@ -232,8 +245,9 @@ dvar_matrix outer_prod(const dvar_vector& v1, const dvar_vector& v2)
   v2.save_dvar_vector_position(fp);
   save_identifier_string("tv");
   gs->GRAD_STACK1->set_gradient_stack(dfouter_prodvv);
-   return(tmp);
- }
+
+  return tmp;
+}
 
 /**
  * Description not yet available.
@@ -249,18 +263,38 @@ void dfouter_prodvv(void)
   dvar_matrix_position tmppos=restore_dvar_matrix_position();
   dmatrix dftmp=restore_dvar_matrix_derivatives(tmppos);
   verify_identifier_string("tu");
-  dvector dfv1(v1pos.indexmin(),v1pos.indexmax());
-  dvector dfv2(v2pos.indexmin(),v2pos.indexmax());
+
+  int imin = v1pos.indexmin();
+  int imax = v1pos.indexmax();
+  int jmin = v2pos.indexmin();
+  int jmax = v2pos.indexmax();
+  dvector dfv1(imin, imax);
+  dvector dfv2(jmin, jmax);
   dfv1.initialize();
   dfv2.initialize();
-  for (int i=v1.indexmin(); i<=v1.indexmax(); i++)
+
+  dvector* pdftmpi = &dftmp(imin);
+  double* pdfv1i = dfv1.get_v() + imin;
+  double* pv1i = v1.get_v() + imin;
+  for (int i = imin; i <= imax; ++i)
   {
-    for (int j=v2.indexmin(); j<=v2.indexmax(); j++)
+    double* pdftmpij = pdftmpi->get_v() + jmin;
+    double* pdfv2j = dfv2.get_v() + jmin;
+    double* pv2j = v2.get_v() + jmin;
+    for (int j = jmin; j <= jmax; ++j)
     {
       //tmp.elem_value(i,j)=v1.elem_value(i)*v2.elem_value(j);
-      dfv1(i)+=dftmp(i,j)*v2(j);
-      dfv2(j)+=dftmp(i,j)*v1(i);
+      *pdfv1i += *pdftmpij * *pv2j;
+      *pdfv2j += *pdftmpij * *pv1i;
+
+      ++pdftmpij;
+      ++pdfv2j;
+      ++pv2j;
     }
+
+    ++pv1i;
+    ++pdfv1i;
+    ++pdftmpi;
   }
   dfv1.save_dvector_derivatives(v1pos);
   dfv2.save_dvector_derivatives(v2pos);

@@ -107,22 +107,21 @@ d3_array restore_d3_array_value(const d3_array_position& mpos)
  */
 dvector restore_dvar_vector_derivatives(const dvar_vector_position& tmp)
 {
+  int min = tmp.indexmin();
+  int max = tmp.indexmax();
   // puts the derivative values from a dvar_vector's guts into a dvector
-  dvector tempvec(tmp.indexmin(),tmp.indexmax());
-  double_and_int * va=tmp.va;
+  dvector tempvec(min, max);
+  double_and_int* ptmpi = tmp.va + min;
 
-#ifndef USE_ASSEMBLER
-  for (int i=tmp.indexmin();i<=tmp.indexmax();i++)
+  double* ptempveci = tempvec.get_v() + min;
+  for (int i = min; i <= max; ++i)
   {
-    tempvec(i)=va[i].xvalue();
-    va[i].xvalue()=0.;
+    *ptempveci = ptmpi->x;
+    ptmpi->x = 0.0;
+
+    ++ptempveci;
+    ++ptmpi;
   }
-#else
-     int min=tmp.indexmin();
-     int n=tmp.max-min+1;
-     dw_block_move(&(tempvec.elem(min)),&(va[min].xvalue()),n);
-     dp_block_initialize(&(va[min].xvalue()),n);
-#endif
 
 //  _dp_vector_add
 //  _dp_vector_elem_div

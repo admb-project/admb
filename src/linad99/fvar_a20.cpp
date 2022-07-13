@@ -45,15 +45,14 @@ dvar_vector& dvar_vector::operator=(const dvar_vector& t)
    {
      int mmin=indexmin();
      int mmax=indexmax();
-#ifdef DEBUG
-     assert(mmax >= mmin);
-#endif
+#ifndef OPT_LIB
      if (mmin != t.indexmin() || mmax != t.indexmax())
      {
        cerr << " Incompatible bounds in dvar_vector& dvar_vector::operator ="
          " (const dvar_vector& t)\n";
        ad_exit(21);
      }
+#endif
      if (va != t.va)
      {
        constexpr size_t sizeofdouble = sizeof(double);
@@ -85,9 +84,12 @@ dvar_vector& dvar_vector::operator=(const prevariable& t)
  {
    int mmin=indexmin();
    int mmax=indexmax();
+   double valuet = value(t);
+   double_and_int* pvai = va + mmin;
    for (int i=mmin; i<=mmax; i++)
    {
-     va[i].x = value(t);
+     pvai->x = valuet;
+     ++pvai;
    }
 
    gradient_structure* gs = gradient_structure::get();
@@ -113,9 +115,11 @@ dvar_vector& dvar_vector::operator=(const double t)
  {
    int mmin=indexmin();
    int mmax=indexmax();
+   double_and_int* pvai = va + mmin;
    for (int i=mmin; i<=mmax; i++)
    {
-     va[i].x = t;
+     pvai->x = t;
+     ++pvai;
    }
    gradient_structure* gs = gradient_structure::get();
    DF_FILE* fp = gs->fp;
@@ -154,11 +158,16 @@ void dv_eqprev(void)
   dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
   prevariable_position t_pos=fp->restore_prevariable_position();
   verify_identifier_string("dddd");
-  double dft=0.;
-  for (int i=dftmp.indexmin();i<=dftmp.indexmax();i++)
+  double dft = 0.0;
+  int min = dftmp.indexmin();
+  int max = dftmp.indexmax();
+  double* pdftmpi = dftmp.get_v() + min;
+  for (int i = min; i <= max; ++i)
   {
     //vtmp.elem(i)=t;
-    dft+=dftmp.elem(i);
+    dft += *pdftmpi;
+
+    ++pdftmpi;
   }
   save_double_derivative(dft,t_pos);
 }

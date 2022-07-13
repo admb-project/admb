@@ -179,9 +179,13 @@ dmatrix restore_dvar_matrix_derivatives(const dvar_matrix_position& _pos)
 {
   dvar_matrix_position& pos= (dvar_matrix_position&) _pos;
   dmatrix tmp(pos);
-  for (int i=pos.row_max;i>=pos.row_min;i--)
+  int min = pos.row_min;
+  int max = pos.row_max;
+  dvector* ptmpi = &tmp(max);
+  for (int i = max; i >= min; --i)
   {
-    tmp(i)=restore_dvar_vector_derivatives(pos(i));
+    *ptmpi = restore_dvar_vector_derivatives(pos(i));
+    --ptmpi;
   }
   return tmp;
 }
@@ -194,9 +198,13 @@ dmatrix restore_dvar_matrix_der_nozero(const dvar_matrix_position& _pos)
 {
   dvar_matrix_position& pos= (dvar_matrix_position&) _pos;
   dmatrix tmp(pos);
-  for (int i=pos.row_max;i>=pos.row_min;i--)
+  int min = pos.row_min;
+  int max = pos.row_max;
+  dvector* ptmpi = &tmp(max);
+  for (int i = max; i >= min; --i)
   {
-    tmp(i)=restore_dvar_vector_der_nozero(pos(i));
+    *ptmpi = restore_dvar_vector_der_nozero(pos(i));
+    --ptmpi;
   }
   return tmp;
 }

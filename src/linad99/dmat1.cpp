@@ -28,22 +28,37 @@ dvector operator*(const dvector& A, const dmatrix& B)
   }
 #endif
 
+#ifndef OPT_LIB
   if (A.indexmin() != B.rowmin() || A.indexmax() != B.rowmax())
   {
     cerr << " Incompatible array bounds in "
          << "dvector operator*(const dvector& A, const dmatrix& B)\n";
     ad_exit(1);
   }
+#endif
 
-  dvector results(B.colmin(), B.colmax());
-  results.initialize();
+  int imin = A.indexmin();
+  int imax = A.indexmax();
+  int jmin = B.colmin();
+  int jmax = B.colmax();
 
-  for (int j = B.colmin(); j <= B.colmax(); ++j)
+  dvector results(jmin, jmax);
+
+  double* presultsj = results.get_v() + jmin;
+  for (int j = jmin; j <= jmax; ++j)
   {
-    for (int i = A.indexmin(); i <= A.indexmax(); ++i)
+    *presultsj = 0.0;
+
+    const double* pAi = A.get_v() + imin;
+    const dvector* pBi = &B(imin);
+    for (int i = imin; i <= imax; ++i)
     {
-       results[j] += A[i] * B[i][j];
+      *presultsj += *pAi * *(pBi->get_v() + j);
+
+      ++pAi;
+      ++pBi;
     }
+    ++presultsj;
   }
 #ifdef DIAG
   if (heapcheck() == _HEAPCORRUPT && ad_printf)
@@ -76,22 +91,40 @@ dvector operator*(const dmatrix& A, const dvector& B)
     (*ad_printf)("Entering dvector * dmat dvec   Heap is OK.\n");
   }
 #endif
-   if (B.indexmin() != A.colmin() || B.indexmax() != A.colmax())
+
+  int imin = A.rowmin();
+  int imax = A.rowmax();
+  int jmin = B.indexmin();
+  int jmax = B.indexmax();
+
+#ifndef OPT_LIB
+   if (jmin != A.colmin() || jmax != A.colmax())
    {
      cerr << " Incompatible array bounds in "
           << "dvector operator*(const dmatrix& A, const dvector& B)\n";
      ad_exit(1);
    }
+#endif
 
-   dvector results(A.rowmin(), A.rowmax());
-   results.initialize();
+   dvector results(imin, imax);
 
-   for (int i = A.rowmin(); i <= A.rowmax(); ++i)
+   double* presultsi = results.get_v() + imin;
+   const dvector* pAi = &A(imin);
+   for (int i = imin; i <= imax; ++i)
    {
-     for (int j = B.indexmin(); j <= B.indexmax(); ++j)
+     *presultsi = 0.0;
+
+     double* pBj = B.get_v() + jmin;
+     double* pAij = pAi->get_v() + jmin;
+     for (int j = jmin; j <= jmax; ++j)
      {
-       results[i] += A[i][j] * B[j];
+       *presultsi += *pAij * *pBj;
+
+       ++pBj;
+       ++pAij;
      }
+     ++presultsi;
+     ++pAi;
    }
 
 #ifdef DIAG
@@ -115,23 +148,36 @@ Returns product of AB where A is a dmatrix and B is a dmatrix.
 */
 dmatrix operator*(const dmatrix& A, const dmatrix& B)
 {
-   if (A.colmin() != B.rowmin() || A.colmax() != B.rowmax())
-   {
+  int imin = A.rowmin();
+  int imax = A.rowmax();
+  int jmin = B.colmin();
+  int jmax = B.colmax();
+#ifndef OPT_LIB
+  //if (imin != jmin || imax != jmax)
+  if (A.colmin() != B.rowmin() || A.colmax() != B.rowmax())
+  {
      cerr << " Incompatible array bounds in "
           << "dmatrix operator*(const dmatrix& A, const dmatrix& B)\n";
      ad_exit(1);
-   }
-   dmatrix results(A.rowmin(), A.rowmax(), B.colmin(), B.colmax());
-   for (int j= B.colmin(); j<= B.colmax(); j++)
-   {
-     dvector col = column(B, j);
-     for (int i= A.rowmin(); i<= A.rowmax(); i++)
-     {
-       results.elem(i,j) = A.elem(i) * col;
-     }
-   }
-   return results;
- }
+  }
+#endif
+
+  dmatrix results(imin, imax, jmin, jmax);
+  for (int j = jmin; j <= jmax; ++j)
+  {
+    dvector col = column(B, j);
+    const dvector* pAi = &A(imin);
+    dvector* presultsi = &results(imin);
+    for (int i = imin; i <= imax; ++i)
+    {
+      *(presultsi->get_v() + j) = *pAi * col;
+
+      ++pAi;
+      ++presultsi;
+    }
+  }
+  return results;
+}
 /*
 dmatrix operator*(const dmatrix& m1, const dmatrix& m2 )
  {

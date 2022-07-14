@@ -66,7 +66,7 @@
 void DF_FILE::fread(const double& _x)
 {
   double& x = (double&)_x;
-  size_t num_bytes = sizeof(double);
+  constexpr size_t num_bytes = sizeof(double);
   if (toffset < static_cast<OFF_T>(num_bytes))
   {
     OFF_T lpos = LSEEK(file_ptr, -static_cast<OFF_T>(buff_size), SEEK_CUR);
@@ -90,7 +90,7 @@ void DF_FILE::fread(const double& _x)
  */
 void DF_FILE::fread(void* &x)
 {
-  const size_t num_bytes = sizeof(void*);
+  constexpr size_t num_bytes = sizeof(void*);
   if (toffset < static_cast<OFF_T>(num_bytes))
   {
     OFF_T lpos = LSEEK(file_ptr, -static_cast<OFF_T>(buff_size), SEEK_CUR);
@@ -119,7 +119,7 @@ void DF_FILE::fwrite(const double x)
     return;
   }
 #endif
-  const size_t num_bytes = sizeof(double);
+  constexpr size_t num_bytes = sizeof(double);
   toffset += num_bytes; //increment the temporary offset count
   if (toffset > buff_end)
   {
@@ -138,7 +138,7 @@ Read _x from buffer.
 void DF_FILE::fread(const int& _x)
 {
   int& x = (int&)_x;
-  const size_t num_bytes = sizeof(int);
+  constexpr size_t num_bytes = sizeof(int);
   if (toffset < static_cast<OFF_T>(num_bytes))
   {
     OFF_T lpos = LSEEK(file_ptr, -static_cast<OFF_T>(buff_size), SEEK_CUR);

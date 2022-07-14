@@ -34,18 +34,35 @@
  */
 dmatrix mfexp(const dmatrix& m)
 {
-  ivector cmin(m.rowmin(),m.rowmax());
-  ivector cmax(m.rowmin(),m.rowmax());
-  int i;
-  for (i=m.rowmin();i<=m.rowmax();i++)
+  int min = m.rowmin();
+  int max = m.rowmax();
+
+  ivector cmin(min, max);
+  ivector cmax(min, max);
+
+  int* pcmini = cmin.get_v() + min;
+  int* pcmaxi = cmax.get_v() + min;
+
+  const dvector* pmi = &m(min);
+  for (int i = min; i <= max; ++i)
   {
-    cmin(i)=m(i).indexmin();
-    cmax(i)=m(i).indexmax();
+    *pcmini = pmi->indexmin();
+    *pcmaxi = pmi->indexmax();
+
+    ++pcmini;
+    ++pcmaxi;
+    ++pmi;
   }
-  dmatrix tmp(m.rowmin(),m.rowmax(),cmin,cmax);
-  for (i=m.rowmin();i<=m.rowmax();i++)
+
+  dmatrix tmp(min, max, cmin, cmax);
+  dvector* ptmpi = &tmp(min);
+  pmi = &m(min);
+  for (int i = min; i <= max; ++i)
   {
-    tmp(i)=mfexp(m(i));
+    *ptmpi = mfexp(*pmi);
+
+    ++ptmpi;
+    ++pmi;
   }
   return tmp;
 }
@@ -56,18 +73,35 @@ dmatrix mfexp(const dmatrix& m)
  */
 dmatrix mfexp(const dmatrix& m, const double d)
 {
-  ivector cmin(m.rowmin(),m.rowmax());
-  ivector cmax(m.rowmin(),m.rowmax());
-  int i;
-  for (i=m.rowmin();i<=m.rowmax();i++)
+  int min = m.rowmin();
+  int max = m.rowmax();
+
+  ivector cmin(min, max);
+  ivector cmax(min, max);
+
+  int* pcmini = cmin.get_v() + min;
+  int* pcmaxi = cmax.get_v() + min;
+
+  const dvector* pmi = &m(min);
+  for (int i = min; i <= max; ++i)
   {
-    cmin(i)=m(i).indexmin();
-    cmax(i)=m(i).indexmax();
+    *pcmini = pmi->indexmin();
+    *pcmaxi = pmi->indexmax();
+
+    ++pcmini;
+    ++pcmaxi;
+    ++pmi;
   }
-  dmatrix tmp(m.rowmin(),m.rowmax(),cmin,cmax);
-  for (i=m.rowmin();i<=m.rowmax();i++)
+
+  dmatrix tmp(min, max, cmin, cmax);
+  dvector* ptmpi = &tmp(min);
+  pmi = &m(min);
+  for (int i = min; i <= max; ++i)
   {
-    tmp(i)=mfexp(m(i),d);
+    *ptmpi = mfexp(*pmi, d);
+
+    ++ptmpi;
+    ++pmi;
   }
   return tmp;
 }

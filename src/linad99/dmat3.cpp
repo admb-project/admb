@@ -36,46 +36,70 @@ void ludcmp(const dmatrix& a, const ivector& indx, const double& d);
 */
 dmatrix inv(const dmatrix& m1)
 {
-  double d;
-  if (m1.rowmin()!=m1.colmin() || m1.rowmax() != m1.colmax())
+  int min = m1.rowmin();
+  int max = m1.rowmax();
+
+#ifndef OPT_LIB
+  if (min != m1.colmin() || max != m1.colmax())
   {
     cerr << " Error in dmatrix inv(const dmatrix&) -- matrix not square \n";
   }
+#endif
 
-  dmatrix a(m1.rowmin(),m1.rowmax(),m1.rowmin(),m1.rowmax());
+  dmatrix a(min, max, min, max);
 
-  int i;
-  for (i=m1.rowmin(); i<=m1.rowmax(); i++)
+  dvector* pai = &a(min);
+  const dvector* pm1i = &m1(min);
+  for (int i = min; i <= max; ++i)
   {
-    for (int j=m1.rowmin(); j<=m1.rowmax(); j++)
+    double* pm1ij = pm1i->get_v() + min;
+    double* paij = pai->get_v() + min;
+    for (int j = min; j <= max; ++j)
     {
-      a[i][j]=m1[i][j];
+      *paij = *pm1ij;
+
+      ++pm1ij;
+      ++paij;
     }
+    ++pm1i;
+    ++pai;
   }
-  ivector indx(m1.rowmin(),m1.rowmax());
+  ivector indx(min, max);
   //int indx[30];
 
+  double d;
   ludcmp(a,indx,d);
 
-  dmatrix y(m1.rowmin(),m1.rowmax(),m1.rowmin(),m1.rowmax());
-  dvector col(m1.rowmin(),m1.rowmax());
+  dmatrix y(min, max, min, max);
+  dvector col(min, max);
 
-  for (int j=m1.rowmin(); j<=m1.rowmax(); j++)
+  double* pcolj = col.get_v() + min;
+  for (int j = min; j <= max; ++j)
   {
-    for (i=m1.rowmin(); i<=m1.rowmax(); i++)
+    double* pcoli = col.get_v() + min;
+    for (int i= min; i <= max; ++i)
     {
-      col[i]=0;
+      *pcoli = 0.0;
+
+      ++pcoli;
     }
-    col[j]=1;
+    *pcolj = 1.0;
 
     lubksb(a,indx,col);
 
-    for (i=m1.rowmin(); i<=m1.rowmax(); i++)
+    dvector* pyi = &y(min);
+    pcoli = col.get_v() + min;
+    for (int i= min; i <= max; ++i)
     {
-      y[i][j]=col[i];
+      *(pyi->get_v() + j)= *pcoli;
+
+      ++pyi;
+      ++pcoli;
     }
+
+    ++pcolj;
   }
-  return(y);
+  return y;
 }
 
 /** Inverse of a constant matrix by LU decomposition.
@@ -89,30 +113,41 @@ dmatrix inv(const dmatrix& m1)
 */
 dmatrix inv(const dmatrix& m1,const double& _ln_det, const int& _sgn)
 {
-  double d = 0.0;
-  double& ln_det=(double&)(_ln_det);
-  ln_det=0.0;
-  int& sgn=(int&)(_sgn);
+  int min = m1.rowmin();
+  int max = m1.rowmax();
 
-  if (m1.rowmin()!=m1.colmin() || m1.rowmax() != m1.colmax())
+#ifndef OPT_LIB
+  if (min != m1.colmin() || max != m1.colmax())
   {
     cerr << " Error in dmatrix inv(const dmatrix&) -- matrix not square \n";
   }
+#endif
 
-  dmatrix a(m1.rowmin(),m1.rowmax(),m1.rowmin(),m1.rowmax());
+  dmatrix a(min, max, min, max);
 
-  int i;
-  for (i=m1.rowmin(); i<=m1.rowmax(); i++)
+  dvector* pai = &a(min);
+  const dvector* pm1i = &m1(min);
+  for (int i = min; i <= max; ++i)
   {
-    for (int j=m1.rowmin(); j<=m1.rowmax(); j++)
+    double* pm1ij = pm1i->get_v() + min;
+    double* paij = pai->get_v() + min;
+    for (int j = min; j <= max; ++j)
     {
-      a[i][j]=m1[i][j];
+      *paij = *pm1ij;
+
+      ++pm1ij;
+      ++paij;
     }
+    ++pm1i;
+    ++pai;
   }
-  ivector indx(m1.rowmin(),m1.rowmax());
+  ivector indx(min, max);
   //int indx[30];
 
+  double d = 0.0;
   ludcmp(a,indx,d);
+
+  int& sgn=(int&)(_sgn);
   if (d>.1)
   {
     sgn=1;
@@ -125,43 +160,54 @@ dmatrix inv(const dmatrix& m1,const double& _ln_det, const int& _sgn)
   {
     sgn=0;
   }
-  int j;
-  for (j=m1.rowmin();j<=m1.rowmax();j++)
+  double& ln_det=(double&)(_ln_det);
+  ln_det=0.0;
+  for (int j = min; j <= max; ++j)
   {
-    if (a(j,j)>0)
+    double ajj = a(j, j);
+    if (ajj > 0)
     {
-      ln_det+=log(a[j][j]);
+      ln_det += log(ajj);
     }
-    else if (a(j,j)<0)
+    else if (ajj < 0)
     {
-      sgn=-sgn;
-      ln_det+=log(-a[j][j]);
+      sgn = -sgn;
+      ln_det += log(-ajj);
     }
     else
     {
-      sgn=0;
+      sgn = 0;
     }
   }
 
-  dmatrix y(m1.rowmin(),m1.rowmax(),m1.rowmin(),m1.rowmax());
-  dvector col(m1.rowmin(),m1.rowmax());
+  dmatrix y(min, max, min, max);
+  dvector col(min, max);
 
-  for (j=m1.rowmin(); j<=m1.rowmax(); j++)
+  double* pcolj = col.get_v() + min;
+  for (int j = min; j <= max; ++j)
   {
-    for (i=m1.rowmin(); i<=m1.rowmax(); i++)
+    double* pcoli = col.get_v() + min;
+    for (int i= min; i <= max; ++i)
     {
-      col[i]=0;
+      *pcoli = 0.0;
+
+      ++pcoli;
     }
-    col[j]=1;
+    *pcolj = 1.0;
 
     lubksb(a,indx,col);
 
-    for (i=m1.rowmin(); i<=m1.rowmax(); i++)
+    dvector* pyi = &y(min);
+    pcoli = col.get_v() + min;
+    for (int i = min; i <= max; ++i)
     {
-      y[i][j]=col[i];
+      *(pyi->get_v() + j)= *pcoli;
+
+      ++pcoli;
+      ++pyi;
     }
   }
-  return(y);
+  return y;
 }
 
 /** Lu decomposition of a constant matrix.
@@ -486,24 +532,39 @@ double det(const dmatrix& m1)
 */
 double ln_det(const dmatrix& m1, int& sgn)
 {
-  double d = 0.0;
-  dmatrix a(m1.rowmin(),m1.rowmax(),m1.rowmin(),m1.rowmax());
+  int min = m1.rowmin();
+  int max = m1.rowmax();
 
-  if (m1.rowmin()!=m1.colmin()||m1.rowmax()!=m1.colmax())
+#ifndef OPT_LIB
+  if (min != m1.colmin() || max != m1.colmax())
   {
     cerr << "Matrix not square in routine det()" << endl;
     ad_exit(1);
   }
+#endif
 
-  for (int i=m1.rowmin(); i<=m1.rowmax(); i++)
+  dmatrix a(min, max, min, max);
+
+  dvector* pai = &a(min);
+  const dvector* pm1i = &m1(min);
+  for (int i = min; i <= max; ++i)
   {
-    for (int j=m1.rowmin(); j<=m1.rowmax(); j++)
+    double* pm1ij = pm1i->get_v() + min;
+    double* paij = pai->get_v() + min;
+    for (int j = min; j <= max; ++j)
     {
-      a[i][j]=m1[i][j];
+      *paij = *pm1ij;
+
+      ++pm1ij;
+      ++paij;
     }
+    ++pm1i;
+    ++pai;
   }
 
-  ivector indx(m1.rowmin(),m1.rowmax());
+  ivector indx(min, max);
+
+  double d = 0.0;
   ludcmp_det(a,indx,d);
   double ln_det=0.0;
 
@@ -519,23 +580,24 @@ double ln_det(const dmatrix& m1, int& sgn)
   {
     sgn=0;
   }
-  for (int j=m1.rowmin();j<=m1.rowmax();j++)
+  for (int j = min; j <= max; ++j)
   {
-    if (a(j,j)>0)
+    double ajj = a(j, j);
+    if (ajj > 0)
     {
-      ln_det+=log(a[j][j]);
+      ln_det += log(ajj);
     }
-    else if (a(j,j)<0)
+    else if (ajj < 0)
     {
       sgn=-sgn;
-      ln_det+=log(-a[j][j]);
+      ln_det += log(-ajj);
     }
     else
     {
-      sgn=0;
+      sgn = 0;
     }
   }
-  return(ln_det);
+  return ln_det;
 }
 
 /** LU decomposition.
@@ -652,5 +714,3 @@ void ludcmp_index(const dmatrix& _a, const ivector& _indx, const double& _d)
   }
 }
 #undef TINY
-
-

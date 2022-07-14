@@ -20,21 +20,33 @@
  * \param
  */
 dmatrix value(const dvar_matrix& m)
+{
+  int nrl = m.rowmin();
+  int nrh = m.rowmax();
+  ivector ncl(nrl, nrh);
+  ivector nch(nrl, nrh);
+  int* pncli = ncl.get_v() + nrl;
+  int* pnchi = nch.get_v() + nrl;
+  const dvar_vector* pmi = &m(nrl);
+  for (int i = nrl; i <= nrh; ++i)
   {
-    int nrl=m.rowmin();
-    int nrh=m.rowmax();
-    ivector ncl(nrl,nrh);
-    ivector nch(nrl,nrh);
-    int i;
-    for (i=nrl;i<=nrh;i++)
-    {
-      ncl(i)=m(i).indexmin();
-      nch(i)=m(i).indexmax();
-    }
-    dmatrix tmp(nrl,nrh,ncl,nch);
-    for (i=nrl;i<=nrh;i++)
-    {
-      tmp(i)=value(m(i));
-    }
-    return tmp;
+    *pncli = pmi->indexmin();
+    *pnchi = pmi->indexmax();
+
+    ++pncli;
+    ++pnchi;
+    ++pmi;
   }
+  dmatrix tmp(nrl, nrh, ncl, nch);
+  pmi = &m(nrl);
+
+  dvector* ptmpi = &tmp(nrl);
+  for (int i = nrl; i <= nrh; ++i)
+  {
+    *ptmpi = value(*pmi);
+
+    ++ptmpi;
+    ++pmi;
+  }
+  return tmp;
+}

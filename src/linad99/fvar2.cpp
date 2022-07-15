@@ -63,12 +63,13 @@ double_and_int* gradnew()
  */
 void gradfree(dlink* v)
 {
-  if (gradient_structure::get())
-    if (gradient_structure::get()->GRAD_LIST)
+  gradient_structure* gs = gradient_structure::get();
+  if (gs)
+    if (gs->GRAD_LIST)
     {
       if (gradient_structure::instances)
       {
-        gradient_structure::get()->GRAD_LIST->append(v);
+        gs->GRAD_LIST->append(v);
       }
       else
       {

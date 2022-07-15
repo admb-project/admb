@@ -116,6 +116,7 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
     ++pbbi;
   }
 
+  dvector* pbbj = &bb.elem(lb);
   for (int j=lb;j<=ub;j++)
   {
     dvector* pbbi = &bb.elem(lb);
@@ -143,7 +144,7 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
     big=0.0;
     pvv = vv.get_v() + j;
 
-    pbbi = &bb.elem(j);
+    pbbi = pbbj;
     for (int i=j;i<=ub;i++)
     {
       double* pbbij = pbbi->get_v() + j;
@@ -171,7 +172,7 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
     if (j != imax)
     {
       double* pbbimaxk = bb.elem(imax).get_v() + lb;
-      double* pbbjk = bb.elem(j).get_v() + lb;
+      double* pbbjk = pbbj->get_v() + lb;
       for (int k=lb;k<=ub;k++)
       {
         dum = *pbbimaxk;
@@ -196,7 +197,7 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
       //cout << "indx= " <<indx<<endl;
     }
 
-    double* pbbjj = bb.elem(j).get_v() + j;
+    double* pbbjj = pbbj->get_v() + j;
     if (*pbbjj == 0.0)
     {
       *pbbjj = TINY;
@@ -205,12 +206,17 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
     if (j != n)
     {
       dum = 1.0 / *pbbjj;
+      dvector* pbbi = &bb.elem(j + 1);
       for (int i=j+1;i<=ub;i++)
       {
-        double* pbbij = bb.elem(i).get_v() + j;
+        double* pbbij = pbbi->get_v() + j;
         *pbbij = *pbbij * dum;
+
+        ++pbbi;
       }
     }
+
+    ++pbbj;
   }
 
   // get the determinant
@@ -220,8 +226,9 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
   if (bb(lb,lb)<0) sign=-sign;
   for (int j=lb+1;j<=ub;j++)
   {
-    if (bb(j,j)<0) sign=-sign;
-    part_prod(j)=part_prod(j-1)+log(fabs(bb(j,j)));
+    double bbjj = bb(j, j);
+    if (bbjj < 0) sign=-sign;
+    part_prod(j)=part_prod(j-1)+log(fabs(bbjj));
   }
   ln_unsigned_det=part_prod(ub);
 
@@ -332,8 +339,7 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
 /// dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
 void dmdv_solve(void)
 {
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+  DF_FILE* fp = gradient_structure::get_fp();
 
   verify_identifier_string("PLACE0");
   dvar_vector_position zpos=fp->restore_dvar_vector_position();
@@ -407,7 +413,7 @@ void dmdv_solve(void)
     for (int j = ub; j >= i + 1; --j)
     {
       // sum -=b.elem(i,j)*x.elem(j);
-      dfb.elem(i,j) -= dfsum* *pxj;
+      *pdfbij -= dfsum* *pxj;
       *pdfxj -= dfsum * *pbij;
       --pxj;
       --pdfxj;
@@ -527,20 +533,20 @@ void dmdv_solve(void)
       int kmax = min(i - 1, j - 1);
       if (kmax >= lb)
       {
-	double* pdfbik = pdfbi->get_v() + kmax;
-	dvector* pdfbk = &dfb(kmax);
-	double* pbik = pbi->get_v() + kmax;
-	dvector* pbk = &b(kmax);
+        double* pdfbik = pdfbi->get_v() + kmax;
+        dvector* pdfbk = &dfb(kmax);
+        double* pbik = pbi->get_v() + kmax;
+        dvector* pbk = &b(kmax);
         for (int k = kmax; k >= lb; --k)
         {
           // sum-=b.elem(i,k)*b.elem(k,j);
           *pdfbik -= dfsum * *(pbk->get_v() + j);
           *(pdfbk->get_v() + j) -= dfsum * *pbik;
 
-	  --pdfbik;
-	  --pdfbk;
-	  --pbik;
-	  --pbk;
+          --pdfbik;
+          --pdfbk;
+          --pbik;
+          --pbk;
         }
       }
       // sum=value(a(indx.elem(i),j);

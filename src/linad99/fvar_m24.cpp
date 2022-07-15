@@ -496,34 +496,62 @@ void dmdv_solve(void)
   *(pdfbj->get_v() + lb) += *pdfpart_prod / *(pbj->get_v() + lb);
   *pdfpart_prod = 0.0;
 
-  for (int j=ub;j>=lb;j--)
+  pdfbj = &dfb(ub);
+  for (int j = ub; j >= lb; --j)
   {
-    for (int i=ub;i>=lb;i--)
+    double bjj = b(j, j);
+    double* pdfbjj = pdfbj->get_v() + j;
+
+    int* pindxi = indx.get_v() + ub;
+
+    dvector* pdfbi = &dfb(ub);
+    dvector* pbi = &b(ub);
+    for (int i = ub; i >= lb; --i)
     {
+      double* pdfbij = pdfbi->get_v() + j;
+      double* pbij = pbi->get_v() + j;
       if (i<=j)
       {
         // b.elem(i,j)=sum;
-        dfsum+=dfb.elem(i,j);
-        dfb.elem(i,j)=0.;
+        dfsum += *pdfbij;
+        *pdfbij = 0.0;
       }
       else
       {
         // b.elem(i,j)=sum/b.elem(j,j);
-        dfsum+=dfb.elem(i,j)/b.elem(j,j);
-        dfb.elem(j,j)-=dfb.elem(i,j)*b.elem(i,j)/b.elem(j,j);
-        dfb.elem(i,j)=0.;
+        dfsum+= *pdfbij / bjj;
+        *pdfbjj -= *pdfbij * *pbij / bjj;
+        *pdfbij = 0.0;
       }
 
-      for (int k=min(i-1,j-1);k>=lb;k--)
+      int kmax = min(i - 1, j - 1);
+      if (kmax >= lb)
       {
-        // sum-=b.elem(i,k)*b.elem(k,j);
-        dfb.elem(i,k)-=dfsum*b.elem(k,j);
-        dfb.elem(k,j)-=dfsum*b.elem(i,k);
+	double* pdfbik = pdfbi->get_v() + kmax;
+	double* pdfbk = &dfb(kmax);
+	double* pbik = pbi->get_v() + kmax;
+	double* pbk = &b(kmax);
+        for (int k = kmax; k >= lb; --k)
+        {
+          // sum-=b.elem(i,k)*b.elem(k,j);
+          *pdfbik -= dfsum * *(pbk->get_v() + j);
+          *(pdfbk->get_v() + j) -= dfsum * *pbik;
+
+	  --pdfbik;
+	  --pdfbk;
+	  --pbik;
+	  --pbk;
+        }
       }
       // sum=value(a(indx.elem(i),j);
-      save_dmatrix_derivatives(a_pos,dfsum,indx.elem(i),j); // like this
+      save_dmatrix_derivatives(a_pos, dfsum, *pindxi, j); // like this
       dfsum=0.;
+
+      --pindxi;
+      --pdfbi;
+      --pbi;
     }
+    --pdfbj;
   }
 }
 #undef TINY

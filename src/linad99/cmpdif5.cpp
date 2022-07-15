@@ -188,7 +188,7 @@ dvector restore_dvar_vector_der_nozero(const dvar_vector_position& tmp)
   int min = tmp.min;
   int max = tmp.max;
   dvector tempvec(min, max);
-  double_and_int* va=tmp.va + min;
+  double_and_int* va = tmp.va + min;
 
 #ifdef USE_ASSEMBLER
   int min=tmp.indexmin();
@@ -211,12 +211,12 @@ Puts the derivative values in a dvector into a dvar_vector's guts.
 */
 void dvector::save_dvector_derivatives(const dvar_vector_position& pos) const
 {
-  const int min = indexmin();
-  const int max = indexmax();
+  const int min = pos.indexmin();
+  const int max = pos.indexmax();
 
 #ifdef DEBUG
   //Check for incompatible array sizes
-  assert(min == pos.indexmin() && max == pos.indexmax());
+  assert(min == indexmin() && max == indexmax());
 #endif
 
   double_and_int* dest = pos.va + min;
@@ -236,11 +236,11 @@ void dvector::save_dvector_derivatives(const dvar_vector_position& pos) const
 void dvector::save_dvector_derivatives_na(const dvar_vector_position& pos) const
 {
   // puts the derivative values in a dvector into a dvar_vector's guts
-  int min = indexmin();
-  int max = indexmax();
+  int min = pos.indexmin();
+  int max = pos.indexmax();
 
 #ifndef OPT_LIB
-  if (min != pos.indexmin() || max != pos.indexmax())
+  if (min != indexmin() || max != indexmax())
   {
     cerr << "Incompatible array sizes in " <<
     "void dvector::save_dvector_derivatives_na(const dvar_vector_position& pos)"

@@ -17,31 +17,38 @@ void dv_pluseq(void);
  * \param
  */
 dvar_vector& dvar_vector::operator+=(const dvar_vector& v1)
- {
-   if (indexmin() != v1.indexmin() || indexmax() != v1.indexmax())
-   {
-     cerr << " Incompatible array bounds in "
-     "dvector& operator += (const dvar_vector&)\n";
-     ad_exit(21);
-   }
+{
+  int min = v1.indexmin();
+  int max = v1.indexmax();
 
-   {
-     for (int i=indexmin();i<=indexmax();i++)
-     {
-       elem_value(i) += v1.elem_value(i);
-     }
-   }
+#ifndef OPT_LIB
+  if (indexmin() != v1.indexmin() || indexmax() != v1.indexmax())
+  {
+    cerr << " Incompatible array bounds in dvector& operator+=(const dvar_vector&)\n";
+    ad_exit(21);
+  }
+#endif
 
-   gradient_structure* gs = gradient_structure::get();
-   DF_FILE* fp = gs->fp;
+  double_and_int* pvai = va + min;
+  double_and_int* pv1i = v1.va + min;
+  for (int i = min; i <= max; ++i)
+  {
+    pvai->x += pv1i->x;
 
-   save_identifier_string("uuvv");
-   fp->save_dvar_vector_position(*this);  // for this->
-   fp->save_dvar_vector_position(v1);
-   save_identifier_string("wwxx");
-   gs->GRAD_STACK1->set_gradient_stack(dv_pluseq);
-   return(*this);
- }
+    ++pvai;
+    ++pv1i;
+  }
+
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
+
+  //save_identifier_string("uuvv");
+  fp->save_dvar_vector_position(*this);  // for this->
+  fp->save_dvar_vector_position(v1);
+  //save_identifier_string("wwxx");
+  gs->GRAD_STACK1->set_gradient_stack(dv_pluseq);
+  return *this;
+}
 
 /**
  * Description not yet available.
@@ -53,10 +60,10 @@ void dv_pluseq(void)
   DF_FILE* fp = gs->fp;
 
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
-  verify_identifier_string("wwxx");
+  //verify_identifier_string("wwxx");
   dvar_vector_position v1_pos=fp->restore_dvar_vector_position();
   dvar_vector_position this_pos=fp->restore_dvar_vector_position();
-  verify_identifier_string("uuvv");
+  //verify_identifier_string("uuvv");
   dvector dfthis=restore_dvar_vector_der_nozero(this_pos);
   dfthis.save_dvector_derivatives(v1_pos);
 }
@@ -66,19 +73,20 @@ void dv_pluseq(void)
  * \param
  */
 dvar_vector& dvar_vector::operator+=(const dvector& v1)
- {
-   if (indexmin() != v1.indexmin() || indexmax() != v1.indexmax())
-   {
-     cerr << " Incompatible array bounds in "
-     "dvector& operator += (const dvar_vector&)\n";
-     ad_exit(21);
-   }
+{
+  int min = v1.indexmin();
+  int max = v1.indexmax();
+  if (indexmin() != v1.indexmin() || indexmax() != v1.indexmax())
+  {
+    cerr << " Incompatible array bounds in dvector& operator+=(const dvar_vector&)\n";
+    ad_exit(21);
+  }
+  double* pv1i = v1.get_v() + min;
+  for (int i = min; i <= max; ++i)
+  {
+    elem_value(i) += *pv1i;
 
-   {
-     for (int i=indexmin();i<=indexmax();i++)
-     {
-       elem_value(i) += v1.elem(i);
-     }
-   }
-   return(*this);
- }
+    ++pv1i;
+  }
+  return *this;
+}

@@ -528,9 +528,9 @@ void dmdv_solve(void)
       if (kmax >= lb)
       {
 	double* pdfbik = pdfbi->get_v() + kmax;
-	double* pdfbk = &dfb(kmax);
+	dvector* pdfbk = &dfb(kmax);
 	double* pbik = pbi->get_v() + kmax;
-	double* pbk = &b(kmax);
+	dvector* pbk = &b(kmax);
         for (int k = kmax; k >= lb; --k)
         {
           // sum-=b.elem(i,k)*b.elem(k,j);

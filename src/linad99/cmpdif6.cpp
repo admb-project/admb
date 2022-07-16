@@ -228,14 +228,19 @@ dvector restore_dvar_matrix_derivative_row(const dvar_matrix_position& _pos,
 dvector restore_dvar_matrix_derivative_column(const dvar_matrix_position& _pos,
   const int& ii)
 {
-  dvar_matrix_position& pos= (dvar_matrix_position&) _pos;
-  dvector tmpvec(pos.rowmin(),pos.rowmax());
-  int min=tmpvec.indexmin();
-  int max=tmpvec.indexmax();
-  for (int i=min;i<=max;i++)
+  dvar_matrix_position& pos =(dvar_matrix_position&)_pos;
+
+  int min = pos.rowmin();
+  int max = pos.rowmax();
+  dvector tmpvec(min, max);
+
+  double* ptmpveci = tmpvec.get_v() + min;
+  for (int i = min; i <= max; ++i)
   {
-    tmpvec(i)=((pos(i)).va)[ii].xvalue();
-    ((pos(i)).va)[ii].xvalue()=0.;
+    *ptmpveci = ((pos(i)).va)[ii].xvalue();
+    ((pos(i)).va)[ii].xvalue() = 0.0;
+
+    ++ptmpveci;
   }
   return tmpvec;
 }
@@ -247,13 +252,21 @@ dvector restore_dvar_matrix_derivative_column(const dvar_matrix_position& _pos,
 dvar_vector nograd_assign(dvector tmp)
 {
   kkludge_object kg;
-  int min=tmp.indexmin();
-  int max=tmp.indexmax();
-  dvar_vector out(min,max,kg); // dvar_vector constructor that
-                               // doesn't do any initialization
-  for (int i=min;i<=max;i++)
+
+  int min = tmp.indexmin();
+  int max = tmp.indexmax();
+
+  // dvar_vector constructor that doesn't do any initialization
+  dvar_vector out(min, max, kg);
+
+  double_and_int* pouti = out.va + min;
+  double* ptmpi = tmp.get_v() + min;
+  for (int i = min; i <= max; ++i)
   {
-    value(out(i))=tmp(i);
+    pouti->x = *ptmpi;
+
+    ++pouti;
+    ++ptmpi;
   }
   return out;
 }
@@ -266,24 +279,48 @@ dvar_matrix nograd_assign(const dmatrix& m)
 {
   // cout << "Entering nograd assign"<<endl;
   //kkludge_object kg;
-  int nrl=m.rowmin();
-  int nrh=m.rowmax();
-  ivector ncl(nrl,nrh);
-  ivector nch(nrl,nrh);
-  int i;
-  for (i=nrl;i<=nrh;i++)
+  int nrl = m.rowmin();
+  int nrh = m.rowmax();
+  ivector ncl(nrl, nrh);
+  ivector nch(nrl, nrh);
+
+  int* pncli = ncl.get_v() + nrl;
+  int* pnchi = nch.get_v() + nrl;
+  const dvector* pmi = &m(nrl);
+  for (int i = nrl; i <= nrh; ++i)
   {
-    ncl(i)=m(i).indexmin();
-    nch(i)=m(i).indexmax();
+    *pncli = pmi->indexmin();
+    *pnchi = pmi->indexmax();
+
+    ++pncli;
+    ++pnchi;
+    ++pmi;
   }
-  dvar_matrix out(nrl,nrh,ncl,nch); // dvar_matrix constructor that
-                                       // doesn't do any initialization
-  for (i=nrl;i<=nrh;i++)
+
+  // dvar_matrix constructor that doesn't do any initialization
+  dvar_matrix out(nrl,nrh,ncl,nch);
+
+  pmi = &m(nrl);
+  pncli = ncl.get_v() + nrl;
+  pnchi = nch.get_v() + nrl;
+  dvar_vector* pouti = &out(nrl);
+  for (int i = nrl; i <= nrh; ++i)
   {
-    for (int j=ncl(i);j<=nch(i);j++)
+    int jmin = *pncli;
+    int jmax = *pnchi;
+    double* pmij = pmi->get_v() + jmin;
+    double_and_int* poutij = pouti->va + jmin;
+    for (int j = jmin; j <= jmax; ++j)
     {
-      value(out(i,j))=m(i,j);
+      poutij->x = *pmij;
+
+      ++pmij;
+      ++poutij;
     }
+    ++pmi;
+    ++pncli;
+    ++pnchi;
+    ++pouti;
     // out(i)=nograd_assign(m(i));
   }
   // cout << "Leaving nograd assign"<<endl;
@@ -302,20 +339,43 @@ dvar_matrix nograd_assign_trans(const dmatrix& m)
   int nrh=m.rowmax();
   ivector ncl(nrl,nrh);
   ivector nch(nrl,nrh);
-  int i;
-  for (i=nrl;i<=nrh;i++)
+
+  int* pncli = ncl.get_v() + nrl;
+  int* pnchi = nch.get_v() + nrl;
+  const dvector* pmi = &m(nrl);
+  for (int i = nrl; i <= nrh; ++i)
   {
-    ncl(i)=m(i).indexmin();
-    nch(i)=m(i).indexmax();
+    *pncli = pmi->indexmin();
+    *pnchi = pmi->indexmax();
+
+    ++pncli;
+    ++pnchi;
+    ++pmi;
   }
-  dvar_matrix out(nrl,nrh,ncl,nch); // dvar_matrix constructor that
-                                       // doesn't do any initialization
-  for (i=nrl;i<=nrh;i++)
+
+  // dvar_matrix constructor that doesn't do any initialization
+  dvar_matrix out(nrl,nrh,ncl,nch);
+
+  pncli = ncl.get_v() + nrl;
+  pnchi = nch.get_v() + nrl;
+  pmi = &m(nrl);
+  for (int i = nrl; i <= nrh; ++i)
   {
-    for (int j=ncl(i);j<=nch(i);j++)
+    int jmin = *pncli;
+    int jmax = *pnchi;
+    double* pmij = pmi->get_v() + jmin;
+    dvar_vector* poutj = &out(jmin);
+    for (int j = jmin; j <= jmax; ++j)
     {
-      value(out(j,i))=m(i,j);
+      (poutj->va + i)->x = *pmij;
+
+      ++poutj;
+      ++pmij;
     }
+
+    ++pmi;
+    ++pncli;
+    ++pnchi;
     // out(i)=nograd_assign(m(i));
   }
   // cout << "Leaving nograd assign"<<endl;
@@ -330,22 +390,31 @@ void nograd_assign_column(const dvar_matrix& m, const dvector& v, const int& ii)
 {
   // cout << "Entering nograd assign"<<endl;
   //kkludge_object kg;
-  if (ii<m.colmin()||ii>m.colmax()  ||
-   (v.indexmin()!=m.rowmin()) ||
-   (v.indexmax()!=m.rowmax()) )
+
+#ifndef OPT_LIB
+  if (ii < m.colmin() || ii > m.colmax()
+      || (v.indexmin() != m.rowmin())
+      || (v.indexmax() != m.rowmax()))
   {
     cerr << "Error -- Index out of bounds in\n"
       "void nograd_assign(const dvar_matrix& m,const dvector& v, const int& ii)"
       << endl;
     ad_exit(1);
   }
-  int min=v.indexmin();
-  int max=v.indexmax();
-  for (int j=min;j<=max;j++)
+#endif
+
+  int min = v.indexmin();
+  int max = v.indexmax();
+  double* pvj = v.get_v() + min;
+  const dvar_vector* pmj = &m(min);
+  for (int j = min; j <= max; ++j)
   {
-    value(m(j,ii))=v(j);
+    (pmj->va + ii)->x = *pvj;
+
+    ++pvj;
+    ++pmj;
   }
-    // out(i)=nograd_assign(m(i));
+  // out(i)=nograd_assign(m(i));
 }
 
 /**

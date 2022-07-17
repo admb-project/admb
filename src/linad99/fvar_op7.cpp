@@ -31,9 +31,17 @@ dvar_matrix square(const dvar_matrix& matrix)
 {
   dvar_matrix results;
   results.allocate(matrix);
-  for (int i = matrix.rowmin(); i <= matrix.rowmax(); ++i)
+
+  int min = matrix.rowmin();
+  int max = matrix.rowmax();
+  const dvar_vector* pmatrixi = &matrix(min);
+  dvar_vector* presultsi = &results(min);
+  for (int i = min; i <= max; ++i)
   {
-    results(i) = square(matrix(i));
+    *presultsi = square(*pmatrixi);
+
+    ++pmatrixi;
+    ++presultsi;
   }
   return results;
 }

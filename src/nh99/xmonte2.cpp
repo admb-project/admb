@@ -17,7 +17,7 @@ void bounded_multivariate_normal_mcmc(int nvar, const dvector& a1,
 {
   double & wght=(double &) _wght;
   //cout << y << endl;
-  const double sqrt_tpi =sqrt(2*PI);
+  const double sqrt_tpi = sqrt(2*PI);
   dvector a(1,nvar);
   dvector b(1,nvar);
   dvector alpha(1,nvar);
@@ -25,21 +25,21 @@ void bounded_multivariate_normal_mcmc(int nvar, const dvector& a1,
   a=a1;
   b=b1;
   wght=0;
-  double ah;
-  double bl;
-  double upper;
-  double lower;
-  double diff;
   int expflag;
   int in=0;
   int ie=0;
+  double* pyi = y.get_v() + 1;
+  double* pai = a.get_v() + 1;
+  double* pbi = b.get_v() + 1;
+  dvector* pchi = &ch(1);
   for (int i=1;i<=nvar;i++)
   {
-    ah=a(i)/ch(i,i);
-    bl=b(i)/ch(i,i);
-    upper=cumd_norm(bl);
-    lower=cumd_norm(ah);
-    diff=upper-lower;
+    double chii = *(pchi->get_v() + i);
+    double ah = *pai / chii;
+    double bl = *pbi / chii;
+    double upper=cumd_norm(bl);
+    double lower=cumd_norm(ah);
+    double diff=upper-lower;
     if (diff>1.e-5)
     {
       wght-=log(diff);
@@ -56,22 +56,30 @@ void bounded_multivariate_normal_mcmc(int nvar, const dvector& a1,
 
     if (!expflag)
     {
-      wght -= .5*y(i)*y(i);
+      wght -= 0.5 * *pyi* *pyi;
       in++;
     }
     else
     {
       ie++;
-      wght += log_density_cauchy(y(i));
+      wght += log_density_cauchy(*pyi);
     }
 
-
-    for (int j=i;j<=nvar;j++)
+    double* paj = a.get_v() + i;
+    double* pbj = b.get_v() + i;
+    dvector* pchj = &ch(i);
+    for (int j=i;j<=nvar;++j)
     {
-      double tmp=y(i)*ch(j,i);
-      a(j)-=tmp;
-      b(j)-=tmp;
+      double tmp = *pyi * *(pchj->get_v() + i);
+      *paj -= tmp;
+      *pbj -= tmp;
+
+      ++pchj;
     }
+    ++pyi;
+    ++pai;
+    ++pbi;
+    ++pchi;
   }
   wght +=  in*log(1./sqrt_tpi);
 }

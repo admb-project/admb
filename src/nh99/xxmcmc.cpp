@@ -316,14 +316,32 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
 
       {  // scale covariance matrix for model space
         dmatrix tmp(1,nvar,1,nvar);
+
+	dvector* ptmpi = &tmp(1);
+	double* pscalei = scale.get_v() + 1;
+	dvector* pSi = &S(1);
         for (int i=1;i<=nvar;i++)
         {
-          tmp(i,i)=S(i,i)*(scale(i)*scale(i));
+          *(ptmpi->get_v() + i) = *(pSi->get_v() + i) * (*pscalei * *pscalei);
+
+	  double* ptmpij = ptmpi->get_v() + 1;
+	  dvector* ptmpj = &tmp(1);
+	  double* pscalej = scale.get_v() + 1;
+	  double* pSij = pSi->get_v() + 1;
           for (int j=1;j<i;j++)
           {
-            tmp(i,j)=S(i,j)*(scale(i)*scale(j));
-            tmp(j,i)=tmp(i,j);
+            *ptmpij = *pSij * (*pscalei * *pscalej);
+            *(ptmpj->get_v() + i) = *ptmpij;
+
+	    ++ptmpij;
+	    ++ptmpj;
+	    ++pscalej;
+	    ++pSij;
           }
+
+	  ++ptmpi;
+	  ++pscalei;
+	  ++pSi;
         }
         S=tmp;
       }

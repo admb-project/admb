@@ -31,7 +31,7 @@ dvar_vector mfexp(const dvar_vector& v1)
     double v1i = pv1i->x;
     if (v1i < 60.0)
     {
-      pvtmpi->x = exp(v1.elem_value(i));
+      pvtmpi->x = exp(v1i);
     }
     else
     {

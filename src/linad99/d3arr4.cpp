@@ -29,9 +29,17 @@ dvector square(const dvector& values)
 {
   dvector results;
   results.allocate(values);
-  for (int i = values.indexmin(); i <= values.indexmax(); ++i)
+  int min = values.indexmin();
+  int max = values.indexmax();
+
+  double* pvaluesi = values.get_v() + min;
+  double* presultsi = results.get_v() + min;
+  for (int i = min; i <= max; ++i)
   {
-    results(i) = square(values(i));
+    *presultsi = square(*pvaluesi);
+
+    ++pvaluesi;
+    ++presultsi;
   }
   return results;
 }

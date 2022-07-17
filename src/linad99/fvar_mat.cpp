@@ -364,10 +364,14 @@ void dvar_matrix::allocate(
     }
     m -= rowmin();
     dvar_vector* pva = m + nrl;
+    int* pncli = ncl.get_v() + nrl;
+    int* pnchi = nch.get_v() + nrl;
     for (int i = nrl; i <= nrh; ++i)
     {
-      pva->allocate(ncl[i], nch[i]);
+      pva->allocate(*pncli, *pnchi);
       ++pva;
+      ++pncli;
+      ++pnchi;
     }
   }
 }
@@ -420,10 +424,12 @@ void dvar_matrix::allocate(int nrl, int nrh, int ncl, const ivector& nch)
     }
     m -= rowmin();
     dvar_vector* pm = m + nrl;
+    int* pnchi = nch.get_v() + nrl;
     for (int i = nrl; i <= nrh; ++i)
     {
-      pm->allocate(ncl,nch[i]);
+      pm->allocate(ncl, *pnchi);
       ++pm;
+      ++pnchi;
     }
   }
 }

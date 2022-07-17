@@ -28,19 +28,19 @@ dvector operator*(const dvector& A, const dmatrix& B)
   }
 #endif
 
+  int imin = A.indexmin();
+  int imax = A.indexmax();
+  int jmin = B.colmin();
+  int jmax = B.colmax();
+
 #ifndef OPT_LIB
-  if (A.indexmin() != B.rowmin() || A.indexmax() != B.rowmax())
+  if (imin != B.rowmin() || imax != B.rowmax())
   {
     cerr << " Incompatible array bounds in "
          << "dvector operator*(const dvector& A, const dmatrix& B)\n";
     ad_exit(1);
   }
 #endif
-
-  int imin = A.indexmin();
-  int imax = A.indexmax();
-  int jmin = B.colmin();
-  int jmax = B.colmax();
 
   dvector results(jmin, jmax);
 

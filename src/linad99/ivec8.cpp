@@ -21,9 +21,14 @@ ivector operator+(int value, const ivector& a)
   int min = a.indexmin();
   int max = a.indexmax();
   ivector results(min, max);
+  int* pai = a.get_v() + min;
+  int* presultsi = results.get_v() + min;
   for (int i = min; i <= max; ++i)
   {
-    results(i) = value + a(i);
+    *presultsi = value + *pai;
+
+    ++pai;
+    ++presultsi;
   }
   return results;
 }
@@ -40,9 +45,14 @@ ivector operator-(int value, const ivector& a)
   int min = a.indexmin();
   int max = a.indexmax();
   ivector results(min, max);
+  int* pai = a.get_v() + min;
+  int* presultsi = results.get_v() + min;
   for (int i = min; i <= max; ++i)
   {
-    results(i) = value - a(i);
+    *presultsi = value - *pai;
+
+    ++pai;
+    ++presultsi;
   }
   return results;
 }
@@ -63,9 +73,15 @@ ivector operator+(const ivector& a, const ivector& b)
   assert(min == b.indexmin() && max == b.indexmax()); 
 #endif
   ivector results(min, max);
+  int* presultsi = results.get_v() + min;
+  int* pai = a.get_v() + min;
+  int* pbi = b.get_v() + min;
   for (int i = min; i <= max; ++i)
   {
-    results(i) = a(i) + b(i);
+    *presultsi = *pai + *pbi;
+    ++presultsi;
+    ++pai;
+    ++pbi;
   }
   return results;
 }
@@ -86,9 +102,15 @@ ivector operator-(const ivector& a, const ivector& b)
   assert(min == b.indexmin() && max == b.indexmax()); 
 #endif
   ivector results(min, max);
+  int* presultsi = results.get_v() + min;
+  int* pai = a.get_v() + min;
+  int* pbi = b.get_v() + min;
   for (int i = min; i <= max; ++i)
   {
-    results(i) = a(i) - b(i);
+    results(i) = *pai - *pbi;
+    ++presultsi;
+    ++pai;
+    ++pbi;
   }
   return results;
 }
@@ -105,9 +127,13 @@ ivector operator+(const ivector& a, int value)
   int min = a.indexmin();
   int max = a.indexmax();
   ivector results(min, max);
+  int* pai = a.get_v() + min;
+  int* presultsi = results.get_v() + min;
   for (int i = min; i <= max; ++i)
   {
-    results(i) = a(i) + value;
+    *presultsi = *pai + value;
+    ++pai;
+    ++presultsi;
   }
   return results;
 }
@@ -124,9 +150,13 @@ ivector operator-(const ivector& a, int value)
   int min = a.indexmin();
   int max = a.indexmax();
   ivector results(min, max);
+  int* pai = a.get_v() + min;
+  int* presultsi = results.get_v() + min;
   for (int i = min; i <= max; ++i)
   {
-    results(i) = a(i) - value;
+    *presultsi = *pai - value;
+    ++pai;
+    ++presultsi;
   }
   return results;
 }

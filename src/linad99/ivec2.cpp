@@ -16,8 +16,12 @@
  */
 void ivector::initialize(void)
 {
-  for (int i=indexmin();i<=indexmax();i++)
+  int min = indexmin();
+  int max = indexmax();
+  int* pvi = v + min;
+  for (int i = min; i <= max; ++i)
   {
-    elem(i)=0;
+    *pvi = 0;
+    ++pvi;
   }
 }

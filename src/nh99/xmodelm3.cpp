@@ -232,6 +232,7 @@ void tracing_message(int traceflag,const char *s);
       cout << m<< "' in phase " <<
 	initial_params::current_phase << " of " <<
 	initial_params::max_number_phases << " at " << asctime(localtm);
+      cout.flush();
     }
     
     if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-lapqd"))>-1)

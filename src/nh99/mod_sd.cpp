@@ -105,6 +105,7 @@ void function_minimizer::sd_routine(void)
   {
     from_start = std::chrono::system_clock::now();
     cout << "Starting standard error calculations... " ;
+    cout.flush();
   }
 
   int nvar=initial_params::nvarcalc(); // get the number of active parameters

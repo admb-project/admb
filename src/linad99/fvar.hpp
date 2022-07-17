@@ -9400,7 +9400,9 @@ int ad_printf( FILE* stream, const char* format, Args ... args )
 template <class ... Args>
 int ad_printf( const char* format, Args ... args )
 {
-  return printf(format, args...);
+  int result = printf(format, args...);
+  fflush(stdout);
+  return result;
 }
 std::ostream& get_output_stream();
 

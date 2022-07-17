@@ -1150,6 +1150,7 @@ if (iprint>0)
        cout << "Optimization completed after "
             << get_elapsed_time(start_time, std::chrono::system_clock::now())
             << " with final statistics:\n" ;
+       cout.flush();
        ad_printf("  nll=%f | mag=%.5e | par[%3d]=%s\n\n", double(f), fabs(double(gmax)), maxpar, (char*)maxparname);
 
        if (initial_params::num_initial_params && function_minimizer::output_flag==1){

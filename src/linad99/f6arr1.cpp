@@ -130,9 +130,14 @@ dvariable sum(const dvar6_array& m)
   gradient_structure* gs = gradient_structure::get();
   gs->RETURN_ARRAYS_INCREMENT();
   dvariable tmp=0.;
-  for (int i=m.indexmin();i<=m.indexmax();i++)
+  int min = m.indexmin();
+  int max = m.indexmax();
+  const dvar5_array* pmi = &m(min);
+  for (int i = min; i <= max; ++i)
   {
-    tmp+=sum(m.elem(i));
+    tmp+=sum(*pmi);
+
+    ++pmi;
   }
   gs->RETURN_ARRAYS_DECREMENT();
   return tmp;

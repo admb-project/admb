@@ -25,18 +25,29 @@ dvar_matrix operator*(const prevariable& x, const dmatrix& m)
   ivector cmin(rmin,rmax);
   ivector cmax(rmin,rmax);
 
-  int i;
-  for (i=rmin;i<=rmax;i++)
+  const dvector* pmi = &m(rmin);
+  int* pcmini = cmin.get_v() + rmin;
+  int* pcmaxi = cmax.get_v() + rmin;
+  for (int i=rmin;i<=rmax;++i)
   {
-    cmin(i)=(m(i)).indexmin();
-    cmax(i)=(m(i)).indexmax();
+    *pcmini = pmi->indexmin();
+    *pcmaxi = pmi->indexmax();
+
+    ++pcmini;
+    ++pcmaxi;
+    ++pmi;
   }
+
   dvar_matrix tmp(rmin,rmax,cmin,cmax);
 
-  for (i=rmin;i<=rmax;i++)
+  pmi = &m(rmin);
+  for (int i=rmin;i<=rmax;++i)
   {
-    tmp(i)=x*m(i);
+    tmp(i) = x * *pmi;
+
+    ++pmi;
   }
+
   gs->RETURN_ARRAYS_DECREMENT();
   return tmp;
 }
@@ -56,17 +67,26 @@ dvar_matrix operator*(const dvar_matrix& m, const double x)
   ivector cmin(rmin,rmax);
   ivector cmax(rmin,rmax);
 
-  int i;
-  for (i=rmin;i<=rmax;i++)
+  const dvar_vector* pmi = &m(rmin);
+  int* pcmini = cmin.get_v() + rmin;
+  int* pcmaxi = cmax.get_v() + rmin;
+  for (int i=rmin;i<=rmax;++i)
   {
-    cmin(i)=(m(i)).indexmin();
-    cmax(i)=(m(i)).indexmax();
+    *pcmini = pmi->indexmin();
+    *pcmaxi = pmi->indexmax();
+
+    ++pcmini;
+    ++pcmaxi;
+    ++pmi;
   }
   dvar_matrix tmp(rmin,rmax,cmin,cmax);
 
-  for (i=rmin;i<=rmax;i++)
+  pmi = &m(rmin);
+  for (int i=rmin;i<=rmax;++i)
   {
-    tmp(i)=x*m(i);
+    tmp(i) = x * *pmi;
+
+    ++pmi;
   }
 
   gs->RETURN_ARRAYS_DECREMENT();
@@ -87,17 +107,27 @@ dvar_matrix operator*(const double x, const dvar_matrix& m)
   ivector cmin(rmin,rmax);
   ivector cmax(rmin,rmax);
 
-  int i;
-  for (i=rmin;i<=rmax;i++)
+  const dvar_vector* pmi = &m(rmin);
+  int* pcmini = cmin.get_v() + rmin;
+  int* pcmaxi = cmax.get_v() + rmin;
+  for (int i=rmin;i<=rmax;++i)
   {
-    cmin(i)=(m(i)).indexmin();
-    cmax(i)=(m(i)).indexmax();
+    *pcmini = pmi->indexmin();
+    *pcmaxi = pmi->indexmax();
+
+    ++pcmini;
+    ++pcmaxi;
+    ++pmi;
   }
+
   dvar_matrix tmp(rmin,rmax,cmin,cmax);
 
-  for (i=rmin;i<=rmax;i++)
+  pmi = &m(rmin);
+  for (int i=rmin;i<=rmax;++i)
   {
-    tmp(i)=x*m(i);
+    tmp(i) = x * *pmi;
+
+    ++pmi;
   }
   gs->RETURN_ARRAYS_DECREMENT();
   return tmp;

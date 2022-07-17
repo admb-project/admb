@@ -17,18 +17,31 @@ void dvcv_sub(void);
  */
 dvar_vector operator-(const dvar_vector& v1, const dvector& v2)
 {
-  if (v1.indexmin()!=v2.indexmin()||v1.indexmax()!=v2.indexmax())
+  int min = v1.indexmin();
+  int max = v1.indexmax();
+
+#ifndef OPT_LIB
+  if (min != v2.indexmin() || max != v2.indexmax())
   {
-    cerr << "Incompatible bounds in "
-      "prevariable operator-(const dvar_vector& v1, const dvector& v2)" << endl;
+    cerr << "Incompatible bounds in prevariable operator-(const dvar_vector&, const dvector&)\n";
     ad_exit(1);
   }
+#endif
+
   //dvector cv1=value(v1);
   //dvector cv2=value(v2);
-  dvar_vector vtmp(v1.indexmin(),v1.indexmax());
-  for (int i=v1.indexmin();i<=v1.indexmax();i++)
+  dvar_vector vtmp(min, max);
+
+  double_and_int* pvtmpi = vtmp.va + min;
+  double_and_int* pv1i = v1.va + min;
+  double* pv2i = v2.get_v() + min;
+  for (int i = min; i <= max; ++i)
   {
-    vtmp.elem_value(i)=v1.elem_value(i)-v2.elem(i);
+    pvtmpi->x = pv1i->x - *pv2i;
+
+    ++pvtmpi;
+    ++pv1i;
+    ++pv2i;
   }
 
   //dvar_vector vtmp=nograd_assign(tmp);
@@ -42,6 +55,7 @@ dvar_vector operator-(const dvar_vector& v1, const dvector& v2)
   fp->save_dvar_vector_position(vtmp);
   save_identifier_string("aaaa");
   gs->GRAD_STACK1->set_gradient_stack(dvcv_sub);
+
   return vtmp;
 }
 
@@ -60,11 +74,19 @@ void dvcv_sub(void)
   dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
   dvar_vector_position v1pos=fp->restore_dvar_vector_position();
   verify_identifier_string("bbbb");
-  dvector dfv1(dftmp.indexmin(),dftmp.indexmax());
-  for (int i=dftmp.indexmin();i<=dftmp.indexmax();i++)
+
+  int min = dftmp.indexmin();
+  int max = dftmp.indexmax();
+  dvector dfv1(min, max);
+  double* pdfv1i = dfv1.get_v() + min;
+  double* pdftmpi = dftmp.get_v() + min;
+  for (int i = min; i <= max; ++i)
   {
     //vtmp.elem(i)=value(v1.elem(i))+v2.elem(i);
-    dfv1.elem(i)=dftmp.elem(i);
+    *pdfv1i = *pdftmpi;
+
+    ++pdfv1i;
+    ++pdftmpi;
   }
   dfv1.save_dvector_derivatives(v1pos);
   //ierr=fsetpos(gradient_structure::get_fp(),&filepos);

@@ -71,10 +71,15 @@ dvector bounded_multivariate_normal(int nvar, const dvector& a1,
   double y;
   int in=0;
   int ie=0;
+
+  double* pai = a.get_v() + 1;
+  double* pbi = b.get_v() + 1;
+  dvector* pchi = &ch(1);
   for (int i=1;i<=nvar;i++)
   {
-    ah=a(i)/ch(i,i);
-    bl=b(i)/ch(i,i);
+    double chii = *(pchi->get_v() + i);
+    ah = *pai / chii;
+    bl = *pbi / chii;
     double u = rng.better_rand();
     upper=cumd_norm(bl);
     lower=cumd_norm(ah);
@@ -107,13 +112,27 @@ dvector bounded_multivariate_normal(int nvar, const dvector& a1,
       wght += log_density_cauchy(y);
     }
     //ty(i)=y;
+    double* pwj = w.get_v() + i;
+    double* paj = a.get_v() + i;
+    double* pbj = b.get_v() + i;
+    dvector* pchj = &ch(i);
     for (int j=i;j<=nvar;j++)
     {
-      double tmp=y*ch(j,i);
-      w(j)+=tmp;
-      a(j)-=tmp;
-      b(j)-=tmp;
+      double tmp = y * *(pchj->get_v() + i);
+
+      *pwj += tmp;
+      *paj -= tmp;
+      *pbj -= tmp;
+
+      ++pwj;
+      ++paj;
+      ++pbj;
+      ++pchj;
     }
+
+    ++pai;
+    ++pbi;
+    ++pchi;
   }
   //cout << ty << endl;
   wght +=  in*log(1./sqrt_tpi);

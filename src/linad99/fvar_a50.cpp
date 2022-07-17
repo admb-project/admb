@@ -35,7 +35,7 @@ dvar_vector mfexp(const dvar_vector& v1)
     }
     else
     {
-      constexpr double exp60 = exp(60.0);
+      double exp60 = exp(60.0);
       double x = v1i - 60.0;
       pvtmpi->x = exp60 * (1.0 + 2.0 * x)/(1.0 + x);
     }
@@ -90,7 +90,7 @@ void DF_dvmfexp(void)
     }
     else
     {
-      constexpr double exp60 = exp(60.0);
+      double exp60 = exp(60.0);
       double b = *pv1i - 60.0;
       *pdfv1i = *pdfvtmpi * exp60 * std::pow(1.0 + b, -2.0);
     }

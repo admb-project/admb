@@ -62,11 +62,6 @@ dvector bounded_multivariate_normal(int nvar, const dvector& a1,
   b=b1;
   wght=0;
   w.initialize();
-  double ah;
-  double bl;
-  double upper;
-  double lower;
-  double diff;
   int expflag;
   double y;
   int in=0;
@@ -75,15 +70,15 @@ dvector bounded_multivariate_normal(int nvar, const dvector& a1,
   double* pai = a.get_v() + 1;
   double* pbi = b.get_v() + 1;
   dvector* pchi = &ch(1);
-  for (int i=1;i<=nvar;i++)
+  for (int i=1;i<=nvar;++i)
   {
     double chii = *(pchi->get_v() + i);
-    ah = *pai / chii;
-    bl = *pbi / chii;
+    double ah = *pai / chii;
+    double bl = *pbi / chii;
     double u = rng.better_rand();
-    upper=cumd_norm(bl);
-    lower=cumd_norm(ah);
-    diff=upper-lower;
+    double upper=cumd_norm(bl);
+    double lower=cumd_norm(ah);
+    double diff=upper-lower;
     if (diff>1.e-5)
     {
       wght-=log(diff);

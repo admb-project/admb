@@ -316,22 +316,31 @@ Compute the outer product of v1 and v2 vectors into dvar_matrix.
 @param v2 dvar_vector
 */
 dvar_matrix outer_prod(const dvector& v1, const dvar_vector& v2)
- {
-   gradient_structure* gs = gradient_structure::get();
-   gs->RETURN_ARRAYS_INCREMENT();
+{
+  gradient_structure* gs = gradient_structure::get();
+  gs->RETURN_ARRAYS_INCREMENT();
 
-   dvar_matrix tmp(v1.indexmin(),v1.indexmax(), v2.indexmin(), v2.indexmax() );
+  int imin = v1.indexmin();
+  int imax = v1.indexmax();
+  int jmin = v2.indexmin();
+  int jmax = v2.indexmax();
 
-   for (int i=v1.indexmin(); i<=v1.indexmax(); i++)
-   {
-     for (int j=v2.indexmin(); j<=v2.indexmax(); j++)
-     {
-       tmp.elem(i,j)=v1.elem(i)*v2.elem(j);
-     }
-   }
-   gs->RETURN_ARRAYS_DECREMENT();
-   return(tmp);
- }
+  dvar_matrix tmp(imin, imax, jmin, jmax);
+
+  dvar_vector* ptmpi = &tmp(imin);
+  double* pv1i = v1.get_v() + imin;
+  for (int i = imin; i <= imax; ++i)
+  {
+    for (int j = jmin; j <= jmax; ++j)
+    {
+      ptmpi->elem(j) = *pv1i * v2.elem(j);
+    }
+    ++ptmpi;
+    ++pv1i;
+  }
+  gs->RETURN_ARRAYS_DECREMENT();
+  return tmp;
+}
 /**
 Compute the outer product of v1 and v2 vectors into dvar_matrix.
 
@@ -339,20 +348,30 @@ Compute the outer product of v1 and v2 vectors into dvar_matrix.
 @param v2 dvector
 */
 dvar_matrix outer_prod(const dvar_vector& v1, const dvector& v2)
- {
-   gradient_structure* gs = gradient_structure::get();
-   gs->RETURN_ARRAYS_INCREMENT();
+{
+  gradient_structure* gs = gradient_structure::get();
+  gs->RETURN_ARRAYS_INCREMENT();
 
-   dvar_matrix tmp(v1.indexmin(),v1.indexmax(), v2.indexmin(), v2.indexmax() );
+  int imin = v1.indexmin();
+  int imax = v1.indexmax();
+  int jmin = v2.indexmin();
+  int jmax = v2.indexmax();
 
-   for (int i=v1.indexmin(); i<=v1.indexmax(); i++)
-   {
-     for (int j=v2.indexmin(); j<=v2.indexmax(); j++)
-     {
-       tmp.elem(i,j)=v1.elem(i)*v2.elem(j);
-     }
-   }
-   gs->RETURN_ARRAYS_DECREMENT();
+  dvar_matrix tmp(imin, imax, jmin, jmax);
 
-   return(tmp);
- }
+  dvar_vector* ptmpi = &tmp(imin);
+  for (int i = imin; i <= imax; ++i)
+  {
+    double* pv2j = v2.get_v() + jmin;
+    for (int j = jmin; j <= jmax; ++j)
+    {
+      ptmpi->elem(j) = v1.elem(i) * *pv2j;
+      ++pv2j;
+    }
+
+    ++ptmpi;
+  }
+  gs->RETURN_ARRAYS_DECREMENT();
+
+  return(tmp);
+}

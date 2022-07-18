@@ -40,9 +40,12 @@ unsigned int size_count(const dvar_matrix& x)
   {
     int min = x.rowmin();
     int max = x.rowmax();
+    const dvar_vector* pxi = &x(min);
     for (int i = min; i <= max; ++i)
     {
-      size += size_count(x(i));
+      size += size_count(*pxi);
+
+      ++pxi;
     }
   }
   return size;
@@ -61,9 +64,12 @@ int size_count_partial(const dvar_matrix& x, int n)
     int tmp=0;
     int min=x.rowmin();
     int max=x.rowmax();
-    for (int i=min;i<=max;i++)
+    const dvar_vector* pxi = &x(min);
+    for (int i=min;i<=max;++i)
     {
-      tmp+=size_count_partial(x(i),n);
+      tmp+=size_count_partial(*pxi, n);
+
+      ++pxi;
     }
     return tmp;
   }
@@ -80,9 +86,12 @@ unsigned int size_count(const dvar3_array& x)
   {
     int min = x.slicemin();
     int max = x.slicemax();
+    const dvar_matrix* pxi = &x(min);
     for (int i = min; i <= max; ++i)
     {
-      size += size_count(x(i));
+      size += size_count(*pxi);
+
+      ++pxi;
     }
   }
   return size;
@@ -99,9 +108,12 @@ unsigned int size_count(const dvar4_array& x)
   {
     int min = x.indexmin();
     int max = x.indexmax();
+    const dvar3_array* pxi = &x(min);
     for (int i = min; i <= max; ++i)
     {
-      size += size_count(x(i));
+      size += size_count(*pxi);
+
+      ++pxi;
     }
   }
   return size;
@@ -118,9 +130,12 @@ unsigned int size_count(const d4_array& x)
   {
     int min = x.indexmin();
     int max = x.indexmax();
+    const d3_array* pxi = &x(min);
     for (int i = min; i <= max; ++i)
     {
-      size += size_count(x(i));
+      size += size_count(*pxi);
+
+      ++pxi;
     }
   }
   return size;
@@ -139,9 +154,12 @@ int size_count_partial(const dvar3_array& x, int n)
     int tmp=0;
     int min=x.slicemin();
     int max=x.slicemax();
+    const dvar_matrix* pxi = &x(min);
     for (int i=min;i<=max;i++)
     {
-      tmp+=size_count_partial(x(i),n);
+      tmp += size_count_partial(*pxi, n);
+
+      ++pxi;
     }
     return tmp;
   }

@@ -41,11 +41,13 @@ dvar_matrix operator*(const prevariable& x, const dmatrix& m)
   dvar_matrix tmp(rmin,rmax,cmin,cmax);
 
   pmi = &m(rmin);
+  dvar_vector *ptmpi = &tmp(rmin);
   for (int i=rmin;i<=rmax;++i)
   {
-    tmp(i) = x * *pmi;
+    *ptmpi = x * *pmi;
 
     ++pmi;
+    ++ptmpi;
   }
 
   gs->RETURN_ARRAYS_DECREMENT();
@@ -82,11 +84,13 @@ dvar_matrix operator*(const dvar_matrix& m, const double x)
   dvar_matrix tmp(rmin,rmax,cmin,cmax);
 
   pmi = &m(rmin);
+  dvar_vector *ptmpi = &tmp(rmin);
   for (int i=rmin;i<=rmax;++i)
   {
-    tmp(i) = x * *pmi;
+    *ptmpi = x * *pmi;
 
     ++pmi;
+    ++ptmpi;
   }
 
   gs->RETURN_ARRAYS_DECREMENT();
@@ -123,11 +127,13 @@ dvar_matrix operator*(const double x, const dvar_matrix& m)
   dvar_matrix tmp(rmin,rmax,cmin,cmax);
 
   pmi = &m(rmin);
+  dvar_vector *ptmpi = &tmp(rmin);
   for (int i=rmin;i<=rmax;++i)
   {
-    tmp(i) = x * *pmi;
+    *ptmpi = x * *pmi;
 
     ++pmi;
+    ++ptmpi;
   }
   gs->RETURN_ARRAYS_DECREMENT();
   return tmp;

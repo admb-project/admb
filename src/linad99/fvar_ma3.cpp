@@ -65,42 +65,58 @@ dvar_vector operator*(const dmatrix& m, const dvar_vector& x)
  * \param
  */
 dvariable norm(const dvar_matrix& m1)
-    {
-      gradient_structure* gs = gradient_structure::get();
-      gs->RETURN_ARRAYS_INCREMENT();
+{
+  gradient_structure* gs = gradient_structure::get();
+  gs->RETURN_ARRAYS_INCREMENT();
 
-      dvariable tmp;
-      tmp=0.0;
-      for (int i=m1.rowmin(); i<=m1.rowmax(); i++)
-      {
-        tmp+=norm2(m1.elem(i));
-      }
-      if (tmp>0.)
-      {
-        tmp=pow(tmp,.5);
-      }
-      else
-      {
-        tmp=0.0;
-      }
-      gs->RETURN_ARRAYS_DECREMENT();
-      return(tmp);
-    }
+  int min = m1.rowmin();
+  int max = m1.rowmax();
+
+  dvariable tmp;
+  tmp = 0.0;
+
+  const dvar_vector* pm1i = &m1(min);
+  for (int i = min; i <= max; ++i)
+  {
+    tmp += norm2(*pm1i);
+
+    ++pm1i;
+  }
+
+  if (tmp > 0.0)
+  {
+    tmp = pow(tmp, 0.5);
+  }
+  else
+  {
+    tmp = 0.0;
+  }
+  gs->RETURN_ARRAYS_DECREMENT();
+  return tmp;
+}
 
 dvariable norm2(const dvar_matrix& m1)
-    {
-      gradient_structure* gs = gradient_structure::get();
-      gs->RETURN_ARRAYS_INCREMENT();
+{
+  gradient_structure* gs = gradient_structure::get();
+  gs->RETURN_ARRAYS_INCREMENT();
 
-      dvariable tmp;
-      tmp=0.0;
-      for (int i=m1.rowmin(); i<=m1.rowmax(); i++)
-      {
-        tmp+=norm2(m1.elem(i));
-      }
-      gs->RETURN_ARRAYS_DECREMENT();
-      return(tmp);
-    }
+  int min = m1.rowmin();
+  int max = m1.rowmax();
+
+  dvariable tmp;
+  tmp = 0.0;
+
+  const dvar_vector* pm1i = &m1(min);
+  for (int i = min; i <= max; ++i)
+  {
+    tmp += norm2(*pm1i);
+
+    ++pm1i;
+  }
+
+  gs->RETURN_ARRAYS_DECREMENT();
+  return tmp;
+}
 dvariable sumsq(const dvar_matrix& m1) {return(norm2(m1));}
 
    /*

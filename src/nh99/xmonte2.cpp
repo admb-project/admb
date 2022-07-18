@@ -32,7 +32,7 @@ void bounded_multivariate_normal_mcmc(int nvar, const dvector& a1,
   double* pai = a.get_v() + 1;
   double* pbi = b.get_v() + 1;
   dvector* pchi = &ch(1);
-  for (int i=1;i<=nvar;i++)
+  for (int i=1;i<=nvar;++i)
   {
     double chii = *(pchi->get_v() + i);
     double ah = *pai / chii;
@@ -56,12 +56,12 @@ void bounded_multivariate_normal_mcmc(int nvar, const dvector& a1,
 
     if (!expflag)
     {
-      wght -= 0.5 * *pyi* *pyi;
-      in++;
+      wght -= 0.5 * *pyi * *pyi;
+      ++in;
     }
     else
     {
-      ie++;
+      ++ie;
       wght += log_density_cauchy(*pyi);
     }
 

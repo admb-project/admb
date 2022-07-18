@@ -98,12 +98,12 @@ dvector bounded_multivariate_normal(int nvar, const dvector& a1,
     {
       y = inv_cumd_norm(u*(upper-lower)+lower);
       wght -= .5*y*y;
-      in++;
+      ++in;
     }
     else
     {
       y = inv_cumd_cauchy(u*(upper-lower)+lower);
-      ie++;
+      ++ie;
       wght += log_density_cauchy(y);
     }
     //ty(i)=y;
@@ -111,7 +111,7 @@ dvector bounded_multivariate_normal(int nvar, const dvector& a1,
     double* paj = a.get_v() + i;
     double* pbj = b.get_v() + i;
     dvector* pchj = &ch(i);
-    for (int j=i;j<=nvar;j++)
+    for (int j=i;j<=nvar;++j)
     {
       double tmp = y * *(pchj->get_v() + i);
 

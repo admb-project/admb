@@ -34,21 +34,22 @@ prevariable dvar_matrix::operator () (int i, int j)
          << __FILE__ << ':' << __LINE__ << ".\n";
     ad_exit(1);
   }
-  if (j < elem(i).indexmin())
+  dvar_vector* pmi = m + i;
+  if (j < pmi->indexmin())
   {
     cerr << "matrix column bound exceeded -- column index " << i
          << " is lower than " << elem(i).indexmin() << " in "
          << __FILE__ << ':' << __LINE__ << ".\n";
     ad_exit(1);
   }
-  if (j > elem(i).indexmax())
+  if (j > pmi->indexmax())
   {
     cerr << "matrix column bound exceeded -- column index " << i
          << " is higher than " << elem(i).indexmax() << " in "
          << __FILE__ << ':' << __LINE__ << ".\n";
     ad_exit(1);
   }
-  return m[i].va + j;
+  return pmi->va + j;
 }
 /**
 Returns a dvar_vector reference to the matrix row at specified location i.
@@ -95,21 +96,22 @@ const prevariable dvar_matrix::operator()(int i, int j) const
          << __FILE__ << ':' << __LINE__ << ".\n";
     ad_exit(1);
   }
-  if (j < elem(i).indexmin())
+  dvar_vector* pmi = m + i;
+  if (j < pmi->indexmin())
   {
     cerr << "matrix column bound exceeded -- column index " << i
          << " is lower than " << elem(i).indexmin() << " in "
          << __FILE__ << ':' << __LINE__ << ".\n";
     ad_exit(1);
   }
-  if (j > elem(i).indexmax())
+  if (j > pmi->indexmax())
   {
     cerr << "matrix column bound exceeded -- column index " << i
          << " is higher than " << elem(i).indexmax() << " in "
          << __FILE__ << ':' << __LINE__ << ".\n";
     ad_exit(1);
   }
-  return m[i].va + j;
+  return pmi->va + j;
 }
 /**
 Returns a const dvar_vector reference to the matrix row at specified location i.

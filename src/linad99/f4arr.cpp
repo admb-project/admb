@@ -129,31 +129,31 @@ dvar4_array::~dvar4_array()
  * Description not yet available.
  * \param
  */
-    dvar_matrix& dvar4_array::operator ( ) (int i ,int j)
-    {
-      if (i < hslicemin() || i > hslicemax())
-      {
-        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
-        "dvar_matrix& dvar4_array::operator() (int i, int j)",
-        hslicemin(), hslicemax(), i);
-      }
-      return ((*this)(i))(j);
-    }
+dvar_matrix& dvar4_array::operator()(int i ,int j)
+{
+  if (i < hslicemin() || i > hslicemax())
+  {
+    ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
+      "dvar_matrix& dvar4_array::operator() (int i, int j)",
+    hslicemin(), hslicemax(), i);
+  }
+  return (t + i)->operator()(j);
+}
 
 /**
  * Description not yet available.
  * \param
  */
-    dvar_vector& dvar4_array::operator ( ) (int i,int j,int k)
-    {
-      if (i < hslicemin() || i > hslicemax())
-      {
-        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
-        "dvar_vector& dvar4_array::operator() (int i, int j, int k)",
-        hslicemin(), hslicemax(), i);
-      }
-      return (((*this)(i,j))(k));
-    }
+dvar_vector& dvar4_array::operator()(int i, int j, int k)
+{
+  if (i < hslicemin() || i > hslicemax())
+  {
+    ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
+      "dvar_vector& dvar4_array::operator() (int i, int j, int k)",
+    hslicemin(), hslicemax(), i);
+  }
+  return (t + i)->operator()(j, k);
+}
 
 /**
  * Description not yet available.
@@ -203,42 +203,42 @@ const dvar3_array& dvar4_array::operator[](int i) const
  * \param
  */
 const dvar_matrix& dvar4_array::operator()(int i, int j) const
-    {
-        if (i<hslicemin()||i>hslicemax())
-        { cerr << "Error hslice index out of bounds in\n"
+{
+  if (i<hslicemin()||i>hslicemax())
+  { cerr << "Error hslice index out of bounds in\n"
             "dvarmatrix& dvar4_array::operator ( )" << endl;
-          ad_exit(1);
-        }
-      return ((*this)(i))(j);
-    }
+    ad_exit(1);
+  }
+  return (t + i)->operator()(j);
+}
 
 /**
  * Description not yet available.
  * \param
  */
 const dvar_vector& dvar4_array::operator()(int i, int j, int k) const
-    {
-        if (i<hslicemin()||i>hslicemax())
-        { cerr << "Error hslice index out of bounds in\n"
+{
+  if (i<hslicemin()||i>hslicemax())
+  { cerr << "Error hslice index out of bounds in\n"
             "dvarvector& dvar4_array::operator ( )" << endl;
-          ad_exit(1);
-        }
-      return (((*this)(i,j))(k));
-    }
+    ad_exit(1);
+  }
+  return (t + i)->operator()(j, k);
+}
 
 /**
  * Description not yet available.
  * \param
  */
 const prevariable dvar4_array::operator()(int i, int j, int k, int l) const
-    {
-        if (i<hslicemin()||i>hslicemax())
-        { cerr << "Error hslice index out of bounds in\n"
+{
+  if (i<hslicemin()||i>hslicemax())
+  { cerr << "Error hslice index out of bounds in\n"
             "double& dvar4_array::operator ( )"  << endl;
-          ad_exit(1);
-        }
-      return ( ((*this)(i,j,k))(l));
-    }
+    ad_exit(1);
+  }
+  return (t + i)->operator()(j, k, l);
+}
 #endif
 
 /**
@@ -324,7 +324,8 @@ void dvar4_array::allocate(
          << __FILE__ << ':' << __LINE__ << '\n';
     ad_exit(1);
   }
-  t -= hslicemin();
+  t -= hsl;
+
   dvar3_array* pti = t + hsl;
   for (int i = hsl; i <= hsu; ++i)
   {
@@ -363,7 +364,8 @@ void dvar4_array::allocate(
          << __FILE__ << ':' << __LINE__ << '\n';
     ad_exit(1);
   }
-  t -= hslicemin();
+  t -= hsl;
+
   dvar3_array* pti = t + hsl;
   for (int i=hsl; i<=hsu; ++i)
   {
@@ -403,11 +405,10 @@ void dvar4_array::allocate(
          << __FILE__ << ':' << __LINE__ << '\n';
     ad_exit(1);
   }
-
-  t -= hslicemin();
-
   int il = hsl;
   int iu = hsu;
+  t -= il;
+
   dvar3_array* pti = t + il;
   for (int i = il; i <= iu; ++i)
   {
@@ -436,9 +437,10 @@ void dvar4_array::allocate(
          << __FILE__ << ':' << __LINE__ << '\n';
     ad_exit(1);
   }
-  t -= hslicemin();
   int il = hsl;
   int iu = hsu;
+  t -= il;
+
   dvar3_array* pti = t + il;
   for (int i = il; i <= iu; ++i)
   {
@@ -466,9 +468,10 @@ void dvar4_array::allocate(
          << __FILE__ << ':' << __LINE__ << '\n';
     ad_exit(1);
   }
-  t -= hslicemin();
   int il=hsl;
   int iu=hsu;
+  t -= il;
+
   dvar3_array* pti = t + il;
   for (int i = il; i <= iu; ++i)
   {
@@ -495,11 +498,10 @@ void dvar4_array::allocate(ad_integer hsl, ad_integer hsu)
          << __FILE__ << ':' << __LINE__ << '\n';
     ad_exit(1);
   }
-
-  t -= hslicemin();
-
   int il = hsl;
   int iu = hsu;
+  t -= il;
+
   dvar3_array* pti = t + il;
   for (int i = il; i <= iu; ++i)
   {
@@ -538,7 +540,7 @@ void dvar4_array::allocate(
          << __FILE__ << ':' << __LINE__ << '\n';
     ad_exit(1);
   }
-  t -= hslicemin();
+  t -= hsl;
   dvar3_array* pti = t + hsl;
   for (int i = hsl; i <= hsu; ++i)
   {
@@ -628,7 +630,7 @@ void dvar4_array::allocate(
          << __FILE__ << ':' << __LINE__ << '\n';
     ad_exit(1);
   }
-  t -= hslicemin();
+  t -= hsl;
 
   dvar3_array* pti = t + hsl;
   for (int i = hsl; i <= hsu; ++i)
@@ -664,7 +666,9 @@ Allocate dvar4_array with same dimensions as m1.
 */
 void dvar4_array::allocate(const d4_array& m1)
 {
-  if ((shape = new four_array_shape(m1.hslicemin(), m1.hslicemax())) == 0)
+  int min = m1.hslicemin();
+  int max = m1.hslicemax();
+  if ((shape = new four_array_shape(min, max)) == 0)
   {
     cerr << " Error: dvar4_array unable to allocate memory in "
          << __FILE__ << ':' << __LINE__ << '\n';
@@ -676,8 +680,6 @@ void dvar4_array::allocate(const d4_array& m1)
          << __FILE__ << ':' << __LINE__ << '\n';
     ad_exit(1);
   }
-  int min = hslicemin();
-  int max = hslicemax();
   t -= min;
 
   dvar3_array* pti = t + min;
@@ -694,7 +696,9 @@ Allocate dvar4_array with same dimensions as m1.
 */
 void dvar4_array::allocate(const dvar4_array& m1)
 {
-  if ((shape = new four_array_shape(m1.hslicemin(),m1.hslicemax())) == 0)
+  int min = m1.hslicemin();
+  int max = m1.hslicemax();
+  if ((shape = new four_array_shape(min, max)) == 0)
   {
     cerr << " Error: dvar4_array unable to allocate memory in "
          << __FILE__ << ':' << __LINE__ << '\n';
@@ -706,8 +710,6 @@ void dvar4_array::allocate(const dvar4_array& m1)
          << __FILE__ << ':' << __LINE__ << '\n';
     ad_exit(1);
   }
-  int min = hslicemin();
-  int max = hslicemax();
   t -= min;
 
   dvar3_array* pti = t + min;

@@ -9,36 +9,43 @@
  * Description not yet available.
  * \param
  */
- void dvar5_array::initialize(void)
- {
-   int mmin=indexmin();
-   int mmax=indexmax();
-   for (int i=mmin; i<=mmax; i++)
-   {
-     (*this)(i).initialize();
-   }
- }
+void dvar5_array::initialize(void)
+{
+  int mmin = indexmin();
+  int mmax = indexmax();
+  dvar4_array* pti = t + mmin;
+  for (int i = mmin; i <= mmax; ++i)
+  {
+    pti->initialize();
+
+    ++pti;
+  }
+}
 
 /**
  * Description not yet available.
  * \param
  */
- dvar5_array dvar5_array::sub(int nrl,int nrh)
- {
-   if (allocated(*this))
-   {
-     dvar5_array tmp(nrl,nrh);
-     for (int i=nrl; i<=nrh; i++)
-     {
-       tmp[i].shallow_copy((*this)(i));
-     }
-     return tmp;
-   }
-   else
-   {
-     return *this;
-   }
- }
+dvar5_array dvar5_array::sub(int nrl,int nrh)
+{
+  if (allocated(*this))
+  {
+    dvar5_array tmp(nrl,nrh);
+
+    dvar4_array* pti = t + nrl;
+    dvar4_array* ptmpi = &tmp(nrl);
+    for (int i=nrl; i<=nrh; i++)
+    {
+      ptmpi->shallow_copy(*pti);
+
+      ++pti;
+      ++ptmpi;
+    }
+
+    return tmp;
+  }
+  return *this;
+}
 /// Copy constructor
 dvar5_array::dvar5_array(const dvar5_array& other)
 {
@@ -109,52 +116,65 @@ dvar5_array::~dvar5_array()
  * Description not yet available.
  * \param
  */
- dvar5_array& dvar5_array::operator=(const dvar5_array& m)
- {
-   int mmin=indexmin();
-   int mmax=indexmax();
-   if (mmin!=m.indexmin() || mmax!=m.indexmax())
-   {
-     cerr << "Incompatible bounds in"
-      " dvar4_array& dvar4_array:: operator=(const dvar4_array& m)"
-      << endl;
-     ad_exit(1);
-    }
-   for (int i=mmin; i<=mmax; i++)
-   {
-     (*this)(i)=m(i);
-   }
-   return *this;
- }
+dvar5_array& dvar5_array::operator=(const dvar5_array& m)
+{
+  int mmin = indexmin();
+  int mmax = indexmax();
+#ifndef OPT_LIB
+  if (mmin != m.indexmin() || mmax != m.indexmax())
+  {
+    cerr << "Incompatible bounds in dvar5_array& dvar5_array::operator=(const dvar5_array&)\n";
+    ad_exit(1);
+  }
+#endif
+  dvar4_array* pti = t + mmin;
+  const dvar4_array* pmi = &m(mmin);
+  for (int i = mmin; i <= mmax; ++i)
+  {
+    *pti = *pmi;
+
+    ++pti;
+    ++pmi;
+  }
+  return *this;
+}
 
 /**
  * Description not yet available.
  * \param
  */
 dvar5_array& dvar5_array::operator=(const d5_array& m)
- {
-   int mmin=indexmin();
-   int mmax=indexmax();
-   if (mmin!=m.indexmin() || mmax!=m.indexmax())
-   {
-     cerr << "Incompatible bounds in"
-      " dvar4_array& dvar4_array:: operator =  (const dvar4_array& m)"
-      << endl;
-     ad_exit(1);
-    }
-   for (int i=mmin; i<=mmax; i++)
-   {
-     (*this)(i)=m(i);
-   }
-   return *this;
- }
+{
+  int mmin = indexmin();
+  int mmax = indexmax();
+#ifndef OPT_LIB
+  if (mmin != m.indexmin() || mmax != m.indexmax())
+  {
+    cerr << "Incompatible bounds in dvar5_array& dvar5_array::operator=(const dvar5_array&)\n";
+    ad_exit(1);
+  }
+#endif
+  dvar4_array* pti = t + mmin;
+  const d4_array* pmi = &m(mmin);
+  for (int i = mmin; i <= mmax; ++i)
+  {
+    *pti = *pmi;
+
+    ++pti;
+    ++pmi;
+  }
+  return *this;
+}
 
 /**
 Allocate dvar5_array with same dimensions as m1.
 */
 void dvar5_array::allocate(const dvar5_array& m1)
 {
-  if ((shape = new vector_shape(m1.indexmin(),m1.indexmax())) == 0)
+  int mmin = m1.indexmin();
+  int mmax = m1.indexmax();
+
+  if ((shape = new vector_shape(mmin, mmax)) == 0)
   {
     cerr << " Error: dvar5_array unable to allocate memory in "
          << __FILE__ << ':' << __LINE__ << '\n';
@@ -166,10 +186,16 @@ void dvar5_array::allocate(const dvar5_array& m1)
          << __FILE__ << ':' << __LINE__ << '\n';
     ad_exit(1);
   }
-  t -= indexmin();
-  for (int i = indexmin(); i <= indexmax(); ++i)
+  t -= mmin;
+
+  dvar4_array* pti = t + mmin;
+  const dvar4_array* pm1i = &m1(mmin);
+  for (int i = mmin; i <= mmax; ++i)
   {
-    t[i].allocate(m1[i]);
+    pti->allocate(*pm1i);
+
+    ++pti;
+    ++pm1i;
   }
 }
 /**
@@ -177,7 +203,9 @@ Allocate dvar5_array with same dimensions as m1.
 */
 void dvar5_array::allocate(const d5_array& m1)
 {
-  if ((shape = new vector_shape(m1.indexmin(),m1.indexmax())) == 0)
+  int mmin = m1.indexmin();
+  int mmax = m1.indexmax();
+  if ((shape = new vector_shape(mmin, mmax)) == 0)
   {
     cerr << " Error: dvar5_array unable to allocate memory in "
          << __FILE__ << ':' << __LINE__ << '\n';
@@ -189,10 +217,15 @@ void dvar5_array::allocate(const d5_array& m1)
          << __FILE__ << ':' << __LINE__ << '\n';
     ad_exit(1);
   }
-  t -= indexmin();
-  for (int i = indexmin(); i <= indexmax(); ++i)
+  t -= mmin;
+  dvar4_array* pti = t + mmin;
+  const d4_array* pm1i = &m1(mmin);
+  for (int i = mmin; i <= mmax; ++i)
   {
-    t[i].allocate(m1[i]);
+    pti->allocate(*pm1i);
+
+    ++pti;
+    ++pm1i;
   }
 }
 
@@ -232,146 +265,145 @@ void dvar5_array::allocate(const d5_array& m1)
  * Description not yet available.
  * \param
  */
-    dvar3_array& dvar5_array::operator ( ) (int i ,int j)
-    {
-      if (i < indexmin() || i > indexmax())
-      {
+dvar3_array& dvar5_array::operator ( ) (int i ,int j)
+{
+  if (i < indexmin() || i > indexmax())
+  {
        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
        "dvar3_array& dvar5_array::operator ( ) (int i,int j)",
        indexmin(), indexmax(), i);
-      }
-      return elem(i)(j);
-    }
+  }
+  return (t + i)->operator()(j);
+}
 
 /**
  * Description not yet available.
  * \param
  */
-    dvar_matrix& dvar5_array::operator ( ) (int i,int j,int k)
-    {
-      if (i < indexmin() || i > indexmax())
-      {
+dvar_matrix& dvar5_array::operator ( ) (int i,int j,int k)
+{
+  if (i < indexmin() || i > indexmax())
+  {
        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
        "dvar_matrix& dvar5_array::operator ( ) (int i,int j,int k)",
        indexmin(), indexmax(), i);
-      }
-      return elem(i)(j,k);
-    }
+  }
+  return (t + i)->operator()(j,k);
+}
 
 /**
  * Description not yet available.
  * \param
  */
-    dvar_vector& dvar5_array::operator ( ) (int i,int j,int k,int l)
-    {
-      if (i < indexmin() || i > indexmax())
-      {
-       ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
+dvar_vector& dvar5_array::operator ( ) (int i,int j,int k,int l)
+{
+  if (i < indexmin() || i > indexmax())
+  {
+    ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
        "dvar_vector& dvar5_array::operator ( ) (int i,int j,int k,int l)",
-       indexmin(), indexmax(), i);
-      }
-      return elem(i)(j,k,l);
-    }
+    indexmin(), indexmax(), i);
+  }
+  return (t + i)->operator()(j,k,l);
+}
 
 /**
  * Description not yet available.
  * \param
  */
-    prevariable dvar5_array::operator ( ) (int i,int j,int k,int l,int m)
-    {
-      if (i < indexmin() || i > indexmax())
-      {
-       ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
+prevariable dvar5_array::operator ( ) (int i,int j,int k,int l,int m)
+{
+  if (i < indexmin() || i > indexmax())
+  {
+    ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
        "prevariable dvar5_array::operator ( ) (int i,int j,int k,int l,int m)",
-       indexmin(), indexmax(), i);
-      }
-      return elem(i)(j,k,l,m);
-    }
+    indexmin(), indexmax(), i);
+  }
+  return (t + i)->operator()(j,k,l,m);
+}
 
 /**
  * Description not yet available.
  * \param
  */
 const dvar4_array& dvar5_array::operator()(int i) const
-    {
-        if (i<indexmin()||i>indexmax())
-        { cerr << "Error  index out of bounds in\n"
+{
+  if (i<indexmin()||i>indexmax())
+  { cerr << "Error  index out of bounds in\n"
             "dvar4_array& dvar5_array::operator ( )" << endl;
-          ad_exit(1);
-        }
-      return t[i];
-    }
+    ad_exit(1);
+  }
+  return t[i];
+}
 
 /**
  * Description not yet available.
  * \param
  */
 const dvar4_array& dvar5_array::operator[](int i) const
-    {
-        if (i<indexmin()||i>indexmax())
-        { cerr << "Error  index out of bounds in\n"
+{
+  if (i<indexmin()||i>indexmax())
+  { cerr << "Error  index out of bounds in\n"
             "dvar4_array& dvar5_array::operator []" << endl;
-          ad_exit(1);
-        }
-      return t[i];
-    }
+    ad_exit(1);
+  }
+  return t[i];
+}
 
 /**
  * Description not yet available.
  * \param
  */
 const dvar3_array& dvar5_array::operator()(int i, int j) const
-    {
-        if (i<indexmin()||i>indexmax())
-        { cerr << "Error index out of bounds in\n"
+{
+  if (i<indexmin()||i>indexmax())
+  { cerr << "Error index out of bounds in\n"
             "dvar3_array& dvar5_array::operator ( )" << endl;
-          ad_exit(1);
-        }
-      return elem(i)(j);
-    }
+    ad_exit(1);
+  }
+  return (t + i)->operator()(j);
+}
 
 /**
  * Description not yet available.
  * \param
  */
 const dvar_matrix& dvar5_array::operator()(int i, int j, int k) const
-    {
-        if (i<indexmin()||i>indexmax())
-        { cerr << "Error index out of bounds in\n"
+{
+  if (i<indexmin()||i>indexmax())
+  { cerr << "Error index out of bounds in\n"
             "dvar3_array& dvar5_array::operator ( )" << endl;
-          ad_exit(1);
-        }
-      return elem(i)(j,k);
-    }
+    ad_exit(1);
+  }
+  return (t + i)->operator()(j,k);
+}
 
 /**
  * Description not yet available.
  * \param
  */
 const dvar_vector& dvar5_array::operator()(int i, int j, int k, int l) const
-    {
-        if (i<indexmin()||i>indexmax())
-        { cerr << "Error hslice index out of bounds in\n"
+{
+  if (i<indexmin()||i>indexmax())
+  { cerr << "Error hslice index out of bounds in\n"
             "dvar_vector& dvar5_array::operator ( )"  << endl;
-          ad_exit(1);
-        }
-      return elem(i)(j,k,l);
-    }
+    ad_exit(1);
+  }
+  return (t + i)->operator()(j,k,l);
+}
 
 /**
  * Description not yet available.
  * \param
  */
-const prevariable dvar5_array::operator()(int i, int j, int k, int l, int m)
-  const
-    {
-        if (i<indexmin()||i>indexmax())
-        { cerr << "Error hslice index out of bounds in\n"
+const prevariable dvar5_array::operator()(int i, int j, int k, int l, int m) const
+{
+  if (i<indexmin()||i>indexmax())
+  { cerr << "Error hslice index out of bounds in\n"
             "dvar_vector& dvar5_array::operator ( )"  << endl;
-          ad_exit(1);
-        }
-      return elem(i)(j,k,l,m);
-    }
+    ad_exit(1);
+  }
+  return (t + i)->operator()(j,k,l,m);
+}
 #endif
 
 /**
@@ -419,10 +451,13 @@ void dvar5_array::allocate(
          << __FILE__ << ':' << __LINE__ << '\n';
     ad_exit(1);
   }
-  t -= indexmin();
+  t -= hsl;
+
+  dvar4_array* pti = t + hsl;
   for (int i = hsl; i <= hsu; ++i)
   {
-    (*this)(i).allocate(sl, sh, nrl, nrh, ncl, nch, l5, u5);
+    pti->allocate(sl, sh, nrl, nrh, ncl, nch, l5, u5);
+    ++pti;
   }
 }
 /**
@@ -457,10 +492,12 @@ void dvar5_array::allocate(int hsl, int hsu)
          << __FILE__ << ':' << __LINE__ << '\n';
     ad_exit(1);
   }
-  t -= indexmin();
-  for (int i = indexmin(); i <= indexmax(); ++i)
+  t -= hsl;
+  dvar4_array* pti = t + hsl;
+  for (int i = hsl; i <= hsu; ++i)
   {
-    t[i].allocate();
+    pti->allocate();
+    ++pti;
   }
 }
 /**
@@ -498,16 +535,18 @@ void dvar5_array::allocate(
     ad_exit(1);
   }
 
-  t -= indexmin();
-
   int il=hsl;
   int iu=hsu;
+  t -= il;
+
+  dvar4_array* pti = t + hsl;
   for (int i = il; i <= iu; ++i)
   {
-    t[i].allocate(
+    pti->allocate(
       ad_integer(sl(i)), ad_integer(sh(i)),
       nrl(i), nrh(i),
       ncl(i), nch(i),
       l5(i),u5(i));
+    ++pti;
   }
 }

@@ -14,9 +14,17 @@ dvar3_array square(const dvar3_array& vararr3)
 {
   dvar3_array result;
   result.allocate(vararr3);
-  for (int i = result.slicemin(); i <= result.slicemax(); ++i)
+
+  int min = result.slicemin();
+  int max = result.slicemax();
+  dvar_matrix* presulti = &result(min);
+  const dvar_matrix* pvararr3i = &vararr3(min);
+  for (int i = min; i <= max; ++i)
   {
-    result(i) = square(vararr3(i));
+    *presulti = square(*pvararr3i);
+
+    ++presulti;
+    ++pvararr3i;
   }
   return result;
 }

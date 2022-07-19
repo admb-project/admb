@@ -14,9 +14,18 @@ d3_array value(const dvar3_array& arr3)
 {
   d3_array result;
   result.allocate(arr3);
-  for (int i = result.slicemin(); i <= result.slicemax(); ++i)
+
+  int min = result.slicemin();
+  int max = result.slicemax();
+
+  dmatrix* presulti = &result(min);
+  const dvar_matrix* parr3i = &arr3(min);
+  for (int i = min; i <= max; ++i)
   {
-    result[i] = value(arr3(i));
+    *presulti = value(*parr3i);
+
+    ++presulti;
+    ++parr3i;
   }
   return result;
 }

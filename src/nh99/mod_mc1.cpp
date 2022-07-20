@@ -35,10 +35,13 @@ void param_init_vector::add_value(const dvector& ndev, const int& _ii)
   int& ii=(int&) _ii;
   int mmin=indexmin();
   int mmax=indexmax();
+  double* pndevii = ndev.get_v() + ii;
   for (int i=mmin;i<=mmax;i++)
   {
-    (*this)(i)+=ndev(ii);
-    ii++;
+    (*this)(i) += *pndevii;
+
+    ++pndevii;
+    ++ii;
   }
 }
 

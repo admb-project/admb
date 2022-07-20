@@ -206,6 +206,7 @@ dvariable ln_det(const dvar_matrix& aa, int& sgn)
     part_prod(1)=ld+log(-bb11);
     sgn=-sgn;
   }
+
   for (j=lb+1;j<=ub;j++)
   {
     double bbjj = bb(j, j);
@@ -305,9 +306,15 @@ void df_xldet(void)
   dfpart_prod(lb) = 0.0;
 
   double dfsum = 0.0;
+  pdfbj = &dfb(ub);
+  pbj = &b(ub);
   for (int j=ub;j>=lb;j--)
   {
+    double bjj = *(pbj->get_v() + j);
+    double* pdfbjj = pdfbj->get_v() + j;
     dvector* pdfbi = &dfb(ub);
+    int* pindxi = indx.get_v() + ub;
+    dvector* pbi = &b(ub);
     for (int i=ub;i>=lb;i--)
     {
       double* pdfbij = pdfbi->get_v() + j;
@@ -319,10 +326,9 @@ void df_xldet(void)
       }
       else
       {
-        double bjj = b(j, j);
         // b(i,j)=sum/b(j,j);
         dfsum += *pdfbij / bjj;
-        dfb(j,j) -= *pdfbij * b(i,j) / bjj;
+        *pdfbjj -= *pdfbij * *(pbi->get_v() + j) / bjj;
         *pdfbij = 0.0;
       }
 
@@ -333,11 +339,16 @@ void df_xldet(void)
         dfb(k,j)-=dfsum*b(i,k);
       }
       // sum=value(a(indx(i),j);
-      save_dmatrix_derivatives(a_pos,dfsum,indx(i),j); // like this
+      save_dmatrix_derivatives(a_pos,dfsum,*pindxi,j); // like this
       dfsum = 0.0;
 
       --pdfbi;
+      --pindxi;
+      --pbi;
     }
+
+    --pdfbj;
+    --pbj;
   }
 }
 

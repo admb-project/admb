@@ -40,5 +40,5 @@ dmatrix outer_prod(const dvector& v1, const dvector& v2)
     ++ptmpi;
     ++pv1i;
   }
-  return(tmp);
+  return tmp;
 }

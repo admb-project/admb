@@ -70,18 +70,25 @@ void param_init_vector::set_simulation_bounds(const dmatrix& _symbds,
 
 void param_init_bounded_vector::set_simulation_bounds(const dmatrix& _symbds,
   const int& _ii)
+{
+  dmatrix& symbds=(dmatrix&) _symbds;
+  int& ii=(int&) _ii;
+  int mmin = indexmin();
+  int mmax = indexmax();
+  double* psymbds1ii = symbds(1).get_v() + ii; 
+  double* psymbds2ii = symbds(2).get_v() + ii; 
+  double_and_int* pvai = va + mmin;
+  for (int i=mmin;i<=mmax;i++)
   {
-    dmatrix& symbds=(dmatrix&) _symbds;
-    int& ii=(int&) _ii;
-    int mmin=indexmin();
-    int mmax=indexmax();
-    for (int i=mmin;i<=mmax;i++)
-    {
-      symbds(1,ii)= minb-value((*this)(i));
-      symbds(2,ii)= maxb-value((*this)(i));
-      ii++;
-    }
+    *psymbds1ii = minb - pvai->x;
+    *psymbds2ii = maxb - pvai->x;
+
+    ++psymbds1ii;
+    ++psymbds2ii;
+    ++pvai;
+    ++ii;
   }
+}
 
 void param_init_matrix::set_simulation_bounds(const dmatrix& _symbds,
   const int& _ii)

@@ -131,17 +131,19 @@ ivector_position::ivector_position(void)
  * Description not yet available.
  * \param
  */
-dvar_vector_position dvar_matrix_position::operator () (int i)
+dvar_vector_position dvar_matrix_position::operator()(int i)
 {
+#ifndef OPT_LIB
   if (i<row_min||i>row_max)
   {
     cerr << "Index out of range in\n"
         "  dvar_vector_position dvar_matrix_position::operator () (int i)"
       << endl;
   }
+#endif
   dvar_vector_position tmp;
-  tmp.min=lb(i);
-  tmp.max=ub(i);
+  tmp.min = *(lb.get_v() + i);
+  tmp.max = *(ub.get_v() + i);
   tmp.va=(double_and_int *) ptr(i);
   return tmp;
 }
@@ -150,17 +152,19 @@ dvar_vector_position dvar_matrix_position::operator () (int i)
  * Description not yet available.
  * \param
  */
-dvector_position dmatrix_position::operator () (int i)
+dvector_position dmatrix_position::operator()(int i)
 {
+#ifndef OPT_LIB
   if (i<row_min||i>row_max)
   {
     cerr << "Index out of range in\n"
         "  dvector_position dmatrix_position::operator () (int i)"
       << endl;
   }
+#endif
   dvector_position tmp;
-  tmp.min=lb(i);
-  tmp.max=ub(i);
+  tmp.min = *(lb.get_v() + i);
+  tmp.max = *(ub.get_v() + i);
   tmp.v=(double *) ptr(i);
   return tmp;
 }

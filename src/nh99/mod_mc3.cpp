@@ -139,9 +139,13 @@ void set_value_inv_mc(const dvar_vector& x, const dvector& _v, const int& _ii,
   int& ii=(int&) _ii;
   int min=x.indexmin();
   int max=x.indexmax();
+  double* pvii = v.get_v() + ii;
   for (int i=min;i<=max;i++)
   {
-    v(ii++)=set_value_inv_mc(x(i),fmin,fmax);
+    *pvii = set_value_inv_mc(x(i), fmin, fmax);
+
+    ++pvii;
+    ++ii;
   }
 }
 
@@ -152,8 +156,12 @@ void set_value_mc(const dvar_vector& _x,const dvar_vector& v, const int& _ii,
   int& ii=(int&) _ii;
   int min=x.indexmin();
   int max=x.indexmax();
+  double* pvii = v.get_v() + ii;
   for (int i=min;i<=max;i++)
   {
-    x(i)=set_value_mc(v(ii++),fmin,fmax);
+    x(i) = set_value_mc(*pvii, fmin, fmax);
+
+    ++pvii;
+    ++ii;
   }
 }

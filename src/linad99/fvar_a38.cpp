@@ -78,7 +78,7 @@ void DF_dv_dble_prod(void)
   for (int i = max; i >= min; --i)
   {
       //tmp.elem_value(i)=value(x)*t1.elem_value(i)*value(x);
-      dfx += *pdftmpi * t1(i);
+      dfx += *pdftmpi * *pt1i;
       *pdft1i = *pdftmpi * x;
 
       --pdftmpi;

@@ -33,21 +33,22 @@ int& imatrix::operator()(int i, int j)
          << "value was \"" << i << "\".\n";
     ad_exit(1);
   }
-  if (j < elem(i).indexmin())
+  ivector* pmi = m + i;
+  if (j < pmi->indexmin())
   {
     cerr << "matrix bound exceeded -- column index too low in "
          << "imatrix::operator()(int, int)\n"
          << "value was \"" << j << "\".\n";
     ad_exit(1);
   }
-  if (j > elem(i).indexmax())
+  if (j > pmi->indexmax())
   {
     cerr << "matrix bound exceeded -- column index too high in "
          << "imatrix::operator()(int, int)\n"
          << "value was \"" << j << "\".\n";
     ad_exit(1);
   }
-  return *((*(m+i)).v+j);
+  return *(pmi->v + j);
 }
 /**
 Return const reference to integer element at imatrix(i, j).
@@ -72,20 +73,21 @@ const int& imatrix::operator()(int i, int j) const
          << "value was \"" << i << "\".\n";
     ad_exit(1);
   }
-  if (j < elem(i).indexmin())
+  ivector* pmi = m + i;
+  if (j < pmi->indexmin())
   {
     cerr << "matrix bound exceeded -- column index too low in "
          << "imatrix::operator()(int, int)\n"
          << "value was \"" << j << "\".\n";
     ad_exit(1);
   }
-  if (j > elem(i).indexmax())
+  if (j > pmi->indexmax())
   {
     cerr << "matrix bound exceeded -- column index too high in "
          << "imatrix::operator()(int, int)\n"
          << "value was \"" << j << "\".\n";
     ad_exit(1);
   }
-  return *((*(m+i)).v+j);
+  return *(pmi->v + j);
 }
 #endif

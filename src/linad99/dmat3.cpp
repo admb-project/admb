@@ -239,29 +239,36 @@ void ludcmp(const dmatrix& _a, const ivector& _indx, const double& _d)
   int lb=a.colmin();
   int ub=a.colmax();
 
-  double big,dum,sum,temp;
-
   dvector vv(lb,ub);
 
   d=1.0;
 
-  for (i=lb;i<=ub;i++)
+  dvector* pai = &a(lb);
+  double* pvvi = vv.get_v() + lb;
+  for (i=lb;i<=ub;++i)
   {
-    big=0.0;
-    for (j=lb;j<=ub;j++)
+    double big=0.0;
+
+    double* paij = pai->get_v() + lb;
+    for (j=lb;j<=ub;++j)
     {
-      temp=fabs(a[i][j]);
+      double temp=fabs(*paij);
       if (temp > big)
       {
         big=temp;
       }
+
+      ++paij;
     }
     if (big == 0.0)
     {
       std::ostream& output_stream = get_output_stream();
       output_stream << "Error: division by zero in ludcmp\n";
     }
-    vv[i]=1.0/big;
+    *pvvi = 1.0 / big;
+
+    ++pai;
+    ++pvvi;
   }
 
 
@@ -270,7 +277,7 @@ void ludcmp(const dmatrix& _a, const ivector& _indx, const double& _d)
   {
     for (i=lb;i<j;i++)
     {
-      sum=a[i][j];
+      double sum=a[i][j];
       for (k=lb;k<i;k++)
       {
         sum = sum - a[i][k]*a[k][j];
@@ -278,16 +285,16 @@ void ludcmp(const dmatrix& _a, const ivector& _indx, const double& _d)
       a[i][j]=sum;
     }
     int imax=j;
-    big=0.0;
+    double big=0.0;
     for (i=j;i<=ub;i++)
     {
-      sum=a[i][j];
+      double sum=a[i][j];
       for (k=lb;k<j;k++)
       {
         sum = sum - a[i][k]*a[k][j];
       }
       a[i][j]=sum;
-      dum=vv[i]*fabs(sum);
+      double dum=vv[i]*fabs(sum);
       if ( dum >= big)
       {
         big=dum;
@@ -298,7 +305,7 @@ void ludcmp(const dmatrix& _a, const ivector& _indx, const double& _d)
     {
       for (k=lb;k<=ub;k++)
       {
-        dum=a[imax][k];
+        double dum=a[imax][k];
         a[imax][k]=a[j][k];
         a[j][k]=dum;
       }
@@ -314,7 +321,7 @@ void ludcmp(const dmatrix& _a, const ivector& _indx, const double& _d)
 
     if (j != n)
     {
-      dum=1.0/(a[j][j]);
+      double dum=1.0/(a[j][j]);
       for (i=j+1;i<=ub;i++)
       {
         a[i][j] = a[i][j] * dum;
@@ -353,19 +360,16 @@ void ludcmp_det(const dmatrix& _a, const ivector& _indx, const double& _d)
   int lb=a.colmin();
   int ub=a.colmax();
 
-  double big,dum,sum,temp;
-
   dvector vv(lb,ub);
-
 
   d=1.0;
 
   for (i=lb;i<=ub;i++)
   {
-    big=0.0;
+    double big=0.0;
     for (j=lb;j<=ub;j++)
     {
-      temp=fabs(a[i][j]);
+      double temp=fabs(a[i][j]);
       if (temp > big)
       {
         big=temp;
@@ -384,7 +388,7 @@ void ludcmp_det(const dmatrix& _a, const ivector& _indx, const double& _d)
   {
     for (i=lb;i<j;i++)
     {
-      sum=a[i][j];
+      double sum=a[i][j];
       for (k=lb;k<i;k++)
       {
         sum = sum - a[i][k]*a[k][j];
@@ -392,16 +396,16 @@ void ludcmp_det(const dmatrix& _a, const ivector& _indx, const double& _d)
       a[i][j]=sum;
     }
     int imax = j;
-    big=0.0;
+    double big=0.0;
     for (i=j;i<=ub;i++)
     {
-      sum=a[i][j];
+      double sum=a[i][j];
       for (k=lb;k<j;k++)
       {
         sum = sum - a[i][k]*a[k][j];
       }
       a[i][j]=sum;
-      dum=vv[i]*fabs(sum);
+      double dum=vv[i]*fabs(sum);
       if ( dum >= big)
       {
         big=dum;
@@ -412,7 +416,7 @@ void ludcmp_det(const dmatrix& _a, const ivector& _indx, const double& _d)
     {
       for (k=lb;k<=ub;k++)
       {
-        dum=a[imax][k];
+        double dum=a[imax][k];
         a[imax][k]=a[j][k];
         a[j][k]=dum;
       }
@@ -428,7 +432,7 @@ void ludcmp_det(const dmatrix& _a, const ivector& _indx, const double& _d)
 
     if (j != n)
     {
-      dum=1.0/(a[j][j]);
+      double dum=1.0/(a[j][j]);
       for (i=j+1;i<=ub;i++)
       {
         a[i][j] = a[i][j] * dum;
@@ -451,13 +455,12 @@ void ludcmp_det(const dmatrix& _a, const ivector& _indx, const double& _d)
 void lubksb(dmatrix a, const ivector& indx, dvector b)
 {
   int i,ii=0,ip,j,iiflag=0;
-  double sum;
   int lb=a.colmin();
   int ub=a.colmax();
   for (i=lb;i<=ub;i++)
   {
     ip=indx[i];
-    sum=b[ip];
+    double sum=b[ip];
     b[ip]=b[i];
     if (iiflag)
     {
@@ -476,7 +479,7 @@ void lubksb(dmatrix a, const ivector& indx, dvector b)
 
   for (i=ub;i>=lb;i--)
   {
-    sum=b[i];
+    double sum=b[i];
     for (j=i+1;j<=ub;j++)
     {                        // !!! remove to show bug
       sum -= a[i][j]*b[j];
@@ -628,19 +631,16 @@ void ludcmp_index(const dmatrix& _a, const ivector& _indx, const double& _d)
   int ub=a.colmax();
   indx.fill_seqadd(lb,1);
 
-  double big,dum,sum,temp;
-
   dvector vv(lb,ub);
-
 
   d=1.0;
 
   for (i=lb;i<=ub;i++)
   {
-    big=0.0;
+    double big=0.0;
     for (j=lb;j<=ub;j++)
     {
-      temp=fabs(a[i][j]);
+      double temp=fabs(a[i][j]);
       if (temp > big)
       {
         big=temp;
@@ -659,7 +659,7 @@ void ludcmp_index(const dmatrix& _a, const ivector& _indx, const double& _d)
   {
     for (i=lb;i<j;i++)
     {
-      sum=a[i][j];
+      double sum=a[i][j];
       for (k=lb;k<i;k++)
       {
         sum = sum - a[i][k]*a[k][j];
@@ -667,16 +667,16 @@ void ludcmp_index(const dmatrix& _a, const ivector& _indx, const double& _d)
       a[i][j]=sum;
     }
     int imax=j;
-    big=0.0;
+    double big=0.0;
     for (i=j;i<=ub;i++)
     {
-      sum=a[i][j];
+      double sum=a[i][j];
       for (k=lb;k<j;k++)
       {
         sum = sum - a[i][k]*a[k][j];
       }
       a[i][j]=sum;
-      dum=vv[i]*fabs(sum);
+      double dum=vv[i]*fabs(sum);
       if ( dum >= big)
       {
         big=dum;
@@ -687,7 +687,7 @@ void ludcmp_index(const dmatrix& _a, const ivector& _indx, const double& _d)
     {
       for (k=lb;k<=ub;k++)
       {
-        dum=a[imax][k];
+        double dum=a[imax][k];
         a[imax][k]=a[j][k];
         a[j][k]=dum;
       }
@@ -705,7 +705,7 @@ void ludcmp_index(const dmatrix& _a, const ivector& _indx, const double& _d)
 
     if (j != n)
     {
-      dum=1.0/(a[j][j]);
+      double dum=1.0/(a[j][j]);
       for (i=j+1;i<=ub;i++)
       {
         a[i][j] = a[i][j] * dum;

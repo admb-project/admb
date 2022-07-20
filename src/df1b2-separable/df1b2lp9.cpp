@@ -50,29 +50,33 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
   dvector gmax(1,num_separable_calls);
   gmax.initialize();
 
+  int* pishapei = ishape.get_v() + 1;
   for (int i=1;i<=num_separable_calls;i++)
   {
-    int m=(*derindex)(i).indexmax();
-    ishape(i)=m;
+    int m = (*derindex)(i).indexmax();
+    *pishapei = m;
     if (m>0)
     {
-    pfmc1[i] = new fmm(m);
-    pfmc1[i]->iprint=0;
-    pfmc1[i]->crit=inner_crit;
-    pfmc1[i]->ireturn=0;
-    pfmc1[i]->itn=0;
-    pfmc1[i]->ifn=0;
-    pfmc1[i]->ialph=0;
-    pfmc1[i]->ihang=0;
-    pfmc1[i]->ihflag=0;
-    pfmc1[i]->maxfn=100;
-    pfmc1[i]->gmax=1.e+100;
-    pfmc1[i]->use_control_c=0;
+      fmm* pfmc1i = new fmm(m);
+      pfmc1i->iprint=0;
+      pfmc1i->crit=inner_crit;
+      pfmc1i->ireturn=0;
+      pfmc1i->itn=0;
+      pfmc1i->ifn=0;
+      pfmc1i->ialph=0;
+      pfmc1i->ihang=0;
+      pfmc1i->ihflag=0;
+      pfmc1i->maxfn=100;
+      pfmc1i->gmax=1.e+100;
+      pfmc1i->use_control_c=0;
+      pfmc1[i] = pfmc1i;
     }
     else
     {
       pfmc1[i]= (fmm *)(0);
     }
+
+    ++pishapei;
   }
   dmatrix gg(1,num_separable_calls,1,ishape);
   dmatrix ggb(1,num_separable_calls,1,ishape);

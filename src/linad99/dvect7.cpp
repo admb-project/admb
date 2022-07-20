@@ -15,45 +15,66 @@
  * \param
  */
 dvector log(const dvector& t1)
-  {
-     dvector tmp(t1.indexmin(),t1.indexmax());
+{
+  int min = t1.indexmin();
+  int max = t1.indexmax();
+  dvector tmp(min, max);
 
-     for (int i=t1.indexmin(); i<=t1.indexmax(); i++)
-     {
-       tmp.elem(i)=log(t1.elem(i));
-     }
-     return(tmp);
+  double* ptmpi = tmp.get_v() + min;
+  const double* pt1i = t1.get_v() + min;
+  for (int i = min; i <= max; ++i)
+  {
+    *ptmpi = log(*pt1i);
+
+    ++ptmpi;
+    ++pt1i;
   }
+  return tmp;
+}
 
 /**
  * Description not yet available.
  * \param
  */
 dvector exp(const dvector& t1)
-  {
-     dvector tmp(t1.indexmin(),t1.indexmax());
+{
+  int min = t1.indexmin();
+  int max = t1.indexmax();
+  dvector tmp(min, max);
 
-     for (int i=t1.indexmin(); i<=t1.indexmax(); i++)
-     {
-       tmp.elem(i)=exp(t1.elem(i));
-     }
-     return(tmp);
+  double* ptmpi = tmp.get_v() + min;
+  const double* pt1i = t1.get_v() + min;
+  for (int i = min; i <= max; ++i)
+  {
+    *ptmpi = exp(*pt1i);
+
+    ++ptmpi;
+    ++pt1i;
   }
+  return tmp;
+}
 
 /**
  * Description not yet available.
  * \param
  */
 dvector fabs(const dvector& t1)
-  {
-     dvector tmp(t1.indexmin(),t1.indexmax());
+{
+  int min = t1.indexmin();
+  int max = t1.indexmax();
+  dvector tmp(min, max);
 
-     for (int i=t1.indexmin(); i<=t1.indexmax(); i++)
-     {
-       tmp.elem(i)=fabs(t1.elem(i));
-     }
-     return(tmp);
+  double* ptmpi = tmp.get_v() + min;
+  const double* pt1i = t1.get_v() + min;
+  for (int i = min; i <= max; ++i)
+  {
+    *ptmpi = fabs(*pt1i);
+
+    ++ptmpi;
+    ++pt1i;
   }
+  return tmp;
+}
 
 /**
 Returns the maximum value of vector vec.
@@ -65,11 +86,15 @@ double max(const dvector& vec)
 {
   int indexmin = vec.indexmin();
   int indexmax = vec.indexmax();
-  double maximum = vec.elem(indexmin);
+  const double* pveci = vec.get_v() + indexmin;
+  double maximum = *pveci;
+  ++pveci;
   for (int i = indexmin + 1; i <= indexmax; ++i)
   {
-    double value = vec.elem(i);
+    double value = *pveci;
     if (value > maximum) maximum = value;
+
+    ++pveci;
   }
   return maximum;
 }
@@ -83,11 +108,15 @@ double min(const dvector& vec)
 {
   int indexmin = vec.indexmin();
   int indexmax = vec.indexmax();
-  double minimum = vec.elem(indexmin);
+  const double* pveci = vec.get_v() + indexmin;
+  double minimum = *pveci;
+  ++pveci;
   for (int i = indexmin + 1; i <= indexmax; ++i)
   {
-    double value = vec.elem(i);
+    double value = *pveci;
     if (value < minimum) minimum = value;
+
+    ++pveci;
   }
   return minimum;
 }

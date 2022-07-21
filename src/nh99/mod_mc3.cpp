@@ -156,12 +156,10 @@ void set_value_mc(const dvar_vector& _x,const dvar_vector& v, const int& _ii,
   int& ii=(int&) _ii;
   int min=x.indexmin();
   int max=x.indexmax();
-  double* pvii = v.get_v() + ii;
   for (int i=min;i<=max;i++)
   {
-    x(i) = set_value_mc(*pvii, fmin, fmax);
+    x(i) = set_value_mc(v(ii), fmin, fmax);
 
-    ++pvii;
     ++ii;
   }
 }

@@ -98,10 +98,13 @@ public:
  */
 class gradient_structure
 {
-public:
-   DF_FILE *fp;
+  DF_FILE* _fp;
 
-  thread_local static gradient_structure* _instance;
+public:
+
+  static __thread DF_FILE* fp;
+  static __thread gradient_structure* _instance;
+
   static gradient_structure* get();
   static gradient_structure* reset(gradient_structure*);
   dvariable* next_RETURN_PTR();

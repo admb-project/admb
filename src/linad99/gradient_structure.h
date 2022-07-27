@@ -92,6 +92,9 @@ public:
   operator double*();
 };
 
+#ifdef _MSC_VER
+  #define __thread __declspec(thread)
+#endif
 /**
  * class for things related to the gradient structures, including dimension of
  * arrays, size of buffers, etc.
@@ -101,7 +104,7 @@ class gradient_structure
   DF_FILE* _fp;
 
 public:
-  static DF_FILE* fp;
+  static __thread DF_FILE* fp;
 
   thread_local static gradient_structure* _instance;
   static gradient_structure* get();

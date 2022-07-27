@@ -123,7 +123,6 @@ GTESTS_ALL=\
  test_cast.cpp\
  test_valarray.cpp\
  test_vector.cpp\
- test_xpools.cpp\
  test_issues.cpp\
  test_funnel.cpp\
  test_math.cpp\
@@ -189,6 +188,7 @@ ERRORS=\
  main.cpp
 
 GTESTS_DEV=\
+ test_xpools.cpp\
  test_thread_funnel.obj\
  thread_funnel5.obj\
  main.cpp

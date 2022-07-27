@@ -263,7 +263,7 @@ dvar_matrix outer_prod(const dvar_vector& v1, const dvar_vector& v2)
  */
 void dfouter_prodvv(void)
 {
-  DF_FILE* fp = gradient_structure::get_fp();
+  DF_FILE* fp = gradient_structure::fp;
 
   verify_identifier_string("tv");
   dvar_vector_position v2pos=fp->restore_dvar_vector_position();

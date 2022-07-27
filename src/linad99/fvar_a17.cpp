@@ -80,7 +80,7 @@ dvar_vector operator+(const dvar_vector& v1, const dvar_vector& v2)
  */
 void dvdv_add(void)
 {
-  DF_FILE* fp = gradient_structure::get_fp();
+  DF_FILE* fp = gradient_structure::fp;
 
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("aaaa");

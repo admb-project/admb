@@ -27,7 +27,7 @@
  */
 void banded_symmetric_dvar_matrix::save_dvar_matrix_value() const
 {
-  gradient_structure::get_fp()->save_dvar_matrix_value(d);
+  gradient_structure::fp->save_dvar_matrix_value(d);
 }
 
 /**
@@ -36,7 +36,7 @@ void banded_symmetric_dvar_matrix::save_dvar_matrix_value() const
  */
 void banded_lower_triangular_dvar_matrix::save_dvar_matrix_value() const
 {
-  gradient_structure::get_fp()->save_dvar_matrix_value(d);
+  gradient_structure::fp->save_dvar_matrix_value(d);
 }
 
 /**
@@ -45,7 +45,7 @@ void banded_lower_triangular_dvar_matrix::save_dvar_matrix_value() const
  */
 void banded_symmetric_dmatrix::save_dmatrix_value() const
 {
-  gradient_structure::get_fp()->save_dmatrix_value(d);
+  gradient_structure::fp->save_dmatrix_value(d);
 }
 
 /**
@@ -55,7 +55,7 @@ void banded_symmetric_dmatrix::save_dmatrix_value() const
 banded_symmetric_dmatrix restore_banded_symmetric_dvar_matrix_value(
   const dvar_matrix_position& mpos)
 {
-  DF_FILE* fp = gradient_structure::get_fp();
+  DF_FILE* fp = gradient_structure::fp;
 
   // restores the size, address, and value information for a dvar_matrix
   banded_symmetric_dmatrix out((const dvar_matrix_position&)mpos);
@@ -78,7 +78,7 @@ banded_lower_triangular_dmatrix
 restore_banded_lower_triangular_dvar_matrix_value(
   const dvar_matrix_position& mpos)
 {
-  DF_FILE* fp = gradient_structure::get_fp();
+  DF_FILE* fp = gradient_structure::fp;
 
   // restores the size, address, and value information for a dvar_matrix
   banded_lower_triangular_dmatrix out((const dvar_matrix_position&)mpos);
@@ -99,7 +99,7 @@ restore_banded_lower_triangular_dvar_matrix_value(
  */
 void banded_symmetric_dvar_matrix::save_dvar_matrix_position() const
 {
-  gradient_structure::get_fp()->save_dvar_matrix_position(d);
+  gradient_structure::fp->save_dvar_matrix_position(d);
 }
 
 /**
@@ -108,7 +108,7 @@ void banded_symmetric_dvar_matrix::save_dvar_matrix_position() const
  */
 void banded_lower_triangular_dvar_matrix::save_dvar_matrix_position() const
 {
-  gradient_structure::get_fp()->save_dvar_matrix_position(d);
+  gradient_structure::fp->save_dvar_matrix_position(d);
 }
 
 /**

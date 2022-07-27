@@ -98,8 +98,10 @@ public:
  */
 class gradient_structure
 {
+  DF_FILE* _fp;
+
 public:
-   DF_FILE *fp;
+  static DF_FILE* fp;
 
   thread_local static gradient_structure* _instance;
   static gradient_structure* get();
@@ -222,7 +224,7 @@ public:
    //access functions
 
    friend class DF_FILE;
-   static DF_FILE* get_fp();
+   DF_FILE* get_fp();
    static void set_NUM_RETURN_ARRAYS(unsigned int i);
 #if defined(NO_DERIVS)
    static void set_NO_DERIVATIVES(void);

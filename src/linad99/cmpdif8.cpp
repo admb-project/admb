@@ -38,7 +38,7 @@ void save_double_derivative(const double x, const prevariable_position& _pos)
  */
 prevariable_position restore_prevariable_position()
 {
-  return gradient_structure::get_fp()->restore_prevariable_position();
+  return gradient_structure::fp->restore_prevariable_position();
 }
 prevariable_position DF_FILE::restore_prevariable_position()
 {
@@ -55,7 +55,7 @@ prevariable_position DF_FILE::restore_prevariable_position()
  */
 void prevariable::save_prevariable_position() const
 {
-  gradient_structure::get_fp()->save_prevariable_position(*this);
+  gradient_structure::fp->save_prevariable_position(*this);
 }
 void DF_FILE::save_prevariable_position(const prevariable& v)
 {
@@ -71,7 +71,7 @@ void DF_FILE::save_prevariable_position(const prevariable& v)
  */
 void prevariable::save_prevariable_value() const
 {
-  gradient_structure::get_fp()->save_prevariable_value(*this);
+  gradient_structure::fp->save_prevariable_value(*this);
 }
 void DF_FILE::save_prevariable_value(const prevariable& v)
 {
@@ -89,7 +89,7 @@ void DF_FILE::save_prevariable_value(const prevariable& v)
  */
 void save_double_value(const double x)
 {
-  gradient_structure::get_fp()->save_double_value(x);
+  gradient_structure::fp->save_double_value(x);
 }
 void DF_FILE::save_double_value(const double x)
 {
@@ -103,7 +103,7 @@ void DF_FILE::save_double_value(const double x)
  */
 void save_int_value(int x)
 {
-  gradient_structure::get_fp()->save_int_value(x);
+  gradient_structure::fp->save_int_value(x);
 }
 void DF_FILE::save_int_value(int x)
 {
@@ -117,7 +117,7 @@ void DF_FILE::save_int_value(int x)
  */
 void save_pointer_value(void *ptr)
 {
-  gradient_structure::get_fp()->save_pointer_value(ptr);
+  gradient_structure::fp->save_pointer_value(ptr);
 }
 void DF_FILE::save_pointer_value(void *ptr)
 {
@@ -142,7 +142,7 @@ double restore_prevariable_derivative(const prevariable_position& _pos)
  */
 double restore_prevariable_derivative()
 {
-  return gradient_structure::get_fp()->restore_prevariable_derivative();
+  return gradient_structure::fp->restore_prevariable_derivative();
 }
 double DF_FILE::restore_prevariable_derivative()
 {
@@ -163,7 +163,7 @@ double DF_FILE::restore_prevariable_derivative()
  */
 double restore_prevariable_value()
 {
-  return gradient_structure::get_fp()->restore_prevariable_value();
+  return gradient_structure::fp->restore_prevariable_value();
 }
 double DF_FILE::restore_prevariable_value()
 {
@@ -181,7 +181,7 @@ double DF_FILE::restore_prevariable_value()
  */
 double restore_double_value()
 {
-  return gradient_structure::get_fp()->restore_double_value();
+  return gradient_structure::fp->restore_double_value();
 }
 double DF_FILE::restore_double_value()
 {
@@ -196,7 +196,7 @@ double DF_FILE::restore_double_value()
  */
 int restore_int_value(void)
 {
-  return gradient_structure::get_fp()->restore_int_value();
+  return gradient_structure::fp->restore_int_value();
 }
 int DF_FILE::restore_int_value()
 {
@@ -211,7 +211,7 @@ int DF_FILE::restore_int_value()
  */
 void* restore_pointer_value()
 {
-  return gradient_structure::get_fp()->restore_pointer_value();
+  return gradient_structure::fp->restore_pointer_value();
 }
 void* DF_FILE::restore_pointer_value()
 {

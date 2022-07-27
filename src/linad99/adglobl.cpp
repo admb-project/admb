@@ -37,6 +37,7 @@ adpvm_manager* ad_comm::pvm_manager = NULL;
  double objective_function_value::fun_without_pen=0;
 
 int function_minimizer::output_flag = defaults::output;
+DF_FILE* gradient_structure::fp = nullptr;
 
 std::ostream& get_output_stream()
 {

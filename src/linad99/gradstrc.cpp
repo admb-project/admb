@@ -161,7 +161,7 @@ void gradient_structure::clean()
 }
 DF_FILE* gradient_structure::get_fp()
 {
-  return _instance != nullptr ? _instance->fp : nullptr;
+  return _fp;
 }
 
 /**
@@ -339,10 +339,12 @@ gradient_structure::gradient_structure(const long int _size, const unsigned int 
   }
 
   if (x > 0)
-    fp = new DF_FILE(CMPDIF_BUFFER_SIZE, x);
+    _fp = new DF_FILE(CMPDIF_BUFFER_SIZE, x);
   else
-    fp = new DF_FILE(CMPDIF_BUFFER_SIZE);
-  memory_allocate_error("fp", (void *) fp);
+    _fp = new DF_FILE(CMPDIF_BUFFER_SIZE);
+  memory_allocate_error("_fp", (void *) _fp);
+
+  gradient_structure::fp = _fp;
 
 #ifdef DIAG
   cerr <<" In gradient_structure::gradient_structure()\n";
@@ -579,15 +581,17 @@ gradient_structure::~gradient_structure()
   delete DEPVARS_INFO;
   DEPVARS_INFO=NULL;
 
-  if (fp == NULL)
+  if (_fp == NULL)
   {
     cerr << "Trying to close stream referenced by a NULL pointer\n"
             " in ~gradient_structure\n";
     ad_exit(1);
   }
 
-  delete fp;
-  fp = NULL;
+  delete _fp;
+  _fp = NULL;
+
+  gradient_structure::fp = nullptr;
 
   _instance = nullptr;
 }

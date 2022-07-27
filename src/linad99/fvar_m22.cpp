@@ -196,7 +196,7 @@ dvar_vector operator*(const dmatrix& m, const dvar_vector& x)
  */
 void cmdv_prod(void)
 {
-  DF_FILE* fp = gradient_structure::get_fp();
+  DF_FILE* fp = gradient_structure::fp;
 
   //verify_identifier_string("PLACE1");
   dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();

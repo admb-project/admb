@@ -164,31 +164,33 @@ TEST_F(test_gradient_structure_thread, multiple_fp)
 {
   {
   gradient_structure a(100000L, 1);
+  DF_FILE* afp = gradient_structure::fp;
   gradient_structure b(100000L, 5);
+  DF_FILE* bfp = gradient_structure::fp;
 
   ASSERT_TRUE(a.x == 1);
   ASSERT_TRUE(b.x == 5);
-  ASSERT_TRUE(a.fp != b.fp);
-  ASSERT_TRUE(a.fp->file_ptr != b.fp->file_ptr);
-  ASSERT_TRUE(strcmp(a.fp->cmpdif_file_name, "cmpdiff1.tmp") == 0);
-  ASSERT_TRUE(strcmp(b.fp->cmpdif_file_name, "cmpdiff5.tmp") == 0);
+  ASSERT_TRUE(afp != bfp);
+  ASSERT_TRUE(afp->file_ptr != bfp->file_ptr);
+  ASSERT_TRUE(strcmp(afp->cmpdif_file_name, "cmpdiff1.tmp") == 0);
+  ASSERT_TRUE(strcmp(bfp->cmpdif_file_name, "cmpdiff5.tmp") == 0);
 
   int expected_a_int = 5;
   double expected_a_double = 5.9;
   int expected_b_int = -2;
   double expected_b_double = -2.5;
-  a.fp->fwrite(expected_a_int);
-  b.fp->fwrite(expected_b_int);
-  a.fp->fwrite(expected_a_double);
-  b.fp->fwrite(expected_b_double);
+  afp->fwrite(expected_a_int);
+  bfp->fwrite(expected_b_int);
+  afp->fwrite(expected_a_double);
+  bfp->fwrite(expected_b_double);
   int read_a_int;
   double read_a_double;
   int read_b_int;
   double read_b_double;
-  b.fp->fread(read_b_double);
-  b.fp->fread(read_b_int);
-  a.fp->fread(read_a_double);
-  a.fp->fread(read_a_int);
+  bfp->fread(read_b_double);
+  bfp->fread(read_b_int);
+  afp->fread(read_a_double);
+  afp->fread(read_a_int);
 
   ASSERT_EQ(read_a_int, expected_a_int);
   ASSERT_EQ(read_b_int, expected_b_int);

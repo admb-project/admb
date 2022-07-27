@@ -244,7 +244,7 @@ dvariable ln_det(const dvar_matrix& aa, int& sgn)
 /// Adjoint code for dvariable ln_det(const dvar_matrix& aa, int& sgn).
 void df_xldet(void)
 {
-  DF_FILE* fp = gradient_structure::get_fp();
+  DF_FILE* fp = gradient_structure::fp;
 
   verify_identifier_string("PLACE0");
   /*double ld=*/fp->restore_double_value();

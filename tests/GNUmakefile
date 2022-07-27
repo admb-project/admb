@@ -49,11 +49,11 @@ all:
 ifeq ($(TESTS_REMOTE),yes)
 	$(MAKE) tests-remote
 endif
+	$(MAKE) outputs.txt
 	$(MAKE) unit-gtests
 
 verify: examples
 	$(MAKE) all
-	$(MAKE) outputs.txt
 
 tests-remote:
 	$(MAKE) remote-core-tpls

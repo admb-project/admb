@@ -83,7 +83,7 @@ dvariable operator*(const dvar_vector& v1, const dvar_vector& v2)
  */
 void dvdv_dot(void)
 {
-  DF_FILE* fp = gradient_structure::get_fp();
+  DF_FILE* fp = gradient_structure::fp;
 
   //verify_identifier_string("aaaa");
   double dftmp=fp->restore_prevariable_derivative();
@@ -165,7 +165,7 @@ dvariable sum(const dvar_vector& v1)
  */
 void X_dv_sum(void)
 {
-  DF_FILE* fp = gradient_structure::get_fp();
+  DF_FILE* fp = gradient_structure::fp;
 
   verify_identifier_string("aaaa");
   double dftmp=fp->restore_prevariable_derivative();

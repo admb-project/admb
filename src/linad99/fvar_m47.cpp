@@ -125,8 +125,7 @@ dvar_matrix choleski_decomp_positive(const dvar_matrix& MM, double eps,
  */
 void dfcholeski_decomp_positive(void)
 {
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+  DF_FILE* fp = gradient_structure::get_fp();
 
   verify_identifier_string("lo");
   dvar_matrix_position MMpos=fp->restore_dvar_matrix_position();

@@ -65,8 +65,7 @@ dvar_vector operator-(const dvar_vector& v1, const dvector& v2)
  */
 void dvcv_sub(void)
 {
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+  DF_FILE* fp = gradient_structure::get_fp();
 
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("aaaa");

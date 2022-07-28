@@ -51,8 +51,7 @@ dvar_vector operator*(const dvar_vector& t1, const double x)
  */
 void DF_dv_double_prod(void)
 {
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+  DF_FILE* fp = gradient_structure::get_fp();
 
   verify_identifier_string("DDaa");
   dvar_vector_position t1_pos=fp->restore_dvar_vector_position();

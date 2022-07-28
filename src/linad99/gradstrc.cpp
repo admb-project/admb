@@ -159,7 +159,7 @@ void gradient_structure::clean()
 }
 DF_FILE* gradient_structure::get_fp()
 {
-  return _fp;
+  return fp;
 }
 
 /**
@@ -375,14 +375,15 @@ gradient_structure::gradient_structure(const long int _size, const unsigned int 
    ARR_LIST1->ARRAY_MEMBLOCK_BASE.adjust(adjustment);
 
   if (x > 0)
-    GRAD_STACK1 = new grad_stack(gradient_structure::GRADSTACK_BUFFER_SIZE, x);
+    _GRAD_STACK1 = new grad_stack(gradient_structure::GRADSTACK_BUFFER_SIZE, x);
   else
-    GRAD_STACK1 = new grad_stack();
-  memory_allocate_error("GRAD_STACK1",GRAD_STACK1);
-  hessian_ptr = (double*)GRAD_STACK1->true_ptr_first;
+    _GRAD_STACK1 = new grad_stack();
+  memory_allocate_error("_GRAD_STACK1", _GRAD_STACK1);
+  hessian_ptr = (double*)_GRAD_STACK1->true_ptr_first;
+  gradient_structure::GRAD_STACK1 = _GRAD_STACK1;
 
 #ifdef DIAG
-   cout << "GRAD_STACK1= "<< _farptr_tolong(GRAD_STACK1)<<"\n";
+   cout << "_GRAD_STACK1= "<< _farptr_tolong(_GRAD_STACK1)<<"\n";
 #endif
 
    {
@@ -550,11 +551,13 @@ gradient_structure::~gradient_structure()
      delete INDVAR_LIST;
      INDVAR_LIST = NULL;
   }
-  if (GRAD_STACK1 != NULL)
+  if (_GRAD_STACK1 != NULL)
   {
-    delete GRAD_STACK1;
-    GRAD_STACK1 = NULL;
+    delete _GRAD_STACK1;
+    _GRAD_STACK1 = NULL;
   }
+  gradient_structure::GRAD_STACK1 = nullptr;
+
   if (ARR_LIST1 != NULL)
   {
     delete ARR_LIST1;

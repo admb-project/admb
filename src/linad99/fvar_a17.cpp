@@ -62,7 +62,7 @@ dvar_vector operator+(const dvar_vector& v1, const dvar_vector& v2)
   //dvar_vector vtmp=nograd_assign(tmp);
 
   gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+  DF_FILE* fp = gs->_fp;
 
   // The derivative list considerations
   save_identifier_string("bbbb");
@@ -80,7 +80,7 @@ dvar_vector operator+(const dvar_vector& v1, const dvar_vector& v2)
  */
 void dvdv_add(void)
 {
-  DF_FILE* fp = gradient_structure::fp;
+  DF_FILE* fp = gradient_structure::get_fp();
 
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("aaaa");

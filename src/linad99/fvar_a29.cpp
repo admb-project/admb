@@ -88,8 +88,7 @@ Adjoint function to compute gradients for sin(const dvar_vector&)
 */
 void DF_dvsin(void)
 {
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+  DF_FILE* fp = gradient_structure::get_fp();
 
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("eee");
@@ -146,8 +145,7 @@ dvar_vector exp(const dvar_vector& v1)
  */
 void DF_dvexp(void)
 {
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+  DF_FILE* fp = gradient_structure::get_fp();
 
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("hee");
@@ -207,8 +205,7 @@ dvar_vector cos(const dvar_vector& v1)
  */
 void DF_dvcos(void)
 {
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+  DF_FILE* fp = gradient_structure::get_fp();
 
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("cee");
@@ -269,8 +266,7 @@ int ad_debug_arithmetic=1;
  */
 void DF_dvlog(void)
 {
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+  DF_FILE* fp = gradient_structure::get_fp();
 
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("eee");
@@ -388,8 +384,7 @@ Adjoint function to compute gradients for tan(const dvar_vector&).
 */
 void DF_dvatan(void)
 {
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+  DF_FILE* fp = gradient_structure::get_fp();
 
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("eee");
@@ -467,8 +462,7 @@ Adjoint function to compute gradients for sqrt(const dvar_vector&).
 */
 void DF_dvsqrt(void)
 {
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+  DF_FILE* fp = gradient_structure::get_fp();
 
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("eve");
@@ -519,8 +513,7 @@ Adjoint function to compute gradients for pow(const dvar_vector&, const double).
 */
 void DF_dvpow(void)
 {
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+  DF_FILE* fp = gradient_structure::get_fp();
 
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("eef");
@@ -580,8 +573,7 @@ dvar_vector pow(const dvar_vector& v1, const prevariable& e)
 void DF_dvdvpow(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+  DF_FILE* fp = gradient_structure::get_fp();
 
   verify_identifier_string("eeg");
   dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();
@@ -638,8 +630,8 @@ dvar_vector pow(const dvar_vector& v1,int e)
  */
 void DF_dvcpow(void)
 {
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+  DF_FILE* fp = gradient_structure::get_fp();
+
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("eef");
   dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();
@@ -695,8 +687,7 @@ dvar_vector pow(const dvector& v1,const prevariable& e)
 void DF_cdvpow(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+  DF_FILE* fp = gradient_structure::get_fp();
 
   verify_identifier_string("feeg");
   dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();
@@ -724,7 +715,6 @@ dvar_vector pow(const dvector& x,const dvar_vector& a)
   gradient_structure* gs = gradient_structure::get();
   gs->RETURN_ARRAYS_INCREMENT();
 
-
   dvar_vector y(x.indexmin(), x.indexmax());
   for(int i=x.indexmin(); i<=x.indexmax(); i++)
   {
@@ -733,5 +723,5 @@ dvar_vector pow(const dvector& x,const dvar_vector& a)
 
   gs->RETURN_ARRAYS_DECREMENT();
 
-  return(y);
+  return y;
 }

@@ -139,8 +139,7 @@ dvariable ln_det_choleski(const dvar_matrix& MM)
  */
 void df_ln_det_choleski(void)
 {
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+  DF_FILE* fp = gradient_structure::get_fp();
 
   verify_identifier_string("pa");
   dvar_matrix_position MMpos=fp->restore_dvar_matrix_position();

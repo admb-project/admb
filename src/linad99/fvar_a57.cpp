@@ -45,8 +45,7 @@
  */
  void DF_unary_diff(void)
  {
-    gradient_structure* gs = gradient_structure::get();
-    DF_FILE* fp = gs->fp;
+    DF_FILE* fp = gradient_structure::get_fp();
 
     verify_identifier_string("d");
     dvar_vector_position t1_pos=fp->restore_dvar_vector_position();

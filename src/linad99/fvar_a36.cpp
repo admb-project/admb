@@ -42,8 +42,7 @@ dvar_vector operator-(const prevariable& x, const dvar_vector& t1)
  */
  void DF_dble_dv_diff(void)
  {
-    gradient_structure* gs = gradient_structure::get();
-    DF_FILE* fp = gs->fp;
+    DF_FILE* fp = gradient_structure::get_fp();
 
     verify_identifier_string("dduu");
     dvar_vector_position t1_pos=fp->restore_dvar_vector_position();

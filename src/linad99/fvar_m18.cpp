@@ -97,8 +97,7 @@ dvar_matrix operator*(const dmatrix& cm1, const dvar_matrix& m2)
  */
 void cmdm_prod(void)
 {
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+  DF_FILE* fp = gradient_structure::get_fp();
 
   verify_identifier_string("TEST6");
   dvar_matrix_position vpos=fp->restore_dvar_matrix_position();

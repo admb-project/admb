@@ -26,7 +26,7 @@
  */
 void dmatrix::save_dmatrix_position() const
 {
-  gradient_structure::fp->save_dmatrix_position(*this);
+  gradient_structure::get_fp()->save_dmatrix_position(*this);
 }
 void DF_FILE::save_dmatrix_position(const dmatrix& m)
 {
@@ -58,7 +58,7 @@ void DF_FILE::save_dmatrix_position(const dmatrix& m)
  */
 void d3_array::save_d3_array_position() const
 {
-  gradient_structure::fp->save_d3_array_position(*this);
+  gradient_structure::get_fp()->save_d3_array_position(*this);
 }
 void DF_FILE::save_d3_array_position(const d3_array& a)
 {
@@ -88,7 +88,7 @@ void DF_FILE::save_d3_array_position(const d3_array& a)
  */
 d3_array_position restore_d3_array_position()
 {
-  return gradient_structure::fp->restore_d3_array_position();
+  return gradient_structure::get_fp()->restore_d3_array_position();
 }
 d3_array_position DF_FILE::restore_d3_array_position()
 {
@@ -109,7 +109,7 @@ d3_array_position DF_FILE::restore_d3_array_position()
  */
 dvar_matrix_position restore_dvar_matrix_position()
 {
-  return gradient_structure::fp->restore_dvar_matrix_position();
+  return gradient_structure::get_fp()->restore_dvar_matrix_position();
 }
 dvar_matrix_position DF_FILE::restore_dvar_matrix_position()
 {
@@ -142,7 +142,7 @@ dvar_matrix_position DF_FILE::restore_dvar_matrix_position()
  */
 dmatrix_position restore_dmatrix_position()
 {
-  return gradient_structure::fp->restore_dmatrix_position();
+  return gradient_structure::get_fp()->restore_dmatrix_position();
 }
 dmatrix_position DF_FILE::restore_dmatrix_position()
 {

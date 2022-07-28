@@ -339,7 +339,7 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
 /// dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
 void dmdv_solve(void)
 {
-  DF_FILE* fp = gradient_structure::fp;
+  DF_FILE* fp = gradient_structure::get_fp();
 
   verify_identifier_string("PLACE0");
   dvar_vector_position zpos=fp->restore_dvar_vector_position();

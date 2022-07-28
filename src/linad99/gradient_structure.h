@@ -101,14 +101,17 @@ public:
  */
 class gradient_structure
 {
-  DF_FILE* _fp;
-
 public:
+  DF_FILE* _fp;
+  grad_stack* _GRAD_STACK1;
+
   static __thread DF_FILE* fp;
   static __thread gradient_structure* _instance;
+  static __thread grad_stack* GRAD_STACK1;
 
   static gradient_structure* get();
   static gradient_structure* reset(gradient_structure*);
+  static DF_FILE* get_fp();
   dvariable* next_RETURN_PTR();
 
   gradient_structure** gradients;
@@ -208,7 +211,6 @@ public:
    friend void allocate_dvariable_space(void);
    friend void wide_funnel_gradcalc(void);
    friend dvar_vector_position restore_dvar_vector_position(void);
-  grad_stack* GRAD_STACK1;
    friend double_and_int *gradnew();
   dlist* GRAD_LIST;
    static unsigned int RETURN_ARRAYS_SIZE;
@@ -227,7 +229,6 @@ public:
    //access functions
 
    friend class DF_FILE;
-   DF_FILE* get_fp();
    static void set_NUM_RETURN_ARRAYS(unsigned int i);
 #if defined(NO_DERIVS)
    static void set_NO_DERIVATIVES(void);

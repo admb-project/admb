@@ -77,7 +77,7 @@ dvar_vector operator*(const dvar_matrix& m, const dvector& x)
  */
 void dmcv_prod(void)
 {
-  DF_FILE* fp = gradient_structure::fp;
+  DF_FILE* fp = gradient_structure::get_fp();
 
   verify_identifier_string("PLX");
   dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();

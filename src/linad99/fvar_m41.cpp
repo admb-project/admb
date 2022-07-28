@@ -86,8 +86,7 @@ dvar_vector solve(const banded_lower_triangular_dvar_matrix& m,
  */
 void dfbltsolve(void)
 {
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+  DF_FILE* fp = gradient_structure::get_fp();
 
   verify_identifier_string("ww");
   dvar_vector_position xpos=fp->restore_dvar_vector_position();

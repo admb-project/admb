@@ -392,8 +392,7 @@ banded_lower_triangular_dvar_matrix choleski_decomp(
  */
 void dfcholeski_decomp_banded(void)
 {
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+  DF_FILE* fp = gradient_structure::get_fp();
 
   verify_identifier_string("ro");
   dvar_matrix_position MMpos=fp->restore_dvar_matrix_position();
@@ -615,8 +614,7 @@ int max(int i,int j,int k)
 dmatrix restore_lower_triangular_dvar_matrix_value(
   const dvar_matrix_position& mpos)
 {
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+  DF_FILE* fp = gradient_structure::get_fp();
 
   // restores the size, address, and value information for a dvar_matrix
   banded_lower_triangular_dmatrix out((const dvar_matrix_position&)mpos);

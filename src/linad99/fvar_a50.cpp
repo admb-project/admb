@@ -63,7 +63,7 @@ dvar_vector mfexp(const dvar_vector& v1)
  */
 void DF_dvmfexp(void)
 {
-  DF_FILE* fp = gradient_structure::fp;
+  DF_FILE* fp = gradient_structure::get_fp();
 
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("see");

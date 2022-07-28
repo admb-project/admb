@@ -100,8 +100,6 @@ long int _farptr_tolong(void *) ;
 #endif
 void memory_allocate_error(const char * s, void * ptr);
 
-thread_local gradient_structure* gradient_structure::_instance = nullptr;
-
 /// Allocate array of gradient_structure instances with size elements.
 void gradient_structure::create(const unsigned int size)
 {
@@ -292,7 +290,6 @@ gradient_structure::gradient_structure(const long int _size, const unsigned int 
 #ifdef DEBUG
   assert(_size > 0);
 #endif
-  atexit(cleanup_temporary_files);
   fill_ad_random_part();
 
   gradients = nullptr;
@@ -342,7 +339,8 @@ gradient_structure::gradient_structure(const long int _size, const unsigned int 
     _fp = new DF_FILE(CMPDIF_BUFFER_SIZE, x);
   else
     _fp = new DF_FILE(CMPDIF_BUFFER_SIZE);
-  memory_allocate_error("_fp", (void *) _fp);
+
+  memory_allocate_error("_fp", (void*)_fp);
 
   gradient_structure::fp = _fp;
 
@@ -594,6 +592,8 @@ gradient_structure::~gradient_structure()
   gradient_structure::fp = nullptr;
 
   _instance = nullptr;
+
+  cleanup_temporary_files();
 }
 
 /**

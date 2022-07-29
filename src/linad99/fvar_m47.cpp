@@ -104,9 +104,9 @@ dvar_matrix choleski_decomp_positive(const dvar_matrix& MM, double eps,
 
   value(_fpen)=fpen;
   dvar_matrix vc=nograd_assign(L);
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
 
+  grad_stack* GRAD_STACK1 = gradient_structure::get_GRAD_STACK1();
+  DF_FILE* fp = gradient_structure::get_fp();
   save_identifier_string("qs");
   fp->save_prevariable_position(_fpen);
   fp->save_double_value(eps);
@@ -115,7 +115,8 @@ dvar_matrix choleski_decomp_positive(const dvar_matrix& MM, double eps,
   save_identifier_string("rl");
   fp->save_dvar_matrix_position(MM);
   save_identifier_string("lo");
-  gs->GRAD_STACK1->set_gradient_stack(dfcholeski_decomp_positive);
+  GRAD_STACK1->set_gradient_stack(dfcholeski_decomp_positive);
+
   return vc;
 }
 

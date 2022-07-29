@@ -115,7 +115,6 @@ void gradient_structure::create(const unsigned int size)
     gradient_structure::reset(gradients[0]);
   }
 }
-/// Get current instance of gradient_structure.
 gradient_structure* gradient_structure::get()
 {
   return _instance;
@@ -156,10 +155,6 @@ void gradient_structure::clean()
     gradients_size = 0;
   }
   _instance = this;
-}
-DF_FILE* gradient_structure::get_fp()
-{
-  return fp;
 }
 
 /**

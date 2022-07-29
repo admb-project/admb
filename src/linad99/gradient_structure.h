@@ -110,8 +110,10 @@ public:
   static __thread grad_stack* GRAD_STACK1;
 
   static gradient_structure* get();
+  inline static DF_FILE* get_fp() { return fp; }
+  inline static grad_stack* get_GRAD_STACK1() { return GRAD_STACK1; }
+
   static gradient_structure* reset(gradient_structure*);
-  static DF_FILE* get_fp();
   dvariable* next_RETURN_PTR();
 
   gradient_structure** gradients;

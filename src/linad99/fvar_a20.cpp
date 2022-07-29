@@ -59,15 +59,14 @@ dvar_vector& dvar_vector::operator=(const dvar_vector& t)
        size_t size = (size_t)(mmax - mmin + 1);
        memcpy(va + mmin, t.va + mmin, size * sizeofdouble);
 
-       gradient_structure* gs = gradient_structure::get();
-       DF_FILE* fp = gs->fp;
-
+       grad_stack* GRAD_STACK1 = gradient_structure::get_GRAD_STACK1();
+       DF_FILE* fp = gradient_structure::get_fp();
        // The derivative list considerations
        //save_identifier_string("bbbb");
        fp->save_dvar_vector_position(t);
        fp->save_dvar_vector_position(*this);
        //save_identifier_string("aaaa");
-       gs->GRAD_STACK1->set_gradient_stack(dv_assign);
+       GRAD_STACK1->set_gradient_stack(dv_assign);
      }
    }
    return (*this);
@@ -92,15 +91,14 @@ dvar_vector& dvar_vector::operator=(const prevariable& t)
      ++pvai;
    }
 
-   gradient_structure* gs = gradient_structure::get();
-   DF_FILE* fp = gs->fp;
-
+   grad_stack* GRAD_STACK1 = gradient_structure::get_GRAD_STACK1();
+   DF_FILE* fp = gradient_structure::get_fp();
    // The derivative list considerations
    save_identifier_string("dddd");
    fp->save_prevariable_position(t);
    fp->save_dvar_vector_position(*this);
    save_identifier_string("ssss");
-   gs->GRAD_STACK1->set_gradient_stack(dv_eqprev);
+   GRAD_STACK1->set_gradient_stack(dv_eqprev);
    return (*this);
  }
 
@@ -121,14 +119,13 @@ dvar_vector& dvar_vector::operator=(const double t)
      pvai->x = t;
      ++pvai;
    }
-   gradient_structure* gs = gradient_structure::get();
-   DF_FILE* fp = gs->fp;
-
+   grad_stack* GRAD_STACK1 = gradient_structure::get_GRAD_STACK1();
+   DF_FILE* fp = gradient_structure::get_fp();
    // The derivative list considerations
    save_identifier_string("trut");
    fp->save_dvar_vector_position(*this);
    save_identifier_string("ssss");
-   gs->GRAD_STACK1->set_gradient_stack(dv_eqdoub);
+   GRAD_STACK1->set_gradient_stack(dv_eqdoub);
    return (*this);
  }
 /**

@@ -23,13 +23,12 @@
         //this->elem(i)=0.0;
         va[i].x=0.0;
       }
-      gradient_structure* gs = gradient_structure::get();
-      DF_FILE* fp = gs->fp;
-
+      grad_stack* GRAD_STACK1 = gradient_structure::get_GRAD_STACK1();
+      DF_FILE* fp = gradient_structure::get_fp();
       save_identifier_string("b");
       fp->save_dvar_vector_position(*this);
       save_identifier_string("a");
-      gs->GRAD_STACK1->set_gradient_stack(dv_init);
+      GRAD_STACK1->set_gradient_stack(dv_init);
     }
   }
 
@@ -75,11 +74,10 @@ void dvar_vector::initialize(const dvector& ww)
       //this->elem(i)=0.0;
       va[i].x=ww.elem(i);
     }
-    gradient_structure* gs = gradient_structure::get();
-    DF_FILE* fp = gs->fp;
-
+    grad_stack* GRAD_STACK1 = gradient_structure::get_GRAD_STACK1();
+    DF_FILE* fp = gradient_structure::get_fp();
     save_identifier_string("b");
     fp->save_dvar_vector_position(*this);
     save_identifier_string("a");
-    gs->GRAD_STACK1->set_gradient_stack(dv_init);
+    GRAD_STACK1->set_gradient_stack(dv_init);
   }

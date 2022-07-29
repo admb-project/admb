@@ -69,11 +69,11 @@ void dvar_matrix::initialize(void)
       }
       ++pmi;
     }
-    gradient_structure* gs = gradient_structure::get();
-    DF_FILE* fp = gs->fp;
+    grad_stack* GRAD_STACK1 = gradient_structure::get_GRAD_STACK1();
+    DF_FILE* fp = gradient_structure::get_fp();
     //save_identifier_string("p");
     fp->save_dvar_matrix_position(*this);
-    gs->GRAD_STACK1->set_gradient_stack(dfmatinit);
+    GRAD_STACK1->set_gradient_stack(dfmatinit);
     //save_identifier_string("q");
   }
 }

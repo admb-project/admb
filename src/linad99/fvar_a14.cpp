@@ -147,7 +147,7 @@ dvariable sum(const dvar_vector& v1)
 
     vtmp = nograd_assign(tmp);
 
-    gradient_structure* gs = gradient_structure::get_GRAD_STACK1();
+    grad_stack* GRAD_STACK1 = gradient_structure::get_GRAD_STACK1();
     DF_FILE* fp = gradient_structure::get_fp();
     // The derivative list considerations
     save_identifier_string("bbbb");

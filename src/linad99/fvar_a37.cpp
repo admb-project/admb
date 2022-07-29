@@ -30,6 +30,9 @@ dvar_vector operator+(const prevariable& x, const dvar_vector& t1)
   gradient_structure* gs = gradient_structure::get();
   gs->RETURN_ARRAYS_INCREMENT();
 
+  grad_stack* GRAD_STACK1 = gradient_structure::get_GRAD_STACK1();
+  DF_FILE* fp = gradient_structure::get_fp();
+
   int min = t1.indexmin();
   int max = t1.indexmax();
   dvar_vector tmp(min, max);
@@ -46,8 +49,6 @@ dvar_vector operator+(const prevariable& x, const dvar_vector& t1)
     ++ptmpi;
   }
 
-  grad_stack* GRAD_STACK1 = gradient_structure::get_GRAD_STACK1();
-  DF_FILE* fp = gradient_structure::get_fp();
   fp->save_dvar_vector_position(tmp);
   fp->save_dvar_vector_position(t1);
   save_identifier_string("dduu");

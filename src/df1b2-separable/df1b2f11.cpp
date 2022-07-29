@@ -123,14 +123,15 @@ void read_pass1_1(void)
 #if defined(SAFE_ALL)
   checkidentiferstring("CX",list);
 #endif
+  constexpr size_t sizeofdouble = sizeof(double);
   df1b2_header * px=(df1b2_header *) list.bptr;
   list.bptr+=sizeof(df1b2_header);
   df1b2_header * pz=(df1b2_header *) list.bptr;
   list.bptr+=sizeof(df1b2_header);
   pf=*(df1b2function1 **) list.bptr;
   list.bptr+=sizeof(char*);
-  memcpy(&xu,list.bptr,sizeof(double));
-  list.bptr+=sizeof(double);
+  memcpy(&xu,list.bptr,sizeofdouble);
+  list.bptr+=sizeofdouble;
   double* xdot=(double*)list.bptr;
   list.restoreposition(); // save pointer to beginning of record;
 
@@ -145,7 +146,7 @@ void read_pass1_1(void)
      test_smartlist& list2=f1b2gradlist->list2;
 
 
-  size_t total_bytes=2*nvar*sizeof(double);
+  size_t total_bytes=2*nvar*sizeofdouble;
 // string identifier debug stuff
 #if defined(SAFE_ALL)
   char ids[]="DU";
@@ -160,7 +161,6 @@ void read_pass1_1(void)
   memcpy(list2,ids,slen);
 #endif
 
-   constexpr size_t sizeofdouble = sizeof(double);
    memcpy(list2,pz->get_u_bar(),nvar*sizeofdouble);
    memcpy(list2,pz->get_u_dot_bar(),nvar*sizeofdouble);
    *nlist2.bptr=adptr_diff(list2.bptr,tmpptr2);

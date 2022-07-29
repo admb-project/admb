@@ -159,12 +159,13 @@ void read_pass2_1_prod(void)
   bptr+=sizeof(df1b2_header);
   //pf=*(df1b2function2 **) bptr;
   //bptr+=sizeof(char*);
-  memcpy(&xu,bptr,sizeof(double));
-  bptr+=sizeof(double);
-  memcpy(&yu,bptr,sizeof(double));
-  bptr+=sizeof(double);
+  size_t total_bytes=2*nvar*sizeof(double);
+  memcpy(&xu,bptr,sizeofdouble);
+  bptr+=sizeofdouble;
+  memcpy(&yu,bptr,sizeofdouble);
+  bptr+=sizeofdouble;
   double * xdot=(double*)bptr;
-  bptr+=nvar*sizeof(double);
+  bptr+=nvar*sizeofdouble;
   double * ydot=(double*)bptr;
 
   list.restoreposition(); // save pointer to beginning of record;
@@ -177,7 +178,6 @@ void read_pass2_1_prod(void)
   // save identifier 1
      test_smartlist & list2 = f1b2gradlist->list2;
 
-  size_t total_bytes=2*nvar*sizeof(double);
 // string identifier debug stuff
 #if defined(SAFE_ALL)
   char ids[]="QK";

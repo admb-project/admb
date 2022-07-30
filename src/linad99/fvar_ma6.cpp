@@ -50,8 +50,9 @@ dvar_matrix empirical_covariance(const dvar_matrix& _v1,
        tmp.elem_value(i,j)/=nobs;
      }
    }
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+
+  grad_stack* GRAD_STACK1 = gradient_structure::get_GRAD_STACK1();
+  DF_FILE* fp = gradient_structure::get_fp();
 
   save_identifier_string("ru");
   fp->save_imatrix_value(missflags);
@@ -61,7 +62,7 @@ dvar_matrix empirical_covariance(const dvar_matrix& _v1,
   fp->save_dvar_matrix_value(v1);
   fp->save_dvar_matrix_position(v1);
   save_identifier_string("rv");
-  gs->GRAD_STACK1->set_gradient_stack(dfempirical_covarv_partial);
+  GRAD_STACK1->set_gradient_stack(dfempirical_covarv_partial);
    return(tmp);
  }
 
@@ -71,8 +72,7 @@ dvar_matrix empirical_covariance(const dvar_matrix& _v1,
  */
 void dfempirical_covarv_partial(void)
 {
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+  DF_FILE* fp = gradient_structure::get_fp();
 
   verify_identifier_string("rv");
   dvar_matrix_position v1pos=fp->restore_dvar_matrix_position();
@@ -152,15 +152,17 @@ dvar_matrix empirical_covariance(const dvar_matrix& v1)
        tmp.elem_value(i,j)/=double(nobs);
      }
    }
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+
+  grad_stack* GRAD_STACK1 = gradient_structure::get_GRAD_STACK1();
+  DF_FILE* fp = gradient_structure::get_fp();
 
   save_identifier_string("ru");
   fp->save_dvar_matrix_position(tmp);
   fp->save_dvar_matrix_value(v1);
   fp->save_dvar_matrix_position(v1);
   save_identifier_string("rv");
-  gs->GRAD_STACK1->set_gradient_stack(dfempirical_covarv);
+  GRAD_STACK1->set_gradient_stack(dfempirical_covarv);
+
    return(tmp);
  }
 
@@ -170,8 +172,7 @@ dvar_matrix empirical_covariance(const dvar_matrix& v1)
  */
 void dfempirical_covarv(void)
 {
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+  DF_FILE* fp = gradient_structure::get_fp();
 
   verify_identifier_string("rv");
   dvar_matrix_position v1pos=fp->restore_dvar_matrix_position();
@@ -242,8 +243,8 @@ dvar_matrix outer_prod(const dvar_vector& v1, const dvar_vector& v2)
     ++pv1i;
   }
 
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+  grad_stack* GRAD_STACK1 = gradient_structure::get_GRAD_STACK1();
+  DF_FILE* fp = gradient_structure::get_fp();
 
   save_identifier_string("tu");
   fp->save_dvar_matrix_position(tmp);
@@ -252,7 +253,7 @@ dvar_matrix outer_prod(const dvar_vector& v1, const dvar_vector& v2)
   fp->save_dvar_vector_value(v2);
   fp->save_dvar_vector_position(v2);
   save_identifier_string("tv");
-  gs->GRAD_STACK1->set_gradient_stack(dfouter_prodvv);
+  GRAD_STACK1->set_gradient_stack(dfouter_prodvv);
 
   return tmp;
 }

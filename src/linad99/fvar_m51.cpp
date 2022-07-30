@@ -119,8 +119,8 @@ dvariable ln_det_choleski(const dvar_matrix& MM)
 
   double log_det=2.0*log_det1;
   dvariable vlog_det=nograd_assign(log_det);
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+  grad_stack* GRAD_STACK1 = gradient_structure::get_GRAD_STACK1();
+  DF_FILE* fp = gradient_structure::get_fp();
 
   save_identifier_string("ps");
   fp->save_prevariable_position(vlog_det);
@@ -129,7 +129,7 @@ dvariable ln_det_choleski(const dvar_matrix& MM)
   save_identifier_string("pl");
   fp->save_dvar_matrix_position(MM);
   save_identifier_string("pa");
-  gs->GRAD_STACK1->set_gradient_stack(df_ln_det_choleski);
+  GRAD_STACK1->set_gradient_stack(df_ln_det_choleski);
   return vlog_det;
 }
 
@@ -139,8 +139,7 @@ dvariable ln_det_choleski(const dvar_matrix& MM)
  */
 void df_ln_det_choleski(void)
 {
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+  DF_FILE* fp = gradient_structure::get_fp();
 
   verify_identifier_string("pa");
   dvar_matrix_position MMpos=fp->restore_dvar_matrix_position();
@@ -382,8 +381,8 @@ dvariable ln_det_choleski_error(const dvar_matrix& MM,int & onerror)
  */
   double log_det=2.0*log_det1;
   dvariable vlog_det=nograd_assign(log_det);
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+  grad_stack* GRAD_STACK1 = gradient_structure::get_GRAD_STACK1();
+  DF_FILE* fp = gradient_structure::get_fp();
   save_identifier_string("ps");
   fp->save_prevariable_position(vlog_det);
   save_identifier_string("rt");
@@ -391,6 +390,6 @@ dvariable ln_det_choleski_error(const dvar_matrix& MM,int & onerror)
   save_identifier_string("pl");
   fp->save_dvar_matrix_position(MM);
   save_identifier_string("pa");
-  gs->GRAD_STACK1->set_gradient_stack(df_ln_det_choleski);
+  GRAD_STACK1->set_gradient_stack(df_ln_det_choleski);
   return vlog_det;
 }

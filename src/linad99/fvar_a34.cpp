@@ -42,8 +42,7 @@ Adjoint function for dvar_vector operator/(const dvar_vector&, const double)
 */
  void DF_dv_cdble_div(void)
  {
-    gradient_structure* gs = gradient_structure::get();
-    DF_FILE* fp = gs->fp;
+    DF_FILE* fp = gradient_structure::get_fp();
 
     verify_identifier_string("ddba");
     dvar_vector_position t1_pos=fp->restore_dvar_vector_position();

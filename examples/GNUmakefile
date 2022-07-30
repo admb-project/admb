@@ -189,9 +189,9 @@ endif
 
 truncreg:
 ifeq ($(CMDSHELL),cmd)
-	pushd admb\\$@ && $(ADMB_HOME)\\admb$(EXT) $(OPTIONS) $@ && $(PROG) $@ -ams 2000000 && $(PROG) $@ -ams 2000000 -gbs 6000000 -cbs 4000000 $(ADMB_RUN_ARGS) && popd
+	pushd admb\\$@ && $(ADMB_HOME)\\admb$(EXT) $(OPTIONS) $@ && $(PROG) $@ -ams 2000000 $(ADMB_RUN_ARGS) && $(PROG) $@ -ams 2000000 -gbs 6000000 -cbs 4000000 $(ADMB_RUN_ARGS) && popd
 else
-	cd admb/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ -ams 2000000 && $(PROG) ./$@ -ams 2000000 -gbs 6000000 -cbs 4000000 $(ADMB_RUN_ARGS)
+	cd admb/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ -ams 2000000 $(ADMB_RUN_ARGS) && $(PROG) ./$@ -ams 2000000 -gbs 6000000 -cbs 4000000 $(ADMB_RUN_ARGS)
 endif
 
 vol: n2mvol

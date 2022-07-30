@@ -88,8 +88,7 @@ dvar_vector operator*(const prevariable& x, const dvector& t1)
  */
 void DF_ccv_dble_prod(void)
 {
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+  DF_FILE* fp = gradient_structure::get_fp();
 
   verify_identifier_string("Da");
   dvector_position t1_pos=fp->restore_dvector_position();

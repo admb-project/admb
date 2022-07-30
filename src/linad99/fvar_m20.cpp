@@ -183,8 +183,7 @@ dvariable det(const dvar_matrix& aa)
 /** Adjoint code for dvariable det(const dvar_matrix& aa) */
 void df_xdet(void)
 {
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+  DF_FILE* fp = gradient_structure::get_fp();
 
   verify_identifier_string("PLACE0");
   double d=fp->restore_double_value();

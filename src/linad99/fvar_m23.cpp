@@ -64,8 +64,7 @@ dvar_vector operator*(const dvar_vector& x, const dvar_matrix& m)
  */
 void dvdm_prod(void)
 {
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+  DF_FILE* fp = gradient_structure::get_fp();
 
   verify_identifier_string("PLACE1");
   dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();
@@ -153,8 +152,7 @@ dvar_vector operator*(const dvar_vector& x, const dmatrix& m)
  */
 void dvcm_prod(void)
 {
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+  DF_FILE* fp = gradient_structure::get_fp();
 
   verify_identifier_string("PLACE1");
   dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();

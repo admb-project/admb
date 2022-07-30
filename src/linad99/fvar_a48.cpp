@@ -46,8 +46,8 @@ dvar_vector& dvar_vector::operator/=(const double x)
  */
  void DF_cdble_dv_diveq(void)
  {
-    gradient_structure* gs = gradient_structure::get();
-    DF_FILE* fp = gs->fp;
+    DF_FILE* fp = gradient_structure::get_fp();
+
     verify_identifier_string("cmtu");
     double x=fp->restore_double_value();
     dvar_vector_position this_pos=fp->restore_dvar_vector_position();
@@ -107,8 +107,7 @@ dvar_vector& dvar_vector::operator/=(const prevariable& x)
  */
  void DF_vdble_dv_diveq(void)
  {
-    gradient_structure* gs = gradient_structure::get();
-    DF_FILE* fp = gs->fp;
+    DF_FILE* fp = gradient_structure::get_fp();
 
     verify_identifier_string("cmtu");
     prevariable_position x_pos=fp->restore_prevariable_position();

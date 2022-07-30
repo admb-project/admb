@@ -147,14 +147,15 @@ void read_pass2_1_prodc2(void)
 #if defined(SAFE_ALL)
   checkidentiferstring("DL",f1b2gradlist->list);
 #endif
+  size_t sizeofdouble = sizeof(double);
   char * bptr=f1b2gradlist->list.bptr;
   df1b2_header * px=(df1b2_header *) bptr;
   bptr+=sizeof(df1b2_header);
   double yu=*(double *) bptr;
-  bptr+=sizeof(double);
+  bptr+=sizeofdouble;
   df1b2_header * pz=(df1b2_header *) bptr;
   bptr+=sizeof(df1b2_header);
-  memcpy(&xu,bptr,sizeof(double));
+  memcpy(&xu,bptr,sizeofdouble);
   //bptr+=sizeof(double); double* xdot=(double*)bptr;
 
   list.restoreposition(); // save pointer to beginning of record;
@@ -182,32 +183,34 @@ void read_pass2_1_prodc2(void)
 #endif
 
   fixed_smartlist2 & nlist2 = f1b2gradlist->nlist2;
-  size_t sizeofdouble = sizeof(double);
   memcpy(list2,pz->get_u_bar(),nvar*sizeofdouble);
   memcpy(list2,pz->get_u_dot_bar(),nvar*sizeofdouble);
   *nlist2.bptr=adptr_diff(list2.bptr,tmpptr);
   ++nlist2;
 
   // Do first reverse pass calculations
+  double* px_u_bari = px->u_bar;
+  double* pz_u_bari = pz->u_bar;
   for (size_t i=0;i<nvar;i++)
   {
-    px->u_bar[i]+=yu*pz->u_bar[i];
-  }
+    *px_u_bari += yu * *pz_u_bari;
 
+    ++px_u_bari;
+    ++pz_u_bari;
+  }
+  double* px_u_dot_bari = px->u_dot_bar;
+  double* pz_u_dot_bari = pz->u_dot_bar;
   for (size_t i=0;i<nvar;i++)
   {
-    px->u_dot_bar[i]+=yu*pz->u_dot_bar[i];
+    *px_u_dot_bari += yu * *pz_u_dot_bari;
+
+    ++px_u_dot_bari;
+    ++pz_u_dot_bari;
   }
 
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  for (size_t i=0;i<nvar;i++)
-  {
-    pz->u_bar[i]=0;
-  }
-  for (size_t i=0;i<nvar;i++)
-  {
-    pz->u_dot_bar[i]=0;
-  }
+  memset(pz->u_bar, 0, nvar * sizeofdouble);
+  memset(pz->u_dot_bar, 0, nvar * sizeofdouble);
 }
 
 /**

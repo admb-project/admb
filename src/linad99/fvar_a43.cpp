@@ -44,8 +44,8 @@ dvar_vector operator/(const double x, const dvar_vector& t1)
  */
  void DF_cdble_dv_div(void)
  {
-    gradient_structure* gs = gradient_structure::get();
-    DF_FILE* fp = gs->fp;
+    DF_FILE* fp = gradient_structure::get_fp();
+
     verify_identifier_string("dffa");
     dvar_vector_position t1_pos=fp->restore_dvar_vector_position();
     dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();

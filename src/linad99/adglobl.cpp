@@ -40,6 +40,7 @@ int function_minimizer::output_flag = defaults::output;
 
 __thread DF_FILE* gradient_structure::fp = nullptr;
 __thread gradient_structure* gradient_structure::_instance = nullptr;
+__thread grad_stack* gradient_structure::GRAD_STACK1 = nullptr;
 
 std::ostream& get_output_stream()
 {

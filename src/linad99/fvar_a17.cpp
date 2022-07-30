@@ -61,16 +61,16 @@ dvar_vector operator+(const dvar_vector& v1, const dvar_vector& v2)
 
   //dvar_vector vtmp=nograd_assign(tmp);
 
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
-
+  grad_stack* GRAD_STACK1 = gradient_structure::get_GRAD_STACK1();
+  DF_FILE* fp = gradient_structure::get_fp();
   // The derivative list considerations
   save_identifier_string("bbbb");
   fp->save_dvar_vector_position(v1);
   fp->save_dvar_vector_position(v2);
   fp->save_dvar_vector_position(vtmp);
   save_identifier_string("aaaa");
-  gs->GRAD_STACK1->set_gradient_stack(dvdv_add);
+  GRAD_STACK1->set_gradient_stack(dvdv_add);
+
   return vtmp;
 }
 

@@ -164,31 +164,33 @@ TEST_F(test_gradient_structure_thread, multiple_fp)
 {
   {
   gradient_structure a(100000L, 1);
+  DF_FILE* afp = a.fp;
   gradient_structure b(100000L, 5);
+  DF_FILE* bfp = b.fp;
 
   ASSERT_TRUE(a.x == 1);
   ASSERT_TRUE(b.x == 5);
-  ASSERT_TRUE(a.fp != b.fp);
-  ASSERT_TRUE(a.fp->file_ptr != b.fp->file_ptr);
-  ASSERT_TRUE(strcmp(a.fp->cmpdif_file_name, "cmpdiff1.tmp") == 0);
-  ASSERT_TRUE(strcmp(b.fp->cmpdif_file_name, "cmpdiff5.tmp") == 0);
+  ASSERT_TRUE(afp != bfp);
+  ASSERT_TRUE(afp->file_ptr != bfp->file_ptr);
+  ASSERT_TRUE(strcmp(afp->cmpdif_file_name, "cmpdiff1.tmp") == 0);
+  ASSERT_TRUE(strcmp(bfp->cmpdif_file_name, "cmpdiff5.tmp") == 0);
 
   int expected_a_int = 5;
   double expected_a_double = 5.9;
   int expected_b_int = -2;
   double expected_b_double = -2.5;
-  a.fp->fwrite(expected_a_int);
-  b.fp->fwrite(expected_b_int);
-  a.fp->fwrite(expected_a_double);
-  b.fp->fwrite(expected_b_double);
+  afp->fwrite(expected_a_int);
+  bfp->fwrite(expected_b_int);
+  afp->fwrite(expected_a_double);
+  bfp->fwrite(expected_b_double);
   int read_a_int;
   double read_a_double;
   int read_b_int;
   double read_b_double;
-  b.fp->fread(read_b_double);
-  b.fp->fread(read_b_int);
-  a.fp->fread(read_a_double);
-  a.fp->fread(read_a_int);
+  bfp->fread(read_b_double);
+  bfp->fread(read_b_int);
+  afp->fread(read_a_double);
+  afp->fread(read_a_int);
 
   ASSERT_EQ(read_a_int, expected_a_int);
   ASSERT_EQ(read_b_int, expected_b_int);
@@ -205,91 +207,93 @@ TEST_F(test_gradient_structure_thread, multiple_grad_stack)
 {
   {
   gradient_structure a(100000L, 1);
+  grad_stack* aGRAD_STACK1 = a.GRAD_STACK1;
   gradient_structure b(100000L, 5);
+  grad_stack* bGRAD_STACK1 = b.GRAD_STACK1;
 
-  ASSERT_TRUE(a.GRAD_STACK1 != b.GRAD_STACK1);
+  ASSERT_TRUE(aGRAD_STACK1 != bGRAD_STACK1);
 
-  ASSERT_TRUE(strcmp(a.GRAD_STACK1->gradfile_name, "gradfil11.tmp") == 0);
-  ASSERT_TRUE(strcmp(a.GRAD_STACK1->gradfile_name1, "gradfil11.tmp") == 0);
-  ASSERT_TRUE(strcmp(a.GRAD_STACK1->gradfile_name2, "gradfil21.tmp") == 0);
-  ASSERT_TRUE(strcmp(a.GRAD_STACK1->var_store_file_name, "varssave1.tmp") == 0);
-  ASSERT_TRUE(strcmp(b.GRAD_STACK1->gradfile_name, "gradfil15.tmp") == 0);
-  ASSERT_TRUE(strcmp(b.GRAD_STACK1->gradfile_name1, "gradfil15.tmp") == 0);
-  ASSERT_TRUE(strcmp(b.GRAD_STACK1->gradfile_name2, "gradfil25.tmp") == 0);
-  ASSERT_TRUE(strcmp(b.GRAD_STACK1->var_store_file_name, "varssave5.tmp") == 0);
+  ASSERT_TRUE(strcmp(aGRAD_STACK1->gradfile_name, "gradfil11.tmp") == 0);
+  ASSERT_TRUE(strcmp(aGRAD_STACK1->gradfile_name1, "gradfil11.tmp") == 0);
+  ASSERT_TRUE(strcmp(aGRAD_STACK1->gradfile_name2, "gradfil21.tmp") == 0);
+  ASSERT_TRUE(strcmp(aGRAD_STACK1->var_store_file_name, "varssave1.tmp") == 0);
+  ASSERT_TRUE(strcmp(bGRAD_STACK1->gradfile_name, "gradfil15.tmp") == 0);
+  ASSERT_TRUE(strcmp(bGRAD_STACK1->gradfile_name1, "gradfil15.tmp") == 0);
+  ASSERT_TRUE(strcmp(bGRAD_STACK1->gradfile_name2, "gradfil25.tmp") == 0);
+  ASSERT_TRUE(strcmp(bGRAD_STACK1->var_store_file_name, "varssave5.tmp") == 0);
 
-  a.GRAD_STACK1->set_gradient_stack(empty_a1);
-  a.GRAD_STACK1->set_gradient_stack(empty_a2);
-  a.GRAD_STACK1->set_gradient_stack(empty_a3);
+  aGRAD_STACK1->set_gradient_stack(empty_a1);
+  aGRAD_STACK1->set_gradient_stack(empty_a2);
+  aGRAD_STACK1->set_gradient_stack(empty_a3);
 
-  ASSERT_EQ(a.GRAD_STACK1->total(), 3);
-  ASSERT_EQ(b.GRAD_STACK1->total(), 0);
+  ASSERT_EQ(aGRAD_STACK1->total(), 3);
+  ASSERT_EQ(bGRAD_STACK1->total(), 0);
 
-  b.GRAD_STACK1->set_gradient_stack(empty_b1);
-  b.GRAD_STACK1->set_gradient_stack(empty_b2);
+  bGRAD_STACK1->set_gradient_stack(empty_b1);
+  bGRAD_STACK1->set_gradient_stack(empty_b2);
 
-  ASSERT_EQ(a.GRAD_STACK1->total(), 3);
-  ASSERT_EQ(b.GRAD_STACK1->total(), 2);
+  ASSERT_EQ(aGRAD_STACK1->total(), 3);
+  ASSERT_EQ(bGRAD_STACK1->total(), 2);
 
   ASSERT_TRUE(gradient_structure::get() == &b);
 
   ASSERT_EQ(a.TOTAL_BYTES, 0);
   ASSERT_EQ(b.TOTAL_BYTES, 0);
 
-  OFF_T abegin_lpos = LSEEK(a.GRAD_STACK1->_GRADFILE_PTR, 0, SEEK_CUR);
-  OFF_T bbegin_lpos = LSEEK(b.GRAD_STACK1->_GRADFILE_PTR, 0, SEEK_CUR);
+  OFF_T abegin_lpos = LSEEK(aGRAD_STACK1->_GRADFILE_PTR, 0, SEEK_CUR);
+  OFF_T bbegin_lpos = LSEEK(bGRAD_STACK1->_GRADFILE_PTR, 0, SEEK_CUR);
 
   ASSERT_EQ(abegin_lpos, 0);
   ASSERT_EQ(bbegin_lpos, 0);
 
-  a.GRAD_STACK1->write_grad_stack_buffer(&a);
-  ASSERT_EQ(a.GRAD_STACK1->total(), 0);
-  ASSERT_EQ(b.GRAD_STACK1->total(), 2);
+  aGRAD_STACK1->write_grad_stack_buffer(&a);
+  ASSERT_EQ(aGRAD_STACK1->total(), 0);
+  ASSERT_EQ(bGRAD_STACK1->total(), 2);
   // 5000 because of grad_stack::set_gbuffer_pointers
-  ASSERT_EQ(a.GRAD_STACK1->length, 5000);
-  size_t aexpected_total_bytes = a.GRAD_STACK1->length * sizeof(grad_stack_entry);
+  ASSERT_EQ(aGRAD_STACK1->length, 5000);
+  size_t aexpected_total_bytes = aGRAD_STACK1->length * sizeof(grad_stack_entry);
   ASSERT_EQ(a.TOTAL_BYTES, aexpected_total_bytes);
   ASSERT_EQ(b.TOTAL_BYTES, 0);
 
-  b.GRAD_STACK1->write_grad_stack_buffer(&b);
-  ASSERT_EQ(a.GRAD_STACK1->total(), 0);
-  ASSERT_EQ(b.GRAD_STACK1->total(), 0);
-  ASSERT_EQ(b.GRAD_STACK1->length, 5000);
-  size_t bexpected_total_bytes = b.GRAD_STACK1->length * sizeof(grad_stack_entry);
+  bGRAD_STACK1->write_grad_stack_buffer(&b);
+  ASSERT_EQ(aGRAD_STACK1->total(), 0);
+  ASSERT_EQ(bGRAD_STACK1->total(), 0);
+  ASSERT_EQ(bGRAD_STACK1->length, 5000);
+  size_t bexpected_total_bytes = bGRAD_STACK1->length * sizeof(grad_stack_entry);
   ASSERT_EQ(a.TOTAL_BYTES, aexpected_total_bytes);
   ASSERT_EQ(b.TOTAL_BYTES, bexpected_total_bytes);
 
-  OFF_T aend_lpos = LSEEK(a.GRAD_STACK1->_GRADFILE_PTR, 0, SEEK_CUR);
-  OFF_T bend_lpos = LSEEK(b.GRAD_STACK1->_GRADFILE_PTR, 0, SEEK_CUR);
+  OFF_T aend_lpos = LSEEK(aGRAD_STACK1->_GRADFILE_PTR, 0, SEEK_CUR);
+  OFF_T bend_lpos = LSEEK(bGRAD_STACK1->_GRADFILE_PTR, 0, SEEK_CUR);
 
   ASSERT_EQ(aend_lpos, aexpected_total_bytes);
   ASSERT_EQ(bend_lpos, bexpected_total_bytes);
 
-  OFF_T reta = LSEEK(a.GRAD_STACK1->_GRADFILE_PTR, -aend_lpos, SEEK_CUR);
+  OFF_T reta = LSEEK(aGRAD_STACK1->_GRADFILE_PTR, -aend_lpos, SEEK_CUR);
   ASSERT_EQ(abegin_lpos, reta);
-  a.GRAD_STACK1->read_grad_stack_buffer(abegin_lpos);
-  OFF_T retb = LSEEK(b.GRAD_STACK1->_GRADFILE_PTR, -bend_lpos, SEEK_CUR);
+  aGRAD_STACK1->read_grad_stack_buffer(abegin_lpos);
+  OFF_T retb = LSEEK(bGRAD_STACK1->_GRADFILE_PTR, -bend_lpos, SEEK_CUR);
   ASSERT_EQ(bbegin_lpos, retb);
-  b.GRAD_STACK1->read_grad_stack_buffer(bbegin_lpos);
+  bGRAD_STACK1->read_grad_stack_buffer(bbegin_lpos);
 
-  ASSERT_TRUE(a.GRAD_STACK1->true_ptr_first[0].func == empty_a1);
-  ASSERT_TRUE(a.GRAD_STACK1->true_ptr_first[1].func == empty_a2);
-  ASSERT_TRUE(a.GRAD_STACK1->true_ptr_first[2].func == empty_a3);
-  ASSERT_TRUE(b.GRAD_STACK1->true_ptr_first[0].func == empty_b1);
-  ASSERT_TRUE(b.GRAD_STACK1->true_ptr_first[1].func == empty_b2);
+  ASSERT_TRUE(aGRAD_STACK1->true_ptr_first[0].func == empty_a1);
+  ASSERT_TRUE(aGRAD_STACK1->true_ptr_first[1].func == empty_a2);
+  ASSERT_TRUE(aGRAD_STACK1->true_ptr_first[2].func == empty_a3);
+  ASSERT_TRUE(bGRAD_STACK1->true_ptr_first[0].func == empty_b1);
+  ASSERT_TRUE(bGRAD_STACK1->true_ptr_first[1].func == empty_b2);
 
-  ASSERT_EQ(a.GRAD_STACK1->total(), 4999);
-  ASSERT_EQ(b.GRAD_STACK1->total(), 4999);
+  ASSERT_EQ(aGRAD_STACK1->total(), 4999);
+  ASSERT_EQ(bGRAD_STACK1->total(), 4999);
 
   //Must manually reset ptr
-  a.GRAD_STACK1->ptr = a.GRAD_STACK1->ptr_first + 3;
-  b.GRAD_STACK1->ptr = b.GRAD_STACK1->ptr_first + 2;
+  aGRAD_STACK1->ptr = aGRAD_STACK1->ptr_first + 3;
+  bGRAD_STACK1->ptr = bGRAD_STACK1->ptr_first + 2;
 
-  ASSERT_EQ(a.GRAD_STACK1->total(), 3);
-  ASSERT_EQ(b.GRAD_STACK1->total(), 2);
+  ASSERT_EQ(aGRAD_STACK1->total(), 3);
+  ASSERT_EQ(bGRAD_STACK1->total(), 2);
   }
 }
-TEST_F(test_gradient_structure_thread, DISABLED_cleanup_temporary_files)
+TEST_F(test_gradient_structure_thread, cleanup_temporary_files)
 {
   {
   gradient_structure* a = new gradient_structure(100000L, 1);

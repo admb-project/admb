@@ -128,18 +128,18 @@ TEST_F(test_simple_async, gradient_structure_only_GRAD_STACK1)
 }
 TEST_F(test_simple_async, gradient_structure_only_DF_FILE)
 {
-  ASSERT_TRUE(gradient_structure::get_fp() == NULL);
+  ASSERT_TRUE(gradient_structure::fp == NULL);
 
   gradient_structure gs;
 
-  ASSERT_TRUE(gradient_structure::get_fp() != NULL);
-  ASSERT_TRUE(gradient_structure::get_fp()->file_ptr != 0);
-  ASSERT_EQ(gradient_structure::get_fp()->offset, 0);
-  ASSERT_EQ(gradient_structure::get_fp()->toffset, 0);
-  ASSERT_TRUE(gradient_structure::get_fp()->buff != NULL);
-  ASSERT_EQ(sizeof(gradient_structure::get_fp()->buff), sizeof(OFF_T));
-  ASSERT_STREQ(gradient_structure::get_fp()->cmpdif_file_name, "cmpdiff.tmp");
-  OFF_T pos = LSEEK(gradient_structure::get_fp()->file_ptr, 0, SEEK_END);
+  ASSERT_TRUE(gradient_structure::fp != NULL);
+  ASSERT_TRUE(gradient_structure::fp->file_ptr != 0);
+  ASSERT_EQ(gradient_structure::fp->offset, 0);
+  ASSERT_EQ(gradient_structure::fp->toffset, 0);
+  ASSERT_TRUE(gradient_structure::fp->buff != NULL);
+  ASSERT_EQ(sizeof(gradient_structure::fp->buff), sizeof(OFF_T));
+  ASSERT_STREQ(gradient_structure::fp->cmpdif_file_name, "cmpdiff.tmp");
+  OFF_T pos = LSEEK(gradient_structure::fp->file_ptr, 0, SEEK_END);
   ASSERT_EQ(pos, 0);
 }
 TEST_F(test_simple_async, DISABLED_simple_final_values)
@@ -168,14 +168,14 @@ TEST_F(test_simple_async, DISABLED_simple_final_values)
   x(9) = 7.0;
   x(10) = 8.0;
 
-  ASSERT_EQ(gradient_structure::get_fp()->toffset, 0);
-  ASSERT_EQ(gradient_structure::get_fp()->offset, 0);
+  ASSERT_EQ(gradient_structure::fp->toffset, 0);
+  ASSERT_EQ(gradient_structure::fp->offset, 0);
 
   dvar_vector yhat(1, 10);
 
   yhat = variables(1) + variables(2) * x; 
 
-  OFF_T pos = LSEEK(gradient_structure::get_fp()->file_ptr, 0, SEEK_CUR);
+  OFF_T pos = LSEEK(gradient_structure::fp->file_ptr, 0, SEEK_CUR);
   ASSERT_EQ(pos, 0);
 
   dvector y(1, 10); 
@@ -199,8 +199,8 @@ TEST_F(test_simple_async, DISABLED_simple_final_values)
 
   ASSERT_TRUE(gradient_structure::get()->GRAD_STACK1->ptr != expected_ptr);
 
-  ASSERT_EQ(gradient_structure::get_fp()->toffset, 460);
-  ASSERT_EQ(gradient_structure::get_fp()->offset, 460);
+  ASSERT_EQ(gradient_structure::fp->toffset, 460);
+  ASSERT_EQ(gradient_structure::fp->offset, 460);
 
   dvector gradients(independents.indexmin(), independents.indexmax());
 
@@ -217,8 +217,8 @@ TEST_F(test_simple_async, DISABLED_simple_final_values)
 
   ASSERT_TRUE(gradient_structure::get()->GRAD_STACK1->ptr == expected_ptr);
 
-  ASSERT_EQ(gradient_structure::get_fp()->toffset, 0);
-  ASSERT_EQ(gradient_structure::get_fp()->offset, 0);
+  ASSERT_EQ(gradient_structure::fp->toffset, 0);
+  ASSERT_EQ(gradient_structure::fp->offset, 0);
 
   ASSERT_EQ(gradient_structure::get()->GRAD_LIST->total_addresses(),
             25 * gradient_structure::RETURN_ARRAYS_SIZE + 3);

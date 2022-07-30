@@ -3,10 +3,6 @@
  * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <df1b2fun.h>
-
-#ifdef OPT_LIB
-  #define NDEBUG
-#endif
 #include <cassert>
 
 #ifdef _MSC_VER
@@ -61,7 +57,9 @@ test_smartlist::test_smartlist(const size_t _bufsize,const adstring& _filename):
 void test_smartlist::allocate(const size_t _bufsize,const adstring& _filename)
 {
   //cerr << "need to modify test_smartlist class for multibyte char" << endl;
+#ifdef DEBUG
   assert(sizeof(char) == 1);
+#endif
 
   end_saved=0;
   eof_flag=0;
@@ -108,7 +106,7 @@ void test_smartlist::allocate(const size_t _bufsize,const adstring& _filename)
 void test_smartlist::write(const size_t n)
 {
 #if defined(__MINGW64__) || (defined(_MSC_VER) && defined(_WIN64))
-  #ifndef OPT_LIB
+  #ifdef DEBUG
   assert(n <= UINT_MAX);
   #endif
   ssize_t nw = ::write(fp,buffer,(unsigned int)n);
@@ -282,7 +280,6 @@ void test_smartlist::write_buffer(void)
   }
 }
 
-#include <cassert>
 /**
  * Description not yet available.
  * \param
@@ -369,7 +366,7 @@ memcpy for test_smartlist
 */
 void memcpy(test_smartlist& dest, void* source, const size_t nsize)
 {
-#ifndef OPT_LIB
+#ifdef DEBUG
   //Trying to write outside list buffer
   assert(dest.bptr + nsize - 1 <= dest.buffend);
 #endif
@@ -383,7 +380,7 @@ memcpy for test_smartlist
 */
 void memcpy(void* dest, test_smartlist& source, const size_t nsize)
 {
-#ifndef OPT_LIB
+#ifdef DEBUG
   //Trying to write outside list buffer
   assert(source.bptr + nsize - 1 <= source.buffend);
 #endif

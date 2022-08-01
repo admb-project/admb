@@ -414,12 +414,8 @@ void dvector::allocate(int ncl, int nch)
   //int size = nch - ncl + 2;
 
   unsigned int size = static_cast<unsigned int>(nch - ncl + 1);
-#if (__cplusplus < 201103L)
   v = new double[size];
-  memset(v, 0, sizeof(double) * size);
-#else
-  v = new double[size] {0};
-#endif
+
   if (v == NULL)
   {
     cerr << " Error: Unable to allocate v in"
@@ -439,11 +435,13 @@ void dvector::allocate(int ncl, int nch)
     ad_exit(1);
   }
 
+  //reset v(index_min) to v[0]
+  v -= ncl;
+
   index_min = ncl;
   index_max = nch;
 
-  //reset v(index_min) to v[0]
-  v -= index_min;
+  initialize();
 }
 /**
 Allocate memory for a %dvector the same size as it's argument.

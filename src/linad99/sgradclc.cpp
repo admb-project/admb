@@ -366,10 +366,10 @@ Rewind buffer.
 */
 void reset_gradient_stack(void)
 {
-  gradient_structure::get()->GRAD_STACK1->ptr =
-    gradient_structure::get()->GRAD_STACK1->ptr_first;
+  gradient_structure::GRAD_STACK1->ptr =
+    gradient_structure::GRAD_STACK1->ptr_first;
 
-  int& _GRADFILE_PTR=gradient_structure::get()->GRAD_STACK1->_GRADFILE_PTR;
+  int& _GRADFILE_PTR=gradient_structure::GRAD_STACK1->_GRADFILE_PTR;
 
   LSEEK(_GRADFILE_PTR,0L,SEEK_SET);
 }

@@ -383,8 +383,17 @@ void fmm::fmin(const double& _f, const dvector &_x, const dvector& _g)
 
      /* xx is reserved for the updated values of independent variables,
         at the moment put the current values */
+  {
+     double* pxi = x.get_v() + 1;
+     double* pxxi = xx.get_v() + 1;
      for (i=1; i<=n; i++)
-           xx.elem(i)=x.elem(i);
+     {
+       *pxxi = *pxi;
+
+       ++pxi;
+       ++pxxi;
+     }
+  }
   tracing_message(traceflag,"A10");
 
       /* itn - iteration counter */
@@ -395,8 +404,15 @@ void fmm::fmin(const double& _f, const dvector &_x, const dvector& _g)
        /* initialize funval vector,
           it will contain last 10 function values (10-th is the most recent)
           needed to stop minimization in case if f(1)-f(10)<min_improve  */
-       for (i=1; i< 11; i++)
-          funval.elem(i)=0.;
+      {
+        double* pfunvali = funval.get_v() + 1;
+        for (i=1; i< 11; i++)
+        {
+          *pfunvali = 0.0;
+
+	  ++pfunvali;
+	}
+      }
   tracing_message(traceflag,"A11");
       ihang = 0;  /* flag, =1 when function minimizer is not making progress */
       llog=1;
@@ -435,12 +451,21 @@ void fmm::fmin(const double& _f, const dvector &_x, const dvector& _g)
       if(dfn == 0.)
          z = 0.0;
   tracing_message(traceflag,"A14");
-      for (i=1; i<=n; i++)
-      {
-        xsave.elem(i)=x.elem(i);
-        x.elem(i)=xx.elem(i);
-      }
-      ireturn=1; /* upon next entry will go to call1 */
+  {
+    double* pxi = x.get_v() + 1;
+    double* pxxi = xx.get_v() + 1;
+    double* pxsavei = xsave.get_v() + 1;
+    for (i=1; i<=n; i++)
+    {
+      *pxsavei = *pxi;
+      *pxi= *pxxi;
+
+      ++pxi;
+      ++pxxi;
+      ++pxsavei;
+    }
+  }
+  ireturn=1; /* upon next entry will go to call1 */
   tracing_message(traceflag,"A15");
       if (h.disk_save())
       {
@@ -460,16 +485,29 @@ void fmm::fmin(const double& _f, const dvector &_x, const dvector& _g)
         cout << "finished hessian restore" << endl;
       }
   tracing_message(traceflag,"A18");
-      for (i=1; i<=n; i++)
-      {
-        x.elem(i)=xsave.elem(i);
-      }
-      ireturn=3;
+  {
+    double* pxi = x.get_v() + 1;
+    double* pxsavei = xsave.get_v() + 1;
+    for (i=1; i<=n; i++)
+    {
+      *pxi = *pxsavei;
+      ++pxi;
+      ++pxsavei;
+    }
+  }
+  ireturn=3;
   tracing_message(traceflag,"A19");
-      {
-      }
-      for ( i=1; i<=n; i++)
-         gbest.elem(i)=g.elem(i);
+  {
+    double* pgi = g.get_v() + 1;
+    double* pgbesti = gbest.get_v() + 1;
+    for ( i=1; i<=n; i++)
+    {
+      *pgbesti = *pgi;
+
+      ++pgi;
+      ++pgbesti;
+    }
+  }
   tracing_message(traceflag,"A20");
       funval.elem(10) = f;
       df=dfn;
@@ -564,9 +602,17 @@ label7003: /* Printing table header */
 label21 : /* Calculating Newton step */
       /* found good search direction, increment iteration number */
       itn=itn+1;
-      for (i=1; i<=n; i++)
-         x.elem(i)=xx.elem(i);
-      w.elem(1)=-g.elem(1);
+      {
+        double* pxi = x.get_v() + 1;
+        double* pxxi = xx.get_v() + 1;
+        for (i=1; i<=n; i++)
+	{
+          *pxi = *pxxi;
+	  ++pxi;
+	  ++pxxi;
+	}
+        w.elem(1)=-g.elem(1);
+      }
 
 #if defined(DIAG)
       cout << __FILE__ << ':' << __LINE__ << ' ' << fmintime.get_elapsed_time_and_reset() << endl;
@@ -575,33 +621,48 @@ label21 : /* Calculating Newton step */
       /* solving system of linear equations H_(k+1) * (x_(k+1)-x(k)) = -g_k
          to get next search direction
          p_k = (x_(k+1)-x(k)) = - inv(H_(k+1)) * g_k */
-      for (i=2; i<=n; i++)
       {
-        i1=i-1;
-        z=-g.elem(i);
-        double * pd=&(h.elem(i,1));
-        double * pw=&(w.elem(1));
-        for (j=1; j<=i1; j++)
+        double* pgi = g.get_v() + 2;
+	double* pwi = w.get_v() + 2;
+        for (i=2; i<=n; i++)
         {
-          z-=*pd++ * *pw++;
+          i1=i-1;
+          z = -(*pgi);
+          double * pd=&(h.elem(i,1));
+          double* pw = w.get_v() + 1;
+          for (j=1; j<=i1; j++)
+          {
+            z -= *pd * *pw;
+	    ++pd;
+	    ++pw;
+          }
+          *pwi = z;
+
+	  ++pwi;
+	  ++pgi;
         }
-        w.elem(i)=z;
       }
       w.elem(is+n)=w.elem(n)/h.elem(n,n);
       {
         dvector tmp(1,n);
         tmp.initialize();
+	double* ptmpi = tmp.get_v() + 1;
         for (i=1; i<=n1; i++)
         {
           j=i;
           double * pd=&(h.elem(n-j+1,n-1));
           double qd=w.elem(is+np-j);
-          double * pt=&(tmp(1));
+          double* pt = tmp.get_v() + 1;
           for (int ii=1; ii<=n1; ii++)
           {
-            *pt++ +=*pd-- * qd;
+            *pt += *pd * qd;
+
+	    ++pt;
+	    --pd;
           }
-          w.elem(is+n-i)=w.elem(n-i)/h.elem(n-i,n-i)-tmp(i);
+          w.elem(is+n-i)=w.elem(n-i)/h.elem(n-i,n-i) - *ptmpi;
+
+	  ++ptmpi;
         }
       }/* w(n+1,2n) now contains search direction
           with current Hessian approximation */

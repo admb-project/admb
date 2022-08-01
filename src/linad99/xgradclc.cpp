@@ -385,6 +385,6 @@ dvariable& funnel_dvariable::operator=(const prevariable& t)
  */
 void ad_begin_funnel(void)
 {
-  gradient_structure::get()->GRAD_STACK1->set_gradient_stack(NULL);
+  gradient_structure::GRAD_STACK1->set_gradient_stack(NULL);
 }
 

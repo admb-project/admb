@@ -505,6 +505,7 @@ void function_minimizer::depvars_routine(void)
     from_start = std::chrono::system_clock::now();
 
     cout << "Differentiating " << ndvarcals << " derived quantities: ";
+    cout.flush();
   }
   independent_variables x(1,nvar);
   initial_params::xinit(x);        // get the initial values into the x vector
@@ -547,8 +548,9 @@ void function_minimizer::depvars_routine(void)
         if (i > 0) cout << ", ";
         cout << i + 1;
       }
+      cout.flush();
     }
-      stddev_params::stddevptr[i]->set_dependent_variables();
+    stddev_params::stddevptr[i]->set_dependent_variables();
   }
   gradient_structure::get()->jacobcalc(nvar,ofs);
   for (i=0;i<ndvarcals;i++)
@@ -683,6 +685,7 @@ bool function_minimizer::hess_inv(void)
       if (function_minimizer::output_flag == 1)
       {
         cout << "\n Warning: Parameter " << i << " appears to have identically 0 derivative.. check model\n";
+        cout.flush();
       }
       std::ostream& output_stream = get_output_stream();
       output_stream << " Hessian is 0 in row " << i

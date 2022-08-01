@@ -32,24 +32,24 @@
  * \param
  */
 prevariable& prevariable::operator=(const double t) const
-    {
-      (*v).x=t;
-      gradient_structure::get()->GRAD_STACK1->
-        set_gradient_stack0(df_eq_pvdoub,&(v->x));
-      return((prevariable&)(*this));
-    }
+{
+  (*v).x=t;
+  gradient_structure::GRAD_STACK1->
+    set_gradient_stack0(df_eq_pvdoub,&(v->x));
+  return((prevariable&)(*this));
+}
 
 /**
  * Description not yet available.
  * \param
  */
 prevariable& prevariable::operator=(const prevariable& t) const
-    {
-      (*v).x=(*t.v).x;
-      gradient_structure::get()->GRAD_STACK1->
-        set_gradient_stack1(default_evaluation1,&(v->x),&(t.v->x));
-      return((prevariable&)(*this));
-    }
+{
+  (*v).x=(*t.v).x;
+  gradient_structure::GRAD_STACK1->
+    set_gradient_stack1(default_evaluation1,&(v->x),&(t.v->x));
+  return((prevariable&)(*this));
+}
 #  endif
 #endif
 
@@ -61,7 +61,7 @@ prevariable& prevariable::operator=(const prevariable& t) const
 prevariable& prevariable::operator=(const prevariable& t)
 {
   (*v).x = (*t.v).x;
-  gradient_structure::get()->GRAD_STACK1->
+  gradient_structure::GRAD_STACK1->
     set_gradient_stack1(default_evaluation1,&(v->x),&(t.v->x));
 
   return *this;
@@ -95,7 +95,7 @@ dvariable& dvariable::operator=(const double t)
 prevariable& prevariable::operator=(const double t)
 {
   (*v).x = t;
-  gradient_structure::get()->GRAD_STACK1->
+  gradient_structure::GRAD_STACK1->
     set_gradient_stack0(default_evaluation0, &(v->x));
   return *this;
 }

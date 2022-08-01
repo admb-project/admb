@@ -114,7 +114,11 @@ public:
   inline static grad_stack* get_GRAD_STACK1() { return GRAD_STACK1; }
 
   static gradient_structure* reset(gradient_structure*);
-  dvariable* next_RETURN_PTR();
+
+  dvariable* RETURN_PTR;
+  dvariable* MIN_RETURN;
+  dvariable* MAX_RETURN;
+  static dvariable* next_RETURN_PTR();
 
   gradient_structure** gradients;
   unsigned int gradients_size;
@@ -217,9 +221,6 @@ public:
   dlist* GRAD_LIST;
    static unsigned int RETURN_ARRAYS_SIZE;
    //static int RETURN_INDEX;
-  dvariable* RETURN_PTR;
-  dvariable* MIN_RETURN;
-  dvariable* MAX_RETURN;
   arr_list* ARR_LIST1;
    //static arr_list *ARR_FREE_LIST1;
    //static void funnel_jacobcalc(void);

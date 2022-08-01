@@ -308,7 +308,7 @@ void check_derivative_values(const char * _s)
   char * s = (char *) _s;
   //char label[20];
   save_identifier_string(s);
-  gradient_structure::get()->GRAD_STACK1->
+  gradient_structure::GRAD_STACK1->
     set_gradient_stack(df_check_derivative_values);
 }
 
@@ -337,7 +337,7 @@ void insert_identifier_string(const char * _s)
 {
   char * s = (char *) _s;
   save_identifier_string(s);
-  gradient_structure::get()->GRAD_STACK1->
+  gradient_structure::GRAD_STACK1->
     set_gradient_stack(df_print_identifier_string);
 }
 

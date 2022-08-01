@@ -133,7 +133,7 @@ DF_FILE::DF_FILE(const size_t nbytes, const unsigned int id)
   }
 
 #ifndef OPT_LIB
-  memset(buff, 0, buff_size);
+  //memset(buff, 0, buff_size);
 #endif
 
   offset = 0;

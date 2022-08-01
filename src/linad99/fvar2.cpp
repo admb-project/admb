@@ -25,6 +25,9 @@
 #ifndef __SUN__
 #endif
 #include <math.h>
+#if !defined(OPT_LIB)
+#include <cassert>
+#endif
 
 /**
   Creates an entry in the gradient structure linked list.
@@ -41,16 +44,16 @@ double_and_int* gradnew()
     ad_exit(1);
   }
 #endif
-  dlink* tmp = nullptr;
 
   gradient_structure* gs = gradient_structure::get();
-  if (gs)
+#if !defined(OPT_LIB)
+  assert(gs);
+#endif
+  dlist* GRAD_LIST = gs->GRAD_LIST;
+  dlink* tmp = GRAD_LIST->last_remove();
+  if (!tmp)
   {
-    tmp = gs->GRAD_LIST->last_remove();
-    if (!tmp)
-    {
-      tmp = gs->GRAD_LIST->create();
-    }
+    tmp = GRAD_LIST->create();
   }
 
   //  cout << "In gradnew the address of the double * ptr is "
@@ -63,20 +66,18 @@ double_and_int* gradnew()
  */
 void gradfree(dlink* v)
 {
+  if (!gradient_structure::instances)
+  {
+    //delete (double_and_int*)v;
+    v = NULL;
+    return;
+  }
   gradient_structure* gs = gradient_structure::get();
-  if (gs)
-    if (gs->GRAD_LIST)
-    {
-      if (gradient_structure::instances)
-      {
-        gs->GRAD_LIST->append(v);
-      }
-      else
-      {
-        delete (double_and_int*)v;
-        v = NULL;
-      }
-    }
+#if !defined(OPT_LIB)
+  assert(gs && gs->GRAD_LIST);
+#endif
+  dlist* GRAD_LIST = gs->GRAD_LIST;
+  GRAD_LIST->append(v);
 }
 //prevariable::prevariable(const prevariable& t)
 //  {
@@ -121,7 +122,7 @@ dvariable::dvariable(): prevariable(gradnew())
   (*v).x = 0.0;
 
 #ifdef SAFE_INITIALIZE
-  gradient_structure::get()->GRAD_STACK1->set_gradient_stack0(
+  gradient_structure::GRAD_STACK1->set_gradient_stack0(
     default_evaluation0,&((*v).x));
 #endif
 }

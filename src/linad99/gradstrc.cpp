@@ -451,7 +451,13 @@ gradient_structure::gradient_structure(const long int _size, const unsigned int 
 }
 dvariable* gradient_structure::next_RETURN_PTR()
 {
-  return RETURN_PTR == MAX_RETURN ? RETURN_PTR = MIN_RETURN : ++RETURN_PTR;
+  /*
+  if (++_instance->RETURN_PTR > _instance->MAX_RETURN)
+    _instance->RETURN_PTR = _instance->MIN_RETURN;
+
+  return _instance->RETURN_PTR;
+  */
+  return _instance->RETURN_PTR == _instance->MAX_RETURN ? _instance->RETURN_PTR = _instance->MIN_RETURN : ++_instance->RETURN_PTR;
 }
 
 /**

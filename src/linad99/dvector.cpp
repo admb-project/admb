@@ -213,22 +213,24 @@ dvector::dvector(const predvector& pdv)
   \return Reference to a %dvector object.
  */
 dvector& dvector::operator=(const double x)
- {
-   #ifdef DIAG
-     myheapcheck("Entering dvector =");
-   #endif
+{
+#ifdef DIAG
+  myheapcheck("Entering dvector=");
+#endif
 
-   {
-     for (int i=indexmin();i<=indexmax();i++)
-     {
-       elem(i)=x;
-     }
-   }
-   #ifdef DIAG
-     myheapcheck("Leaving dvector =");
-   #endif
-   return (*this);
- }
+  int min = index_min;
+  int max = index_max;
+  double* pvi = v + min;
+  for (int i = min; i <= max; ++i)
+  {
+    *pvi = x;
+    ++pvi;
+  }
+#ifdef DIAG
+  myheapcheck("Leaving dvector=");
+#endif
+   return *this;
+}
 
 /**
 \ingroup matop

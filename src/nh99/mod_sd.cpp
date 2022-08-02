@@ -299,15 +299,31 @@ void function_minimizer::sd_routine(void)
           }
         }
 
+	dvector* pBSi = &BS(1);
+	double* pscalei = scale.get_v() + 1;
+	double* ptmpi = tmp.get_v() + 1;
+	double* pdiagi = diag.get_v() + 1;
         for (int i=1;i<=nvar1;i++)
         {
+	  double* pBSij = pBSi->get_v() + 1;
+	  double* ptmpj = tmp.get_v() + 1;
+	  double* pscalej = scale.get_v() + 1;
           for (int j=1;j<=i;j++)
           {
-            tmp(j)=BS(i,j)*scale(i)*scale(j);
-            ofs << tmp(j) << " ";
+            *ptmpj = *pBSij * *pscalei * *pscalej;
+            ofs << *ptmpj << " ";
+
+	    ++ptmpj;
+	    ++pBSij;
+	    ++pscalej;
           }
           ofs << endl;
-          diag(i)=tmp(i);
+          *pdiagi = *ptmpi;
+
+	  ++pBSi;
+	  ++ptmpi;
+	  ++pscalei;
+	  ++pdiagi;
         }
 
         if (ndvar>0)
@@ -472,29 +488,37 @@ void function_minimizer::sd_routine(void)
 
     if (GAUSS_varcovariance_matrix) (*GAUSS_varcovariance_matrix).initialize();
 
+    double* pdiagi = diag.get_v() + 1;
     for (int i=1;i<=nvar1+ndvar;i++)
     {
+      double* ptmpj = tmp.get_v() + 1;
       for (int j=1;j<=i;j++)
       {
-        cif >> tmp(j);
+        cif >> *ptmpj;
+
+	++ptmpj;
       }
+      ptmpj = tmp.get_v() + 1;
+      double* pdiagj = diag.get_v() + 1;
       for (int j=1;j<=i;j++)
       {
-        if (diag(i)==0.0 || diag(j)==0.0)
+        if (*pdiagi == 0.0 || *pdiagj == 0.0)
         {
-          tmp(j)=0.0;
+          *ptmpj = 0.0;
         }
         else
         {
           if (i!=j)
           {
-            tmp(j)/=(diag(i)*diag(j));
+            *ptmpj /= (*pdiagi * *pdiagj);
           }
           else
           {
-            tmp(j)=1;
+            *ptmpj = 1;
           }
         }
+	++ptmpj;
+	++pdiagj;
       }
       ofs << "  " << setw(4) << i << "   ";
       ofsd << "  " << setw(4) << i << "   ";
@@ -507,7 +531,7 @@ void function_minimizer::sd_routine(void)
         {
           if (param_labels[lc]==likeprof_params::likeprofptr[ix]->label())
           {
-            likeprof_params::likeprofptr[ix]->get_sigma()=diag(i);
+            likeprof_params::likeprofptr[ix]->get_sigma()= *pdiagi;
           }
         }
       }
@@ -526,32 +550,35 @@ void function_minimizer::sd_routine(void)
       }
       ofs << setscientific() << setw(11) << setprecision(4) << param_values(i)
           << " ";
-      ofs << setscientific() << setw(10) << setprecision(4) << diag(i) << " ";
+      ofs << setscientific() << setw(10) << setprecision(4) << *pdiagi << " ";
 
       if (GAUSS_varcovariance_matrix)
       {
         if (GAUSS_varcovariance_matrix->indexmax()>=i)
-          (*GAUSS_varcovariance_matrix) (i,1)=diag(i);
+          (*GAUSS_varcovariance_matrix) (i,1)= *pdiagi;
       }
 
       ofsd << setscientific() << setw(11) << setprecision(4) << param_values(i)
            << " ";
-      ofsd << setscientific() << setw(10) << setprecision(4) << diag(i);
+      ofsd << setscientific() << setw(10) << setprecision(4) << *pdiagi;
+      ptmpj = tmp.get_v() + 1;
       for (int j=1;j<=i;j++)
       {
-        ofs << " " << setfixed() << setprecision(4) << setw(7)
-            << tmp(j);
+        ofs << " " << setfixed() << setprecision(4) << setw(7) << *ptmpj;
         if (GAUSS_varcovariance_matrix)
         {
           if (GAUSS_varcovariance_matrix->indexmax()>=i  &&
             (*GAUSS_varcovariance_matrix)(i).indexmax()>j)
           {
-            (*GAUSS_varcovariance_matrix) (i,j+1)=tmp(j);
+            (*GAUSS_varcovariance_matrix) (i,j+1) = *ptmpj;
           }
         }
+	++ptmpj;
       }
       ofs << endl;
       ofsd << endl;
+
+      ++pdiagi;
     }
   }
 #if defined(_MSC_VER)

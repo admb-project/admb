@@ -8,7 +8,9 @@
  * \file
  * Description not yet available.
  */
-#include <mutex>
+#ifdef USE_THREAD
+  #include <mutex>
+#endif
 #ifndef _MSC_VER
   #include <unistd.h>
 #endif
@@ -271,7 +273,9 @@ void allocate_dvariable_space()
   }
 }
 
+#ifdef USE_THREAD
 std::mutex gsm;
+#endif
 
 /**
 Constructor
@@ -295,9 +299,13 @@ gradient_structure::gradient_structure(const long int _size, const unsigned int 
 
   save_var_file_flag = 0;
 
+#ifdef USE_THREAD
   gsm.lock();
+#endif
   ++instances;
+#ifdef USE_THREAD
   gsm.unlock();
+#endif
 
   //Should be a multiple of sizeof(double_and_int)
   const long int remainder = _size % sizeof(double_and_int);
@@ -570,9 +578,13 @@ gradient_structure::~gradient_structure()
     GRAD_LIST = NULL;
   }
 
+#ifdef USE_THREAD
   gsm.lock();
+#endif
   --instances;
+#ifdef USE_THREAD
   gsm.unlock();
+#endif
 
   if (DEPVARS_INFO==NULL)
   {

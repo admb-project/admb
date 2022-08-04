@@ -92,8 +92,13 @@ public:
   operator double*();
 };
 
-#ifdef _MSC_VER
-  #define __thread __declspec(thread)
+#ifdef USE_THREAD
+#define _THREAD __thread
+  #ifdef _MSC_VER
+    #define __thread __declspec(thread)
+  #endif
+#else
+#define _THREAD
 #endif
 /**
  * class for things related to the gradient structures, including dimension of
@@ -105,9 +110,9 @@ public:
   DF_FILE* _fp;
   grad_stack* _GRAD_STACK1;
 
-  static __thread DF_FILE* fp;
-  static __thread gradient_structure* _instance;
-  static __thread grad_stack* GRAD_STACK1;
+  static _THREAD DF_FILE* fp;
+  static _THREAD gradient_structure* _instance;
+  static _THREAD grad_stack* GRAD_STACK1;
 
   static gradient_structure* get();
   inline static DF_FILE* get_fp() { return fp; }

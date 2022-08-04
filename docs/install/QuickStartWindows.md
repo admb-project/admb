@@ -1,7 +1,7 @@
 # ADMB Quick Start Windows
 
 *ADMB-13.0*  
-*Released May 31, 2022*  
+*Released August 8, 2022*  
 
 Describe downloading, installing and using ADMB from binary release for Windows.
 

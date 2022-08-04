@@ -14,12 +14,11 @@ Read [QuickStartWindows](docs/install/QuickStartWindows.md).
 
 **MacOS**
 
-Read [QuickStartMacOS](scripts/installers/packagemaker/QuickStartMacOS.md).
+MacOS installers will not be available with ADMB-13.0, please read the [BuildingSourceUnix](docs/install/BuildingSourceUnix.md).
 
 **Unix**
 
 Read [QuickStartUnix](docs/install/QuickStartUnix.md).
-
 
 For all others, read the building source procedures below.
 

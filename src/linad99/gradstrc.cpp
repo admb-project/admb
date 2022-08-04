@@ -117,10 +117,6 @@ void gradient_structure::create(const unsigned int size)
     gradient_structure::reset(gradients[0]);
   }
 }
-gradient_structure* gradient_structure::get()
-{
-  return _instance;
-}
 gradient_structure* gradient_structure::reset(gradient_structure* instance)
 {
   _instance = instance;

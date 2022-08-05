@@ -6,7 +6,7 @@ class test_rvalue: public ::testing::Test {};
 class derived: public prevariable
 {
 public:
-  derived(): prevariable() { v = nullptr; }
+  derived(): prevariable(nullptr) { }
   derived(const derived& other): prevariable(new double_and_int)
   {
     v->x = other.v->x;

@@ -1298,7 +1298,8 @@ class indvar_offset_list
    }
 };
 
-void gradfree(dlink *);
+double_and_int* gradnew();
+void gradfree(dlink* v);
 
 class prevariable_position;
 
@@ -1319,7 +1320,13 @@ protected:
   }
 
 public:
-  //prevariable(const prevariable&) = delete;
+  /**
+  Copy Constructor
+
+  Note - Shallow copy is the same as 12.3 where copy constructor
+  is not declared.
+  */ 
+  prevariable(const prevariable& other): v(other.v) { }
 
   double_and_int* v; ///< pointer to the data
 
@@ -1506,8 +1513,6 @@ class df1_three_variable;
 Fundamental data type for reverse mode automatic differentiation.
 \ingroup BAD
 */
-double_and_int* gradnew();
-void gradfree(dlink* v);
 class dvariable: public prevariable
 {
 public:

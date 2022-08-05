@@ -1313,15 +1313,13 @@ class prevariable
 {
 protected:
   /// Default constructor
-  prevariable(): prevariable(nullptr)
-  {
-  }
+  prevariable() = delete;
   prevariable(double_and_int* u): v(u)
   {
   }
 
 public:
-  prevariable(const prevariable&);
+  prevariable(const prevariable&) = delete;
 
   double_and_int* v; ///< pointer to the data
 
@@ -1418,7 +1416,7 @@ public:
       return v;
    }
 
-   prevariable & operator=(const prevariable &);
+   prevariable& operator=(const prevariable&);
    prevariable & operator=(double);
 #if (__BORLANDC__  >= 0x0540)
    prevariable & operator=(const prevariable &) const;
@@ -1504,24 +1502,103 @@ class df1_one_variable;
 class df1_two_variable;
 class df1_three_variable;
 
-  /**
-  Fundamental data type for reverse mode automatic differentiation.
-  \ingroup BAD
- */
+/**
+Fundamental data type for reverse mode automatic differentiation.
+\ingroup BAD
+*/
+double_and_int* gradnew();
+void gradfree(dlink* v);
 class dvariable: public prevariable
 {
 public:
-  dvariable();
-  dvariable(const dvariable&);
-  dvariable(double t);
-  dvariable(const int &t);
-  dvariable(kkludge_object);
-  dvariable(const prevariable&);
-  ~dvariable();
+  /**
+  Default constructor.
 
-  dvariable& operator=(const dvariable&);
-  dvariable& operator=(double);
-  dvariable& operator=(const prevariable&);
+  Creates new zero value dvariable object.
+  */
+  dvariable(): prevariable(gradnew())
+  {
+    (*v).x = 0.0;
+
+#ifdef SAFE_INITIALIZE
+    gradient_structure::GRAD_STACK1->set_gradient_stack0(
+      default_evaluation0,&((*v).x));
+#endif
+  }
+  /**
+  Copy constructor for dvariable object; deep copy.
+  Allocates memory and assigns value of argument to new object.
+  \param t constant devariable object
+  */
+  dvariable(const dvariable& t): prevariable(gradnew())
+  {
+    prevariable::operator=(t);
+  }
+  /**
+  Creates dvariable instance from a double constant.
+  Creates new dvariable object,
+  Sets Value to the argument and initializes derivative information.
+  \param t constant double passed by value.
+  */
+  dvariable(const double t): prevariable(gradnew())
+  {
+    prevariable::operator=(t);
+  }
+  /**
+  Creates dvariable instance from a int constant.
+  Creates new dvariable object,
+  Sets value to the argument and initializes derivatve information.
+  \param t constant integer passed by reference.
+  */
+  dvariable(const int &t): dvariable(static_cast<double>(t)) {}
+  /**
+  Specialized constructor that does not create unnecessary entries
+  in the gradient structure; see function \ref nograd_assign.
+  */
+  dvariable(kkludge_object): prevariable(gradnew())
+  {
+    //(*v).nc=0;
+  }
+  /**
+  Constructor for dvariable object from its base class; deep copy.
+  Allocates memory and assigns value of argument to new object.
+  \param t constant prevariable object
+  */
+  dvariable(const prevariable& t): prevariable(gradnew())
+  {
+    //(*v).nc=0;
+    prevariable::operator=(t);
+  }
+  /** Destructor; frees memory on gradient stack.  */
+  virtual ~dvariable() { gradfree((dlink*)v); }
+
+  //dvariable& operator=(const dvariable&);
+  /**
+  Assigns a value to a dvariable object.
+  \param t constant object of type double.
+  \return prevariable reference
+  */
+  dvariable& operator=(const double x)
+  {
+    prevariable::operator=(x);
+    return *this;
+  }
+
+  dvariable& operator=(const dvariable& other)
+  {
+    prevariable::operator=(other);
+    return *this;
+  }
+  /**
+  Assigns a value to a dvariable object.
+  \param t constant reference to an object of type prevariable.
+  \return dvariable reference
+  */
+  dvariable& operator=(const prevariable& other)
+  {
+    prevariable::operator=(other);
+    return *this;
+  }
   dvariable& operator=(const df1_one_variable&);
   dvariable& operator=(const df1_two_variable&);
   dvariable& operator=(const df1_three_variable&);

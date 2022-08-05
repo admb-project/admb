@@ -68,26 +68,6 @@ prevariable& prevariable::operator=(const prevariable& t)
 }
 
 /**
-  Assigns a value to a dvariable object.
-  \param t constant reference to an object of type prevariable.
-  \return dvariable reference
- */
-dvariable& dvariable::operator=(const prevariable& t)
-{
-  return static_cast<dvariable&>(prevariable::operator=(t));
-}
-
-/**
-  Assigns a value to a dvariable object.
-  \param t constant object of type double.
-  \return prevariable reference
- */
-dvariable& dvariable::operator=(const double t)
-{
-  return static_cast<dvariable&>(prevariable::operator=(t));
-}
-
-/**
   Assigns a value to a prevariable object.
   \param t constant object of type double.
   \return prevariable reference

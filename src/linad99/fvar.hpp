@@ -1319,7 +1319,7 @@ protected:
   }
 
 public:
-  prevariable(const prevariable&) = delete;
+  //prevariable(const prevariable&) = delete;
 
   double_and_int* v; ///< pointer to the data
 

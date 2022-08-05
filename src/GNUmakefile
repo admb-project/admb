@@ -843,7 +843,7 @@ else
 	cp ../docs/install/QuickStartUnix.md ../build/$(ADMB_VER)/INSTALL.txt
   endif
   ifeq ($(UNAME_S),Darwin)
-	cp ../docs/install/QuickStartMacOSZip.md ../build/$(ADMB_VER)/INSTALL.txt
+	cp ../docs/install/QuickStartUnix.md ../build/$(ADMB_VER)/INSTALL.txt
   endif
 	cp -R ../examples $(DIST)
 	cd ../build/ && zip -r $(ADMB_VER).zip $(ADMB_VER)

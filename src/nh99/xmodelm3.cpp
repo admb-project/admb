@@ -221,15 +221,25 @@ void tracing_message(int traceflag,const char *s);
     }
 
     if(function_minimizer::output_flag==1){
+       std::string fullpath(ad_comm::argv[0]);
+#if defined(_WIN32)
+       auto idx1 = fullpath.rfind("\\");
+       auto idx2 = fullpath.rfind(".");
+       auto total = idx2 - idx1 - 1;
+       std::string model_name = fullpath.substr(idx1 + 1, total);
+#else
+       auto idx1 = fullpath.rfind("/");
+       if (idx1 > 0) ++idx1;
+       std::string model_name = fullpath.substr(idx1);
+#endif
       time_t now = time(0);
       tm* localtm = localtime(&now);
-      std::string m=get_filename((char*)ad_comm::adprogram_name);
       if(!random_effects_flag){
 	cout << "Starting optimization of '";
       } else {
 	cout << "Starting RE optimization of '";
       }
-      cout << m<< "' in phase " <<
+      cout << model_name << "' in phase " <<
 	initial_params::current_phase << " of " <<
 	initial_params::max_number_phases << " at " << asctime(localtm);
       cout.flush();

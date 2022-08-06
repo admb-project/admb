@@ -853,6 +853,8 @@ public:
   void save_variables();
   void restore_variables();
 
+  double_and_int* gradnew();
+
   // check list integrity
   void check_list(void);
   size_t total_addresses() const;

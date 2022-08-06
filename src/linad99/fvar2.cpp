@@ -30,9 +30,9 @@
 #endif
 
 /**
-  Creates an entry in the gradient structure linked list.
-  \return Pointer instance of class double_and_int
- */
+Creates an entry in the gradient structure linked list.
+\return Pointer instance of class double_and_int
+*/
 double_and_int* gradnew()
 {
 #if !defined(OPT_LIB)
@@ -44,18 +44,16 @@ double_and_int* gradnew()
     ad_exit(1);
   }
 #endif
+  return gradient_structure::_instance->GRAD_LIST->gradnew();
+}
 
-  gradient_structure* gs = gradient_structure::get();
-#if !defined(OPT_LIB)
-  assert(gs);
-#endif
-  dlist* GRAD_LIST = gs->GRAD_LIST;
-  dlink* tmp = GRAD_LIST->last_remove();
+double_and_int* dlist::gradnew()
+{
+  dlink* tmp = last_remove();
   if (!tmp)
   {
-    tmp = GRAD_LIST->create();
+    tmp = create();
   }
-
   //  cout << "In gradnew the address of the double * ptr is "
   //       << _farptr_tolong(tmp) << "\n";
   return (double_and_int*)tmp;
@@ -66,18 +64,15 @@ double_and_int* gradnew()
  */
 void gradfree(dlink* v)
 {
+#if !defined(OPT_LIB)
   if (!gradient_structure::instances)
   {
     //delete (double_and_int*)v;
     v = NULL;
     return;
   }
-  gradient_structure* gs = gradient_structure::get();
-#if !defined(OPT_LIB)
-  assert(gs && gs->GRAD_LIST);
 #endif
-  dlist* GRAD_LIST = gs->GRAD_LIST;
-  GRAD_LIST->append(v);
+  gradient_structure::_instance->GRAD_LIST->append(v);
 }
 //prevariable::prevariable(const prevariable& t)
 //  {

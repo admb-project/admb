@@ -111,7 +111,7 @@ df1b2vector pow(const double v,const df1b2vector& _x)
  */
 df1b2vector pow(const dvector& x,  const df1b2variable& a)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
   df1b2vector y(x.indexmin(), x.indexmax());
   for(int i=x.indexmin(); i<=x.indexmax(); i++)
@@ -129,7 +129,7 @@ df1b2vector pow(const dvector& x,  const df1b2variable& a)
  */
 df1b2vector pow(const dvector& x,  const df1b2vector& a)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
   df1b2vector y(x.indexmin(), x.indexmax());
 
@@ -148,7 +148,7 @@ df1b2vector pow(const dvector& x,  const df1b2vector& a)
  */
   dvar_vector pow(const dvar_vector& v1, const dvector& v2)
   {
-    gradient_structure* gs = gradient_structure::get();
+    gradient_structure* gs = gradient_structure::_instance;
     gs->RETURN_ARRAYS_INCREMENT();
 
     dvar_vector tmp(v1.indexmin(),v1.indexmax());

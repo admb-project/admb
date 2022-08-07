@@ -2901,7 +2901,7 @@ dvariable ln_det(dvar_compressed_triplet& VM,hs_symbolic& S)
 dvariable ln_det(dvar_compressed_triplet& VM,hs_symbolic& S,
   dcompressed_triplet& s)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
   int n=VM.get_n();
   dvar_hs_smatrix H(n,VM);
@@ -3062,8 +3062,8 @@ int varchol(XCONST dvar_hs_smatrix &AA, XCONST hs_symbolic &T,
   dvar_hs_smatrix &LL, dcompressed_triplet & sparse_triplet2)
  //laplace_approximation_calculator * lapprox)
 {
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+  gradient_structure* gs = gradient_structure::_instance;
+  DF_FILE* fp = gradient_structure::fp;
   gs->RETURN_ARRAYS_INCREMENT(); //Need this statement because the function
   //ADUNCONST(hs_symbolic,S)
   //ADUNCONST(dvar_hs_smatrix,L)
@@ -3171,8 +3171,7 @@ int varchol(XCONST dvar_hs_smatrix &AA, XCONST hs_symbolic &T,
 
 static void dfcholeski_sparse(void)
 {
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+  DF_FILE* fp = gradient_structure::fp;
 
   verify_identifier_string("dg");
   dcompressed_triplet * sparse_triplet2  =
@@ -3552,8 +3551,7 @@ void dvar_hs_smatrix::set_symbolic(hs_symbolic& s)
 
 void report_dvar_vector_derivatives(void)
 {
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+  DF_FILE* fp = gradient_structure::fp;
 
   verify_identifier_string("jr");
   /*dvar_vector_position dpos=*/fp->restore_dvar_vector_position();
@@ -3564,8 +3562,8 @@ void report_dvar_vector_derivatives(void)
 
 void report_derivatives(const dvar_vector& x)
 {
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+  gradient_structure* gs = gradient_structure::_instance;
+  DF_FILE* fp = gradient_structure::fp;
 
   save_identifier_string("jx");
   fp->save_dvar_vector_position(x);

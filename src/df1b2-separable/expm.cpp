@@ -33,7 +33,7 @@ df1b2matrix solve(const df1b2matrix& aa,const df1b2matrix& tz)
 df1b2matrix solve(const df1b2matrix& aa,const df1b2matrix& tz,
   df1b2variable ln_unsigned_det,df1b2variable& sign)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
 
   int n = aa.colsize();
@@ -214,7 +214,7 @@ The main use of the matrix exponential is to solve linear ordinary differential 
   */
 df1b2matrix expm(const df1b2matrix & A)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
 
   int rmin = A.rowmin();

@@ -76,7 +76,7 @@
 #endif
 void gradcalc(int nvar, const dvector& g)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   if (!gs)
   {
     cerr << "Error: No instance of gradient data structure.\n";

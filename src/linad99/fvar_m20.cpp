@@ -158,8 +158,8 @@ dvariable det(const dvar_matrix& aa)
   }
   double det=part_prod(ub);
   dvariable rdet=nograd_assign(det);
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+  gradient_structure* gs = gradient_structure::_instance;
+  DF_FILE* fp = gradient_structure::fp;
   save_identifier_string("PLACE7");
   fp->save_dvector_value(part_prod);
   fp->save_dvector_position(part_prod);
@@ -183,7 +183,7 @@ dvariable det(const dvar_matrix& aa)
 /** Adjoint code for dvariable det(const dvar_matrix& aa) */
 void df_xdet(void)
 {
-  DF_FILE* fp = gradient_structure::get_fp();
+  DF_FILE* fp = gradient_structure::fp;
 
   verify_identifier_string("PLACE0");
   double d=fp->restore_double_value();

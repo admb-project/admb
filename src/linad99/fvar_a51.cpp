@@ -33,14 +33,12 @@ dvar_vector mfexp(const dvar_vector& v1, const double d)
     }
   }
 
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
-
+  DF_FILE* fp = gradient_structure::fp;
   save_identifier_string("ddd");
   fp->save_dvar_vector_position(v1);
   fp->save_dvar_vector_value(vtmp);
   fp->save_dvar_vector_position(vtmp);
   save_identifier_string("hee");
-  gs->GRAD_STACK1->set_gradient_stack(DF_dvexp);
+  gradient_structure::GRAD_STACK1->set_gradient_stack(DF_dvexp);
   return vtmp;
 }

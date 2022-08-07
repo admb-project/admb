@@ -18,8 +18,8 @@ Divides each element of t1 by x, then return result in dvar_vector.
 */
 dvar_vector operator/(const dvar_vector& t1, const double x)
   {
-    gradient_structure* gs = gradient_structure::get();
-    DF_FILE* fp = gs->fp;
+    gradient_structure* gs = gradient_structure::_instance;
+    DF_FILE* fp = gradient_structure::fp;
     gs->RETURN_ARRAYS_INCREMENT();
     dvar_vector tmp(t1.indexmin(),t1.indexmax());
     save_identifier_string("ccxb");
@@ -42,7 +42,7 @@ Adjoint function for dvar_vector operator/(const dvar_vector&, const double)
 */
  void DF_dv_cdble_div(void)
  {
-    DF_FILE* fp = gradient_structure::get_fp();
+    DF_FILE* fp = gradient_structure::fp;
 
     verify_identifier_string("ddba");
     dvar_vector_position t1_pos=fp->restore_dvar_vector_position();

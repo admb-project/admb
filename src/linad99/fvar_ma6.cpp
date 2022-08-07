@@ -51,8 +51,8 @@ dvar_matrix empirical_covariance(const dvar_matrix& _v1,
      }
    }
 
-  grad_stack* GRAD_STACK1 = gradient_structure::get_GRAD_STACK1();
-  DF_FILE* fp = gradient_structure::get_fp();
+  grad_stack* GRAD_STACK1 = gradient_structure::GRAD_STACK1;
+  DF_FILE* fp = gradient_structure::fp;
 
   save_identifier_string("ru");
   fp->save_imatrix_value(missflags);
@@ -72,7 +72,7 @@ dvar_matrix empirical_covariance(const dvar_matrix& _v1,
  */
 void dfempirical_covarv_partial(void)
 {
-  DF_FILE* fp = gradient_structure::get_fp();
+  DF_FILE* fp = gradient_structure::fp;
 
   verify_identifier_string("rv");
   dvar_matrix_position v1pos=fp->restore_dvar_matrix_position();
@@ -153,8 +153,8 @@ dvar_matrix empirical_covariance(const dvar_matrix& v1)
      }
    }
 
-  grad_stack* GRAD_STACK1 = gradient_structure::get_GRAD_STACK1();
-  DF_FILE* fp = gradient_structure::get_fp();
+  grad_stack* GRAD_STACK1 = gradient_structure::GRAD_STACK1;
+  DF_FILE* fp = gradient_structure::fp;
 
   save_identifier_string("ru");
   fp->save_dvar_matrix_position(tmp);
@@ -172,7 +172,7 @@ dvar_matrix empirical_covariance(const dvar_matrix& v1)
  */
 void dfempirical_covarv(void)
 {
-  DF_FILE* fp = gradient_structure::get_fp();
+  DF_FILE* fp = gradient_structure::fp;
 
   verify_identifier_string("rv");
   dvar_matrix_position v1pos=fp->restore_dvar_matrix_position();
@@ -243,8 +243,8 @@ dvar_matrix outer_prod(const dvar_vector& v1, const dvar_vector& v2)
     ++pv1i;
   }
 
-  grad_stack* GRAD_STACK1 = gradient_structure::get_GRAD_STACK1();
-  DF_FILE* fp = gradient_structure::get_fp();
+  grad_stack* GRAD_STACK1 = gradient_structure::GRAD_STACK1;
+  DF_FILE* fp = gradient_structure::fp;
 
   save_identifier_string("tu");
   fp->save_dvar_matrix_position(tmp);
@@ -264,7 +264,7 @@ dvar_matrix outer_prod(const dvar_vector& v1, const dvar_vector& v2)
  */
 void dfouter_prodvv(void)
 {
-  DF_FILE* fp = gradient_structure::get_fp();
+  DF_FILE* fp = gradient_structure::fp;
 
   verify_identifier_string("tv");
   dvar_vector_position v2pos=fp->restore_dvar_vector_position();
@@ -318,7 +318,7 @@ Compute the outer product of v1 and v2 vectors into dvar_matrix.
 */
 dvar_matrix outer_prod(const dvector& v1, const dvar_vector& v2)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
 
   int imin = v1.indexmin();
@@ -350,7 +350,7 @@ Compute the outer product of v1 and v2 vectors into dvar_matrix.
 */
 dvar_matrix outer_prod(const dvar_vector& v1, const dvector& v2)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
 
   int imin = v1.indexmin();

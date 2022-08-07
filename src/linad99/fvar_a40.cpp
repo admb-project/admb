@@ -18,8 +18,7 @@ void DF_cdble_dv_diff(void);
  */
 dvar_vector operator-(const double x, const dvar_vector& t1)
 {
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
 
   int min = t1.indexmin();
@@ -34,6 +33,7 @@ dvar_vector operator-(const double x, const dvar_vector& t1)
     ++ptmpi;
     ++pt1i;
   }
+  DF_FILE* fp = gradient_structure::fp;
   fp->save_dvar_vector_position(tmp);
   fp->save_dvar_vector_position(t1);
   //save_identifier_string("druu");
@@ -48,7 +48,7 @@ dvar_vector operator-(const double x, const dvar_vector& t1)
  */
 void DF_cdble_dv_diff(void)
 {
-  DF_FILE* fp = gradient_structure::get_fp();
+  DF_FILE* fp = gradient_structure::fp;
 
   //verify_identifier_string("druu");
   dvar_vector_position t1_pos=fp->restore_dvar_vector_position();
@@ -81,8 +81,7 @@ void DF_dv_minus(void);
  */
 dvar_vector operator-(const dvar_vector& t1)
 {
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
 
   int min = t1.indexmin();
@@ -98,11 +97,12 @@ dvar_vector operator-(const dvar_vector& t1)
     ++ptmpi;
     ++pt1i;
   }
+  DF_FILE* fp = gradient_structure::fp;
   fp->save_dvar_vector_position(tmp);
   fp->save_dvar_vector_position(t1);
   //save_identifier_string("tduu");
   gs->RETURN_ARRAYS_DECREMENT();
-  gs->GRAD_STACK1->set_gradient_stack(DF_dv_minus);
+  gradient_structure::GRAD_STACK1->set_gradient_stack(DF_dv_minus);
   return(tmp);
 }
 
@@ -112,7 +112,7 @@ dvar_vector operator-(const dvar_vector& t1)
  */
 void DF_dv_minus(void)
 {
-  DF_FILE* fp = gradient_structure::get_fp();
+  DF_FILE* fp = gradient_structure::fp;
 
   //verify_identifier_string("tduu");
   dvar_vector_position t1_pos=fp->restore_dvar_vector_position();

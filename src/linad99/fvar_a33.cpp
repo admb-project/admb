@@ -18,8 +18,8 @@
  */
 dvar_vector operator/(const dvar_vector& t1, const prevariable& x)
   {
-    gradient_structure* gs = gradient_structure::get();
-    DF_FILE* fp = gs->fp;
+    gradient_structure* gs = gradient_structure::_instance;
+    DF_FILE* fp = gradient_structure::fp;
     gs->RETURN_ARRAYS_INCREMENT();
     dvar_vector tmp(t1.indexmin(),t1.indexmax());
     save_identifier_string("ccbb");
@@ -52,7 +52,7 @@ dvar_vector operator/(const dvar_vector& t1, const prevariable& x)
  */
  void DF_dv_dble_div(void)
  {
-    DF_FILE* fp = gradient_structure::get_fp();
+    DF_FILE* fp = gradient_structure::fp;
 
     verify_identifier_string("ddaa");
     dvar_vector_position t1_pos=fp->restore_dvar_vector_position();

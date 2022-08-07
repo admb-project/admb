@@ -190,8 +190,8 @@ dvar_matrix inv(const dvar_matrix& aa)
     }
   }
 
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+  gradient_structure* gs = gradient_structure::_instance;
+  DF_FILE* fp = gradient_structure::fp;
 
   dvector y(lb,ub);
   dvector x(lb,ub);
@@ -286,7 +286,7 @@ dvar_matrix inv(const dvar_matrix& aa)
 */
 void dfinvpret(void)
 {
-  DF_FILE* fp = gradient_structure::get_fp();
+  DF_FILE* fp = gradient_structure::fp;
 
   verify_identifier_string("P1");
   dmatrix_position bpos=fp->restore_dmatrix_position();

@@ -16,7 +16,7 @@
  */
 dvar_matrix operator*(const prevariable& x, const dmatrix& m)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
 
   int rmin=m.rowmin();
@@ -60,7 +60,7 @@ dvar_matrix operator*(const prevariable& x, const dmatrix& m)
  */
 dvar_matrix operator*(const dvar_matrix& m, const double x)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
 
   int rmin=m.rowmin();
@@ -103,7 +103,7 @@ dvar_matrix operator*(const dvar_matrix& m, const double x)
  */
 dvar_matrix operator*(const double x, const dvar_matrix& m)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
   int rmin=m.rowmin();
   int rmax=m.rowmax();

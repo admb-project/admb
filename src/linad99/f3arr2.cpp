@@ -16,7 +16,7 @@
  */
 dvariable norm(const dvar3_array& m)
     {
-      gradient_structure* gs = gradient_structure::get();
+      gradient_structure* gs = gradient_structure::_instance;
       gs->RETURN_ARRAYS_INCREMENT();
       dvariable tmp=0.0;
       for (int k=m.slicemin();k<=m.slicemax();k++)
@@ -34,7 +34,7 @@ dvariable norm(const dvar3_array& m)
  */
 dvariable norm2(const dvar3_array& m)
     {
-      gradient_structure* gs = gradient_structure::get();
+      gradient_structure* gs = gradient_structure::_instance;
       gs->RETURN_ARRAYS_INCREMENT();
       dvariable tmp=0.0;
       for (int k=m.slicemin();k<=m.slicemax();k++)
@@ -53,7 +53,7 @@ Computes exp of each element in m to a dvar3_array.
 */
 dvar3_array exp(const dvar3_array& m)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
   dvar3_array tmp;
   tmp.allocate(m);
@@ -71,7 +71,7 @@ Computes log of each element in m to a dvar3_array.
 */
 dvar3_array log(const dvar3_array& m)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
   dvar3_array tmp;
   tmp.allocate(m);
@@ -89,7 +89,7 @@ Computes sin of each element in m to a dvar3_array.
 */
 dvar3_array sin(const dvar3_array& m)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
   dvar3_array tmp;
   tmp.allocate(m);
@@ -107,7 +107,7 @@ Computes cos of each element in m to a dvar3_array.
 */
 dvar3_array cos(const dvar3_array& m)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
   dvar3_array tmp;
   tmp.allocate(m);
@@ -125,7 +125,7 @@ Computes square root of each element in m to a dvar3_array.
 */
 dvar3_array sqrt(const dvar3_array& m)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
   dvar3_array tmp;
   tmp.allocate(m);
@@ -143,7 +143,7 @@ Computes square of each element in m to a dvar3_array.
  */
 dvar3_array sqr(const dvar3_array& m)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
   dvar3_array tmp;
   tmp.allocate(m);
@@ -161,7 +161,7 @@ dvar3_array sqr(const dvar3_array& m)
  */
 dvar3_array tan(const dvar3_array& m)
    {
-     gradient_structure* gs = gradient_structure::get();
+     gradient_structure* gs = gradient_structure::_instance;
      gs->RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
      tmp.allocate(m);
@@ -179,7 +179,7 @@ dvar3_array tan(const dvar3_array& m)
  */
 dvar3_array elem_prod(const dvar3_array& m1, const dvar3_array& m2)
    {
-     gradient_structure* gs = gradient_structure::get();
+     gradient_structure* gs = gradient_structure::_instance;
      gs->RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
      tmp.allocate(m1);
@@ -197,7 +197,7 @@ dvar3_array elem_prod(const dvar3_array& m1, const dvar3_array& m2)
  */
 dvar3_array elem_div(const dvar3_array& m1, const dvar3_array& m2)
    {
-     gradient_structure* gs = gradient_structure::get();
+     gradient_structure* gs = gradient_structure::_instance;
      gs->RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
      tmp.allocate(m1);
@@ -215,7 +215,7 @@ dvar3_array elem_div(const dvar3_array& m1, const dvar3_array& m2)
  */
 dvar3_array operator+(const dvar3_array& m1,const dvar3_array& m2)
    {
-     gradient_structure* gs = gradient_structure::get();
+     gradient_structure* gs = gradient_structure::_instance;
      gs->RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
      tmp.allocate(m1);
@@ -233,7 +233,7 @@ dvar3_array operator+(const dvar3_array& m1,const dvar3_array& m2)
  */
 dvar3_array operator-(const dvar3_array& m1, const dvar3_array& m2)
    {
-     gradient_structure* gs = gradient_structure::get();
+     gradient_structure* gs = gradient_structure::_instance;
      gs->RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
      tmp.allocate(m1);
@@ -251,7 +251,7 @@ dvar3_array operator-(const dvar3_array& m1, const dvar3_array& m2)
  */
 dvar3_array elem_prod(const d3_array& m1, const dvar3_array& m2)
    {
-     gradient_structure* gs = gradient_structure::get();
+     gradient_structure* gs = gradient_structure::_instance;
      gs->RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
      tmp.allocate(m1);
@@ -269,7 +269,7 @@ dvar3_array elem_prod(const d3_array& m1, const dvar3_array& m2)
  */
 dvar3_array elem_div(const d3_array& m1, const dvar3_array& m2)
    {
-     gradient_structure* gs = gradient_structure::get();
+     gradient_structure* gs = gradient_structure::_instance;
      gs->RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
      tmp.allocate(m1);
@@ -287,7 +287,7 @@ dvar3_array elem_div(const d3_array& m1, const dvar3_array& m2)
  */
 dvar3_array operator+(const d3_array& m1, const dvar3_array& m2)
    {
-     gradient_structure* gs = gradient_structure::get();
+     gradient_structure* gs = gradient_structure::_instance;
      gs->RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
      tmp.allocate(m1);
@@ -305,7 +305,7 @@ dvar3_array operator+(const d3_array& m1, const dvar3_array& m2)
  */
 dvar3_array operator-(const d3_array& m1, const dvar3_array& m2)
    {
-     gradient_structure* gs = gradient_structure::get();
+     gradient_structure* gs = gradient_structure::_instance;
      gs->RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
      tmp.allocate(m1);

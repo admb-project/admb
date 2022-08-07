@@ -18,8 +18,8 @@ dvar_vector& dvar_vector::operator-=(const prevariable& d)
 {
   dvar_vector::operator-=(value(d));
 
-  grad_stack* GRAD_STACK1 = gradient_structure::get_GRAD_STACK1();
-  DF_FILE* fp = gradient_structure::get_fp();
+  grad_stack* GRAD_STACK1 = gradient_structure::GRAD_STACK1;
+  DF_FILE* fp = gradient_structure::fp;
   save_identifier_string("Pvv");
   fp->save_dvar_vector_position(*this);  // for this->
   fp->save_prevariable_position(d);
@@ -33,7 +33,7 @@ Adjoint function to compute gradients for dvar_vector::operator-=(const prevaria
 */
 void dv_xminuseq(void)
 {
-  DF_FILE* fp = gradient_structure::get_fp();
+  DF_FILE* fp = gradient_structure::fp;
 
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("Pxx");
@@ -56,8 +56,8 @@ dvar_vector& dvar_vector::operator+=(const prevariable& d)
 {
   dvar_vector::operator+=(value(d));
 
-  grad_stack* GRAD_STACK1 = gradient_structure::get_GRAD_STACK1();
-  DF_FILE* fp = gradient_structure::get_fp();
+  grad_stack* GRAD_STACK1 = gradient_structure::GRAD_STACK1;
+  DF_FILE* fp = gradient_structure::fp;
   save_identifier_string("Qvv");
   fp->save_dvar_vector_position(*this);  // for this->
   fp->save_prevariable_position(d);
@@ -71,7 +71,7 @@ Adjoint function to compute gradients for dvar_vector::operator+=(const prevaria
 */
 void dv_xpluseq(void)
 {
-  DF_FILE* fp = gradient_structure::get_fp();
+  DF_FILE* fp = gradient_structure::fp;
 
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("Qxx");

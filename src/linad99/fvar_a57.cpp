@@ -18,9 +18,7 @@
  */
   dvar_vector dvar_vector::operator- (void)
   {
-    gradient_structure* gs = gradient_structure::get();
-    DF_FILE* fp = gs->fp;
-
+    gradient_structure* gs = gradient_structure::_instance;
     gs->RETURN_ARRAYS_INCREMENT();
 
     int mmin=indexmin();
@@ -31,10 +29,11 @@
     {
       tmp.elem_value(i)=-elem_value(i);
     }
+    DF_FILE* fp = gradient_structure::fp;
     fp->save_dvar_vector_position(tmp);
     fp->save_dvar_vector_position(*this);
     save_identifier_string("d");
-    gs->GRAD_STACK1->set_gradient_stack(DF_unary_diff);
+    gradient_structure::GRAD_STACK1->set_gradient_stack(DF_unary_diff);
     gs->RETURN_ARRAYS_DECREMENT();
     return(tmp);
   }
@@ -45,7 +44,7 @@
  */
  void DF_unary_diff(void)
  {
-    DF_FILE* fp = gradient_structure::get_fp();
+    DF_FILE* fp = gradient_structure::fp;
 
     verify_identifier_string("d");
     dvar_vector_position t1_pos=fp->restore_dvar_vector_position();

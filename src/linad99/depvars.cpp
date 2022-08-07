@@ -24,7 +24,7 @@ prevariable& operator<<(const prevariable& _v1, const prevariable& v2)
   {
     ADUNCONST(prevariable,v1)
     v1=v2;
-    gradient_structure::get()->save_dependent_variable_position(v1);
+    gradient_structure::_instance->save_dependent_variable_position(v1);
     return (prevariable&)v1;
   }
 
@@ -34,7 +34,7 @@ prevariable& operator<<(const prevariable& _v1, const prevariable& v2)
  */
 dvar_vector& operator<<(const dvar_vector& v1, const dvar_vector& v2)
   {
-    gradient_structure* gs = gradient_structure::get();
+    gradient_structure* gs = gradient_structure::_instance;
     gs->RETURN_ARRAYS_INCREMENT();
 
     int mmin=v1.indexmin();
@@ -60,7 +60,7 @@ dvar_vector& operator<<(const dvar_vector& v1, const dvar_vector& v2)
  */
 dvar_matrix& operator<<(const dvar_matrix& v1, const dvar_matrix& v2)
   {
-    gradient_structure* gs = gradient_structure::get();
+    gradient_structure* gs = gradient_structure::_instance;
     gs->RETURN_ARRAYS_INCREMENT();
 
     int mmin=v1.rowmin();

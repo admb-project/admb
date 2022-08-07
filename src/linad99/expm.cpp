@@ -139,7 +139,7 @@ equation (ODE) systems:
   */
 dvar_matrix expm(const dvar_matrix& A)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
 
   int rmin = A.rowmin();
@@ -200,7 +200,7 @@ dvar_matrix expm(const dvar_matrix& A)
 dvar_matrix solve(const dvar_matrix& aa,const dvar_matrix& tz,
   dvariable ln_unsigned_det, dvariable& sign)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
 
 #if !defined(OPT_LIB) && (__cplusplus >= 201103L)

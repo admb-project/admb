@@ -109,7 +109,7 @@ void gradient_structure::create(const unsigned int size)
   {
     gradients_size = size;
     gradients = new gradient_structure*[gradients_size];
-    gradients[0] = gradient_structure::get();
+    gradients[0] = gradient_structure::_instance;
     for (unsigned int id = 1; id < gradients_size; ++id)
     {
       gradients[id] = new gradient_structure(10000L, id);
@@ -195,7 +195,7 @@ void cleanup_temporary_files()
   void cleanup_xpools();
   cleanup_xpools();
 #endif
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   if (gs)
   {
     delete gs;
@@ -253,8 +253,9 @@ void allocate_dvariable_space()
     tmp1+=2*sizeof(double);
     dl->prev=NULL;
     dlink * prev=dl;
-    int& nlinks=(int&)gradient_structure::get()->GRAD_LIST->nlinks;
-    gradient_structure::get()->GRAD_LIST->dlink_addresses[nlinks++]=dl;
+    dlist* GRAD_LIST = gradient_structure::_instance->GRAD_LIST;
+    int& nlinks=(int&)GRAD_LIST->nlinks;
+    GRAD_LIST->dlink_addresses[nlinks++]=dl;
     for (unsigned int i=1;i<=numlinks;i++)
     {
       dl=(dlink*)tmp1;
@@ -262,10 +263,10 @@ void allocate_dvariable_space()
       prev=dl;
       tmp1+=2*sizeof(double);
 
-      gradient_structure::get()->GRAD_LIST->dlink_addresses[nlinks++]=dl;
+      GRAD_LIST->dlink_addresses[nlinks++]=dl;
       // keep track of the links so you can zero them out
     }
-    gradient_structure::get()->GRAD_LIST->last=dl;
+    GRAD_LIST->last=dl;
   }
 }
 
@@ -472,7 +473,7 @@ Calls must balance calls to void RETURN_ARRAYS_DECREMENT(void).
 */
 void RETURN_ARRAYS_INCREMENT()
 {
-  gradient_structure::get()->RETURN_ARRAYS_INCREMENT();
+  gradient_structure::_instance->RETURN_ARRAYS_INCREMENT();
 }
 void gradient_structure::RETURN_ARRAYS_INCREMENT(void)
 {
@@ -505,7 +506,7 @@ Calls must balance calls to void RETURN_ARRAYS_INCREMENT(void).
 */
 void RETURN_ARRAYS_DECREMENT()
 {
-  gradient_structure::get()->RETURN_ARRAYS_DECREMENT();
+  gradient_structure::_instance->RETURN_ARRAYS_DECREMENT();
 }
 void gradient_structure::RETURN_ARRAYS_DECREMENT()
 {

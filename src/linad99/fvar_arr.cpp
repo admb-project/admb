@@ -158,7 +158,7 @@ dvar_vector::dvar_vector()
  */
 void make_indvar_list(const dvar_vector& t)
 {
-  gradient_structure::get()->make_indvar_list(t);
+  gradient_structure::_instance->make_indvar_list(t);
 }
 void gradient_structure::make_indvar_list(const dvar_vector& t)
 {
@@ -287,7 +287,7 @@ void dvar_vector::allocate(int ncl, int nch)
          ad_exit(1);
     }
 #endif
-    gradient_structure* gs = gradient_structure::get();
+    gradient_structure* gs = gradient_structure::_instance;
     if (!gs)
     {
       cerr << "Error: instance of gradient_structure is a nullptr.\n";

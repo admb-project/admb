@@ -58,9 +58,8 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
 {
   prevariable& sign=(prevariable&) _sign;
 
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
-
+  gradient_structure* gs = gradient_structure::_instance;
+  DF_FILE* fp = gradient_structure::fp;
   gs->RETURN_ARRAYS_INCREMENT();
 
 #if !defined(OPT_LIB) && (__cplusplus >= 201103L)
@@ -339,7 +338,7 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
 /// dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
 void dmdv_solve(void)
 {
-  DF_FILE* fp = gradient_structure::get_fp();
+  DF_FILE* fp = gradient_structure::fp;
 
   verify_identifier_string("PLACE0");
   dvar_vector_position zpos=fp->restore_dvar_vector_position();

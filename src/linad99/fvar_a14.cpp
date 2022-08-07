@@ -37,7 +37,7 @@
 */
 dvariable operator*(const dvar_vector& v1, const dvar_vector& v2)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
 
   int min=v1.indexmin();
@@ -62,8 +62,8 @@ dvariable operator*(const dvar_vector& v1, const dvar_vector& v2)
 
   dvariable vtmp=nograd_assign(tmp);
 
-  grad_stack* GRAD_STACK1 = gradient_structure::get_GRAD_STACK1();
-  DF_FILE* fp = gradient_structure::get_fp();
+  grad_stack* GRAD_STACK1 = gradient_structure::GRAD_STACK1;
+  DF_FILE* fp = gradient_structure::fp;
   // The derivative list considerations
   //save_identifier_string("bbbb");
   fp->save_dvar_vector_value(v1);
@@ -83,7 +83,7 @@ dvariable operator*(const dvar_vector& v1, const dvar_vector& v2)
  */
 void dvdv_dot(void)
 {
-  DF_FILE* fp = gradient_structure::get_fp();
+  DF_FILE* fp = gradient_structure::fp;
 
   //verify_identifier_string("aaaa");
   double dftmp=fp->restore_prevariable_derivative();
@@ -147,8 +147,8 @@ dvariable sum(const dvar_vector& v1)
 
     vtmp = nograd_assign(tmp);
 
-    grad_stack* GRAD_STACK1 = gradient_structure::get_GRAD_STACK1();
-    DF_FILE* fp = gradient_structure::get_fp();
+    grad_stack* GRAD_STACK1 = gradient_structure::GRAD_STACK1;
+    DF_FILE* fp = gradient_structure::fp;
     // The derivative list considerations
     save_identifier_string("bbbb");
     fp->save_dvar_vector_position(v1);
@@ -165,7 +165,7 @@ dvariable sum(const dvar_vector& v1)
  */
 void X_dv_sum(void)
 {
-  DF_FILE* fp = gradient_structure::get_fp();
+  DF_FILE* fp = gradient_structure::fp;
 
   verify_identifier_string("aaaa");
   double dftmp=fp->restore_prevariable_derivative();
@@ -193,7 +193,7 @@ void X_dv_sum(void)
 
 dvariable sum(const dvar_matrix& m)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
 
   int min = m.rowmin();

@@ -18,8 +18,8 @@
  */
 dvar_vector operator/(const double x, const dvar_vector& t1)
   {
-    gradient_structure* gs = gradient_structure::get();
-    DF_FILE* fp = gs->fp;
+    gradient_structure* gs = gradient_structure::_instance;
+    DF_FILE* fp = gradient_structure::fp;
     gs->RETURN_ARRAYS_INCREMENT();
 
     dvar_vector tmp(t1.indexmin(),t1.indexmax());
@@ -34,7 +34,7 @@ dvar_vector operator/(const double x, const dvar_vector& t1)
     fp->save_dvar_vector_position(t1);
     save_identifier_string("dffa");
     gs->RETURN_ARRAYS_DECREMENT();
-    gs->GRAD_STACK1->set_gradient_stack(DF_cdble_dv_div);
+    gradient_structure::GRAD_STACK1->set_gradient_stack(DF_cdble_dv_div);
     return(tmp);
   }
 
@@ -44,7 +44,7 @@ dvar_vector operator/(const double x, const dvar_vector& t1)
  */
  void DF_cdble_dv_div(void)
  {
-    DF_FILE* fp = gradient_structure::get_fp();
+    DF_FILE* fp = gradient_structure::fp;
 
     verify_identifier_string("dffa");
     dvar_vector_position t1_pos=fp->restore_dvar_vector_position();

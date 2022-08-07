@@ -163,7 +163,7 @@ dvar_vector::dvar_vector(const char * s)
 #ifndef OPT_LIB
   assert(size() > 0);
 #endif
-   gradient_structure* gs = gradient_structure::get();
+   gradient_structure* gs = gradient_structure::_instance;
    if (!gs)
    {
      cerr << "Error: instance of gradient_structure is a nullptr.\n";

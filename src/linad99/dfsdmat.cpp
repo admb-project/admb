@@ -144,7 +144,7 @@ void dfsdmat::allocate(int _n)
   n=_n;
   if (gradient_structure::get_USE_FOR_HESSIAN())
   {
-    ptr = gradient_structure::get()->hessian_ptr;
+    ptr = gradient_structure::_instance->hessian_ptr;
     shared_memory=1;
     disk_save_flag=1;
   }

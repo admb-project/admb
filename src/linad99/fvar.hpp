@@ -974,7 +974,7 @@ public:
   ~grad_stack();
 
   void write_grad_stack_buffer()
-    { write_grad_stack_buffer(gradient_structure::get()); }
+    { write_grad_stack_buffer(gradient_structure::_instance); }
   void write_grad_stack_buffer(gradient_structure*);
 
    void set_gradient_stack(void (*func) (void),

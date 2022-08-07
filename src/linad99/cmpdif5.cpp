@@ -21,7 +21,7 @@
  */
 void dmatrix::save_dmatrix_value() const
 {
-  gradient_structure::get_fp()->save_dmatrix_value(*this);
+  gradient_structure::fp->save_dmatrix_value(*this);
 }
 void DF_FILE::save_dmatrix_value(const dmatrix& m)
 {
@@ -45,7 +45,7 @@ void DF_FILE::save_dmatrix_value(const dmatrix& m)
  */
 void d3_array::save_d3_array_value() const
 {
-  gradient_structure::get_fp()->save_d3_array_value(*this);
+  gradient_structure::fp->save_d3_array_value(*this);
 }
 void DF_FILE::save_d3_array_value(const d3_array& a)
 {
@@ -69,7 +69,7 @@ void DF_FILE::save_d3_array_value(const d3_array& a)
  */
 dmatrix restore_dvar_matrix_value(const dvar_matrix_position& mpos)
 {
-  return gradient_structure::get_fp()->restore_dvar_matrix_value(mpos);
+  return gradient_structure::fp->restore_dvar_matrix_value(mpos);
 }
 dmatrix DF_FILE::restore_dvar_matrix_value(const dvar_matrix_position& mpos)
 {
@@ -95,7 +95,7 @@ dmatrix DF_FILE::restore_dvar_matrix_value(const dvar_matrix_position& mpos)
  */
 dmatrix restore_dmatrix_value(const dmatrix_position& mpos)
 {
-  return gradient_structure::get_fp()->restore_dmatrix_value(mpos);
+  return gradient_structure::fp->restore_dmatrix_value(mpos);
 }
 dmatrix DF_FILE::restore_dmatrix_value(const dmatrix_position& mpos)
 {
@@ -122,7 +122,7 @@ dmatrix DF_FILE::restore_dmatrix_value(const dmatrix_position& mpos)
  */
 d3_array restore_d3_array_value(const d3_array_position& mpos)
 {
-  return gradient_structure::get_fp()->restore_d3_array_value(mpos);
+  return gradient_structure::fp->restore_d3_array_value(mpos);
 }
 d3_array DF_FILE::restore_d3_array_value(const d3_array_position& mpos)
 {
@@ -340,7 +340,7 @@ void dmatrix::save_dmatrix_derivatives_na(const dvar_matrix_position& _pos)
  */
 void dvar_matrix::save_dvar_matrix_position() const
 {
-  gradient_structure::get_fp()->save_dvar_matrix_position(*this);
+  gradient_structure::fp->save_dvar_matrix_position(*this);
 }
 void DF_FILE::save_dvar_matrix_position(const dvar_matrix& m)
 {

@@ -69,8 +69,8 @@ dvariable operator*(const dvar_vector& v2, const dvector& cv1)
 
   dvariable vtmp=nograd_assign(tmp);
 
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+  gradient_structure* gs = gradient_structure::_instance;
+  DF_FILE* fp = gradient_structure::fp;
 
   // The derivative list considerations
   save_identifier_string("yyyy");
@@ -89,7 +89,7 @@ dvariable operator*(const dvar_vector& v2, const dvector& cv1)
  */
 void dvcv_dot(void)
 {
-  DF_FILE* fp = gradient_structure::get_fp();
+  DF_FILE* fp = gradient_structure::fp;
 
   verify_identifier_string("uuuu");
   double dftmp=fp->restore_prevariable_derivative();

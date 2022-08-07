@@ -66,7 +66,7 @@ dvar_vector operator*(const dmatrix& m, const dvar_vector& x)
  */
 dvariable norm(const dvar_matrix& m1)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
 
   int min = m1.rowmin();
@@ -97,7 +97,7 @@ dvariable norm(const dvar_matrix& m1)
 
 dvariable norm2(const dvar_matrix& m1)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
 
   int min = m1.rowmin();

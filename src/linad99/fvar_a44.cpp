@@ -37,8 +37,8 @@ dvar_vector square(const dvar_vector& v1)
     ++pvtmp;
   }
 
-  grad_stack* GRAD_STACK1 = gradient_structure::get_GRAD_STACK1();
-  DF_FILE* fp = gradient_structure::get_fp();
+  grad_stack* GRAD_STACK1 = gradient_structure::GRAD_STACK1;
+  DF_FILE* fp = gradient_structure::fp;
   save_identifier_string("sddd");
   fp->save_dvar_vector_value(v1);
   fp->save_dvar_vector_position(v1);
@@ -54,7 +54,7 @@ dvar_vector square(const dvar_vector& v1)
  */
 void DF_dvsquare(void)
 {
-  DF_FILE* fp = gradient_structure::get_fp();
+  DF_FILE* fp = gradient_structure::fp;
 
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("eee");
@@ -104,8 +104,8 @@ dvar_vector cube(const dvar_vector& v1)
     vtmp.elem_value(i)=x*x*x;
   }
 
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+  gradient_structure* gs = gradient_structure::_instance;
+  DF_FILE* fp = gradient_structure::fp;
   save_identifier_string("sssd");
   fp->save_dvar_vector_value(v1);
   fp->save_dvar_vector_position(v1);
@@ -121,7 +121,7 @@ dvar_vector cube(const dvar_vector& v1)
  */
 void DF_dvcube(void)
 {
-  DF_FILE* fp = gradient_structure::get_fp();
+  DF_FILE* fp = gradient_structure::fp;
 
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("tee");
@@ -159,8 +159,8 @@ dvar_vector fourth(const dvar_vector& v1)
     vtmp.elem_value(i)=x2*x2;
   }
 
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+  gradient_structure* gs = gradient_structure::_instance;
+  DF_FILE* fp = gradient_structure::fp;
   save_identifier_string("ssf");
   fp->save_dvar_vector_value(v1);
   fp->save_dvar_vector_position(v1);
@@ -176,7 +176,7 @@ dvar_vector fourth(const dvar_vector& v1)
  */
 void DF_dvfourth(void)
 {
-  DF_FILE* fp = gradient_structure::get_fp();
+  DF_FILE* fp = gradient_structure::fp;
 
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("gee");

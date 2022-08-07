@@ -18,9 +18,8 @@
  */
 dvar_vector operator*(const dvector& t1, const prevariable& x)
 {
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
-
+  gradient_structure* gs = gradient_structure::_instance;
+  DF_FILE* fp = gradient_structure::fp;
   gs->RETURN_ARRAYS_INCREMENT();
 
   int min = t1.indexmin();
@@ -53,9 +52,8 @@ dvar_vector operator*(const dvector& t1, const prevariable& x)
  */
 dvar_vector operator*(const prevariable& x, const dvector& t1)
 {
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
-
+  gradient_structure* gs = gradient_structure::_instance;
+  DF_FILE* fp = gradient_structure::fp;
   gs->RETURN_ARRAYS_INCREMENT();
 
   int min = t1.indexmin();
@@ -78,7 +76,7 @@ dvar_vector operator*(const prevariable& x, const dvector& t1)
   fp->save_dvector_position(t1);
   save_identifier_string("Da");
   gs->RETURN_ARRAYS_DECREMENT();
-  gs->GRAD_STACK1->set_gradient_stack(DF_ccv_dble_prod);
+  gradient_structure::GRAD_STACK1->set_gradient_stack(DF_ccv_dble_prod);
   return tmp;
 }
 
@@ -88,7 +86,7 @@ dvar_vector operator*(const prevariable& x, const dvector& t1)
  */
 void DF_ccv_dble_prod(void)
 {
-  DF_FILE* fp = gradient_structure::get_fp();
+  DF_FILE* fp = gradient_structure::fp;
 
   verify_identifier_string("Da");
   dvector_position t1_pos=fp->restore_dvector_position();

@@ -16,7 +16,7 @@
  */
 dvar_matrix operator-(const dvar_matrix& m1, const dmatrix& m2 )
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
 
 #ifndef OPT_LIB
@@ -56,7 +56,7 @@ dvar_matrix operator-(const dvar_matrix& m1, const dmatrix& m2 )
  */
 dvar_matrix operator-(const dvar_matrix& m1, const dvar_matrix& m2)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
 
 #ifndef OPT_LIB
@@ -96,7 +96,7 @@ dvar_matrix operator-(const dvar_matrix& m1, const dvar_matrix& m2)
  */
 dvar_matrix operator-(const dmatrix& m1, const dvar_matrix& m2)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
 
 #ifndef OPT_LIB

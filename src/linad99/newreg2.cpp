@@ -25,7 +25,7 @@ dvariable robust_regression(const dvector& obs, const dvar_vector& pred,
 
   //Need this statement because the function
   //returns a variable type
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
 
   dvariable v_hat;
@@ -66,7 +66,7 @@ dvariable robust_regression(const dvector& obs, const dvar_vector& pred,
 
   //Need this statement because the function
   //returns a variable type
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
 
   dvariable v_hat;

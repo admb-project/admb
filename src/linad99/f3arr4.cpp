@@ -11,7 +11,7 @@ Copyright (c) 2008-2012 Regents of the University of California
  */
 dvar3_array operator-(const double d, const dvar3_array& m2)
    {
-     gradient_structure* gs = gradient_structure::get();
+     gradient_structure* gs = gradient_structure::_instance;
      gs->RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
      tmp.allocate(m2);

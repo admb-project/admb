@@ -32,7 +32,7 @@ double randn(long int& n);
   void dvar_vector::fill_randu(long int& n)
   {
     long int nn;
-    gradient_structure* gs = gradient_structure::get();
+    gradient_structure* gs = gradient_structure::_instance;
     gs->RETURN_ARRAYS_INCREMENT();
 
     nn=n;
@@ -57,7 +57,7 @@ double randn(long int& n);
       ad_exit(1);
     }
     long int nn;
-    gradient_structure* gs = gradient_structure::get();
+    gradient_structure* gs = gradient_structure::_instance;
     gs->RETURN_ARRAYS_INCREMENT();
     nn=n;
     for (int i=indexmin(); i<=indexmax(); i++)
@@ -82,7 +82,7 @@ double randn(long int& n);
 void dvar_matrix::colfill_randu(const int &j, long int &n)
   {
     long int nn;
-    gradient_structure* gs = gradient_structure::get();
+    gradient_structure* gs = gradient_structure::_instance;
     gs->RETURN_ARRAYS_INCREMENT();
     nn=n;
     for (int i=rowmin(); i<=rowmax(); i++)
@@ -100,7 +100,7 @@ void dvar_matrix::colfill_randu(const int &j, long int &n)
 void dvar_matrix::rowfill_randu(const int& i, long int& n)
   {
     long int nn;
-    gradient_structure* gs = gradient_structure::get();
+    gradient_structure* gs = gradient_structure::_instance;
     gs->RETURN_ARRAYS_INCREMENT();
     nn=n;
     for (int j=colmin(); j<=colmax(); j++)
@@ -118,7 +118,7 @@ void dvar_matrix::rowfill_randu(const int& i, long int& n)
   void dvar_vector::fill_randn(long int& n)
   {
     long int nn;
-    gradient_structure* gs = gradient_structure::get();
+    gradient_structure* gs = gradient_structure::_instance;
     gs->RETURN_ARRAYS_INCREMENT();
     nn=n;
     for (int i=indexmin(); i<=indexmax(); i++)
@@ -136,7 +136,7 @@ void dvar_matrix::rowfill_randu(const int& i, long int& n)
 void dvar_matrix::colfill_randn(const int &j, long int &n)
   {
     long int nn;
-    gradient_structure* gs = gradient_structure::get();
+    gradient_structure* gs = gradient_structure::_instance;
     gs->RETURN_ARRAYS_INCREMENT();
     nn=n;
     for (int i=rowmin(); i<=rowmax(); i++)
@@ -154,7 +154,7 @@ void dvar_matrix::colfill_randn(const int &j, long int &n)
 void dvar_matrix::rowfill_randn(const int& i, long int& n)
   {
     long int nn;
-    gradient_structure* gs = gradient_structure::get();
+    gradient_structure* gs = gradient_structure::_instance;
     gs->RETURN_ARRAYS_INCREMENT();
     nn=n;
     for (int j=colmin(); j<=colmax(); j++)
@@ -172,7 +172,7 @@ void dvar_matrix::rowfill_randn(const int& i, long int& n)
   void dvar_matrix::fill_randn(long int& n)
   {
     long int nn=n;
-    gradient_structure* gs = gradient_structure::get();
+    gradient_structure* gs = gradient_structure::_instance;
     gs->RETURN_ARRAYS_INCREMENT();
     for (int i=rowmin(); i<=rowmax(); i++)
     {
@@ -190,7 +190,7 @@ void dvar_matrix::rowfill_randn(const int& i, long int& n)
   void dvar_matrix::fill_randu(long int& n)
   {
     long int nn=n;
-    gradient_structure* gs = gradient_structure::get();
+    gradient_structure* gs = gradient_structure::_instance;
     gs->RETURN_ARRAYS_INCREMENT();
     for (int i=rowmin(); i<=rowmax(); i++)
     {

@@ -51,7 +51,7 @@
  */
 void jacobcalc(int nvar, const uostream& ofs)
 {
-  gradient_structure::get()->jacobcalc(nvar,ofs);
+  gradient_structure::_instance->jacobcalc(nvar,ofs);
 }
 
 /**

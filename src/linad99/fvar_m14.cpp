@@ -106,8 +106,8 @@
    }
 
    dvar_matrix vtmp=nograd_assign(tmp);
-   gradient_structure* gs = gradient_structure::get();
-   DF_FILE* fp = gs->fp;
+   gradient_structure* gs = gradient_structure::_instance;
+   DF_FILE* fp = gradient_structure::fp;
    save_identifier_string("TEST1");
    fp->save_dvar_matrix_value(m1);
    fp->save_dvar_matrix_position(m1);
@@ -125,7 +125,7 @@
  */
 void dmdm_prod(void)
 {
-  DF_FILE* fp = gradient_structure::get_fp();
+  DF_FILE* fp = gradient_structure::fp;
 
   verify_identifier_string("TEST6");
   dvar_matrix_position vpos=fp->restore_dvar_matrix_position();

@@ -75,7 +75,7 @@ void funnel_derivatives(void);
  */
 void funnel_gradcalc()
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   if (!gs)
   {
     cerr << "Error: No instance of gradient data structure.\n";
@@ -301,8 +301,8 @@ do
  */
 void funnel_derivatives(void)
 {
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+  gradient_structure* gs = gradient_structure::_instance;
+  DF_FILE* fp = gradient_structure::fp;
 
   verify_identifier_string("ae");
   prevariable_position deppos=fp->restore_prevariable_position();
@@ -333,7 +333,7 @@ void funnel_derivatives(void)
   verify_identifier_string("ue");
 
   double df = restore_prevariable_derivative(deppos);
-  double* dptr = (double*)(gradient_structure::get()->ARR_LIST1->ARRAY_MEMBLOCK_BASE);
+  double* dptr = (double*)(gs->ARR_LIST1->ARRAY_MEMBLOCK_BASE);
 
   //double * dd = &(dx(1));
   ii=0;

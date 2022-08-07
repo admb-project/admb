@@ -114,7 +114,7 @@ dvar_vector& dvar3_array::operator () (int k, int i)
  */
 dvariable sum(const dvar3_array& m)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
 
   int min = m.indexmin();

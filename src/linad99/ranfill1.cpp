@@ -32,7 +32,7 @@
  */
 void dvar_vector::fill_seqadd(const double base, const double offset)
   {
-    gradient_structure* gs = gradient_structure::get();
+    gradient_structure* gs = gradient_structure::_instance;
     gs->RETURN_ARRAYS_INCREMENT();
 
     double temp=0;
@@ -75,7 +75,7 @@ void dvar_matrix::colfill_seqadd(const int& j, const double base,
   const double offset)
   {
     double temp=0;
-    gradient_structure* gs = gradient_structure::get();
+    gradient_structure* gs = gradient_structure::_instance;
     gs->RETURN_ARRAYS_INCREMENT();
     for (int i=rowmin(); i<=rowmax(); i++)
     {
@@ -97,7 +97,7 @@ void dvar_matrix::rowfill_seqadd(const int& i, const double base,
   const double offset)
   {
     double temp=0;
-    gradient_structure* gs = gradient_structure::get();
+    gradient_structure* gs = gradient_structure::_instance;
     gs->RETURN_ARRAYS_INCREMENT();
     for (int j=colmin(); j<=colmax(); j++)
     {
@@ -117,7 +117,7 @@ void dvar_matrix::rowfill_seqadd(const int& i, const double base,
  */
 void dvar_matrix::colfill(int j, const dvar_vector& v)
   {
-    gradient_structure* gs = gradient_structure::get();
+    gradient_structure* gs = gradient_structure::_instance;
     gs->RETURN_ARRAYS_INCREMENT();
     for (int i=rowmin(); i<=rowmax(); i++)
     {
@@ -136,7 +136,7 @@ void dvar_matrix::colfill(int j, const dvar_vector& v)
  */
 void dvar_matrix::rowfill(int i, const dvar_vector& v)
   {
-    gradient_structure* gs = gradient_structure::get();
+    gradient_structure* gs = gradient_structure::_instance;
     gs->RETURN_ARRAYS_INCREMENT();
     // for (int j=colmin(); j<=colmax(); j++)
     // {

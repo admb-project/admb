@@ -34,8 +34,8 @@
      va[i].x=t[i];
    }
 
-   grad_stack* GRAD_STACK1 = gradient_structure::get_GRAD_STACK1();
-   DF_FILE* fp = gradient_structure::get_fp();
+   grad_stack* GRAD_STACK1 = gradient_structure::GRAD_STACK1;
+   DF_FILE* fp = gradient_structure::fp;
    save_identifier_string("b");
    fp->save_dvar_vector_position(*this);
    save_identifier_string("a");

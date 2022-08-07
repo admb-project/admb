@@ -15,7 +15,7 @@
 dvariable ghk(const dvar_vector& lower,const dvar_vector& upper,
   const dvar_matrix& Sigma, const dmatrix& eps)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
 
   int n=lower.indexmax();
@@ -58,7 +58,7 @@ dvariable ghk(const dvar_vector& lower,const dvar_vector& upper,
 dvariable ghk_m(const dvar_vector& upper,const dvar_matrix& Sigma,
   const dmatrix& eps)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
   int n=upper.indexmax();
   int m=eps.indexmax();
@@ -95,7 +95,7 @@ dvariable ghk_m(const dvar_vector& upper,const dvar_matrix& Sigma,
 dvariable ghk_choleski(const dvar_vector& lower,const dvar_vector& upper,
   const dvar_matrix& ch, const dmatrix& eps)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
   int n=lower.indexmax();
   int m=eps.indexmax();
@@ -136,7 +136,7 @@ dvariable ghk_choleski(const dvar_vector& lower,const dvar_vector& upper,
 dvariable ghk_choleski_m(const dvar_vector& upper,
   const dvar_matrix& ch, const dmatrix& eps)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
 
   int n=upper.indexmax();
@@ -175,7 +175,7 @@ void ghk_test(const dmatrix& eps,int i);
 dvariable ghk(const dvar_vector& lower,const dvar_vector& upper,
   const dvar_matrix& Sigma, const dmatrix& eps,int _i)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
 
   int n=lower.indexmax();
@@ -217,7 +217,7 @@ dvariable ghk(const dvar_vector& lower,const dvar_vector& upper,
 dvariable ghk_choleski_m_cauchy(const dvar_vector& upper,
   const dvar_matrix& ch, const dmatrix& eps)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
 
   int n=upper.indexmax();
@@ -254,7 +254,7 @@ dvariable ghk_choleski_m_cauchy(const dvar_vector& upper,
 dvariable ghk_choleski_m_logistic(const dvar_vector& upper,
   const dvar_matrix& ch, const dmatrix& eps)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
   int n=upper.indexmax();
   int m=eps.indexmax();

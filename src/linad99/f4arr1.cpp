@@ -100,7 +100,7 @@ dvar4_array log(const dvar4_array& m)
  */
 dvariable sum(const dvar4_array& m)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
 
   int min = m.indexmin();

@@ -69,7 +69,7 @@ dvariable factln(const dvariable& n)
  */
 dvar_vector log_comb(const dvar_vector& n, const dvar_vector& r)
 {
-    gradient_structure* gs = gradient_structure::get();
+    gradient_structure* gs = gradient_structure::_instance;
     gs->RETURN_ARRAYS_INCREMENT();
 
     int mmin=n.indexmin();
@@ -97,7 +97,7 @@ dvar_vector log_comb(const dvar_vector& n, const dvar_vector& r)
  */
 dvar_vector log_comb(const dvector& n, const dvar_vector& r)
 {
-    gradient_structure* gs = gradient_structure::get();
+    gradient_structure* gs = gradient_structure::_instance;
     gs->RETURN_ARRAYS_INCREMENT();
     int mmin=n.indexmin();
     int mmax=n.indexmax();
@@ -124,7 +124,7 @@ dvar_vector log_comb(const dvector& n, const dvar_vector& r)
  */
 dvar_vector log_comb(const dvar_vector& n, const dvector& r)
 {
-    gradient_structure* gs = gradient_structure::get();
+    gradient_structure* gs = gradient_structure::_instance;
     gs->RETURN_ARRAYS_INCREMENT();
     int mmin=n.indexmin();
     int mmax=n.indexmax();
@@ -151,7 +151,7 @@ dvar_vector log_comb(const dvar_vector& n, const dvector& r)
  */
 dvar_vector log_comb(const dvariable& n, const dvector& r)
 {
-    gradient_structure* gs = gradient_structure::get();
+    gradient_structure* gs = gradient_structure::_instance;
     gs->RETURN_ARRAYS_INCREMENT();
     int mmin=r.indexmin();
     int mmax=r.indexmax();
@@ -172,7 +172,7 @@ dvar_vector log_comb(const dvariable& n, const dvector& r)
  */
 dvar_vector log_comb(const dvariable& n, const dvar_vector& r)
 {
-    gradient_structure* gs = gradient_structure::get();
+    gradient_structure* gs = gradient_structure::_instance;
     gs->RETURN_ARRAYS_INCREMENT();
     int mmin=r.indexmin();
     int mmax=r.indexmax();
@@ -192,7 +192,7 @@ dvar_vector log_comb(const dvariable& n, const dvar_vector& r)
  */
 dvar_vector factln(const dvar_vector& r)
 {
-    gradient_structure* gs = gradient_structure::get();
+    gradient_structure* gs = gradient_structure::_instance;
     gs->RETURN_ARRAYS_INCREMENT();
     int mmin=r.indexmin();
     int mmax=r.indexmax();
@@ -213,7 +213,7 @@ dvar_vector factln(const dvar_vector& r)
  */
 dvar_vector log_comb(double n, const dvar_vector& r)
 {
-    gradient_structure* gs = gradient_structure::get();
+    gradient_structure* gs = gradient_structure::_instance;
     gs->RETURN_ARRAYS_INCREMENT();
     int mmin=r.indexmin();
     int mmax=r.indexmax();
@@ -233,7 +233,7 @@ dvar_vector log_comb(double n, const dvar_vector& r)
  */
 dvar_vector gammln(const dvar_vector& v)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
   int mmin=v.indexmin();
   int mmax=v.indexmax();

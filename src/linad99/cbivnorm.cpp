@@ -266,7 +266,7 @@ double cmvbvu_(const double *sh,const  double *sk,
 */
 double cumbvn(const double& x,const double& y,const double& rho)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
 
   double retval;
@@ -289,7 +289,7 @@ double cumbvn(const double& x,const double& y,const double& rho)
 double cumbvn(const double& xl,const double& yl,
   const double& xu,const double& yu,const double& rho)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
   double my=cumbvn(xl,yl,rho);
   my+=cumbvn(xu,yu,rho);
@@ -306,7 +306,7 @@ extern "C" {
 /*       larger than SK. */
 double cmvbvu_(const double *sh,const double *sk,const double *r__)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
     /* Initialized data */
 
@@ -482,7 +482,7 @@ double cmvbvu_(const double *sh,const double *sk,const double *r__)
 
 double cmvphi_(double *z__)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
 
     /* System generated locals */

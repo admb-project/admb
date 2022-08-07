@@ -119,8 +119,8 @@ dvariable ln_det_choleski(const dvar_matrix& MM)
 
   double log_det=2.0*log_det1;
   dvariable vlog_det=nograd_assign(log_det);
-  grad_stack* GRAD_STACK1 = gradient_structure::get_GRAD_STACK1();
-  DF_FILE* fp = gradient_structure::get_fp();
+  grad_stack* GRAD_STACK1 = gradient_structure::GRAD_STACK1;
+  DF_FILE* fp = gradient_structure::fp;
 
   save_identifier_string("ps");
   fp->save_prevariable_position(vlog_det);
@@ -139,7 +139,7 @@ dvariable ln_det_choleski(const dvar_matrix& MM)
  */
 void df_ln_det_choleski(void)
 {
-  DF_FILE* fp = gradient_structure::get_fp();
+  DF_FILE* fp = gradient_structure::fp;
 
   verify_identifier_string("pa");
   dvar_matrix_position MMpos=fp->restore_dvar_matrix_position();
@@ -381,8 +381,8 @@ dvariable ln_det_choleski_error(const dvar_matrix& MM,int & onerror)
  */
   double log_det=2.0*log_det1;
   dvariable vlog_det=nograd_assign(log_det);
-  grad_stack* GRAD_STACK1 = gradient_structure::get_GRAD_STACK1();
-  DF_FILE* fp = gradient_structure::get_fp();
+  grad_stack* GRAD_STACK1 = gradient_structure::GRAD_STACK1;
+  DF_FILE* fp = gradient_structure::fp;
   save_identifier_string("ps");
   fp->save_prevariable_position(vlog_det);
   save_identifier_string("rt");

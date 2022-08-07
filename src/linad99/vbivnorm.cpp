@@ -261,7 +261,7 @@ dvariable mvbvu_(const dvariable *sh,const  dvariable *sk,
 */
 dvariable cumbvn(const dvariable& x,const dvariable& y,const dvariable& rho)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
   dvariable retval;
   dvariable mx=-x;
@@ -283,7 +283,7 @@ dvariable cumbvn(const dvariable& x,const dvariable& y,const dvariable& rho)
 dvariable cumbvn(const dvariable& xl,const dvariable& yl,
   const dvariable& xu,const dvariable& yu,const dvariable& rho)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
   dvariable my=cumbvn(xl,yl,rho);
   my+=cumbvn(xu,yu,rho);
@@ -298,7 +298,7 @@ dvariable mvphi_(dvariable*);
 dvariable mvbvu_(const dvariable *sh,const dvariable *sk,const dvariable *r__)
 {
   //cout << " " << *r__;
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
     //dvariable pr;
     //if (*zz>0)
@@ -503,7 +503,7 @@ int debug_switch=0;
 dvariable mvphi_(dvariable *z__)
 {
   if (debug_switch) cout << "  " << *z__;
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
     /* System generated locals */
     dvariable d__1,ret_val;

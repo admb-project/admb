@@ -52,7 +52,7 @@ prevariable& operator+(const prevariable& v1, const prevariable& v2)
   dvariable* RETURN_PTR = gradient_structure::next_RETURN_PTR();
 
   RETURN_PTR->v->x = (*v1.v).x + (*v2.v).x;
-  gradient_structure::get_GRAD_STACK1()->set_gradient_stack4(default_evaluation4,
+  gradient_structure::GRAD_STACK1->set_gradient_stack4(default_evaluation4,
     &(RETURN_PTR->v->x),&((*v1.v).x), &((*v2.v).x));
 
   return *RETURN_PTR;
@@ -69,7 +69,7 @@ prevariable& operator*(const prevariable& v1, const prevariable& v2)
   double_and_int* di1 = v1.v;
   double_and_int* di2 = v2.v;
   RETURN_PTR->v->x = di1->x * di2->x;
-  gradient_structure::get_GRAD_STACK1()->set_gradient_stack(default_evaluation3,
+  gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation3,
     &(RETURN_PTR->v->x),
     &(di1->x), di2->x, &(di2->x), di1->x);
 

@@ -318,7 +318,7 @@ void check_derivative_values(const char * _s)
  */
 void check_derivative_values(const char * _s,int i)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   DF_FILE* fp = gs->fp;
   char * s = (char *) _s;
   //char label[20];
@@ -347,7 +347,7 @@ void insert_identifier_string(const char * _s)
  */
 void check_derivative_values_break(const char * _s,int i,int b)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   DF_FILE* fp = gs->fp;
   char * s = (char *) _s;
   //char label[20];
@@ -365,9 +365,8 @@ void df_check_derivative_values(void)
 {
   //char label[20];
   adstring str=get_string_marker();
-  double* temp_ptr = (double*)(gradient_structure::get()->ARR_LIST1->ARRAY_MEMBLOCK_BASE);
-  unsigned long int max_last_offset =
-    gradient_structure::get()->ARR_LIST1->get_max_last_offset();
+  double* temp_ptr = (double*)(gradient_structure::_instance->ARR_LIST1->ARRAY_MEMBLOCK_BASE);
+  unsigned long int max_last_offset = gradient_structure::_instance->ARR_LIST1->get_max_last_offset();
   size_t size = sizeof(double_and_int);
 
   int icount=0;
@@ -389,14 +388,14 @@ void df_check_derivative_values(void)
   }
 
   icount=0;
-  for (i=0; i<gradient_structure::get()->GRAD_LIST->nlinks; i++)
+  for (i=0; i<gradient_structure::_instance->GRAD_LIST->nlinks; i++)
   {
-    if (* (double*) (gradient_structure::get()->GRAD_LIST->dlink_addresses[i])
+    if (* (double*) (gradient_structure::_instance->GRAD_LIST->dlink_addresses[i])
       > 1.e+8)
     {
       icount++;
        cout << "dlist " << i << " " << setscientific() <<
-         * (double*) (gradient_structure::get()->GRAD_LIST->dlink_addresses[i])
+         * (double*) (gradient_structure::_instance->GRAD_LIST->dlink_addresses[i])
           << endl;
       if (icount>10)
       {
@@ -427,15 +426,15 @@ void df_print_identifier_string(void)
  */
 void df_check_derivative_values_indexed(void)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   DF_FILE* fp = gs->fp;
 
   //char label[20];
   int index=fp->restore_int_value();
   adstring str=get_string_marker();
-  double* temp_ptr = (double*)(gradient_structure::get()->ARR_LIST1->ARRAY_MEMBLOCK_BASE);
+  double* temp_ptr = (double*)(gradient_structure::_instance->ARR_LIST1->ARRAY_MEMBLOCK_BASE);
   unsigned long int max_last_offset =
-    gradient_structure::get()->ARR_LIST1->get_max_last_offset();
+    gradient_structure::_instance->ARR_LIST1->get_max_last_offset();
   size_t size = sizeof(double_and_int);
 
   int icount=0;
@@ -454,15 +453,15 @@ void df_check_derivative_values_indexed(void)
   }
 
   icount=0;
-  for (i=0; i<gradient_structure::get()->GRAD_LIST->nlinks; i++)
+  for (i=0; i<gradient_structure::_instance->GRAD_LIST->nlinks; i++)
   {
-    if (* (double*) (gradient_structure::get()->GRAD_LIST->dlink_addresses[i])
+    if (* (double*) (gradient_structure::_instance->GRAD_LIST->dlink_addresses[i])
       > 1.e+8)
     {
       icount++;
       if (ad_kill_flag) exit_flag=1;
        cout << "dlist " << i << " " << setscientific() <<
-         * (double*) (gradient_structure::get()->GRAD_LIST->dlink_addresses[i])
+         * (double*) (gradient_structure::_instance->GRAD_LIST->dlink_addresses[i])
           << endl;
       if (icount>10)
       {
@@ -479,16 +478,16 @@ void df_check_derivative_values_indexed(void)
  */
 void df_check_derivative_values_indexed_break(void)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   DF_FILE* fp = gs->fp;
 
   //char label[20];
   int b=fp->restore_int_value();
   int index=fp->restore_int_value();
   adstring str=get_string_marker();
-  double* temp_ptr = (double*)(gradient_structure::get()->ARR_LIST1->ARRAY_MEMBLOCK_BASE);
+  double* temp_ptr = (double*)(gradient_structure::_instance->ARR_LIST1->ARRAY_MEMBLOCK_BASE);
   unsigned long int max_last_offset =
-    gradient_structure::get()->ARR_LIST1->get_max_last_offset();
+    gradient_structure::_instance->ARR_LIST1->get_max_last_offset();
   size_t size = sizeof(double_and_int);
 
   if (index<=b)
@@ -511,15 +510,15 @@ void df_check_derivative_values_indexed_break(void)
   }
 
   icount=0;
-  for (i=0; i<gradient_structure::get()->GRAD_LIST->nlinks; i++)
+  for (i=0; i<gradient_structure::_instance->GRAD_LIST->nlinks; i++)
   {
-    if (* (double*) (gradient_structure::get()->GRAD_LIST->dlink_addresses[i])
+    if (* (double*) (gradient_structure::_instance->GRAD_LIST->dlink_addresses[i])
       > 1.e+8)
     {
       icount++;
       if (ad_kill_flag) exit_flag=1;
        cout << "dlist " << i << " " <<
-         * (double*) (gradient_structure::get()->GRAD_LIST->dlink_addresses[i])
+         * (double*) (gradient_structure::_instance->GRAD_LIST->dlink_addresses[i])
           << endl;
       if (icount>10)
       {

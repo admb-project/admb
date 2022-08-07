@@ -27,7 +27,7 @@
  */
 void dvector::save_dvector_position() const
 {
-  return gradient_structure::get_fp()->save_dvector_position(*this);
+  return gradient_structure::fp->save_dvector_position(*this);
 }
 void DF_FILE::save_dvector_position(const dvector& v)
 {
@@ -44,7 +44,7 @@ void DF_FILE::save_dvector_position(const dvector& v)
  */
 ivector_position restore_ivector_position()
 {
-  return gradient_structure::get_fp()->restore_ivector_position();
+  return gradient_structure::fp->restore_ivector_position();
 }
 ivector_position DF_FILE::restore_ivector_position()
 {
@@ -64,7 +64,7 @@ ivector_position DF_FILE::restore_ivector_position()
  */
 dvar_vector_position restore_dvar_vector_position()
 {
-  return gradient_structure::get_fp()->restore_dvar_vector_position();
+  return gradient_structure::fp->restore_dvar_vector_position();
 }
 dvar_vector_position DF_FILE::restore_dvar_vector_position()
 {
@@ -83,7 +83,7 @@ dvar_vector_position DF_FILE::restore_dvar_vector_position()
  */
 dvector_position restore_dvector_position()
 {
-  return gradient_structure::get_fp()->restore_dvector_position();
+  return gradient_structure::fp->restore_dvector_position();
 }
 dvector_position DF_FILE::restore_dvector_position()
 {
@@ -101,7 +101,7 @@ Saves the size, address, and value information for a dvar_vector.
 */
 void dvar_vector::save_dvar_vector_value() const
 {
-  return gradient_structure::get_fp()->save_dvar_vector_value(*this);
+  return gradient_structure::fp->save_dvar_vector_value(*this);
 }
 void DF_FILE::save_dvar_vector_value(const dvar_vector& v)
 {
@@ -125,7 +125,7 @@ Saves the size, address, and value information for a dvector.
 */
 void dvector::save_dvector_value() const
 {
-  return gradient_structure::get_fp()->save_dvector_value(*this);
+  return gradient_structure::fp->save_dvector_value(*this);
 }
 void DF_FILE::save_dvector_value(const dvector& v)
 {
@@ -147,7 +147,7 @@ Saves the size, address, and value information for a ivector.
 */
 void ivector::save_ivector_value() const
 {
-  return gradient_structure::get_fp()->save_ivector_value(*this);
+  return gradient_structure::fp->save_ivector_value(*this);
 }
 void DF_FILE::save_ivector_value(const ivector& v)
 {
@@ -173,7 +173,7 @@ Back up the stream and read the number of bytes written in the
 */
 dvector restore_dvector_value(const dvector_position& tmp)
 {
-  return gradient_structure::get_fp()->restore_dvector_value(tmp);
+  return gradient_structure::fp->restore_dvector_value(tmp);
 }
 dvector DF_FILE::restore_dvector_value(const dvector_position& tmp)
 {
@@ -197,7 +197,7 @@ dvector DF_FILE::restore_dvector_value(const dvector_position& tmp)
  */
 ivector restore_ivector_value(const ivector_position& tmp)
 {
-  return gradient_structure::get_fp()->restore_ivector_value(tmp);
+  return gradient_structure::fp->restore_ivector_value(tmp);
 }
 ivector DF_FILE::restore_ivector_value(const ivector_position& tmp)
 {
@@ -226,7 +226,7 @@ Back up the stream and read the number of bytes written in the
 */
 dvector restore_dvar_vector_value(const dvar_vector_position& tmp)
 {
-  return gradient_structure::get_fp()->restore_dvar_vector_value(tmp);
+  return gradient_structure::fp->restore_dvar_vector_value(tmp);
 }
 dvector DF_FILE::restore_dvar_vector_value(const dvar_vector_position& tmp)
 {
@@ -247,7 +247,7 @@ Saves the size, address, and value information for a dvar_matrix.
 */
 void dvar_matrix::save_dvar_matrix_value() const
 {
-  gradient_structure::get_fp()->save_dvar_matrix_value(*this);
+  gradient_structure::fp->save_dvar_matrix_value(*this);
 }
 void DF_FILE::save_dvar_matrix_value(const dvar_matrix& m)
 {

@@ -39,8 +39,8 @@ dvar_vector& dvar_vector::operator+=(const dvar_vector& v1)
     ++pv1i;
   }
 
-  grad_stack* GRAD_STACK1 = gradient_structure::get_GRAD_STACK1();
-  DF_FILE* fp = gradient_structure::get_fp();
+  grad_stack* GRAD_STACK1 = gradient_structure::GRAD_STACK1;
+  DF_FILE* fp = gradient_structure::fp;
   //save_identifier_string("uuvv");
   fp->save_dvar_vector_position(*this);  // for this->
   fp->save_dvar_vector_position(v1);
@@ -56,7 +56,7 @@ dvar_vector& dvar_vector::operator+=(const dvar_vector& v1)
  */
 void dv_pluseq(void)
 {
-  DF_FILE* fp = gradient_structure::get_fp();
+  DF_FILE* fp = gradient_structure::fp;
 
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   //verify_identifier_string("wwxx");

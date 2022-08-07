@@ -59,8 +59,8 @@ dvar_vector& dvar_vector::operator=(const dvar_vector& t)
        size_t size = (size_t)(mmax - mmin + 1);
        memcpy(va + mmin, t.va + mmin, size * sizeofdouble);
 
-       grad_stack* GRAD_STACK1 = gradient_structure::get_GRAD_STACK1();
-       DF_FILE* fp = gradient_structure::get_fp();
+       grad_stack* GRAD_STACK1 = gradient_structure::GRAD_STACK1;
+       DF_FILE* fp = gradient_structure::fp;
        // The derivative list considerations
        //save_identifier_string("bbbb");
        fp->save_dvar_vector_position(t);
@@ -91,8 +91,8 @@ dvar_vector& dvar_vector::operator=(const prevariable& t)
      ++pvai;
    }
 
-   grad_stack* GRAD_STACK1 = gradient_structure::get_GRAD_STACK1();
-   DF_FILE* fp = gradient_structure::get_fp();
+   grad_stack* GRAD_STACK1 = gradient_structure::GRAD_STACK1;
+   DF_FILE* fp = gradient_structure::fp;
    // The derivative list considerations
    save_identifier_string("dddd");
    fp->save_prevariable_position(t);
@@ -119,8 +119,8 @@ dvar_vector& dvar_vector::operator=(const double t)
      pvai->x = t;
      ++pvai;
    }
-   grad_stack* GRAD_STACK1 = gradient_structure::get_GRAD_STACK1();
-   DF_FILE* fp = gradient_structure::get_fp();
+   grad_stack* GRAD_STACK1 = gradient_structure::GRAD_STACK1;
+   DF_FILE* fp = gradient_structure::fp;
    // The derivative list considerations
    save_identifier_string("trut");
    fp->save_dvar_vector_position(*this);
@@ -133,7 +133,7 @@ Adjoint to compute gradient for dvar_vector::operator=(const double).
 */
 void dv_eqdoub(void)
 {
-  DF_FILE* fp = gradient_structure::get_fp();
+  DF_FILE* fp = gradient_structure::fp;
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("ssss");
   dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();
@@ -145,7 +145,7 @@ Adjoint to compute gradient for dvar_vector::operator=(const prevariable&).
 */
 void dv_eqprev(void)
 {
-  DF_FILE* fp = gradient_structure::get_fp();
+  DF_FILE* fp = gradient_structure::fp;
 
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("ssss");
@@ -171,7 +171,7 @@ Adjoint to compute gradients for dvar_vector::operator=(const dvar_vector&)
 */
 void dv_assign(void)
 {
-  DF_FILE* fp = gradient_structure::get_fp();
+  DF_FILE* fp = gradient_structure::fp;
 
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   //verify_identifier_string("aaaa");

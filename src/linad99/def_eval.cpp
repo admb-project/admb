@@ -174,7 +174,7 @@ void default_evaluation0(void)
   void default_evaluation3ind(void)
   {
     // there are three independent variables
-    gradient_structure* gs = gradient_structure::get();
+    gradient_structure* gs = gradient_structure::_instance;
     grad_stack_entry* grad_ptr = gs->GRAD_STACK1->ptr;
 
     double mult3=grad_ptr->mult1 ;
@@ -205,7 +205,7 @@ void default_evaluation0(void)
   void default_evaluation4ind(void)
   {
     // there are three independent variables
-    gradient_structure* gs = gradient_structure::get();
+    gradient_structure* gs = gradient_structure::_instance;
     grad_stack_entry* grad_ptr = gs->GRAD_STACK1->ptr;
 
     double * ind_addr3=grad_ptr->ind_addr1;

@@ -30,7 +30,7 @@ void dvar_matrix::initialize(void)
  */
 void dfmatinit(void)
 {
-  DF_FILE* fp = gradient_structure::get_fp();
+  DF_FILE* fp = gradient_structure::fp;
 
   //verify_identifier_string("q");
   dvar_matrix_position tmp_pos=fp->restore_dvar_matrix_position();
@@ -69,8 +69,8 @@ void dvar_matrix::initialize(void)
       }
       ++pmi;
     }
-    grad_stack* GRAD_STACK1 = gradient_structure::get_GRAD_STACK1();
-    DF_FILE* fp = gradient_structure::get_fp();
+    grad_stack* GRAD_STACK1 = gradient_structure::GRAD_STACK1;
+    DF_FILE* fp = gradient_structure::fp;
     //save_identifier_string("p");
     fp->save_dvar_matrix_position(*this);
     GRAD_STACK1->set_gradient_stack(dfmatinit);

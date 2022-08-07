@@ -26,7 +26,7 @@
       cerr << "tau <=1 in log_negbinomial_density " << endl;
       ad_exit(1);
     }
-    gradient_structure* gs = gradient_structure::get();
+    gradient_structure* gs = gradient_structure::_instance;
     gs->RETURN_ARRAYS_INCREMENT();
 
     dvariable r=mu/(1.e-120+(tau-1));
@@ -54,7 +54,7 @@ A local parameter r is used to make it robust.
       cerr << "tau <=1 in log_negbinomial_density " << endl;
       ad_exit(1);
     }
-    gradient_structure* gs = gradient_structure::get();
+    gradient_structure* gs = gradient_structure::_instance;
     gs->RETURN_ARRAYS_INCREMENT();
     dvariable r=mu/(1.e-120+(tau-1));
     dvariable tmp;

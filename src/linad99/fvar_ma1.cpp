@@ -16,7 +16,7 @@
  */
 dvar_vector operator*(const dvector& x, const dvar_matrix& m)
  {
-   gradient_structure* gs = gradient_structure::get();
+   gradient_structure* gs = gradient_structure::_instance;
    gs->RETURN_ARRAYS_INCREMENT();
 
    if (x.indexmin() != m.rowmin() || x.indexmax() != m.rowmax())

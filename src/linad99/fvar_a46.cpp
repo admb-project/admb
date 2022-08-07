@@ -28,9 +28,7 @@ Element-wise division of v1 by v2 into a dvar_vector.
 */
 dvar_vector elem_div(const dvar_vector& v1, const dvar_vector& v2)
 {
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
-
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
 
   int min = v1.indexmin();
@@ -62,6 +60,7 @@ dvar_vector elem_div(const dvar_vector& v1, const dvar_vector& v2)
   }
 
   // The derivative list considerations
+  DF_FILE* fp = gradient_structure::fp;
   save_identifier_string("bbbb");
   fp->save_dvar_vector_value(v1);
   fp->save_dvar_vector_position(v1);
@@ -73,7 +72,7 @@ dvar_vector elem_div(const dvar_vector& v1, const dvar_vector& v2)
   save_identifier_string("uuuu");
   fp->save_dvar_vector_position(tmp);
   save_identifier_string("aaaa");
-  gs->GRAD_STACK1->set_gradient_stack(dvdv_elem_div);
+  gradient_structure::GRAD_STACK1->set_gradient_stack(dvdv_elem_div);
   gs->RETURN_ARRAYS_DECREMENT();
   return tmp;
 }
@@ -82,7 +81,7 @@ Adjoint gradient computation of elem_div(const dvar_vector&, const dvar_vector&)
 */
 void dvdv_elem_div(void)
 {
-  DF_FILE* fp = gradient_structure::get_fp();
+  DF_FILE* fp = gradient_structure::fp;
 
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("aaaa");
@@ -141,8 +140,8 @@ Element-wise division of v1 by v2 into a dvar_vector.
 */
 dvar_vector elem_div(const dvar_vector& v1, const dvector& v2)
 {
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+  gradient_structure* gs = gradient_structure::_instance;
+  DF_FILE* fp = gradient_structure::fp;
   gs->RETURN_ARRAYS_INCREMENT();
 
   int min = v1.indexmin();
@@ -194,7 +193,7 @@ Adjoint gradient computation of elem_div(const dvar_vector&, const dvector&)
 */
 void dvcv_elem_div(void)
 {
-  DF_FILE* fp = gradient_structure::get_fp();
+  DF_FILE* fp = gradient_structure::fp;
 
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("aaaa");
@@ -226,9 +225,8 @@ Element-wise division of v1 by v2 into a dvar_vector.
 */
 dvar_vector elem_div(const dvector& v1, const dvar_vector& v2)
 {
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
-
+  gradient_structure* gs = gradient_structure::_instance;
+  DF_FILE* fp = gradient_structure::fp;
   gs->RETURN_ARRAYS_INCREMENT();
 
   if (v1.indexmin()!=v2.indexmin()||v1.indexmax()!=v2.indexmax())
@@ -266,7 +264,7 @@ Adjoint gradient computation of elem_div(const dvector&, const dvar_vector&)
 */
 void cvdv_elem_div(void)
 {
-  DF_FILE* fp = gradient_structure::get_fp();
+  DF_FILE* fp = gradient_structure::fp;
 
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("aaaa");

@@ -26,10 +26,6 @@
 #include <stdio.h>
 #include <math.h>
 
-//extern prevariable * FRETURN;
-//extern int RETURN_INDEX;
-//extern dlist * GRAD_LIST; //js
-
 void shape_check(const dvar_vector& v1, const dvar_vector& v2,
   const char *function_name);
 void shape_check(const dvector& v1, const dvar_vector& v2,
@@ -45,7 +41,7 @@ void shape_check(const dvar_vector& v1, const dvector& v2,
  */
  dvar_vector sinh(const dvar_vector& v1)// ***
  {
-   gradient_structure* gs = gradient_structure::get();
+   gradient_structure* gs = gradient_structure::_instance;
    gs->RETURN_ARRAYS_INCREMENT();
 
    dvar_vector tmp(v1.indexmin(),v1.indexmax());
@@ -63,7 +59,7 @@ void shape_check(const dvar_vector& v1, const dvector& v2,
  */
  dvar_vector cosh(const dvar_vector& v1)// ***
  {
-   gradient_structure* gs = gradient_structure::get();
+   gradient_structure* gs = gradient_structure::_instance;
    gs->RETURN_ARRAYS_INCREMENT();
    dvar_vector tmp(v1.indexmin(),v1.indexmax());
    for (int i=v1.indexmin();i<=v1.indexmax();i++)
@@ -80,7 +76,7 @@ void shape_check(const dvar_vector& v1, const dvector& v2,
  */
  dvar_vector tanh(const dvar_vector& v1)// ***
  {
-   gradient_structure* gs = gradient_structure::get();
+   gradient_structure* gs = gradient_structure::_instance;
    gs->RETURN_ARRAYS_INCREMENT();
    dvar_vector tmp(v1.indexmin(),v1.indexmax());
    for (int i=v1.indexmin();i<=v1.indexmax();i++)
@@ -100,7 +96,7 @@ void shape_check(const dvar_vector& v1, const dvector& v2,
    shape_check(v1,v2,
      "dvar_vector pow(const dvar_vector& v1,const dvar_vector& v2)");
 
-   gradient_structure* gs = gradient_structure::get();
+   gradient_structure* gs = gradient_structure::_instance;
    gs->RETURN_ARRAYS_INCREMENT();
    dvar_vector tmp(v1.indexmin(),v1.indexmax());
    for (int i=v1.indexmin();i<=v1.indexmax();i++)
@@ -117,7 +113,7 @@ void shape_check(const dvar_vector& v1, const dvector& v2,
  */
  dvar_vector pow(const prevariable& x, const dvar_vector& v2)// ***
  {
-   gradient_structure* gs = gradient_structure::get();
+   gradient_structure* gs = gradient_structure::_instance;
    gs->RETURN_ARRAYS_INCREMENT();
    dvar_vector tmp(v2.indexmin(),v2.indexmax());
    for (int i=v2.indexmin();i<=v2.indexmax();i++)
@@ -134,7 +130,7 @@ void shape_check(const dvar_vector& v1, const dvector& v2,
  */
  dvar_vector asin(const dvar_vector& v1)// ***
  {
-   gradient_structure* gs = gradient_structure::get();
+   gradient_structure* gs = gradient_structure::_instance;
    gs->RETURN_ARRAYS_INCREMENT();
    dvar_vector tmp(v1.indexmin(),v1.indexmax());
    for (int i=v1.indexmin();i<=v1.indexmax();i++)
@@ -151,7 +147,7 @@ void shape_check(const dvar_vector& v1, const dvector& v2,
  */
  dvar_vector acos(const dvar_vector& v1)// ***
  {
-   gradient_structure* gs = gradient_structure::get();
+   gradient_structure* gs = gradient_structure::_instance;
    gs->RETURN_ARRAYS_INCREMENT();
    dvar_vector tmp(v1.indexmin(),v1.indexmax());
    for (int i=v1.indexmin();i<=v1.indexmax();i++)
@@ -168,7 +164,7 @@ void shape_check(const dvar_vector& v1, const dvector& v2,
  */
  dvar_vector log10(const dvar_vector& v1)// ***
  {
-   gradient_structure* gs = gradient_structure::get();
+   gradient_structure* gs = gradient_structure::_instance;
    gs->RETURN_ARRAYS_INCREMENT();
    dvar_vector tmp(v1.indexmin(),v1.indexmax());
    for (int i=v1.indexmin();i<=v1.indexmax();i++)

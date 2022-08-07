@@ -18,9 +18,7 @@
  */
 dvar_vector& dvar_vector::operator/=(const double x)
   {
-    gradient_structure* gs = gradient_structure::get();
-    DF_FILE* fp = gs->fp;
-
+    gradient_structure* gs = gradient_structure::_instance;
     gs->RETURN_ARRAYS_INCREMENT();
     save_identifier_string("wctf");
     double xinv = 1.0 / x;
@@ -32,6 +30,7 @@ dvar_vector& dvar_vector::operator/=(const double x)
       pva->x *=xinv;
       ++pva;
     }
+    DF_FILE* fp = gradient_structure::fp;
     fp->save_dvar_vector_position(*this);
     fp->save_double_value(x);
     save_identifier_string("cmtu");
@@ -46,7 +45,7 @@ dvar_vector& dvar_vector::operator/=(const double x)
  */
  void DF_cdble_dv_diveq(void)
  {
-    DF_FILE* fp = gradient_structure::get_fp();
+    DF_FILE* fp = gradient_structure::fp;
 
     verify_identifier_string("cmtu");
     double x=fp->restore_double_value();
@@ -76,10 +75,10 @@ dvar_vector& dvar_vector::operator/=(const double x)
  */
 dvar_vector& dvar_vector::operator/=(const prevariable& x)
   {
-    gradient_structure* gs = gradient_structure::get();
-    DF_FILE* fp = gs->fp;
-
+    gradient_structure* gs = gradient_structure::_instance;
+    DF_FILE* fp = gradient_structure::fp;
     gs->RETURN_ARRAYS_INCREMENT();
+
     double xinv = 1.0 / value(x);
     int min = index_min;
     int max = index_max;
@@ -97,7 +96,7 @@ dvar_vector& dvar_vector::operator/=(const prevariable& x)
     fp->save_prevariable_position(x);
     save_identifier_string("cmtu");
     gs->RETURN_ARRAYS_DECREMENT();
-    gs->GRAD_STACK1->set_gradient_stack(DF_vdble_dv_diveq);
+    gradient_structure::GRAD_STACK1->set_gradient_stack(DF_vdble_dv_diveq);
     return(*this);
   }
 
@@ -107,7 +106,7 @@ dvar_vector& dvar_vector::operator/=(const prevariable& x)
  */
  void DF_vdble_dv_diveq(void)
  {
-    DF_FILE* fp = gradient_structure::get_fp();
+    DF_FILE* fp = gradient_structure::fp;
 
     verify_identifier_string("cmtu");
     prevariable_position x_pos=fp->restore_prevariable_position();

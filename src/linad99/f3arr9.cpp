@@ -19,7 +19,7 @@ m1(i, j, k) * m2(i, j, k).
 */
 dvar3_array elem_prod(const dvar3_array& m1, const d3_array& m2)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
 
   dvar3_array result;
@@ -41,7 +41,7 @@ m1(i, j, k) / m2(i, j, k).
 */
 dvar3_array elem_div(const dvar3_array& m1, const d3_array& m2)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
   dvar3_array result;
   result.allocate(m1);
@@ -61,7 +61,7 @@ Returns dvar3_array with each element equal to m1(i, j, k) + m2(i, j, k).
 */
 dvar3_array operator+(const dvar3_array& m1, const d3_array& m2)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
   dvar3_array result;
   result.allocate(m1);
@@ -81,7 +81,7 @@ Returns dvar3_array with each element equal to m1(i, j, k) - m2(i, j, k).
 */
 dvar3_array operator-(const dvar3_array& m1, const d3_array& m2)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
   dvar3_array result;
   result.allocate(m1);
@@ -101,7 +101,7 @@ Returns dvar3_array with each element equal to d + m2(i, j, k).
 */
 dvar3_array operator+(const dvariable& d, const d3_array& m2)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
   dvar3_array result;
   result.allocate(m2);
@@ -121,7 +121,7 @@ Returns dvar3_array with each element equal to d + m2(i, j, k).
 */
 dvar3_array operator-(const dvariable& d, const d3_array& m2)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
 
   dvar3_array result;
@@ -141,7 +141,7 @@ dvar3_array operator-(const dvariable& d, const d3_array& m2)
  */
 dvar3_array operator*(const dvariable& d, const d3_array& m2)
    {
-     gradient_structure* gs = gradient_structure::get();
+     gradient_structure* gs = gradient_structure::_instance;
      gs->RETURN_ARRAYS_INCREMENT();
 
      dvar3_array tmp;
@@ -160,7 +160,7 @@ dvar3_array operator*(const dvariable& d, const d3_array& m2)
  */
 dvar3_array operator*(const dvariable& d, const dvar3_array& m2)
    {
-     gradient_structure* gs = gradient_structure::get();
+     gradient_structure* gs = gradient_structure::_instance;
      gs->RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
      tmp.allocate(m2);
@@ -178,7 +178,7 @@ dvar3_array operator*(const dvariable& d, const dvar3_array& m2)
  */
 dvar3_array operator*(double d, const dvar3_array& m2)
    {
-     gradient_structure* gs = gradient_structure::get();
+     gradient_structure* gs = gradient_structure::_instance;
      gs->RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
      tmp.allocate(m2);
@@ -196,7 +196,7 @@ dvar3_array operator*(double d, const dvar3_array& m2)
  */
 dvar3_array operator-(const dvar3_array& m1, const dvariable& d)
    {
-     gradient_structure* gs = gradient_structure::get();
+     gradient_structure* gs = gradient_structure::_instance;
      gs->RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
      tmp.allocate(m1);
@@ -214,7 +214,7 @@ dvar3_array operator-(const dvar3_array& m1, const dvariable& d)
  */
 dvar3_array operator+(const dvar3_array& m1, const dvariable& d)
    {
-     gradient_structure* gs = gradient_structure::get();
+     gradient_structure* gs = gradient_structure::_instance;
      gs->RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
      tmp.allocate(m1);
@@ -232,7 +232,7 @@ dvar3_array operator+(const dvar3_array& m1, const dvariable& d)
  */
 dvar3_array operator+(double d, const dvar3_array& m1)
    {
-     gradient_structure* gs = gradient_structure::get();
+     gradient_structure* gs = gradient_structure::_instance;
      gs->RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
      tmp.allocate(m1);
@@ -250,7 +250,7 @@ dvar3_array operator+(double d, const dvar3_array& m1)
  */
 dvar3_array operator*(const dvar3_array& m1, const dvariable& d)
    {
-     gradient_structure* gs = gradient_structure::get();
+     gradient_structure* gs = gradient_structure::_instance;
      gs->RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
      tmp.allocate(m1);
@@ -268,7 +268,7 @@ dvar3_array operator*(const dvar3_array& m1, const dvariable& d)
  */
 dvar3_array operator+(const dvariable& d1, const dvar3_array& m1)
    {
-     gradient_structure* gs = gradient_structure::get();
+     gradient_structure* gs = gradient_structure::_instance;
      gs->RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
      tmp.allocate(m1);

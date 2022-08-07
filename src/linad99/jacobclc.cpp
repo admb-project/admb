@@ -65,7 +65,7 @@
  */
 void jacobcalc(int nvar, const dmatrix& jac)
 {
-  gradient_structure::get()->jacobcalc(nvar,jac);
+  gradient_structure::_instance->jacobcalc(nvar,jac);
 }
 
 /**

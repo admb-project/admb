@@ -16,7 +16,7 @@
  */
 dvar_vector fabs(const dvar_vector& t1)
   {
-     gradient_structure* gs = gradient_structure::get();
+     gradient_structure* gs = gradient_structure::_instance;
      gs->RETURN_ARRAYS_INCREMENT();
 
      int min = t1.indexmin();
@@ -42,7 +42,7 @@ dvar_vector fabs(const dvar_vector& t1)
  */
 dvector value(const dvar_vector& t1)
   {
-     gradient_structure* gs = gradient_structure::get();
+     gradient_structure* gs = gradient_structure::_instance;
      gs->RETURN_ARRAYS_INCREMENT();
 
      int min = t1.indexmin();
@@ -68,7 +68,7 @@ dvector value(const dvar_vector& t1)
  */
 dvariable norm(const dvar_vector& t1)
   {
-    gradient_structure* gs = gradient_structure::get();
+    gradient_structure* gs = gradient_structure::_instance;
     gs->RETURN_ARRAYS_INCREMENT();
     dvariable tmp;
     tmp=t1*t1;
@@ -86,7 +86,7 @@ dvariable norm(const dvar_vector& t1)
  */
 dvariable norm2(const dvar_vector& t1)
   {
-    gradient_structure* gs = gradient_structure::get();
+    gradient_structure* gs = gradient_structure::_instance;
     gs->RETURN_ARRAYS_INCREMENT();
     dvariable tmp;
     tmp=t1*t1;
@@ -101,7 +101,7 @@ dvariable sumsq(const dvar_vector& t1) {return(norm2(t1));}
  */
 dvar_vector sfabs(const dvar_vector& t1)
   {
-     gradient_structure* gs = gradient_structure::get();
+     gradient_structure* gs = gradient_structure::_instance;
      gs->RETURN_ARRAYS_INCREMENT();
 
      dvar_vector tmp(t1.indexmin(),t1.indexmax());

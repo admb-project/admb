@@ -31,9 +31,7 @@ void dvdv_elem_prod(void);
  */
 dvar_vector elem_prod(const dvar_vector& v1, const dvar_vector& v2)
 {
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
-
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
 
   int min = v1.indexmin();
@@ -62,13 +60,14 @@ dvar_vector elem_prod(const dvar_vector& v1, const dvar_vector& v2)
 
   // The derivative list considerations
   save_identifier_string("b");
+  DF_FILE* fp = gradient_structure::fp;
   fp->save_dvar_vector_value(v1);
   fp->save_dvar_vector_position(v1);
   fp->save_dvar_vector_value(v2);
   fp->save_dvar_vector_position(v2);
   fp->save_dvar_vector_position(tmp);
   save_identifier_string("a");
-  gs->GRAD_STACK1->set_gradient_stack(dvdv_elem_prod);
+  gradient_structure::GRAD_STACK1->set_gradient_stack(dvdv_elem_prod);
   gs->RETURN_ARRAYS_DECREMENT();
   return tmp;
 }
@@ -79,7 +78,7 @@ dvar_vector elem_prod(const dvar_vector& v1, const dvar_vector& v2)
  */
 void dvdv_elem_prod(void)
 {
-  DF_FILE* fp = gradient_structure::get_fp();
+  DF_FILE* fp = gradient_structure::fp;
 
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("a");
@@ -125,8 +124,8 @@ void cvdv_elem_prod(void);
  */
 dvar_vector elem_prod(const dvector& v1, const dvar_vector& v2)
 {
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+  gradient_structure* gs = gradient_structure::_instance;
+  DF_FILE* fp = gradient_structure::fp;
   gs->RETURN_ARRAYS_INCREMENT();
 
   int min = v1.indexmin();
@@ -172,7 +171,7 @@ dvar_vector elem_prod(const dvector& v1, const dvar_vector& v2)
  */
 void cvdv_elem_prod(void)
 {
-  DF_FILE* fp = gradient_structure::get_fp();
+  DF_FILE* fp = gradient_structure::fp;
 
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("a");
@@ -211,8 +210,8 @@ void dvcv_elem_prod(void);
  */
 dvar_vector elem_prod(const dvar_vector& v1, const dvector& v2)
 {
-  gradient_structure* gs = gradient_structure::get();
-  DF_FILE* fp = gs->fp;
+  gradient_structure* gs = gradient_structure::_instance;
+  DF_FILE* fp = gradient_structure::fp;
   gs->RETURN_ARRAYS_INCREMENT();
 
   int min = v1.indexmin();
@@ -256,7 +255,7 @@ dvar_vector elem_prod(const dvar_vector& v1, const dvector& v2)
  */
 void dvcv_elem_prod(void)
 {
-  DF_FILE* fp = gradient_structure::get_fp();
+  DF_FILE* fp = gradient_structure::fp;
 
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("a");

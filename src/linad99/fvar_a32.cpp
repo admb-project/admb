@@ -30,8 +30,8 @@ dvar_vector dvar_vector::operator()(const ivector& u)
      tmp.elem_value(i)=elem_value(u(i));
    }
 
-   grad_stack* GRAD_STACK1 = gradient_structure::get_GRAD_STACK1();
-   DF_FILE* fp = gradient_structure::get_fp();
+   grad_stack* GRAD_STACK1 = gradient_structure::GRAD_STACK1;
+   DF_FILE* fp = gradient_structure::fp;
    save_identifier_string("by");
    fp->save_dvar_vector_position(*this);
    fp->save_dvar_vector_position(tmp);
@@ -49,7 +49,7 @@ dvar_vector dvar_vector::operator()(const ivector& u)
  */
 void dv_subassign()
 {
-  DF_FILE* fp = gradient_structure::get_fp();
+  DF_FILE* fp = gradient_structure::fp;
 
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("ay");

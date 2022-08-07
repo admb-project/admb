@@ -15,7 +15,7 @@ dvar_vector extract_diagonal(const dvar_matrix& m)
     cerr << "Error in extract_diagonal function -- input matrix not square\n";
     ad_exit(1);
   }
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
 
   dvar_vector diagonal(m.rowmin(), m.rowmax());

@@ -16,7 +16,7 @@
  */
 dvariable sum(const dvar5_array& m)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
 
   dvariable tmp=0.;
@@ -41,7 +41,7 @@ dvariable sum(const dvar5_array& m)
  */
 dvar5_array sqrt(const dvar5_array& m)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
   dvar5_array tmp;
   tmp.allocate(m);
@@ -59,7 +59,7 @@ dvar5_array sqrt(const dvar5_array& m)
  */
 dvar5_array exp(const dvar5_array& m)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
   dvar5_array tmp;
   tmp.allocate(m);
@@ -77,7 +77,7 @@ dvar5_array exp(const dvar5_array& m)
  */
 dvar5_array mfexp(const dvar5_array& m)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
   dvar5_array tmp;
   tmp.allocate(m);
@@ -95,7 +95,7 @@ dvar5_array mfexp(const dvar5_array& m)
  */
 dvar5_array log(const dvar5_array& m)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
   dvar5_array tmp;
   tmp.allocate(m);

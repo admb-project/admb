@@ -16,7 +16,7 @@
  */
 dvar5_array operator/(const d5_array& m, const prevariable& d)
    {
-     gradient_structure* gs = gradient_structure::get();
+     gradient_structure* gs = gradient_structure::_instance;
      gs->RETURN_ARRAYS_INCREMENT();
 
      dvar5_array tmp;
@@ -35,7 +35,7 @@ dvar5_array operator/(const d5_array& m, const prevariable& d)
  */
 dvar5_array operator/(const dvar5_array& m, const double d)
    {
-     gradient_structure* gs = gradient_structure::get();
+     gradient_structure* gs = gradient_structure::_instance;
      gs->RETURN_ARRAYS_INCREMENT();
      dvar5_array tmp;
      tmp.allocate(m);
@@ -53,7 +53,7 @@ dvar5_array operator/(const dvar5_array& m, const double d)
  */
 dvar5_array operator/(const dvar5_array& m, const prevariable& d)
    {
-     gradient_structure* gs = gradient_structure::get();
+     gradient_structure* gs = gradient_structure::_instance;
      gs->RETURN_ARRAYS_INCREMENT();
      dvar5_array tmp;
      tmp.allocate(m);
@@ -71,7 +71,7 @@ dvar5_array operator/(const dvar5_array& m, const prevariable& d)
  */
 void dvar5_array::operator/=(const prevariable& d)
    {
-     gradient_structure* gs = gradient_structure::get();
+     gradient_structure* gs = gradient_structure::_instance;
      gs->RETURN_ARRAYS_INCREMENT();
      for (int i=indexmin();i<=indexmax();i++)
      {
@@ -86,7 +86,7 @@ void dvar5_array::operator/=(const prevariable& d)
  */
 void dvar5_array::operator/=(const double& d)
    {
-     gradient_structure* gs = gradient_structure::get();
+     gradient_structure* gs = gradient_structure::_instance;
      gs->RETURN_ARRAYS_INCREMENT();
      for (int i=indexmin();i<=indexmax();i++)
      {

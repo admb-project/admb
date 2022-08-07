@@ -36,7 +36,7 @@ double normal_tail_right(const double& x)
  */
 dvariable inv_cumd_norm_inner(const prevariable& x)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   if (++gs->RETURN_PTR > gs->MAX_RETURN)
     gs->RETURN_PTR = gs->MIN_RETURN;
 
@@ -148,7 +148,7 @@ dvariable inv_cumd_norm(const prevariable& x)
  */
 dvariable old_cumd_norm(const prevariable& x)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
 
   const double b1=0.319381530;
@@ -183,7 +183,7 @@ dvariable old_cumd_norm(const prevariable& x)
 */
 prevariable& cumd_norm(const prevariable& _x)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   if (++gs->RETURN_PTR > gs->MAX_RETURN)
     gs->RETURN_PTR = gs->MIN_RETURN;
 
@@ -278,7 +278,7 @@ dvar_vector inv_cumd_norm(const dvar_vector& x)
  */
 prevariable& bounded_cumd_norm(const prevariable& _x,double beta)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   if (++gs->RETURN_PTR > gs->MAX_RETURN)
    gs->RETURN_PTR = gs->MIN_RETURN;
 

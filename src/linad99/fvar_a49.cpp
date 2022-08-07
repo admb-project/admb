@@ -28,7 +28,7 @@
 dvariable var(const dvar_vector& v)
   {
     dvariable tmp;
-    gradient_structure* gs = gradient_structure::get();
+    gradient_structure* gs = gradient_structure::_instance;
     gs->RETURN_ARRAYS_INCREMENT();
     tmp=norm(v)/sqrt(double(v.size()));
     dvariable tmp1;
@@ -44,7 +44,7 @@ dvariable var(const dvar_vector& v)
 dvariable std_dev(const dvar_vector& v)
   {
     dvariable tmp;
-    gradient_structure* gs = gradient_structure::get();
+    gradient_structure* gs = gradient_structure::_instance;
     gs->RETURN_ARRAYS_INCREMENT();
     tmp=norm(v)/sqrt(double(v.size()));
     dvariable tmp1;
@@ -61,7 +61,7 @@ dvariable mean(const dvar_vector& v)
   dvariable tmp = 0.0;
   if (allocated(v))
   {
-    gradient_structure* gs = gradient_structure::get();
+    gradient_structure* gs = gradient_structure::_instance;
     gs->RETURN_ARRAYS_INCREMENT();
     tmp = sum(v) / double(v.size());
     gs->RETURN_ARRAYS_DECREMENT();

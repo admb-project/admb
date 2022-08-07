@@ -38,7 +38,7 @@ dvar_vector spline_cubic_set (int n, const dvector& t, const dvar_vector& y,
 dvariable splint(const dvector& _xa,const dvar_vector& _ya,
     const dvar_vector& _y2a,double x)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
   dvariable ret = spline_cubic_val(_xa.size(), _xa, x, _ya, _y2a);
   gs->RETURN_ARRAYS_DECREMENT();
@@ -57,7 +57,7 @@ dvariable splint(const dvector& _xa,const dvar_vector& _ya,
 dvariable splint(const dvector& _xa,const dvar_vector& _ya,
     const dvar_vector& _y2a, const prevariable& _x)
 {
-  gradient_structure* gs = gradient_structure::get();
+  gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
   dvariable ret = spline_cubic_val2(_xa.size(), _xa, _x, _ya, _y2a);
   gs->RETURN_ARRAYS_DECREMENT();

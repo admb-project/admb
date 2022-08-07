@@ -19,7 +19,7 @@ Saves the size, address, and value information for a imatrix.
 */
 void imatrix::save_imatrix_value()
 {
-  gradient_structure::get_fp()->save_imatrix_value(*this);
+  gradient_structure::fp->save_imatrix_value(*this);
 }
 void DF_FILE::save_imatrix_value(const imatrix& m)
 {
@@ -34,7 +34,7 @@ Saves the size and address information for a imatrix.
 */
 void imatrix::save_imatrix_position()
 {
-  gradient_structure::get_fp()->save_imatrix_position(*this);
+  gradient_structure::fp->save_imatrix_position(*this);
 }
 void DF_FILE::save_imatrix_position(const imatrix& m)
 {
@@ -58,7 +58,7 @@ Reads and restores back the size and address information for a imatrix.
 */
 imatrix_position restore_imatrix_position()
 {
-  return gradient_structure::get_fp()->restore_imatrix_position();
+  return gradient_structure::fp->restore_imatrix_position();
 }
 imatrix_position DF_FILE::restore_imatrix_position()
 {
@@ -84,7 +84,7 @@ imatrix_position DF_FILE::restore_imatrix_position()
  */
 imatrix restore_imatrix_value(const imatrix_position& mpos)
 {
-  return gradient_structure::get_fp()->restore_imatrix_value(mpos);
+  return gradient_structure::fp->restore_imatrix_value(mpos);
 }
 imatrix DF_FILE::restore_imatrix_value(const imatrix_position& mpos)
 {

@@ -1539,7 +1539,9 @@ public:
   */
   dvariable(const dvariable& t): prevariable(gradnew())
   {
-    prevariable::operator=(t);
+    v->x = t.v->x;
+    gradient_structure::GRAD_STACK1->
+      set_gradient_stack(default_evaluation1,&(v->x),&(t.v->x));
   }
   /**
   Creates dvariable instance from a double constant.
@@ -1549,7 +1551,10 @@ public:
   */
   dvariable(const double t): prevariable(gradnew())
   {
-    prevariable::operator=(t);
+    v->x = t;
+    //(*v).nc=0;
+    gradient_structure::GRAD_STACK1->set_gradient_stack0(default_evaluation0,
+      &(v->x));
   }
   /**
   Creates dvariable instance from a int constant.
@@ -1574,7 +1579,9 @@ public:
   dvariable(const prevariable& t): prevariable(gradnew())
   {
     //(*v).nc=0;
-    prevariable::operator=(t);
+    v->x = t.v->x;
+    gradient_structure::GRAD_STACK1->
+      set_gradient_stack(default_evaluation1,&(v->x),&(t.v->x));
   }
   /** Destructor; frees memory on gradient stack.  */
   virtual ~dvariable() { gradfree((dlink*)v); }
@@ -1591,17 +1598,17 @@ public:
     return *this;
   }
 
-  dvariable& operator=(const dvariable& other)
-  {
-    prevariable::operator=(other);
-    return *this;
-  }
   /**
   Assigns a value to a dvariable object.
   \param t constant reference to an object of type prevariable.
   \return dvariable reference
   */
   dvariable& operator=(const prevariable& other)
+  {
+    prevariable::operator=(other);
+    return *this;
+  }
+  dvariable& operator=(const dvariable& other)
   {
     prevariable::operator=(other);
     return *this;

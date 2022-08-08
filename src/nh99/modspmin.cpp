@@ -11,7 +11,7 @@
 #if ( (defined(_WINDOWS) || defined(_Windows)) && !defined(BORBUGS))
 #  include <windows.h>
 #endif
-
+#include<ctime>
 #include <cassert>
 
 void ADSleep(unsigned int x);
@@ -30,6 +30,12 @@ void ADSleep(unsigned int x);
 class admb_javapointers;
 extern admb_javapointers * adjm_ptr;
 
+std::string get_elapsed_time(
+  const std::chrono::time_point<std::chrono::system_clock>& from,
+  const std::chrono::time_point<std::chrono::system_clock>& to);
+
+extern std::chrono::time_point<std::chrono::system_clock> start_time;
+
   void function_minimizer::computations(int argc,char * argv[])
   {
     //traceflag=1;
@@ -43,28 +49,90 @@ extern admb_javapointers * adjm_ptr;
 #if defined (AD_DEMO)
      write_banner_stuff();
 #endif
-     if (option_match(argc,argv,"-mceval") == -1)
+     // ------------------------------------------------------------
+     // Cole added experimental new flag to improve console
+     // output to be more compact and informative
+
+     output_flag = defaults::output;
+
+     int on, nopt;
+     if ( (on=option_match(argc,argv,"-display",nopt)) > -1)
      {
-       if(!(option_match(argc,argv,"-hess_step") == -1))
-       {
-         // Experimental feature to take Newton steps after
-         // previous optimization
-         // Note: ::computations1 is called at the end of hess_step function. 
-         hess_step();
+       // Updated output option with argument '-display 1'
+       // Details and bug reports at: https://github.com/admb-project/admb/discussions/219"
+       if (nopt == 1){
+	 int argument = atoi(argv[on+1]);
+	 if (argument >= 0 && argument <= 2)
+         {
+           function_minimizer::output_flag = argument;
+	 }
+         else
+         {
+	   cerr << "Warning: Invaild argument for option -display (See -help).\n\n";
+         }
        }
        else
        {
-         computations1(argc,argv);
+	 cerr << "Warning: Option -display needs a number argument (See -help).\n\n";
        }
-     } else {
-       initial_params::mceval_phase=1;
-       mcmc_eval();
-       initial_params::mceval_phase=0;
      }
+
+     if (function_minimizer::output_flag == 1)
+     {
+       start_time = std::chrono::system_clock::now();
+     }
+
+     // ------------------------------------------------------------
+     if (option_match(argc,argv,"-mceval") == -1)
+       {
+	 // if not mceval model do optimization or hess step
+	 if(!(option_match(argc,argv,"-hess_step") == -1))
+	   {
+	     // Experimental feature to take Newton steps after
+	     // previous optimization
+	     // Note: ::computations1 is called at the end of hess_step function.
+	     hess_step();
+	   }
+	 else
+	   {
+	     // main optimization call
+	     computations1(argc,argv);
+	   }
+       }
+     else
+       {
+	 // mceval skips all the optimization stuff
+	 initial_params::mceval_phase=1;
+	 mcmc_eval();
+	 initial_params::mceval_phase=0;
+       }
      other_calculations();
      final_calcs();
+
      // clean up if have random effects
      // cleanup_laplace_stuff(lapprox);
+
+     // Print new concluding message unless in MCMC mode which already prints timing stuff
+     if(function_minimizer::output_flag==1 &&
+	!(option_match(ad_comm::argc,ad_comm::argv,"-nuts") > -1) &&
+	!(option_match(ad_comm::argc,ad_comm::argv,"-rwm") > -1) &&
+	!(option_match(ad_comm::argc,ad_comm::argv,"-hmc") > -1)){
+
+       std::string fullpath(argv[0]);
+#if defined(_WIN32)
+       auto idx1 = fullpath.rfind("\\");
+       auto idx2 = fullpath.rfind(".");
+       auto total = idx2 - idx1 - 1;
+       std::string model_name = fullpath.substr(idx1 + 1, total);
+#else
+       auto idx1 = fullpath.rfind("/");
+       if (idx1 > 0) ++idx1;
+       std::string model_name = fullpath.substr(idx1);
+#endif
+       cout << "\nFinished running model '" << model_name << "' after "
+            << get_elapsed_time(start_time, std::chrono::system_clock::now())
+            << "." <<  endl;
+     }
   }
 
   void function_minimizer::computations1(int argc,char * argv[])
@@ -221,6 +289,7 @@ extern admb_javapointers * adjm_ptr;
                 sd_routine();
               }
             }
+            // if(function_minimizer::output_flag==1) function_minimizer::check_parameters_on_bounds();
           }
           else
           {
@@ -245,7 +314,7 @@ extern admb_javapointers * adjm_ptr;
                     break;
                   default:
                     cerr << "error illega value for pvm_manager->mode" << endl;
-                    exit(1);
+                    ad_exit(1);
                   }
                 }
                 else
@@ -283,7 +352,7 @@ extern admb_javapointers * adjm_ptr;
                   break;
                 default:
                   cerr << "error illega value for pvm_manager->mode" << endl;
-                  exit(1);
+                  ad_exit(1);
                 }
               }
               else
@@ -475,25 +544,25 @@ void write_banner_stuff(void)
       // start addition
       // temporarily adding this here, need to fully merge in with other options still
       if (option_match(ad_comm::argc,ad_comm::argv,"-hmc") > -1)
-	{
-	  gradient_structure::Hybrid_bounded_flag=1;
-	  shmc_mcmc_routine(nmcmc,iseed0,dscale,0);
-	  return;
-	}
+      {
+        gradient_structure::Hybrid_bounded_flag=1;
+        shmc_mcmc_routine(nmcmc,iseed0,dscale,0);
+        return;
+      }
       if (option_match(ad_comm::argc,ad_comm::argv,"-nuts") > -1)
-	{
-	  gradient_structure::Hybrid_bounded_flag=1;
-	  nuts_mcmc_routine(nmcmc,iseed0,dscale,0);
-	  return;
-	}
+      {
+        gradient_structure::Hybrid_bounded_flag=1;
+        nuts_mcmc_routine(nmcmc,iseed0,dscale,0);
+        return;
+      }
       // This one is my modified version of the one Dave wrote. Mostly
       // cosmetic differences to get it to work with adnuts better.
       if (option_match(ad_comm::argc,ad_comm::argv,"-rwm") > -1)
-	{
-	  gradient_structure::Hybrid_bounded_flag=0;
-	  rwm_mcmc_routine(nmcmc,iseed0,dscale,0);
-	  return;
-	}
+      {
+        gradient_structure::Hybrid_bounded_flag=0;
+        rwm_mcmc_routine(nmcmc,iseed0,dscale,0);
+        return;
+      }
 
       // Temporarily turn off this chunk if using HMC
      else

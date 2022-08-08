@@ -18,9 +18,14 @@
  {
    if (!(!(*this)))  // only initialize allocated objects
    {
-     for (int i=slicemin();i<=slicemax();i++)
+     int min = indexmin();
+     int max = indexmax();
+     dvar_matrix* pti = t + min;
+     for (int i = min; i <= max; ++i)
      {
-       elem(i).initialize();
+       pti->initialize();
+
+       ++pti;
      }
    }
  }
@@ -103,9 +108,12 @@ void dvar3_array::allocate(int sl,int sh,int nrl,int nrh,int ncl,int nch)
     ad_exit(21);
   }
   t -= slicemin();
+
+  dvar_matrix* pti = t + sl;
   for (int i = sl; i <= sh; ++i)
   {
-    t[i].allocate(nrl, nrh, ncl, nch);
+    pti->allocate(nrl, nrh, ncl, nch);
+    ++pti;
   }
 }
 
@@ -137,9 +145,12 @@ void dvar3_array::allocate(int sl,int sh,int nrl,int nrh)
     ad_exit(21);
   }
   t -= slicemin();
+
+  dvar_matrix* pti = t + sl;
   for (int i = sl; i <= sh; ++i)
   {
-    t[i].allocate(nrl, nrh);
+    pti->allocate(nrl, nrh);
+    ++pti;
   }
 }
 
@@ -168,9 +179,11 @@ void dvar3_array::allocate(int sl,int sh,
      ad_exit(21);
   }
   t -= slicemin();
+  dvar_matrix* pti = t + sl;
   for (int i=sl; i<=sh; i++)
   {
-    t[i].allocate(nrl(i),nrh(i));
+    pti->allocate(nrl(i),nrh(i));
+    ++pti;
   }
 }
 
@@ -199,9 +212,11 @@ void dvar3_array::allocate(int sl,int sh)
     ad_exit(21);
   }
   t -= slicemin();
+  dvar_matrix* pti = t + sl;
   for (int i = sl; i <= sh; ++i)
   {
-    t[i].allocate();
+    pti->allocate();
+    ++pti;
   }
 }
 
@@ -255,9 +270,13 @@ void dvar3_array::allocate(int sl, int sh, int nrl, int nrh,
     ad_exit(21);
   }
   t -= slicemin();
+  dvar_matrix* pti = t + sl;
+  int* pncli = ncl.get_v() + sl;
   for (int i = sl; i <= sh; ++i)
   {
-    t[i].allocate(nrl, nrh, ncl(i), nch);
+    pti->allocate(nrl, nrh, *pncli, nch);
+    ++pti;
+    ++pncli;
   }
 }
 
@@ -300,9 +319,15 @@ void dvar3_array::allocate(int sl, int sh, int nrl, int nrh,
     ad_exit(21);
   }
   t -= slicemin();
+  dvar_matrix* pti = t + sl;
+  const int* pncli = ncl.get_v() + sl;
+  const int* pnchi = nch.get_v() + sl;
   for (int i = sl; i <= sh; ++i)
   {
-    t[i].allocate(nrl, nrh, ncl(i), nch(i));
+    pti->allocate(nrl, nrh, ncl(i), nch(i));
+    ++pti;
+    ++pncli;
+    ++pnchi;
   }
 }
 /**
@@ -343,9 +368,13 @@ void dvar3_array::allocate(int sl, int sh, int nrl, int nrh,
      ad_exit(21);
   }
   t -= slicemin();
+  dvar_matrix* pti = t + sl;
+  const int* pnchi = nch.get_v() + sl;
   for (int i = sl; i <= sh; ++i)
   {
-    t[i].allocate(nrl, nrh, ncl, nch(i));
+    pti->allocate(nrl, nrh, ncl, *pnchi);
+    ++pti;
+    ++pnchi;
   }
 }
 
@@ -356,9 +385,16 @@ void dvar3_array::allocate(int sl, int sh, int nrl, int nrh,
 dvar3_array::dvar3_array(const d3_array& m1)
  {
    allocate(m1);
-   for (int i=slicemin(); i<=slicemax(); i++)
+   int min = slicemin();
+   int max = slicemax();
+   dvar_matrix* pti = t + min;
+   const dmatrix* pm1i = &m1(min);
+   for (int i = min; i <= max; ++i)
    {
-     t[i]=m1[i];
+     *pti = *pm1i;
+
+     ++pti;
+     ++pm1i;
    }
  }
 
@@ -379,10 +415,16 @@ void dvar3_array::allocate(const d3_array& m1)
     cerr << " Error allocating memory in dvar3_array contructor" << endl;
     ad_exit(21);
   }
-  t -= slicemin();
-  for (int i = slicemin(); i <= slicemax(); ++i)
+  int min = slicemin();
+  int max = slicemax();
+  t -= min;
+  dvar_matrix* pti = t + min;
+  const dmatrix* pm1i = &m1(min);
+  for (int i = min; i <= max; ++i)
   {
-    t[i].allocate(m1[i]);
+    pti->allocate(*pm1i);
+    ++pti;
+    ++pm1i;
   }
 }
 /**
@@ -402,10 +444,16 @@ void dvar3_array::allocate(const dvar3_array& m1)
     cerr << " Error allocating memory in dvar3_array contructor" << endl;
     ad_exit(21);
   }
-  t -= slicemin();
-  for (int i = slicemin(); i <= slicemax(); ++i)
+  int min = slicemin();
+  int max = slicemax();
+  t -= min;
+  dvar_matrix* pti = t + min;
+  const dvar_matrix* pm1i = &m1(min);
+  for (int i = min; i <= max; ++i)
   {
-    t[i].allocate(m1[i]);
+    pti->allocate(*pm1i);
+    ++pti;
+    ++pm1i;
   }
 }
 
@@ -459,9 +507,19 @@ void dvar3_array::allocate(int sl, int sh, const ivector& nrl,
     ad_exit(21);
   }
   t -= slicemin();
+  int* pnrli = nrl.get_v() + sl;
+  int* pnrhi = nrh.get_v() + sl;
+  int* pncli = ncl.get_v() + sl;
+  int* pnchi = nch.get_v() + sl;
+  dvar_matrix* pti = t + sl;
   for (int i = sl; i <= sh; ++i)
   {
-    t[i].allocate(nrl[i], nrh[i], ncl[i], nch[i]);
+    pti->allocate(*pnrli, *pnrhi, *pncli, *pnchi);
+    ++pti;
+    ++pnrli;
+    ++pnrhi;
+    ++pncli;
+    ++pnchi;
   }
 }
 
@@ -515,9 +573,15 @@ void dvar3_array::allocate(int sl, int sh, int nrl, const ivector& nrh,
      ad_exit(21);
   }
   t -= slicemin();
+  int* pnrhi = nrh.get_v() + sl;
+  int* pnchi = nch.get_v() + sl;
+  dvar_matrix* pti = t + sl;
   for (int i = sl; i <= sh; ++i)
   {
-    t[i].allocate(nrl, nrh[i], ncl, nch[i]);
+    pti->allocate(nrl, *pnrhi, ncl, *pnchi);
+    ++pti;
+    ++pnrhi;
+    ++pnchi;
   }
 }
 
@@ -566,9 +630,13 @@ void dvar3_array::allocate(int sl, int sh, int nrl, const ivector& nrh,
     ad_exit(21);
   }
   t -= slicemin();
+  int* pnrhi = nrh.get_v() + sl;
+  dvar_matrix* pti = t + sl;
   for (int i = sl; i <= sh; ++i)
   {
-    t[i].allocate(nrl, nrh[i], ncl, nch);
+    pti->allocate(nrl, *pnrhi, ncl, nch);
+    ++pti;
+    ++pnrhi;
   }
 }
 
@@ -659,9 +727,15 @@ void dvar3_array::allocate(int sl, int sh, const ivector& nrl,
     ad_exit(21);
   }
   t -= slicemin();
+  int* pnrli = nrl.get_v() + sl;
+  int* pnrhi = nrh.get_v() + sl;
+  dvar_matrix* pti = t + sl;
   for (int i = sl; i <= sh; ++i)
   {
-    t[i].allocate(nrl(i), nrh(i), ncl, nch);
+    pti->allocate(*pnrli, *pnrhi, ncl, nch);
+    ++pti;
+    ++pnrli;
+    ++pnrhi;
   }
 }
 /**
@@ -699,8 +773,12 @@ void dvar3_array::allocate(int sl, int sh, const ivector& nrl, int nrh,
     ad_exit(21);
   }
   t -= slicemin();
+  int* pnrli = nrl.get_v() + sl;
+  dvar_matrix* pti = t + sl;
   for (int i = sl; i <= sh; ++i)
   {
-    t[i].allocate(nrl(i), nrh, ncl, nch);
+    pti->allocate(*pnrli, nrh, ncl, nch);
+    ++pti;
+    ++pnrli;
   }
 }

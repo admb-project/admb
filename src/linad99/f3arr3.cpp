@@ -14,9 +14,18 @@ d3_array value(const dvar3_array& arr3)
 {
   d3_array result;
   result.allocate(arr3);
-  for (int i = result.slicemin(); i <= result.slicemax(); ++i)
+
+  int min = result.slicemin();
+  int max = result.slicemax();
+
+  dmatrix* presulti = &result(min);
+  const dvar_matrix* parr3i = &arr3(min);
+  for (int i = min; i <= max; ++i)
   {
-    result[i] = value(arr3(i));
+    *presulti = value(*parr3i);
+
+    ++presulti;
+    ++parr3i;
   }
   return result;
 }
@@ -40,9 +49,13 @@ void d3_array::allocate(const dvar3_array& d3v)
          << __FILE__ << ':' << __LINE__ << '\n';
     ad_exit(1);
   }
-  t -= slicemin();
+  t -= sl;
+  dmatrix* pti = t + sl;
+  const dvar_matrix* pd3vi = &d3v(sl);
   for (int i = sl; i <= sh; ++i)
   {
-    t[i].allocate(d3v(i));
+    pti->allocate(*pd3vi);
+    ++pti;
+    ++pd3vi;
   }
 }

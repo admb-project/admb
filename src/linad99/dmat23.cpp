@@ -16,14 +16,29 @@
  */
 dmatrix outer_prod(const dvector& v1, const dvector& v2)
 {
-  dmatrix tmp(v1.indexmin(),v1.indexmax(), v2.indexmin(), v2.indexmax() );
+  int imin = v1.indexmin();
+  int imax = v1.indexmax();
+  int jmin = v2.indexmin();
+  int jmax = v2.indexmax();
 
-  for (int i=v1.indexmin(); i<=v1.indexmax(); i++)
+  dmatrix tmp(imin, imax, jmin, jmax);
+
+  dvector* ptmpi = &tmp(imin);
+  double* pv1i = v1.get_v() + imin;
+  for (int i = imin; i <= imax; ++i)
   {
-    for (int j=v2.indexmin(); j<=v2.indexmax(); j++)
+    double* ptmpij = ptmpi->get_v() + jmin;
+    double* pv2j = v2.get_v() + jmin;
+    for (int j = jmin; j <= jmax; ++j)
     {
-      tmp.elem(i,j)=v1.elem(i)*v2.elem(j);
+      *ptmpij = *pv1i * *pv2j;
+
+      ++ptmpij;
+      ++pv2j;
     }
+
+    ++ptmpi;
+    ++pv1i;
   }
-  return(tmp);
+  return tmp;
 }

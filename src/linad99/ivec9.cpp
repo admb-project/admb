@@ -14,15 +14,22 @@ ivector& ivector::operator+=(const ivector& other)
 {
   int min = indexmin();
   int max = indexmax();
+#ifndef OPT_LIB
   if (min != other.indexmin() || max != other.indexmax())
   {
     cerr << " Incompatible vector indexes in "
          << "ivector::operator+=(const ivector&).\n";
     ad_exit(1);
   }
+#endif
+  int* pvi = v + min;
+  int* potheri = other.get_v() + min;
   for (int i = min; i <= max; ++i)
   {
-    elem(i) += other(i);
+    *pvi += *potheri;
+
+    ++pvi;
+    ++potheri;
   }
   return *this;
 }
@@ -35,9 +42,11 @@ ivector& ivector::operator+=(int value)
 {
   int min = indexmin();
   int max = indexmax();
+  int* pvi = v + min;
   for (int i = min; i <= max; ++i)
   {
-    elem(i) += value;
+    *pvi += value;
+    ++pvi;
   }
   return *this;
 }

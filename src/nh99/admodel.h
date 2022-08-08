@@ -52,6 +52,8 @@
   #pragma interface
 #endif
 
+#include <limits>
+
 #include <vector>
 
   class laplace_approximation_calculator;
@@ -86,7 +88,6 @@ class init_xml_doc;
   dvector mfexp(const dvector&);
 
   class param_init_bounded_number_vector;
-  class model_parameters;
   extern int AD_gaussflag;
 
   extern function_minimizer * pfm;
@@ -178,13 +179,12 @@ public:
  */
 class named_dvar_vector : public dvar_vector, public model_name_tag
 {
-protected:
+public:
   named_dvar_vector(void) : dvar_vector(), model_name_tag() {;}
   named_dvar_vector& operator=(const dvar_vector& m);
   named_dvar_vector& operator=(const dvector& m);
   named_dvar_vector& operator=(const double m);
   named_dvar_vector& operator=(const prevariable& m);
-  friend class model_parameters;
   void allocate(int mmin,int mmax,const char * s);
   void allocate(const char * s);
 };
@@ -195,13 +195,12 @@ protected:
  */
 class equality_constraint_vector : public named_dvar_vector
 {
-protected:
+public:
   equality_constraint_vector(void);
   equality_constraint_vector& operator=(const dvar_vector& m);
   equality_constraint_vector& operator=(const dvector& m);
   equality_constraint_vector& operator=(const double m);
   equality_constraint_vector& operator=(const prevariable& m);
-  friend class model_parameters;
   void allocate(int mmin,int mmax,const char * s);
 };
 
@@ -211,13 +210,12 @@ protected:
  */
 class inequality_constraint_vector : public named_dvar_vector
 {
-protected:
+public:
   inequality_constraint_vector(void);
   inequality_constraint_vector& operator=(const dvar_vector& m);
   inequality_constraint_vector& operator=(const dvector& m);
   inequality_constraint_vector& operator=(const double m);
   inequality_constraint_vector& operator=(const prevariable& m);
-  friend class model_parameters;
   void allocate(int mmin,int mmax,const char * s);
 };
 
@@ -244,12 +242,11 @@ public:
 class named_dvariable : public dvariable, public model_name_tag
 {
   //named_dvariable& operator=(const dvariable& m);
-protected:
+public:
   named_dvariable(void) : dvariable(), model_name_tag() {;}
   void allocate(const char * s);
   named_dvariable& operator=(const prevariable& m);
   named_dvariable& operator=(const double m);
-  friend class model_parameters;
 };
 
 /**
@@ -259,13 +256,12 @@ protected:
 class dll_param_number : public named_dvariable
 {
   double * pd;
-protected:
+public:
   //named_dvariable(void) : dvariable(), model_name_tag() {;}
   void allocate(double *_d,const char * s);
   dll_param_number& operator=(const prevariable& m);
   dll_param_number& operator=(const double m);
   virtual ~dll_param_number();
-  friend class model_parameters;
 };
 
 /**
@@ -274,7 +270,7 @@ protected:
  */
 class named_dvar_matrix : public dvar_matrix, public model_name_tag
 {
-protected:
+public:
   named_dvar_matrix(void) : dvar_matrix(), model_name_tag() {;}
   void allocate(int rmin,int rmax,int cmin,int cmax,const char * s);
   void allocate(int rmin,int rmax,const char * s);
@@ -284,13 +280,10 @@ protected:
     int rmin, int rmax,
     const index_type& cmin, const index_type& cmax,
     const char* s);
-public:
   named_dvar_matrix& operator=(const double m);
   named_dvar_matrix& operator=(const dmatrix& m);
   named_dvar_matrix& operator=(const dvar_matrix& m);
   named_dvar_matrix& operator=(const dvariable& m);
-
-  friend class model_parameters;
 };
 
 /**
@@ -318,7 +311,7 @@ public:
  */
 class named_dvar3_array : public dvar3_array, public model_name_tag
 {
-protected:
+public:
   named_dvar3_array(void) : dvar3_array(), model_name_tag() {;}
  void allocate(const ad_integer& sl,const ad_integer& sh,
   const index_type& nrl,const index_type& nrh,const index_type& ncl,
@@ -331,8 +324,6 @@ protected:
     const char * s="UNNAMED");
   void allocate(int hsl,int hsu,const char * s="UNNAMED");
   void allocate(const char * s="UNNAMED");
-
-
   void allocate(int hsl, int hsu, const ivector& rmin, int rmax,
                 int cmin, int cmax, const char *s = "UNNAMED");
   void allocate(int hsl, int hsu, int rmin, const ivector& rmax,
@@ -347,7 +338,6 @@ protected:
                 const ivector& cmax, const char *s = "UNNAMED");
   named_dvar3_array& operator=(const dvar3_array& m);
   named_dvar3_array& operator=(const d3_array& m);
-  friend class model_parameters;
 };
 
 /**
@@ -356,7 +346,7 @@ protected:
  */
 class named_dvar4_array : public dvar4_array, public model_name_tag
 {
-protected:
+public:
   named_dvar4_array(void) : dvar4_array(), model_name_tag() {;}
   void allocate(int hhsl,int hhsu,int hsl,int hsu,int rmin,int rmax,
   int cmin,int cmax,const char * s);
@@ -379,7 +369,6 @@ protected:
 
   named_dvar4_array& operator=(const dvar4_array& m);
   named_dvar4_array& operator=(const d4_array& m);
-  friend class model_parameters;
 };
 
 /**
@@ -388,7 +377,7 @@ protected:
  */
 class named_dvar5_array : public dvar5_array, public model_name_tag
 {
-protected:
+public:
   named_dvar5_array(void) : dvar5_array(), model_name_tag() {;}
   void allocate(int hhsl,int hhsu,int hsl,int hsu,int rmin,int rmax,
   int cmin,int cmax,
@@ -404,7 +393,6 @@ protected:
 
   named_dvar5_array& operator=(const dvar5_array& m);
   named_dvar5_array& operator=(const d5_array& m);
-  friend class model_parameters;
 };
 
 /**
@@ -413,7 +401,7 @@ protected:
  */
 class named_dvar6_array : public dvar6_array, public model_name_tag
 {
-protected:
+public:
   named_dvar6_array(void) : dvar6_array(), model_name_tag() {;}
   void allocate(int hhsl,int hhsu,
     int hsl,int hsu,
@@ -433,7 +421,6 @@ protected:
 
   named_dvar6_array& operator=(const dvar6_array& m);
   named_dvar6_array& operator=(const d6_array& m);
-  friend class model_parameters;
 };
 
 /**
@@ -442,7 +429,7 @@ protected:
  */
 class named_dvar7_array : public dvar7_array, public model_name_tag
 {
-protected:
+public:
   named_dvar7_array(void) : dvar7_array(), model_name_tag() {;}
   void allocate(
     int hhsl,int hhsu,
@@ -465,7 +452,6 @@ protected:
 
   named_dvar7_array& operator=(const dvar7_array& m);
   named_dvar7_array& operator=(const d7_array& m);
-  friend class model_parameters;
 };
 
 /**
@@ -474,14 +460,13 @@ protected:
  */
 class named_dvector : public dvector, public model_name_tag
 {
-protected:
+public:
   named_dvector(void) : dvector(), model_name_tag() {;}
   void allocate(int mmin,int mmax,const char * s);
   void allocate(const char * s);
   void allocate(int mmin, const ivector& mmax, const char *s);
   named_dvector& operator=(const dvector& m);
   named_dvector& operator=(const double m);
-  friend class model_data;
 };
 
 /**
@@ -960,6 +945,7 @@ public:
     const double& ll, const dvector& diag);
   virtual void restore_value(const ifstream& ifs) = 0;
   virtual void add_to_list(void);
+
 #if defined(USE_ADPVM)
   virtual void pvm_pack(void)=0;
   virtual void pvm_unpack(void)=0;
@@ -996,7 +982,6 @@ public:
   void pvm_pack(void){::pvm_pack(*this);}
   void pvm_unpack(void){::pvm_unpack(*this);}
 #endif
-private:
   virtual void set_simulation_bounds(const dmatrix& symbds, const int& ii);
   //virtual void set_simulation_bounds(const dmatrix&, const dvector& symbds,
   //  const int& ii);
@@ -1025,7 +1010,6 @@ private:
   virtual void restore_value(const ifstream& ifs);
   void report_value(void);
   //virtual void read_value(void);
-public:
   void allocate(int imin,int imax,int phasestart=1,const char * s="UNNAMED");
   void allocate(const ad_integer& imin,const ad_integer& imax,
     const ad_integer& phasestart=1,const char * s="UNNAMED");
@@ -1034,9 +1018,7 @@ public:
   void allocate(int imin,int imax,const ivector& ishare,
     const char * s="UNNAMED");
 #endif
-  friend class model_parameters;
   friend class param_init_vector_vector;
-public:
   param_init_vector& operator = (const dvector&);
   param_init_vector& operator = (const dvar_vector&);
   param_init_vector& operator = (const prevariable&);
@@ -1067,8 +1049,6 @@ public:
   void allocate(double* _pd,
     int imin, int imax,
     const char* s="UNNAMED");
-
-  friend class model_parameters;
 };
 
 /**
@@ -1083,11 +1063,9 @@ public:
   void set_minb(double b);
   double get_maxb() const;
   void set_maxb(double b);
-protected:
   double minb;
   double maxb;
   param_init_bounded_vector();
-private:
   virtual void dev_correction(const dmatrix&, const int&);
   virtual void set_simulation_bounds(const dmatrix& symbds, const int& ii);
   virtual void sd_vscale(const dvar_vector& d,const dvar_vector& x,
@@ -1115,7 +1093,6 @@ private:
  //void param_init_bounded_vector::allocate(const ad_integer& imin,
    //const ad_integer& imax,const ad_double& _minb,const ad_double& _maxb,
    //const ad_integer& phase_start,const char * s);
-  friend class model_parameters;
   friend class param_init_bounded_vector_vector;
   virtual const char * label(void);
   virtual void save_value(const ofstream& ofs, int prec);
@@ -1126,7 +1103,6 @@ private:
   virtual void bsave_value(uostream& uos);
   void report_value(void);
   //virtual void read_value(void);
-public:
   param_init_bounded_vector& operator = (const dvector&);
   param_init_bounded_vector& operator = (const dvar_vector&);
   param_init_bounded_vector& operator = (const prevariable&);
@@ -1210,13 +1186,15 @@ public:
   virtual void sd_vscale(const dvar_vector& d,const dvar_vector& x,
     const int& ii);
   //virtual void read_value(void);
-public:
   void allocate(int phase_start=1,const char *s="UNNAMED");
   void allocate(const char *s="UNNAMED");
   void allocate(init_xml_doc&, const char *s="UNNAMED");
-  friend class model_parameters;
   friend class param_init_number_vector;
   param_init_number();
+  param_init_number(const char* name): param_init_number()
+  {
+    allocate(name);
+  }
   param_init_number& operator=(const double m);
   param_init_number& operator=(const prevariable& m);
 };
@@ -1254,7 +1232,6 @@ public:
   void set_minb(double b);
   double get_maxb() const;
   void set_maxb(double b);
-protected:
   double minb;
   double maxb;
   void allocate(double _minb,double _maxb,int phase_start=1,
@@ -1264,13 +1241,34 @@ protected:
   void allocate(const data_vector& v,const char * s="UNNAMED");
   void allocate(init_xml_doc&, const char * s="UNNAMED");
 
-public:
 #if defined(USE_ADPVM)
   void pvm_pack(void){::pvm_pack(*this);}
   void pvm_unpack(void){::pvm_unpack(*this);}
 #endif
   param_init_bounded_number();
-private:
+  param_init_bounded_number(
+      const double new_initial_value,
+      const double bounds_min,
+      const double bounds_max,
+      const int phase_start,
+      const char* name
+    ): param_init_bounded_number()
+  {
+    set_initial_value(new_initial_value);
+    allocate(bounds_min, bounds_max, phase_start, name);
+  }
+  param_init_bounded_number
+    (
+      const double new_initial_value,
+      const double bounds_min,
+      const double bounds_max,
+      const char* name
+    ): param_init_bounded_number()
+  {
+    set_initial_value(new_initial_value);
+    allocate(bounds_min, bounds_max, 1, name);
+  }
+
   virtual void set_simulation_bounds(const dmatrix& symbds, const int& ii);
 //virtual void set_simulation_bounds(const dmatrix&, const dvector& symbds,
 //  const int& ii);
@@ -1291,8 +1289,6 @@ private:
   void report_value(void);
   param_init_bounded_number& operator=(const double m);
   param_init_bounded_number& operator=(const prevariable& m);
-  friend class model_parameters;
-  friend class param_init_bounded_number_vector;
   virtual void sd_vscale(const dvar_vector& d,const dvar_vector& x,
     const int& ii);
 };
@@ -1480,22 +1476,25 @@ class data_int: public model_name_tag
 protected:
   int val;
 
-  data_int& operator=(const int);
-
+public:
   void allocate(int n,const char * s="UNNAMED");
   void allocate(const char * s="UNNAMED");
   void allocate(init_xml_doc&, const char * s="UNNAMED");
 
-public:
-  //data_int(): val(0) { }
+  data_int(): val(0) { }
+  data_int(const data_int& other): val((int)other)
+  {
+  }
   ~data_int() { }
+
+  data_int& operator=(const data_int& other)
+    { return data_int::operator=((int)other); }
+  data_int& operator=(const int);
   operator int() const { return val; }
 
-  friend class model_data;
-  friend class model_parameters;
-  friend int operator + (int n,data_int v);
-  friend int operator + (data_int v,int n);
-  friend int operator + (data_int v,data_int n);
+  friend int operator+(const int n, const data_int& v);
+  friend int operator+(const data_int& v, const int n);
+  friend int operator+(const data_int& v, const data_int& n);
 };
 
 /**
@@ -1593,7 +1592,6 @@ public:
   data_matrix(void) : named_dmatrix() {;}
   data_matrix& operator=(const dmatrix& m);
   data_matrix& operator=(const double& m);
-private:
   void allocate(int rmin,int rmax,int cmin,int cmax,
     const char * = "UNNAMED");
   void allocate(int rmin, int rmax, const ivector& cmin, const ivector& cmax,
@@ -1603,7 +1601,6 @@ private:
   void allocate(int rmin, int rmax, int cmin, const ivector& cmax,
     const char * = "UNNAMED");
   void allocate(init_xml_doc&, const char * = "UNNAMED");
-  friend class model_data;
 };
 
 /**
@@ -1629,7 +1626,6 @@ class data_3array : public named_d3_array
 {
 public:
   data_3array(void) : named_d3_array() {;}
-private:
   void allocate(int hsl,int hsu,int rmin,int rmax,int cmin,int cmax,
     const char * ="UNNAMED");
   void allocate(int hsl, int hsu, const ivector& rmin, int rmax,
@@ -1646,17 +1642,16 @@ private:
                 const ivector& cmax, const char * ="UNNAMED");
   void allocate(int hsl,int hsu, const index_type& rmin, const index_type& rmax,
     const index_type& cmin, const index_type& cmax, const char * ="UNNAMED");
-  friend class model_data;
 };
 
 class data_3iarray : public named_i3_array
 {
+public:
   data_3iarray(void) : named_i3_array() {;}
   void allocate(int hsl,int hsu,int rmin,int rmax,int cmin,int cmax,
     const char * ="UNNAMED");
   void allocate(int hsl, int hsu,const index_type& rmin, const index_type& rmax,
     const index_type& cmin, const index_type& cmax, const char * ="UNNAMED");
-  friend class model_data;
 };
 
 /**
@@ -1671,12 +1666,12 @@ public:
     int cmin,int cmax,const char * _s = "UNNAMED");
   dll_data_3array& operator=(const d3_array &);
   virtual ~dll_data_3array();
-  friend class model_data;
 };
 
 
 class data_7array : public named_d7_array
 {
+public:
   data_7array(void) : named_d7_array() {;}
   void allocate(int l7,int u7,int l6,int u6,int l5,int u5,int hhsl,
     int hhsu,int hsl,int hsu,int rmin,int rmax,int cmin,int cmax,
@@ -1689,11 +1684,11 @@ class data_7array : public named_d7_array
     const index_type& sl,const index_type& sh,
     const index_type& nrl,const index_type& nrh,
     const char* s="UNNAMED");
-  friend class model_data;
 };
 
 class data_6array : public named_d6_array
 {
+public:
   data_6array(void) : named_d6_array() {;}
   void allocate(int l6,int u6,int l5,int u5,int hhsl,int hhsu,int hsl,
     int hsu,int rmin,int rmax,int cmin,int cmax,const char * s="UNNAMED");
@@ -1704,11 +1699,11 @@ class data_6array : public named_d6_array
     const index_type& sl,const index_type& sh,
     const index_type& nrl,const index_type& nrh,
     const char * s="UNNAMED");
-  friend class model_data;
 };
 
 class data_5array : public named_d5_array
 {
+public:
   data_5array(void) : named_d5_array() {;}
   void allocate(int hhsl,int hhsu,
     int hhhsl,int hhhsu,
@@ -1718,7 +1713,6 @@ class data_5array : public named_d5_array
     const index_type& hhsu, const index_type& hsl, const index_type& hsu,
     const index_type& rmin, const index_type& rmax, const index_type& cmin,
     const index_type& cmax, const char * ="UNNAMED");
-  friend class model_data;
 };
 
 /**
@@ -1727,24 +1721,24 @@ class data_5array : public named_d5_array
  */
 class data_4array : public named_d4_array
 {
+public:
   data_4array(void) : named_d4_array() {;}
   void allocate(int hhsl,int hhsu,int hsl,int hsu,int rmin,int rmax,
     int cmin,int cmax,const char * ="UNNAMED");
   void allocate(ad_integer hhsl, ad_integer hhsu, const index_type& hsl,
     const index_type& hsu, const index_type& rmin, const index_type& rmax,
     const index_type& cmin, const index_type& cmax, const char * ="UNNAMED");
-  friend class model_data;
 };
 
 class data_4iarray : public named_i4_array
 {
+public:
   data_4iarray(void) : named_i4_array() {;}
   void allocate(int hhsl,int hhsu,int hsl,int hsu,int rmin,int rmax,
     int cmin,int cmax,const char * ="UNNAMED");
   void allocate(ad_integer hhsl, ad_integer hhsu, const index_type& hsl,
     const index_type& hsu, const index_type& rmin, const index_type& rmax,
     const index_type& cmin, const index_type& cmax, const char * ="UNNAMED");
-  friend class model_data;
 };
 
 /**
@@ -1753,11 +1747,11 @@ class data_4iarray : public named_i4_array
  */
 class data_imatrix : public named_imatrix
 {
+public:
   data_imatrix(void) : named_imatrix() {;}
   void allocate(int rmin,int rmax,int cmin,int cmax,const char * ="UNNAMED");
   void allocate(int rmin, int rmax, const index_type&, const index_type& cmax,
     const char * ="UNNAMED");
-  friend class model_data;
 };
 
 /**
@@ -1770,11 +1764,9 @@ public:
   data_vector& operator=(const dvector& m);
   data_vector& operator=(const double m);
   data_vector(void) : named_dvector() {;}
-private:
   void allocate(int imin,int imax,const char * ="UNNAMED");
   void allocate(int imin, const ivector& imax, const char * ="UNNAMED");
   void allocate(init_xml_doc&, const char * ="UNNAMED");
-  friend class model_data;
 };
 
 /**
@@ -1801,9 +1793,7 @@ class data_ivector : public named_ivector
 {
 public:
   data_ivector(void) : named_ivector() {;}
-private:
   void allocate(int imin,int imax,const char * ="UNNAMED");
-  friend class model_data;
 };
 
 /**
@@ -1814,13 +1804,12 @@ class data_number : public model_name_tag
 {
 protected:
   double val;
-  void allocate(const char * ="UNNAMED");
 public:
+  void allocate(const char * ="UNNAMED");
   void report_value(void);
   operator double() {return val;}
   double& value(void) {return val;}
   void initialize(void) {val=0.0;}
-  friend class model_data;
   data_number & operator=(const double& m);
 };
 
@@ -1839,12 +1828,16 @@ public:
 
 #include <functional>
 
-typedef dvariable (model_parameters::*PMF) (const dvariable&);
 typedef std::function<dvariable(const dvariable&)> _func;
+
+#if defined(USE_ADPVM)
+class model_parameters;
+typedef dvariable (model_parameters::*PMF) (const dvariable&);
 typedef dvariable (model_parameters::*PMFI) (const dvariable&,int n);
 typedef dvariable (model_parameters::*PMFVI) (const dvar_vector&,int n);
 typedef void (model_parameters::*PMFVIV4) (const dvar_vector&,int n,
   dvariable& f1, const dvariable& f2, const dvariable& f3, const dvariable& f4);
+#endif
 
   class init_df1b2vector;
   class df1b2vector;
@@ -1975,6 +1968,9 @@ public:
   void sgibbs_mcmc_routine(int,int,double,int);
   void hybrid_mcmc_routine(int,int,double,int);
 
+  // Compact flag to toggle new console output
+  static int output_flag;
+
   /// hess_step is used for HMC. See details in function_minimizer::hess_step.
   void hess_step();
   bool choleski_decomp_hmc(const dmatrix& metric, dmatrix& L);
@@ -1986,7 +1982,7 @@ public:
 			const independent_variables& q);
   dvector rotate_pars(const dvector& m, const dvector& x);
   dvector rotate_pars(const dmatrix& m, const dvector& x);
-  dvector rotate_gradient(const dvector& x, const dmatrix& m); 
+  dvector rotate_gradient(const dvector& x, const dmatrix& m);
   int compute_next_window(int i, int warmup, int w1, int aws, int w3);
   bool slow_phase(int is, int warmup, int w1, int w3);
   std::string get_filename(const char* f);
@@ -2120,6 +2116,7 @@ public:
   void trust_region_update(int nvar,int _crit,
     independent_variables& x,const dvector& _g,const double& _f);
 
+#if defined(USE_ADPVM)
   void multint4(int n, const dvar_vector& a, const dvar_vector& b,
     const dvar_vector& h, double al, int m, const dvariable& e,
     const dvariable& aint1, const dvariable& aint2, dvariable& aint3,
@@ -2128,6 +2125,7 @@ public:
   void multint(int n, const dvar_vector& a, const dvar_vector& b,
     const dvar_vector& h, double al, int m, const dvariable& e,
     const dvariable& aint, const int& key, PMFVI f);
+#endif
 
   virtual void set_runtime(void);
   virtual void set_runtime_maxfn(const char *);
@@ -2281,6 +2279,7 @@ public:
  */
 class param_stddev_vector: public named_dvar_vector , stddev_params
 {
+public:
   dvector sd;
 
   // get the number of active parameters
@@ -2290,7 +2289,6 @@ class param_stddev_vector: public named_dvar_vector , stddev_params
     param_stddev_vector();
     void allocate(int imin,int imax,const char * s="UNNAMED");
     virtual void set_dependent_variables(void);
-    friend class model_parameters;
     virtual void copy_value_to_vector(const dvector& x, const int& ii);
     virtual void get_sd_values(const dvector& x, const int& ii);
   param_stddev_vector& operator=(const dvar_vector& m);
@@ -2304,6 +2302,7 @@ class param_stddev_vector: public named_dvar_vector , stddev_params
  */
 class param_stddev_number: public named_dvariable , public stddev_params
 {
+public:
   double sd;
   int index;
   void allocate(const char *s="UNNAMED");
@@ -2316,9 +2315,11 @@ class param_stddev_number: public named_dvariable , public stddev_params
   virtual const char * label(void);
   virtual void copy_value_to_vector(const dvector& x, const int& ii);
   virtual void get_sd_values(const dvector& x, const int& ii);
-protected:
   param_stddev_number();
-  friend class model_parameters;
+  param_stddev_number(const char* name): param_stddev_number()
+  {
+    allocate(name);
+  }
   virtual void set_dependent_variables(void);
   param_stddev_number& operator=(const prevariable&);
   param_stddev_number& operator=(const double);
@@ -2331,22 +2332,34 @@ protected:
 class param_likeprof_number: public param_stddev_number ,
     public likeprof_params
 {
-    double sigma;
-    void allocate(const char *s="UNNAMED");
+public:
+  double sigma;
+  void allocate(const char *s="UNNAMED");
 
   // get the number of active parameters
   virtual unsigned int size_count() const;
 
-    virtual const char * label(void);
-    virtual double& get_sigma(void){return sigma;}
-    virtual double get_value(void){return value(*this);}
-    //void copy_value_to_vector(const dvector& x, const int& ii);
-    virtual dvariable variable(void){ return dvariable(*this);}
-    param_likeprof_number();
-    friend class model_parameters;
-public:
-    param_likeprof_number& operator=(const prevariable&);
-    param_likeprof_number& operator=(const double);
+  virtual const char * label(void);
+  virtual double& get_sigma(void){return sigma;}
+  virtual double get_value(void){return value(*this);}
+  //void copy_value_to_vector(const dvector& x, const int& ii);
+  virtual dvariable variable(void){ return dvariable(*this);}
+
+  param_likeprof_number();
+  param_likeprof_number(const char* name): param_likeprof_number()
+  {
+    allocate(name);
+  }
+  param_likeprof_number(
+      const int step_number,
+      const char* name
+    ): param_likeprof_number(name)
+  {
+    set_stepnumber(step_number);
+  }
+
+  param_likeprof_number& operator=(const prevariable&);
+  param_likeprof_number& operator=(const double);
 };
 
 /**
@@ -2355,6 +2368,7 @@ public:
  */
 class param_stddev_matrix: public named_dvar_matrix , stddev_params
 {
+public:
   dmatrix sd;
   virtual unsigned int size_count() const;
     //virtual void read_value(void);
@@ -2362,7 +2376,6 @@ class param_stddev_matrix: public named_dvar_matrix , stddev_params
     void allocate(int rmin,int rmax,int cmin,int cmax,
     const char * s="UNNAMED");
   param_stddev_matrix(void);
-  friend class model_parameters;
   virtual void set_dependent_variables(void);
   virtual void get_sd_values(const dvector& x, const int& ii);
   virtual void copy_value_to_vector(const dvector& x, const int& ii);
@@ -2382,6 +2395,11 @@ class param_stddev_matrix: public named_dvar_matrix , stddev_params
     static double fun_without_pen;
     static double gmax;
     objective_function_value();
+    objective_function_value(const char* name): objective_function_value()
+    {
+      allocate(name);
+    }
+
     objective_function_value& operator=(const prevariable& v);
     objective_function_value& operator=(const double v);
   };

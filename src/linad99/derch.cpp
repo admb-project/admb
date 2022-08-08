@@ -222,12 +222,9 @@ void derch(const double& _f, const independent_variables & _x,
                   << "  " <<  setw(12) <<  perr
                   << endl;
         }
-        if (ad_printf)
-        {
-          (*ad_printf)("  %12.5e  %12.5e  %12.5e  %12.5e ; %5d \n",
+        ad_printf("  %12.5e  %12.5e  %12.5e  %12.5e ; %5d \n",
                 x(i), f, g(i), g2, i);
-          fflush(stdout);
-        }
+        fflush(stdout);
       }
 #if defined(_MSC_VER)
       if ( kbhit() )

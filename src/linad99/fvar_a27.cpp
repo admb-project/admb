@@ -33,10 +33,13 @@
    {
      va[i].x=t[i];
    }
+
+   grad_stack* GRAD_STACK1 = gradient_structure::GRAD_STACK1;
+   DF_FILE* fp = gradient_structure::fp;
    save_identifier_string("b");
-   this->save_dvar_vector_position();
+   fp->save_dvar_vector_position(*this);
    save_identifier_string("a");
-   gradient_structure::GRAD_STACK1->
-     set_gradient_stack(dv_init);
-   return(*this);
+   GRAD_STACK1->set_gradient_stack(dv_init);
+
+   return *this;
  }

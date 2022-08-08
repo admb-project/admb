@@ -16,16 +16,24 @@ ivector colsum(const imatrix& matrix)
   int jmin = matrix.colmin();
   int jmax = matrix.colmax();
   ivector colsums(jmin, jmax);
-  colsums.initialize();
 
   int imin = matrix.rowmin();
   int imax = matrix.rowmax();
+
+  int* pcolumnsj = colsums.get_v() + jmin;
   for (int j = jmin; j <= jmax; ++j)
   {
+    *pcolumnsj = 0;
+
+    const ivector* pmatrixi = &matrix(imin);
     for (int i = imin; i <= imax; ++i)
     {
-      colsums(j) += matrix(i, j);
+      *pcolumnsj += *(pmatrixi->get_v() + j);
+
+      ++pmatrixi;
     }
+
+    ++pcolumnsj;
   }
   return colsums;
 }
@@ -41,9 +49,13 @@ ivector rowsum(const imatrix& matrix)
   int max = matrix.rowmax();
   ivector rowsums(min, max);
 
+  int* prowsumsi = rowsums.get_v() + min;
+  const ivector* pmatrixi = &matrix(min);
   for (int i = min; i <= max; ++i)
   {
-    rowsums(i) = sum(matrix(i));
+    *prowsumsi = sum(*pmatrixi);
+    ++pmatrixi;
+    ++prowsumsi;
   }
 
   return rowsums;

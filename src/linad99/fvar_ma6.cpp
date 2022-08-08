@@ -50,16 +50,19 @@ dvar_matrix empirical_covariance(const dvar_matrix& _v1,
        tmp.elem_value(i,j)/=nobs;
      }
    }
+
+  grad_stack* GRAD_STACK1 = gradient_structure::GRAD_STACK1;
+  DF_FILE* fp = gradient_structure::fp;
+
   save_identifier_string("ru");
-  missflags.save_imatrix_value();
-  missflags.save_imatrix_position();
-  save_int_value(nobs);
-  tmp.save_dvar_matrix_position();
-  v1.save_dvar_matrix_value();
-  v1.save_dvar_matrix_position();
+  fp->save_imatrix_value(missflags);
+  fp->save_imatrix_position(missflags);
+  fp->save_int_value(nobs);
+  fp->save_dvar_matrix_position(tmp);
+  fp->save_dvar_matrix_value(v1);
+  fp->save_dvar_matrix_position(v1);
   save_identifier_string("rv");
-  gradient_structure::GRAD_STACK1->
-      set_gradient_stack(dfempirical_covarv_partial);
+  GRAD_STACK1->set_gradient_stack(dfempirical_covarv_partial);
    return(tmp);
  }
 
@@ -69,14 +72,16 @@ dvar_matrix empirical_covariance(const dvar_matrix& _v1,
  */
 void dfempirical_covarv_partial(void)
 {
+  DF_FILE* fp = gradient_structure::fp;
+
   verify_identifier_string("rv");
-  dvar_matrix_position v1pos=restore_dvar_matrix_position();
-  dmatrix v1=restore_dvar_matrix_value(v1pos);
-  dvar_matrix_position tmppos=restore_dvar_matrix_position();
+  dvar_matrix_position v1pos=fp->restore_dvar_matrix_position();
+  dmatrix v1=fp->restore_dvar_matrix_value(v1pos);
+  dvar_matrix_position tmppos=fp->restore_dvar_matrix_position();
   dmatrix dftmp=restore_dvar_matrix_derivatives(tmppos);
-  int nobs=restore_int_value();
-  imatrix_position mfpos=restore_imatrix_position();
-  imatrix missflags=restore_imatrix_value(mfpos);
+  int nobs=fp->restore_int_value();
+  imatrix_position mfpos=fp->restore_imatrix_position();
+  imatrix missflags=fp->restore_imatrix_value(mfpos);
   verify_identifier_string("ru");
   int mmin=v1(v1.indexmin()).indexmin();
   int mmax=v1(v1.indexmin()).indexmax();
@@ -147,13 +152,17 @@ dvar_matrix empirical_covariance(const dvar_matrix& v1)
        tmp.elem_value(i,j)/=double(nobs);
      }
    }
+
+  grad_stack* GRAD_STACK1 = gradient_structure::GRAD_STACK1;
+  DF_FILE* fp = gradient_structure::fp;
+
   save_identifier_string("ru");
-  tmp.save_dvar_matrix_position();
-  v1.save_dvar_matrix_value();
-  v1.save_dvar_matrix_position();
+  fp->save_dvar_matrix_position(tmp);
+  fp->save_dvar_matrix_value(v1);
+  fp->save_dvar_matrix_position(v1);
   save_identifier_string("rv");
-  gradient_structure::GRAD_STACK1->
-      set_gradient_stack(dfempirical_covarv);
+  GRAD_STACK1->set_gradient_stack(dfempirical_covarv);
+
    return(tmp);
  }
 
@@ -163,10 +172,12 @@ dvar_matrix empirical_covariance(const dvar_matrix& v1)
  */
 void dfempirical_covarv(void)
 {
+  DF_FILE* fp = gradient_structure::fp;
+
   verify_identifier_string("rv");
-  dvar_matrix_position v1pos=restore_dvar_matrix_position();
-  dmatrix v1=restore_dvar_matrix_value(v1pos);
-  dvar_matrix_position tmppos=restore_dvar_matrix_position();
+  dvar_matrix_position v1pos=fp->restore_dvar_matrix_position();
+  dmatrix v1=fp->restore_dvar_matrix_value(v1pos);
+  dvar_matrix_position tmppos=fp->restore_dvar_matrix_position();
   dmatrix dftmp=restore_dvar_matrix_derivatives(tmppos);
   verify_identifier_string("ru");
   int mmin=v1(v1.indexmin()).indexmin();
@@ -207,27 +218,45 @@ void dfouter_prodvv(void);
  * \param
  */
 dvar_matrix outer_prod(const dvar_vector& v1, const dvar_vector& v2)
- {
-   dvar_matrix tmp(v1.indexmin(),v1.indexmax(), v2.indexmin(), v2.indexmax() );
+{
+  int imin = v1.indexmin();
+  int imax = v1.indexmax();
+  int jmin = v2.indexmin();
+  int jmax = v2.indexmax();
 
-   for (int i=v1.indexmin(); i<=v1.indexmax(); i++)
-   {
-     for (int j=v2.indexmin(); j<=v2.indexmax(); j++)
-     {
-       tmp.elem_value(i,j)=v1.elem_value(i)*v2.elem_value(j);
-     }
-   }
+  dvar_matrix tmp(imin, imax, jmin, jmax);
+
+  dvar_vector* ptmpi = &tmp(imin);
+  double_and_int* pv1i = v1.va + imin;
+  for (int i = imin; i <= imax; ++i)
+  {
+    double_and_int* ptmpij = ptmpi->va + jmin;
+    double_and_int* pv2j = v2.va + jmin;
+    for (int j = jmin; j <= jmax; ++j)
+    {
+      ptmpij->x = pv1i->x * pv2j->x;
+
+      ++ptmpij;
+      ++pv2j;
+    }
+    ++ptmpi;
+    ++pv1i;
+  }
+
+  grad_stack* GRAD_STACK1 = gradient_structure::GRAD_STACK1;
+  DF_FILE* fp = gradient_structure::fp;
+
   save_identifier_string("tu");
-  tmp.save_dvar_matrix_position();
-  v1.save_dvar_vector_value();
-  v1.save_dvar_vector_position();
-  v2.save_dvar_vector_value();
-  v2.save_dvar_vector_position();
+  fp->save_dvar_matrix_position(tmp);
+  fp->save_dvar_vector_value(v1);
+  fp->save_dvar_vector_position(v1);
+  fp->save_dvar_vector_value(v2);
+  fp->save_dvar_vector_position(v2);
   save_identifier_string("tv");
-  gradient_structure::GRAD_STACK1->
-      set_gradient_stack(dfouter_prodvv);
-   return(tmp);
- }
+  GRAD_STACK1->set_gradient_stack(dfouter_prodvv);
+
+  return tmp;
+}
 
 /**
  * Description not yet available.
@@ -235,26 +264,47 @@ dvar_matrix outer_prod(const dvar_vector& v1, const dvar_vector& v2)
  */
 void dfouter_prodvv(void)
 {
+  DF_FILE* fp = gradient_structure::fp;
+
   verify_identifier_string("tv");
-  dvar_vector_position v2pos=restore_dvar_vector_position();
+  dvar_vector_position v2pos=fp->restore_dvar_vector_position();
   dvector v2=restore_dvar_vector_value(v2pos);
-  dvar_vector_position v1pos=restore_dvar_vector_position();
+  dvar_vector_position v1pos=fp->restore_dvar_vector_position();
   dvector v1=restore_dvar_vector_value(v1pos);
-  dvar_matrix_position tmppos=restore_dvar_matrix_position();
+  dvar_matrix_position tmppos=fp->restore_dvar_matrix_position();
   dmatrix dftmp=restore_dvar_matrix_derivatives(tmppos);
   verify_identifier_string("tu");
-  dvector dfv1(v1pos.indexmin(),v1pos.indexmax());
-  dvector dfv2(v2pos.indexmin(),v2pos.indexmax());
+
+  int imin = v1.indexmin();
+  int imax = v1.indexmax();
+  int jmin = v2.indexmin();
+  int jmax = v2.indexmax();
+  dvector dfv1(imin, imax);
+  dvector dfv2(jmin, jmax);
   dfv1.initialize();
   dfv2.initialize();
-  for (int i=v1.indexmin(); i<=v1.indexmax(); i++)
+
+  double* pv1i = v1.get_v() + imin;
+  double* pdfv1i = dfv1.get_v() + imin;
+  dvector* pdftmpi = &dftmp(imin);
+  for (int i = imin; i <= imax; ++i)
   {
-    for (int j=v2.indexmin(); j<=v2.indexmax(); j++)
+    double* pv2j = v2.get_v() + jmin;
+    double* pdfv2j = dfv2.get_v() + jmin;
+    double* pdftmpij = pdftmpi->get_v() + jmin;
+    for (int j = jmin; j <= jmax; ++j)
     {
       //tmp.elem_value(i,j)=v1.elem_value(i)*v2.elem_value(j);
-      dfv1(i)+=dftmp(i,j)*v2(j);
-      dfv2(j)+=dftmp(i,j)*v1(i);
+      *pdfv1i += *pdftmpij * *pv2j;
+      *pdfv2j += *pdftmpij * *pv1i;
+
+      ++pv2j;
+      ++pdfv2j;
+      ++pdftmpij;
     }
+    ++pv1i;
+    ++pdfv1i;
+    ++pdftmpi;
   }
   dfv1.save_dvector_derivatives(v1pos);
   dfv2.save_dvector_derivatives(v2pos);
@@ -267,21 +317,31 @@ Compute the outer product of v1 and v2 vectors into dvar_matrix.
 @param v2 dvar_vector
 */
 dvar_matrix outer_prod(const dvector& v1, const dvar_vector& v2)
- {
-   RETURN_ARRAYS_INCREMENT();
+{
+  gradient_structure* gs = gradient_structure::_instance;
+  gs->RETURN_ARRAYS_INCREMENT();
 
-   dvar_matrix tmp(v1.indexmin(),v1.indexmax(), v2.indexmin(), v2.indexmax() );
+  int imin = v1.indexmin();
+  int imax = v1.indexmax();
+  int jmin = v2.indexmin();
+  int jmax = v2.indexmax();
 
-   for (int i=v1.indexmin(); i<=v1.indexmax(); i++)
-   {
-     for (int j=v2.indexmin(); j<=v2.indexmax(); j++)
-     {
-       tmp.elem(i,j)=v1.elem(i)*v2.elem(j);
-     }
-   }
-   RETURN_ARRAYS_DECREMENT();
-   return(tmp);
- }
+  dvar_matrix tmp(imin, imax, jmin, jmax);
+
+  dvar_vector* ptmpi = &tmp(imin);
+  double* pv1i = v1.get_v() + imin;
+  for (int i = imin; i <= imax; ++i)
+  {
+    for (int j = jmin; j <= jmax; ++j)
+    {
+      ptmpi->elem(j) = *pv1i * v2.elem(j);
+    }
+    ++ptmpi;
+    ++pv1i;
+  }
+  gs->RETURN_ARRAYS_DECREMENT();
+  return tmp;
+}
 /**
 Compute the outer product of v1 and v2 vectors into dvar_matrix.
 
@@ -289,19 +349,30 @@ Compute the outer product of v1 and v2 vectors into dvar_matrix.
 @param v2 dvector
 */
 dvar_matrix outer_prod(const dvar_vector& v1, const dvector& v2)
- {
-   RETURN_ARRAYS_INCREMENT();
+{
+  gradient_structure* gs = gradient_structure::_instance;
+  gs->RETURN_ARRAYS_INCREMENT();
 
-   dvar_matrix tmp(v1.indexmin(),v1.indexmax(), v2.indexmin(), v2.indexmax() );
+  int imin = v1.indexmin();
+  int imax = v1.indexmax();
+  int jmin = v2.indexmin();
+  int jmax = v2.indexmax();
 
-   for (int i=v1.indexmin(); i<=v1.indexmax(); i++)
-   {
-     for (int j=v2.indexmin(); j<=v2.indexmax(); j++)
-     {
-       tmp.elem(i,j)=v1.elem(i)*v2.elem(j);
-     }
-   }
-   RETURN_ARRAYS_DECREMENT();
+  dvar_matrix tmp(imin, imax, jmin, jmax);
 
-   return(tmp);
- }
+  dvar_vector* ptmpi = &tmp(imin);
+  for (int i = imin; i <= imax; ++i)
+  {
+    double* pv2j = v2.get_v() + jmin;
+    for (int j = jmin; j <= jmax; ++j)
+    {
+      ptmpi->elem(j) = v1.elem(i) * *pv2j;
+      ++pv2j;
+    }
+
+    ++ptmpi;
+  }
+  gs->RETURN_ARRAYS_DECREMENT();
+
+  return(tmp);
+}

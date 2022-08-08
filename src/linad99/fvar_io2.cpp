@@ -129,27 +129,27 @@ dvar_vector::dvar_vector(const char * s)
    char* field = new char[size_t(MAX_FIELD_LENGTH+1)];
    infile.width(size_t(MAX_FIELD_LENGTH+1));
    int count=0;
-   do
+   char c;
+   infile.get(c);
+   while (!infile.eof())
    {
-     infile >> field;
-     if (infile.good())
+     if (isspace(c))
      {
-       count++;
+       infile.get(c);
+     }
+     else if (c == ',')
+     {
+       infile.get(c);
      }
      else
      {
-       if (!infile.eof())
+       ++count;
+       do
        {
-         cerr << "Error reading file " << filename << " in dvector constructor "
-           << "dvector::dvector(char * filename)\n";
-         cerr << "Error appears to have occurred at element"
-          << count+1 << endl;
-         cerr << "Stream state is " << infile.rdstate() << endl;
-         ad_exit(1);
-       }
+         infile.get(c);
+       } while (!isspace(c) && c != ',');
      }
    }
-   while (!infile.eof());
 
    infile.clear();
    infile.seekg(0,ios::beg);
@@ -163,7 +163,13 @@ dvar_vector::dvar_vector(const char * s)
 #ifndef OPT_LIB
   assert(size() > 0);
 #endif
-   if ((va = arr_new((unsigned int)size()))==0 )
+   gradient_structure* gs = gradient_structure::_instance;
+   if (!gs)
+   {
+     cerr << "Error: instance of gradient_structure is a nullptr.\n";
+     ad_exit(1);
+   }
+   if ((va = gs->ARR_LIST1->arr_new((unsigned int)size()))==0 )
    {
      cerr << " Error trying to allocate memory for dvector\n";
      ad_exit(21);
@@ -172,7 +178,32 @@ dvar_vector::dvar_vector(const char * s)
    infile.width(size_t(MAX_FIELD_LENGTH+1));
    for (i=1;i<=count;i++)
    {
-     infile >> field;
+     int index = 0;
+     char c;
+     infile.get(c);
+     while (!infile.eof())
+     {
+       if (isspace(c))
+       {
+         infile.get(c);
+       }
+       else if (c == ',')
+       {
+         infile.get(c);
+       }
+       else
+       {
+         do
+         {
+           field[index] = c;
+
+           infile.get(c);
+           ++index;
+         } while (!isspace(c) && c != ',');
+         field[index] = '\0';
+         break;
+       }
+     }
      elem(i)=strtod(field,&err_ptr); // increment column counter
 
      if (isalpha((unsigned char)err_ptr[0]))

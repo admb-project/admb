@@ -18,21 +18,24 @@
  */
 dvar_vector operator/(const prevariable& x, const dvar_vector& t1)
   {
-    RETURN_ARRAYS_INCREMENT();
+    gradient_structure* gs = gradient_structure::_instance;
+    DF_FILE* fp = gradient_structure::fp;
+    gs->RETURN_ARRAYS_INCREMENT();
+
     dvar_vector tmp(t1.indexmin(),t1.indexmax());
     save_identifier_string("ceeb");
-    x.save_prevariable_value();
-    x.save_prevariable_position();
+    fp->save_prevariable_value(x);
+    fp->save_prevariable_position(x);
     for (int i=t1.indexmin(); i<=t1.indexmax(); i++)
     {
       tmp.elem_value(i)=value(x)/t1.elem_value(i);
     }
-    t1.save_dvar_vector_value();
-    tmp.save_dvar_vector_position();
-    t1.save_dvar_vector_position();
+    fp->save_dvar_vector_value(t1);
+    fp->save_dvar_vector_position(tmp);
+    fp->save_dvar_vector_position(t1);
     save_identifier_string("deea");
-    RETURN_ARRAYS_DECREMENT();
     gradient_structure::GRAD_STACK1->set_gradient_stack(DF_dble_dv_div);
+    gs->RETURN_ARRAYS_DECREMENT();
     return(tmp);
   }
 
@@ -42,12 +45,14 @@ dvar_vector operator/(const prevariable& x, const dvar_vector& t1)
  */
  void DF_dble_dv_div(void)
  {
+    DF_FILE* fp = gradient_structure::fp;
+
     verify_identifier_string("deea");
-    dvar_vector_position t1_pos=restore_dvar_vector_position();
-    dvar_vector_position tmp_pos=restore_dvar_vector_position();
+    dvar_vector_position t1_pos=fp->restore_dvar_vector_position();
+    dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();
     dvector t1=restore_dvar_vector_value(t1_pos);
-    prevariable_position xpos=restore_prevariable_position();
-    double x=restore_prevariable_value();
+    prevariable_position xpos=fp->restore_prevariable_position();
+    double x=fp->restore_prevariable_value();
     dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
     dvector dft1(t1_pos.indexmin(),t1_pos.indexmax());
     verify_identifier_string("ceeb");

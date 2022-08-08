@@ -1,5 +1,5 @@
 ifndef TESTS_REMOTE
-  TESTS_REMOTE=all
+  TESTS_REMOTE=no
 endif
 
 ifndef ADMB_VER
@@ -10,13 +10,12 @@ ifeq ($(OS),Windows_NT)
   ifeq ($(SHELL),cmd)
     CMDSHELL=cmd
   else
-    ifneq ($(TERM),cygwin)
-      ifneq ($(TERM),xterm)
-        ifneq ($(findstring sh.exe,$(shell where sh.exe 2>&1 | findstr sh.exe)),sh.exe)
-          SHELL=cmd
-          CMDSHELL=cmd
-        endif
-      endif
+    ifndef TERM
+      export SHELL=cmd
+      CMDSHELL=cmd
+    endif
+    ifndef CMDSHELL
+      EXT=.sh
     endif
   endif
   ifeq ($(CMDSHELL),cmd)
@@ -47,12 +46,14 @@ endif
 all:
 	$(MAKE) tests-core
 	$(MAKE) tests-contrib
+ifeq ($(TESTS_REMOTE),yes)
 	$(MAKE) tests-remote
+endif
+	$(MAKE) outputs.txt
 	$(MAKE) unit-gtests
 
 verify: examples
 	$(MAKE) all
-	$(MAKE) outputs.txt
 
 tests-remote:
 	$(MAKE) remote-core-tpls
@@ -93,6 +94,7 @@ core-tpls:\
   tpl-df33_tester\
   tpl-dd2\
   tpl-dualaveraging\
+  tpl-dtweedie\
   tpl-expm\
   tpl-f1b2vc5\
   cpp-globals\
@@ -119,8 +121,7 @@ core-tpls:\
   tpl-tiny_ad_re\
   tpl-tinyfun\
   tpl-vectorize\
-  tpl-vonmises\
-  example-prof_like
+  tpl-vonmises
 
 remote-core-tpls:\
   tpl-changepoint\
@@ -221,6 +222,9 @@ tpl-dualaveraging:
 tpl-data_adstring_array:
 	$(MAKE) --directory=data_adstring_array
 
+tpl-dtweedie:
+	$(MAKE) --directory=dtweedie
+
 tpl-beta_deviate:
 	$(MAKE) --directory=beta_deviate
 
@@ -293,27 +297,28 @@ tpl-orange_mvn:
 tpl-lprof:
 	$(MAKE) --directory=lprof
 
-example-prof_like:
-	$(MAKE) --directory=../examples/admb/prof_like
-
 examples:
 ifeq ($(CMDSHELL),cmd)
 	if exist $(DIST)\\examples rmdir /s /q $(DIST)\\examples
 	md $(DIST)\\examples
 	xcopy ..\\examples $(DIST)\examples /S /Y /D
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C $(DIST)\\examples all
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C $(DIST)\\examples bhplfine
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C $(DIST)\\examples get-outputs > outputs-examples-saf.txt
   ifndef SAFE_ONLY
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C $(DIST)\\examples all
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C $(DIST)\\examples bhplfine
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C $(DIST)\\examples get-outputs > outputs-examples-opt.txt
   endif
 else
 	if [ -d "$(DIST)/examples" ]; then rm -rvf $(DIST)/examples; fi
 	cp -Rvf ../examples $(DIST)
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) --directory=$(DIST)/examples all
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) --directory=$(DIST)/examples bhplfine
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) --directory=$(DIST)/examples get-outputs > outputs-examples-saf.txt
   ifndef SAFE_ONLY
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C $(DIST)/examples all
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C $(DIST)/examples bhplfine
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) --directory=$(DIST)/examples get-outputs > outputs-examples-opt.txt
   endif
 endif
@@ -355,6 +360,7 @@ endif
 	$(MAKE) --directory=dd2 clean
 	$(MAKE) --directory=df33_tester clean
 	$(MAKE) --directory=dualaveraging clean
+	$(MAKE) --directory=dtweedie clean
 	$(MAKE) --directory=expm clean
 	$(MAKE) --directory=f1b2vc5 clean
 	$(MAKE) --directory=geolocation clean
@@ -387,7 +393,6 @@ endif
 	$(MAKE) --directory=tinyfun clean
 	$(MAKE) --directory=vectorize clean
 	$(MAKE) --directory=vonmises clean
-	$(MAKE) --directory=../examples/admb/prof_like clean
 	$(MAKE) --directory=issue158 clean
 
 dist-clean:

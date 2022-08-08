@@ -1,3 +1,4 @@
+
 /*
  * $Id$
  *
@@ -15,9 +16,9 @@
  */
 
 #include <fvar.hpp>
+#include <admodel.h>
 #if defined(_WIN32)
   #include <windows.h>
-  #include <admodel.h>
 #endif
 #if defined(__BORLANDC__)
   #include <signal.h>
@@ -25,7 +26,6 @@
 #ifdef __ZTC__
   #include <conio.h>
 #endif
-#include <fvar.hpp>
 extern int ctlc_flag;
 
 #if defined (__WAT32__) || defined (_MSC_VER)
@@ -68,8 +68,7 @@ BOOL CtrlHandler(DWORD fdwCtrlType)
     if (ctlc_flag) ad_exit(1);
 
     ctlc_flag = 1;
-    if (ad_printf)
-      (*ad_printf)("\npress q to quit or c to invoke derivative checker: ");
+    ad_printf("\npress q to quit or c to invoke derivative checker: ");
     return true;
   }
   return false;
@@ -79,8 +78,7 @@ extern "C" void onintr(int k)
 {
   signal(SIGINT, exit_handler);
   ctlc_flag = 1;
-  if (ad_printf)
-    (*ad_printf)("\npress q to quit or c to invoke derivative checker"
+  ad_printf("\npress q to quit or c to invoke derivative checker"
                  " or s to stop optimizing: ");
 }
 #endif
@@ -164,7 +162,49 @@ void print_values(const double& f, const dvector & x,const dvector& g)
 extern int traceflag;
 //#pragma warn -sig
 
+std::string get_elapsed_time(
+  const std::chrono::time_point<std::chrono::system_clock>& from,
+  const std::chrono::time_point<std::chrono::system_clock>& to);
 
+void check_for_params_on_bounds(ostream& os);
+adstring_array get_param_names();
+std::chrono::time_point<std::chrono::system_clock> start_time;
+
+adstring get_maxparname(const int index)
+{
+  if (initial_params::num_initial_params){
+    adstring_array pars;
+    pars = get_param_names();
+    return pars(index);
+  }
+  else
+  {
+    adstring maxparname = "param[" + str(index) + "]";
+    return maxparname;
+  }
+}
+int get_maxpar(const dvector& g)
+{
+  int min = g.indexmin();
+  int max = g.indexmax();
+
+  double* pg = g.get_v() + min;
+  int maxpar = min;
+  double gmax = fabs(*pg);
+
+  ++pg;
+  for (int i = min + 1; i <= max; ++i)
+  {
+    double v = fabs(*pg);
+    if (v > gmax)
+    {
+      gmax = v;
+      maxpar = i;
+    }
+    ++pg;
+  }
+  return maxpar;
+}
 /**
 * Function fmin contains Quasi-Newton function minimizer with
 * inexact line search using Wolfe conditions and
@@ -213,6 +253,8 @@ extern int traceflag;
 */
 void fmm::fmin(const double& _f, const dvector &_x, const dvector& _g)
 {
+  std::ostream& output_stream = get_output_stream();
+
   if (log_values_switch)
   {
     print_values(_f,_x,_g);
@@ -341,8 +383,17 @@ void fmm::fmin(const double& _f, const dvector &_x, const dvector& _g)
 
      /* xx is reserved for the updated values of independent variables,
         at the moment put the current values */
+  {
+     double* pxi = x.get_v() + 1;
+     double* pxxi = xx.get_v() + 1;
      for (i=1; i<=n; i++)
-           xx.elem(i)=x.elem(i);
+     {
+       *pxxi = *pxi;
+
+       ++pxi;
+       ++pxxi;
+     }
+  }
   tracing_message(traceflag,"A10");
 
       /* itn - iteration counter */
@@ -353,8 +404,15 @@ void fmm::fmin(const double& _f, const dvector &_x, const dvector& _g)
        /* initialize funval vector,
           it will contain last 10 function values (10-th is the most recent)
           needed to stop minimization in case if f(1)-f(10)<min_improve  */
-       for (i=1; i< 11; i++)
-          funval.elem(i)=0.;
+      {
+        double* pfunvali = funval.get_v() + 1;
+        for (i=1; i< 11; i++)
+        {
+          *pfunvali = 0.0;
+
+	  ++pfunvali;
+	}
+      }
   tracing_message(traceflag,"A11");
       ihang = 0;  /* flag, =1 when function minimizer is not making progress */
       llog=1;
@@ -393,12 +451,21 @@ void fmm::fmin(const double& _f, const dvector &_x, const dvector& _g)
       if(dfn == 0.)
          z = 0.0;
   tracing_message(traceflag,"A14");
-      for (i=1; i<=n; i++)
-      {
-        xsave.elem(i)=x.elem(i);
-        x.elem(i)=xx.elem(i);
-      }
-      ireturn=1; /* upon next entry will go to call1 */
+  {
+    double* pxi = x.get_v() + 1;
+    double* pxxi = xx.get_v() + 1;
+    double* pxsavei = xsave.get_v() + 1;
+    for (i=1; i<=n; i++)
+    {
+      *pxsavei = *pxi;
+      *pxi= *pxxi;
+
+      ++pxi;
+      ++pxxi;
+      ++pxsavei;
+    }
+  }
+  ireturn=1; /* upon next entry will go to call1 */
   tracing_message(traceflag,"A15");
       if (h.disk_save())
       {
@@ -418,16 +485,29 @@ void fmm::fmin(const double& _f, const dvector &_x, const dvector& _g)
         cout << "finished hessian restore" << endl;
       }
   tracing_message(traceflag,"A18");
-      for (i=1; i<=n; i++)
-      {
-        x.elem(i)=xsave.elem(i);
-      }
-      ireturn=3;
+  {
+    double* pxi = x.get_v() + 1;
+    double* pxsavei = xsave.get_v() + 1;
+    for (i=1; i<=n; i++)
+    {
+      *pxi = *pxsavei;
+      ++pxi;
+      ++pxsavei;
+    }
+  }
+  ireturn=3;
   tracing_message(traceflag,"A19");
-      {
-      }
-      for ( i=1; i<=n; i++)
-         gbest.elem(i)=g.elem(i);
+  {
+    double* pgi = g.get_v() + 1;
+    double* pgbesti = gbest.get_v() + 1;
+    for ( i=1; i<=n; i++)
+    {
+      *pgbesti = *pgi;
+
+      ++pgi;
+      ++pgbesti;
+    }
+  }
   tracing_message(traceflag,"A20");
       funval.elem(10) = f;
       df=dfn;
@@ -448,10 +528,16 @@ label20: /* check for convergence */
          ihang = 1;
       gmax = 0;
       /* satisfy convergence criterion? */
-      for ( i=1; i<=n; i++)
       {
-        if(fabs(g.elem(i)) > crit) iconv = 2;
-        if(fabs(g.elem(i)) > fabs(gmax) ) gmax = g.elem(i);
+        double* pg = g.get_v() + 1;
+        for (i = 1; i <= n; ++i)
+        {
+          double gi = *pg;
+          double fabsgi = fabs(gi);
+          if(fabsgi > crit) iconv = 2;
+          if(fabsgi > fabs(gmax)) gmax = gi;
+            ++pg;
+        }
       }
       /* exit if either convergence or no improvement has been achieved
          during last 10 iterations */
@@ -479,81 +565,119 @@ label20: /* check for convergence */
         if (!scroll_flag) clrscr();
 #endif
 label7003: /* Printing table header */
+        // This is the main console output
+      if (function_minimizer::output_flag==1){
+        int maxpar = get_maxpar(g);
+        adstring maxparname = get_maxparname(maxpar);
+        if (itn % iprint == 0)
+        {
+          ad_printf("phase=%2d | nvar=%3d | iter=%3d | nll=%.2e | mag=%.2e | par[%3d]=%s\n",
+            initial_params::current_phase, n, itn,  double(f), fabs(double(gmax)), maxpar, (char*)maxparname);
+        }
+      }
       if (iprint>0)
       {
-        if (ad_printf)
+        //ad_printf("%d variables; iteration %ld; function evaluation %ld", n, itn, ifn);
+        output_stream << n << " variables; iteration " << itn << "; function evaluation " << ifn;
+        if (pointer_to_phase)
         {
-          (*ad_printf)("%d variables; iteration %ld; function evaluation %ld",
-           n, itn, ifn);
-          if (pointer_to_phase)
-          {
-            (*ad_printf)("; phase %d", *pointer_to_phase);
-          }
-          (*ad_printf)(
-           "\nFunction value %15.7le; maximum gradient component mag %12.4le\n",
+          //ad_printf("; phase %d", *pointer_to_phase);
+          output_stream << "; phase " << *pointer_to_phase;
+        }
+        //ad_printf("\nFunction value %15.7le; maximum gradient component mag %12.4le\n",
 #if defined(USE_DDOUBLE)
   #undef double
-              double(f), double(gmax));
+        output_stream << "\nFunction value " << double(f) << "; maximum gradient component mag " << double(gmax) << "\n";
   #define double dd_real
 #else
-              f, gmax);
+        output_stream << "\nFunction value " << std::scientific << setprecision(7) << f << "; maximum gradient component mag " << setprecision(4) << gmax << "\n";
 #endif
-        }
       }
 /*label7002:*/
       /* Printing Statistics table */
-      if(iprint>0)
+      if (iprint>0)
       {
         fmmdisp(x, g, n, this->scroll_flag,noprintx);
       }
 label21 : /* Calculating Newton step */
       /* found good search direction, increment iteration number */
       itn=itn+1;
-      for (i=1; i<=n; i++)
-         x.elem(i)=xx.elem(i);
-      w.elem(1)=-g.elem(1);
+      {
+        double* pxi = x.get_v() + 1;
+        double* pxxi = xx.get_v() + 1;
+        for (i=1; i<=n; i++)
+	{
+          *pxi = *pxxi;
+	  ++pxi;
+	  ++pxxi;
+	}
+        w.elem(1)=-g.elem(1);
+      }
 
 #if defined(DIAG)
-      cout << __FILE__ << ':' << __LINE__ << ' '
-	   << fmintime.get_elapsed_time_and_reset() << endl;
+      cout << __FILE__ << ':' << __LINE__ << ' ' << fmintime.get_elapsed_time_and_reset() << endl;
 #endif
 
       /* solving system of linear equations H_(k+1) * (x_(k+1)-x(k)) = -g_k
          to get next search direction
          p_k = (x_(k+1)-x(k)) = - inv(H_(k+1)) * g_k */
-      for (i=2; i<=n; i++)
       {
-        i1=i-1;
-        z=-g.elem(i);
-        double * pd=&(h.elem(i,1));
-        double * pw=&(w.elem(1));
-        for (j=1; j<=i1; j++)
+        double* pgi = g.get_v() + 2;
+	double* pwi = w.get_v() + 2;
+        for (i=2; i<=n; i++)
         {
-          z-=*pd++ * *pw++;
+          i1=i-1;
+          z = -(*pgi);
+          double * pd=&(h.elem(i,1));
+          double* pw = w.get_v() + 1;
+          for (j=1; j<=i1; j++)
+          {
+            z -= *pd * *pw;
+	    ++pd;
+	    ++pw;
+          }
+          *pwi = z;
+
+	  ++pwi;
+	  ++pgi;
         }
-        w.elem(i)=z;
       }
       w.elem(is+n)=w.elem(n)/h.elem(n,n);
       {
         dvector tmp(1,n);
         tmp.initialize();
+	double* ptmpi = tmp.get_v() + 1;
         for (i=1; i<=n1; i++)
         {
           j=i;
           double * pd=&(h.elem(n-j+1,n-1));
           double qd=w.elem(is+np-j);
-          double * pt=&(tmp(1));
+          double* pt = tmp.get_v() + 1;
           for (int ii=1; ii<=n1; ii++)
           {
-            *pt++ +=*pd-- * qd;
+            *pt += *pd * qd;
+
+	    ++pt;
+	    --pd;
           }
-          w.elem(is+n-i)=w.elem(n-i)/h.elem(n-i,n-i)-tmp(i);
+          w.elem(is+n-i)=w.elem(n-i)/h.elem(n-i,n-i) - *ptmpi;
+
+	  ++ptmpi;
         }
       }/* w(n+1,2n) now contains search direction
           with current Hessian approximation */
       gs=0.0;
-      for (i=1; i<=n; i++)
-         gs+=w.elem(is+i)*g.elem(i);/* gs = -inv(H_k)*g_k*df(x_k+alpha_k*p_k) */
+      {
+        double* pgi = g.get_v() + 1;
+        double* pwis = w.get_v() + is + 1;
+        for (i=1; i<=n; i++)
+        {
+          gs += *pwis * *pgi;/* gs = -inv(H_k)*g_k*df(x_k+alpha_k*p_k) */
+
+          ++pwis;
+          ++pgi;
+        }
+      }
       iexit=2;
       if(gs >= 0.0)
          goto label92; /* exit with error */
@@ -579,19 +703,37 @@ label30: /* Taking a step, updating x */
         iexit=1;
       }
       if(quit_flag) goto label92;
-      for (i=1; i<=n; i++)
       {
-        /* w(n+1,2n) has the next direction to go */
-        z=alpha*w.elem(is+i);
-        /* new independent vector values */
-        xx.elem(i)+=z;
-      }
-      for (i=1; i<=n; i++)
-      { /* save previous values and update x return value */
-        xsave.elem(i)=x.elem(i);
-        gsave.elem(i)=g.elem(i);
-        x.elem(i)=xx.elem(i);
-        fsave = f;
+        double* pw = w.get_v() + is + 1;
+        double* pxx = xx.get_v() + 1;
+        for (i=1; i<=n; i++)
+        {
+          /* w(n+1,2n) has the next direction to go */
+          z = alpha * *pw;
+          /* new independent vector values */
+          *pxx += z;
+
+          ++pw;
+          ++pxx;
+        }
+        double* px = x.get_v() + 1;
+        double* pg = g.get_v() + 1;
+        pxx = xx.get_v() + 1;
+        double* pxsave = xsave.get_v() + 1;
+        double* pgsave = gsave.get_v() + 1;
+        for (i=1; i<=n; i++)
+        { /* save previous values and update x return value */
+          *pxsave = *px;
+          *pgsave = *pg;
+          *px = *pxx;
+          fsave = f;
+
+          ++px;
+          ++pg;
+          ++pxx;
+          ++pxsave;
+          ++pgsave;
+        }
       }
       fsave = f;
       ireturn=2;
@@ -610,11 +752,24 @@ label30: /* Taking a step, updating x */
         cout << "finished hessian restore" << endl;
       }
       /* restore x_k, g(x_k) and g(x_k+alpha*p_k) */
-      for (i=1; i<=n; i++)
       {
-        x.elem(i)=xsave.elem(i); //x_k
-        w.elem(i)=g.elem(i);     //g(x_k+alpha*p_k)
-        g.elem(i)=gsave.elem(i); //g(x_k)
+        double* px = x.get_v() + 1;
+        double* pw = w.get_v() + 1;
+        double* pg = g.get_v() + 1;
+        double* pgsave = gsave.get_v() + 1;
+        double* pxsave = xsave.get_v() + 1;
+        for (i=1; i<=n; i++)
+        {
+          *px = *pxsave; //x_k
+          *pw = *pg;     //g(x_k+alpha*p_k)
+          *pg = *pgsave; //g(x_k)
+
+          ++px;
+          ++pw;
+          ++pg;
+          ++pgsave;
+          ++pxsave;
+        }
       }
       fy = f;
       f = fsave; /* now fy is a new function value, f is the old one */
@@ -623,10 +778,19 @@ label30: /* Taking a step, updating x */
       if (fy <= fbest)
       {
         fbest=fy;
+        double* px = x.get_v() + 1;
+        double* pw = w.get_v() + 1;
+        double* pxx = xx.get_v() + 1;
+        double* pgbest = gbest.get_v() + 1;
         for (i=1; i<=n; i++)
         {
-          x.elem(i)=xx.elem(i);
-          gbest.elem(i)=w.elem(i);
+          *px = *pxx;
+          *pgbest = *pw;
+
+          ++px;
+          ++pw;
+          ++pgbest;
+          ++pxx;
         }
       }
       /* what to do if CTRL-C keys were pressed */
@@ -699,8 +863,7 @@ label30: /* Taking a step, updating x */
       {
          if (iprint>0)
          {
-           if (ad_printf)
-             (*ad_printf)("  ic > imax  in fminim is answer attained ?\n");
+           output_stream << "  ic > imax  in fminim is answer attained ?\n";
            fmmdisp(x, g, n, this->scroll_flag,noprintx);
          }
          ihflag=1;
@@ -713,8 +876,17 @@ label30: /* Taking a step, updating x */
       gys=0.0;
 
       /* gys = transpose(p_k) * df(x_k+alpha_k*p_k) */
-      for (i=1; i<= n; i++)
-         gys+=w.elem(i)*w.elem(is+i);
+      {
+        double* pwi = w.get_v() + 1;
+        double* pwis = w.get_v() + is + 1;
+        for (i=1; i<= n; i++)
+        {
+          gys += *pwi * *pwis;
+
+          ++pwi;
+          ++pwis;
+        }
+      }
 
       /* bad step; unless modified by the user, fringe default = 0 */
       if(fy>f+fringe)
@@ -756,8 +928,17 @@ label30: /* Taking a step, updating x */
 label40: /* new step is not acceptable, stepping back and
             start backtracking along the Newton direction
             trying a smaller value of alpha */
-      for (i=1;i<=n;i++)
-         xx.elem(i)-=alpha*w.elem(is+i);
+      {
+        double* pxxi = xx.get_v() + 1;
+        double* pwis = w.get_v() + is + 1;
+        for (i=1;i<=n;i++)
+        {
+          *pxxi -= alpha * *pwis;
+
+          ++pwis;
+          ++pxxi;
+        }
+      }
       if (alpha == 0.)
       {
         ialph=1;
@@ -785,7 +966,7 @@ label40: /* new step is not acceptable, stepping back and
          ialph=1;
         if (ialph)
         {
-          if (ad_printf) (*ad_printf)("\nFunction minimizer: Step size"
+          ad_printf("\nFunction minimizer: Step size"
             "  too small -- ialph=1");
         }
          return;
@@ -799,22 +980,54 @@ label50: /* compute Hessian updating terms */
       xxlink=1;
       if(dgs+alpha*gso>0.0)
          goto label52;
-      for (i=1;i<=n;i++)
-         w.elem(iu+i)=w.elem(i)-g.elem(i);
+
+      {
+        double* pg = g.get_v() + 1;
+        double* pw = w.get_v() + 1;
+        double* pwu = w.get_v() + iu + 1;
+        for (i=1;i<=n;i++)
+        {
+          *pwu = *pw - *pg;
+
+          ++pg;
+          ++pw;
+          ++pwu;
+        }
+      }
       /* now w(n+1,2n) = df(x_k+alpha_k*p_k)-df(x_k) */
       sig=1.0/(alpha*dgs);
       goto label70;
 label52: /* compute Hessian updating terms */
       zz=alpha/(dgs-alpha*gso);
       z=dgs*zz-1.0;
-      for (i=1;i<=n;i++)
-         w.elem(iu+i)=z*g.elem(i)+w.elem(i);
+      {
+        double* pg = g.get_v() + 1;
+        double* pw = w.get_v() + 1;
+        double* pwu = w.get_v() + iu + 1;
+        for (i=1;i<=n;i++)
+        {
+          *pwu = z * *pg + *pw;
+
+          ++pg;
+          ++pw;
+          ++pwu;
+        }
+      }
       sig=1.0/(zz*dgs*dgs);
       goto label70;
 label60: /* compute Hessian updating terms */
       xxlink=2;
-      for (i=1;i<=n;i++)
-         w.elem(iu+i)=g.elem(i);
+      {
+double* pg = g.get_v() + 1;
+double* pw = w.get_v() + iu + 1;
+        for (i=1;i<=n;i++)
+        {
+          *pw = *pg;
+
+          ++pg;
+          ++pw;
+        }
+      }
       if(dgs+alpha*gso>0.0)
          goto label62;
       sig=1.0/gso;
@@ -823,141 +1036,218 @@ label62: /* compute Hessian updating terms */
       sig=-zz;
       goto label70;
 label65: /* save in g the gradient df(x_k+alpha*p_k) */
-      for (i=1;i<=n;i++)
-         g.elem(i)=w.elem(i);
+      {
+        double* pg = g.get_v() + 1;
+        double* pw = w.get_v() + 1;
+        for (i=1;i<=n;i++)
+        {
+          *pg = *pw;
+
+          ++pg;
+          ++pw;
+        }
+      }
       goto  label20; //convergence check
 label70:  // Hessian update
       w.elem(iv+1)=w.elem(iu+1);
 
 #if defined(DIAG)
-      cout << __FILE__ << ':' << __LINE__ << ' '
-	   << fmintime.get_elapsed_time_and_reset() << endl;
+      cout << __FILE__ << ':' << __LINE__ << ' ' << fmintime.get_elapsed_time_and_reset() << endl;
 #endif
 
-      for (i=2;i<=n;i++)
       {
-         i1=i-1;
-         z=w.elem(iu+i);
-         double * pd=&(h.elem(i,1));
-         double * pw=&(w.elem(iv+1));
-         for (j=1;j<=i1;j++)
-         {
-           z-=*pd++ * *pw++;
-         }
-         w.elem(iv+i)=z;
+        for (i=2;i<=n;i++)
+        {
+           i1=i-1;
+           z=w.elem(iu+i);
+           double* ph = &(h.elem(i,1));
+           double* pw = &(w.elem(iv+1));
+           for (j=1;j<=i1;j++)
+           {
+             z -= *ph * *pw;
+
+             ++ph;
+             ++pw;
+           }
+           w.elem(iv+i)=z;
+        }
       }
 
 #if defined(DIAG)
-      cout << __FILE__ << ':' << __LINE__ << ' '
-	   << fmintime.get_elapsed_time_and_reset() << endl;
+      cout << __FILE__ << ':' << __LINE__ << ' ' << fmintime.get_elapsed_time_and_reset() << endl;
 #endif
-
-      for (i=1;i<=n;i++)
-      {  /* BFGS updating formula */
-         z=h.elem(i,i)+sig*w.elem(iv+i)*w.elem(iv+i);
-         if(z <= 0.0)
-            z=dmin;
-         if(z<dmin)
-            dmin=z;
-         h.elem(i,i)=z;
-         w.elem(ib+i)=w.elem(iv+i)*sig/z;
-         sig-=w.elem(ib+i)*w.elem(ib+i)*z;
-       }
-      for (j=2;j<=n;j++)
       {
-         double * pd=&(h.elem(j,1));
-         double * qd=&(w.elem(iu+j));
-         double * rd=&(w.elem(iv+1));
-         for (i=1;i<j;i++)
-         {
-            *qd-=*pd * *rd++;
-            *pd++ +=w.elem(ib+i)* *qd;
-         }
+        double* pwiv = w.get_v() + iv + 1;
+        double* pwib = w.get_v() + ib + 1;
+        for (i=1;i<=n;i++)
+        {  /* BFGS updating formula */
+          z = h.elem(i,i) + sig * *pwiv * *pwiv;
+          if (z <= 0.0)
+            z=dmin;
+          if (z < dmin)
+            dmin=z;
+
+          h.elem(i,i)=z;
+          *pwib = *pwiv * sig / z;
+          sig -= *pwib * *pwib * z;
+
+          ++pwiv;
+          ++pwib;
+        }
+        double* qd = w.get_v() + iu + 2;//&(w.elem(iu+j));
+        for (j=2;j<=n;j++)
+        {
+          double* pd=&(h.elem(j,1));
+          double* rd = w.get_v() + iv + 1;//&(w.elem(iv+1));
+          double* pwib = w.get_v() + ib + 1;
+          for (i=1;i<j;i++)
+          {
+            *qd-=*pd * *rd;
+            *pd += *pwib * *qd;
+
+            ++pd;
+            ++rd;
+            ++pwib;
+          }
+
+          ++qd;
+        }
       }
       if (xxlink == 1) goto label60;
       if (xxlink == 2) goto label65;
 /*label90:*/
-      for (i=1;i<=n;i++)
-         g.elem(i)=w.elem(i);
+      {
+        double* pg = g.get_v() + 1;
+        double* pw = w.get_v() + 1;
+        for (i=1;i<=n;i++)
+        {
+          *pg = *pw;
+          ++pg;
+          ++pw;
+        }
+      }
 label92: /* Exit with error */
-      if (iprint>0)
-      {
-        if (ialph)
-        {
-          if (ad_printf)
-           (*ad_printf)("\nFunction minimizer: Step size too small -- ialph=1");
-        }
-        if (ihang == 1)
-        {
-          if (ad_printf)
-            (*ad_printf)(
-           "Function minimizer not making progress ... is minimum attained?\n");
+if (iprint>0)
+  {
+    if (ialph)
+    {
+      //ad_printf("\nFunction minimizer: Step size too small -- ialph=1");
+      output_stream << "\nFunction minimizer: Step size too small -- ialph=1\n";
+    }
+    if (ihang == 1)
+    {
+      output_stream << "Function minimizer not making progress ... is minimum attained?\n"
+                    << "Minimprove criterion = "
 #if defined(USE_DDOUBLE)
 #undef double
-           if (ad_printf)
-           (*ad_printf)("Minimprove criterion = %12.4le\n",double(min_improve));
+         //ad_printf("Minimprove criterion = %12.4le\n",double(min_improve));
+                    << double(min_improve)
 #define double dd_real
 #else
-           if (ad_printf)
-             (*ad_printf)("Minimprove criterion = %12.4le\n",min_improve);
+         //ad_printf("Minimprove criterion = %12.4le\n",min_improve);
+                    << std::scientific << setprecision(4) << min_improve
 #endif
-        }
-      }
-      if(iexit == 2)
-      {
-        if (iprint>0)
-        {
-          if (ad_printf)
-            (*ad_printf)("*** grad transpose times delta x greater >= 0\n"
-           " --- convergence critera may be too strict\n");
-          ireturn=-1;
-        }
-      }
+                    << endl;
+    }
+    if (function_minimizer::output_flag==1)
+    {
+    // Not sure this really helps the user. It just moves
+    // on to next phase or finishes optimization and
+    // those messgaes are more useful
+    // cout << "Optimizer ended early due to not making progress (ialpha=" <<
+    //   ialph << ", ihang=" << ihang <<  ")" << endl;//try reoptimizing from .par file" << endl;
+    }
+  }
+if(iexit == 2)
+  {
+    if (iprint>0)
+    {
+      ad_printf("*** grad transpose times delta x greater >= 0\n"
+                " --- convergence critera may be too strict\n");
+      ireturn=-1;
+    }
+  }
 #if defined (_MSC_VER) && !defined (__WAT32__)
-        if (scroll_flag == 0) clrscr();
+if (scroll_flag == 0) clrscr();
 #endif
-      if (maxfn_flag == 1)
+  if (maxfn_flag == 1)
+  {
+    if (iprint>0)
+    {
+      output_stream << "Maximum number of function evaluations exceeded" << endl;
+      if (function_minimizer::output_flag==1)
       {
-        if (iprint>0)
-        {
-          if (ad_printf)
-            (*ad_printf)("Maximum number of function evaluations exceeded");
-        }
+        cout << "Exiting without success due to excessive function evaluations (maxfn="
+             << maxfn << ") | mag=" << fabs(double(gmax)) << endl;
       }
-      if (iprint>0)
-      {
-        if (quit_flag == 'Q')
-          if (ad_printf) (*ad_printf)("User initiated interrupt");
-      }
-      if(iprint == 0) goto label777;
-      if (ad_printf) (*ad_printf)("\n - final statistics:\n");
-      if (ad_printf)
-        (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
-                       n, itn, ifn);
+    }
+  }
+if (iprint>0)
+  {
+    if (quit_flag == 'Q')
+      ad_printf("User initiated interrupt");
+  }
+// if last iteration of phase print to screen regardless of
+// iprint. Note that for RE models it is sometimes set iprint=0
+// intermediately so turn that off.
+ if(function_minimizer::output_flag==1){
+   // this logic should print final when no RE are used for any
+   // iprint, and if RE is used if iprint>0. It will only not
+   // work when user specifies iprint=0 with a RE model.
+   if(!function_minimizer::random_effects_flag ||
+      (function_minimizer::random_effects_flag && iprint>0)){
+     // always print info from final iteration.. copied from 7003
+     // above b/c I don't know how to get the logic write, I
+     // can't just use goto label7003 or it loops forever.
+     int maxpar = get_maxpar(g);
+     adstring maxparname = get_maxparname(maxpar);
+     if(iprint>0)
+       ad_printf("phase=%2d | nvar=%3d | iter=%3d | nll=%.2e | mag=%.2e | par[%3d]=%s\n",
+         initial_params::current_phase, n, itn,  double(f), fabs(double(gmax)), maxpar, (char*)maxparname);
+
+     // only print global stuff if in last phase
+     if (initial_params::current_phase==initial_params::max_number_phases)
+     {
+       cout << "Optimization completed after "
+            << get_elapsed_time(start_time, std::chrono::system_clock::now())
+            << " with final statistics:\n" ;
+       cout.flush();
+       ad_printf("  nll=%f | mag=%.5e | par[%3d]=%s\n\n", double(f), fabs(double(gmax)), maxpar, (char*)maxparname);
+
+       if (initial_params::num_initial_params && function_minimizer::output_flag==1){
+         check_for_params_on_bounds(std::cout);
+         check_for_params_on_bounds(*ad_comm::global_logfile);
+       }
+     }
+   }
+ }
+
+// Important to be here b/c it appears other parts of ADMB-RE
+// code set iprint=0 then call fmin, so this exits early to
+// prevent excess printing.
+if(iprint == 0) goto label777;
+
+  output_stream << "\n - final statistics:\n"
+                << n << " variables; iteration " << itn << "; function evaluation " << ifn << '\n'
 #if defined(USE_DDOUBLE)
 #undef double
-      if (ad_printf)
-        (*ad_printf)(
-             "Function value %12.4le; maximum gradient component mag %12.4le\n",
-             double(f), double(gmax));
-      if (ad_printf)
-        (*ad_printf)(
-          "Exit code = %ld;  converg criter %12.4le\n",iexit,double(crit));
+  //ad_printf("Function value %12.4le; maximum gradient component mag %12.4le\n", double(f), double(gmax));
+  //ad_printf("Exit code = %ld;  converg criter %12.4le\n",iexit,double(crit));
+                << "Function value " << double(f) << "; maximum gradient component mag " << double(gmax)
+                << "Exit code = " << iexit << ";  converg criter " << double(crit)
 #define double dd_real
 #else
-      if (ad_printf)
-        (*ad_printf)(
-          "Function value %12.4le; maximum gradient component mag %12.4le\n",
-          f, gmax);
-      if (ad_printf)
-        (*ad_printf)(
-          "Exit code = %ld;  converg criter %12.4le\n",iexit,crit);
+                << "Function value " << std::scientific << setprecision(4) << f
+                << "; maximum gradient component mag " << gmax
+                << "\nExit code = " << iexit << ";  converg criter " << crit
 #endif
-      fmmdisp(x, g, n, this->scroll_flag,noprintx);
+                << endl;
+  fmmdisp(x, g, n, this->scroll_flag,noprintx);
+
 label777: /* Printing final Hessian approximation */
          if (ireturn <= 0)
          #ifdef DIAG
-           if (ad_printf) (*ad_printf)("Final values of h in fmin:\n");
+           ad_printf("Final values of h in fmin:\n");
            //cout << h << "\n";
          #endif
          #ifdef __ZTC__
@@ -972,7 +1262,7 @@ label7000:/* Printing Initial statistics */
 #if defined (_MSC_VER) && !defined (__WAT32__)
         if (!scroll_flag) clrscr();
 #endif
-        if (ad_printf) (*ad_printf)("\nInitial statistics: ");
+        output_stream << "\nInitial statistics: " << std::scientific << setprecision(8);
       }
       goto label7003;
 label7010:/* Printing Intermediate statistics */
@@ -981,14 +1271,14 @@ label7010:/* Printing Intermediate statistics */
 #if defined (_MSC_VER) && !defined (__WAT32__)
      if (!scroll_flag) clrscr();
 #endif
-     if (ad_printf) (*ad_printf)("\nIntermediate statistics: ");
+     output_stream << "\nIntermediate statistics: " << std::scientific << setprecision(8);
    }
    llog=0;
    goto label7003;
 label7020:/* Exis because Hessian is not positive definite */
   if (iprint > 0)
   {
-    if (ad_printf) (*ad_printf)("*** hessian not positive definite\n");
+    ad_printf("*** hessian not positive definite\n");
   }
 #ifdef __ZTC__
   if (ireturn <= 0)

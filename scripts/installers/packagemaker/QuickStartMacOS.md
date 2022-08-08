@@ -1,7 +1,7 @@
 # ADMB Quick Start for MacOS
 
-*ADMB-12.3*  
-*Released March 7, 2021*  
+*ADMB-13.0*  
+*Released May 31, 2022*  
 
 Describe downloading, installing and using ADMBTerminal from binary release for MacOS.
 
@@ -20,7 +20,7 @@ Quick Start
 
 1. **Download**
 
-   Download [admb-12.3-macos.dmg](https://github.com/admb-project/admb/releases/download/admb-12.3/admb-12.3-macos.dmg).
+   Download [admb-13.0-macos.dmg](https://github.com/admb-project/admb/releases/download/admb-13.0/admb-10.0-macos.dmg).
 
 2. **Install**
 

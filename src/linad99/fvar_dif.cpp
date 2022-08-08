@@ -21,7 +21,10 @@ dvar_vector first_difference(const dvar_vector& x)
     ad_exit(1);
   }
 
-  RETURN_ARRAYS_INCREMENT();
+  gradient_structure* gs = gradient_structure::_instance;
+  DF_FILE* fp = gradient_structure::fp;
+
+  gs->RETURN_ARRAYS_INCREMENT();
   int mmin=x.indexmin();
   int mmax=x.indexmax()-1;
   dvar_vector tmp(mmin,mmax);
@@ -30,12 +33,11 @@ dvar_vector first_difference(const dvar_vector& x)
     tmp.elem_value(i)=x.elem_value(i+1)-x.elem_value(i);
   }
   save_identifier_string("CE4");
-  x.save_dvar_vector_position();
-  tmp.save_dvar_vector_position();
+  fp->save_dvar_vector_position(x);
+  fp->save_dvar_vector_position(tmp);
   save_identifier_string("CE1");
-  gradient_structure::GRAD_STACK1->
-      set_gradient_stack(DF_first_diference);
-  RETURN_ARRAYS_DECREMENT();
+  gs->GRAD_STACK1->set_gradient_stack(DF_first_diference);
+  gs->RETURN_ARRAYS_DECREMENT();
   return(tmp);
 }
 
@@ -45,9 +47,11 @@ dvar_vector first_difference(const dvar_vector& x)
  */
 void DF_first_diference(void)
 {
+  DF_FILE* fp = gradient_structure::fp;
+
   verify_identifier_string("CE1");
-  dvar_vector_position tmp_pos=restore_dvar_vector_position();
-  dvar_vector_position x_pos=restore_dvar_vector_position();
+  dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();
+  dvar_vector_position x_pos=fp->restore_dvar_vector_position();
   verify_identifier_string("CE4");
   dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
   dvector dfx(x_pos.indexmin(),x_pos.indexmax());

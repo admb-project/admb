@@ -9,7 +9,7 @@ endif
 
 run: $(TARGET)
 ifeq ($(CMDSHELL),cmd)
-	./$(TARGET) -mcmc 10000 -mcsave 100
+	$(TARGET) -mcmc 10000 -mcsave 100
 else
 	./$(TARGET) -mcmc 10000 -mcsave 100
 endif

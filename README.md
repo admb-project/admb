@@ -1,7 +1,7 @@
 ADMB Project
 ============
-*ADMB-12.3*  
-*Released March 7, 2021*  
+*ADMB-13.0*  
+*Released August 8, 2022*  
 
 ---
 
@@ -17,7 +17,7 @@ package, ADMB-RE, implements random effects in nonlinear models.
 
 ADMB is an open source project.  Read the AD Model Builder [LICENSE][LICENSE_link].
 
-[LICENSE_link]: https://raw.githubusercontent.com/admb-project/admb/master/LICENSE.txt
+[LICENSE_link]: https://raw.githubusercontent.com/admb-project/admb/main/LICENSE.txt
 
 Donations
 ---------
@@ -97,4 +97,4 @@ developing features, testing, providing fixes, improving documentation and givin
 * Johnoel Ancheta
 
 ---
-Copyright (c) 2008-2021 ADMB Foundation and Regents of the University of California
+Copyright (c) 2008-2022 ADMB Foundation and Regents of the University of California

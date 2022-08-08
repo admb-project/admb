@@ -71,18 +71,19 @@ banded_lower_triangular_dvar_matrix choleski_decomp_positive(
 
    value(_fpen)=fpen;
   //banded_lower_triangular_dvar_matrix vc=nograd_assign(L);
+  grad_stack* GRAD_STACK1 = gradient_structure::GRAD_STACK1;
+  DF_FILE* fp = gradient_structure::fp;
   save_identifier_string("qs");
-  _fpen.save_prevariable_position();
-  save_double_value(eps);
+  fp->save_prevariable_position(_fpen);
+  fp->save_double_value(eps);
   save_identifier_string("rs");
-  L.save_dvar_matrix_position();
+  fp->save_dvar_matrix_position(L.d);
   save_identifier_string("rt");
-  MM.save_dvar_matrix_value();
+  fp->save_dvar_matrix_value(MM.d);
   save_identifier_string("rl");
-  MM.save_dvar_matrix_position();
+  fp->save_dvar_matrix_position(MM.d);
   save_identifier_string("ro");
-  gradient_structure::GRAD_STACK1->
-      set_gradient_stack(dfcholeski_decomp_banded_positive);
+  GRAD_STACK1->set_gradient_stack(dfcholeski_decomp_banded_positive);
 
   return L;
 }
@@ -93,18 +94,20 @@ banded_lower_triangular_dvar_matrix choleski_decomp_positive(
  */
 void dfcholeski_decomp_banded_positive(void)
 {
+  DF_FILE* fp = gradient_structure::fp;
+
   verify_identifier_string("ro");
-  dvar_matrix_position MMpos=restore_dvar_matrix_position();
+  dvar_matrix_position MMpos=fp->restore_dvar_matrix_position();
   verify_identifier_string("rl");
   banded_symmetric_dmatrix M=
     restore_banded_symmetric_dvar_matrix_value(MMpos);
   verify_identifier_string("rt");
-  dvar_matrix_position vcpos=restore_dvar_matrix_position();
+  dvar_matrix_position vcpos=fp->restore_dvar_matrix_position();
   verify_identifier_string("rs");
   banded_lower_triangular_dmatrix dfL=
     restore_banded_lower_triangular_dvar_matrix_derivatives(vcpos);
-  double eps=restore_double_value();
-  prevariable_position fpenpos=restore_prevariable_position();
+  double eps=fp->restore_double_value();
+  prevariable_position fpenpos=fp->restore_prevariable_position();
   verify_identifier_string("qs");
   double dfpen=restore_prevariable_derivative(fpenpos);
 

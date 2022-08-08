@@ -62,15 +62,16 @@
    temp_col+=m2.rowmin();
    free ((char*)temp_col);
    dvar_matrix vtmp=nograd_assign(tmp);
+   gradient_structure* gs = gradient_structure::get();
+   DF_FILE* fp = gs->fp;
    save_identifier_string("TEST1");
-   m1.save_dvar_matrix_value();
-   m1.save_dvar_matrix_position();
-   m2.save_dvar_matrix_value();
-   m2.save_dvar_matrix_position();
-   vtmp.save_dvar_matrix_position();
+   m1.save_dvar_matrix_value(fp);
+   m1.save_dvar_matrix_position(fp);
+   m2.save_dvar_matrix_value(fp);
+   m2.save_dvar_matrix_position(fp);
+   vtmp.save_dvar_matrix_position(fp);
    save_identifier_string("TEST6");
-   gradient_structure::GRAD_STACK1->
-            set_gradient_stack(dmdm_prod);
+   gs->GRAD_STACK1->set_gradient_stack(dmdm_prod);
    return vtmp;
  }
 */
@@ -105,15 +106,16 @@
    }
 
    dvar_matrix vtmp=nograd_assign(tmp);
+   gradient_structure* gs = gradient_structure::_instance;
+   DF_FILE* fp = gradient_structure::fp;
    save_identifier_string("TEST1");
-   m1.save_dvar_matrix_value();
-   m1.save_dvar_matrix_position();
-   m2.save_dvar_matrix_value();
-   m2.save_dvar_matrix_position();
-   vtmp.save_dvar_matrix_position();
+   fp->save_dvar_matrix_value(m1);
+   fp->save_dvar_matrix_position(m1);
+   fp->save_dvar_matrix_value(m2);
+   fp->save_dvar_matrix_position(m2);
+   fp->save_dvar_matrix_position(vtmp);
    save_identifier_string("TEST6");
-   gradient_structure::GRAD_STACK1->
-            set_gradient_stack(dmdm_prod);
+   gs->GRAD_STACK1->set_gradient_stack(dmdm_prod);
    return vtmp;
  }
 
@@ -123,13 +125,15 @@
  */
 void dmdm_prod(void)
 {
+  DF_FILE* fp = gradient_structure::fp;
+
   verify_identifier_string("TEST6");
-  dvar_matrix_position vpos=restore_dvar_matrix_position();
+  dvar_matrix_position vpos=fp->restore_dvar_matrix_position();
   dmatrix dftmp=restore_dvar_matrix_derivatives(vpos);
-  dvar_matrix_position m2pos=restore_dvar_matrix_position();
-  dmatrix cm2=restore_dvar_matrix_value(m2pos);
-  dvar_matrix_position m1pos=restore_dvar_matrix_position();
-  dmatrix cm1=restore_dvar_matrix_value(m1pos);
+  dvar_matrix_position m2pos=fp->restore_dvar_matrix_position();
+  dmatrix cm2=fp->restore_dvar_matrix_value(m2pos);
+  dvar_matrix_position m1pos=fp->restore_dvar_matrix_position();
+  dmatrix cm1=fp->restore_dvar_matrix_value(m1pos);
   verify_identifier_string("TEST1");
   dmatrix dfm1(m1pos);
   dmatrix dfm2(m2pos);

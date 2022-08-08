@@ -55,7 +55,7 @@ SEPARABLE_FUNCTION void f0(const dvar_vector& u)
   f+=0.5*norm2(u);
   
   
-SEPARABLE_FUNCTION void f1(double y,const prevariable& a,const prevariable& u1,const prevariable& u2,const prevariable& u3,const prevariable& u4,const prevariable& u5,const prevariable ls1,const prevariable ls2,const prevariable ls3,const prevariable ls4,const prevariable ls5)
+SEPARABLE_FUNCTION void f1(double y, const prevariable& a, const prevariable& u1, const prevariable& u2, const prevariable& u3, const prevariable& u4, const prevariable& u5, const prevariable& ls1, const prevariable& ls2, const prevariable& ls3, const prevariable& ls4, const prevariable& ls5)
     dvariable logq=a+exp(ls1)*u1+exp(ls2)*u2+exp(ls3)*u3+exp(ls4)*u4+exp(ls5)*u5;
     dvariable q=exp(logq);
     // add minus thge log likelihood

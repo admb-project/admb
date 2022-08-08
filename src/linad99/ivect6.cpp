@@ -22,10 +22,16 @@ Return integer sum of all the elements in ivector v.
 */
 int sum(const ivector &v)
 {
+  int min = v.indexmin();
+  int max = v.indexmax();
   int value = 0;
-  for (int i = v.indexmin(); i <= v.indexmax(); i++)
+
+  int* pvi = v.get_v() + min;
+  for (int i = min; i <= max; ++i)
   {
-    value += v.elem(i);
+    value += *pvi;
+
+    ++pvi;
   }
   return value;
 }

@@ -1,7 +1,7 @@
 # ADMB Quick Start Windows
 
-*ADMB-12.3*  
-*Released March 7, 2021*  
+*ADMB-13.0*  
+*Released August 8, 2022*  
 
 Describe downloading, installing and using ADMB from binary release for Windows.
 
@@ -12,7 +12,7 @@ Quick Start
 
 1. **Download**
 
-   Download installer [admb-12.3-windows.exe](https://github.com/admb-project/admb/releases/download/admb-12.3/admb-12.3-windows.exe).
+   Download installer [admb-13.0-windows.exe](https://github.com/admb-project/admb/releases/download/admb-13.0/admb-13.0-windows.exe).
 
    _**Note**_ &mdash; Installer includes MinGW-w64 C++ compiler.
 

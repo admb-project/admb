@@ -1,5 +1,10 @@
 ifeq ($(OS),Windows_NT)
   ifeq ($(CMDSHELL),cmd)
+    SHELL=cmd
+  endif
+endif
+ifeq ($(OS),Windows_NT)
+  ifeq ($(CMDSHELL),cmd)
 PATH:=..\..\utilities;$(PATH);..\..\utilities\shared
 bins: $(DIST)\bin\tpl2rem.exe
 $(DIST)\bin\tpl2rem.exe: ..\..\build\tpl2rem\tpl2rem.c

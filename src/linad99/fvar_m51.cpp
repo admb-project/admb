@@ -119,15 +119,17 @@ dvariable ln_det_choleski(const dvar_matrix& MM)
 
   double log_det=2.0*log_det1;
   dvariable vlog_det=nograd_assign(log_det);
+  grad_stack* GRAD_STACK1 = gradient_structure::GRAD_STACK1;
+  DF_FILE* fp = gradient_structure::fp;
+
   save_identifier_string("ps");
-  vlog_det.save_prevariable_position();
+  fp->save_prevariable_position(vlog_det);
   save_identifier_string("rt");
-  MM.save_dvar_matrix_value();
+  fp->save_dvar_matrix_value(MM);
   save_identifier_string("pl");
-  MM.save_dvar_matrix_position();
+  fp->save_dvar_matrix_position(MM);
   save_identifier_string("pa");
-  gradient_structure::GRAD_STACK1->
-      set_gradient_stack(df_ln_det_choleski);
+  GRAD_STACK1->set_gradient_stack(df_ln_det_choleski);
   return vlog_det;
 }
 
@@ -137,13 +139,15 @@ dvariable ln_det_choleski(const dvar_matrix& MM)
  */
 void df_ln_det_choleski(void)
 {
+  DF_FILE* fp = gradient_structure::fp;
+
   verify_identifier_string("pa");
-  dvar_matrix_position MMpos=restore_dvar_matrix_position();
+  dvar_matrix_position MMpos=fp->restore_dvar_matrix_position();
   verify_identifier_string("pl");
-  dmatrix M=restore_dvar_matrix_value(MMpos);
+  dmatrix M=fp->restore_dvar_matrix_value(MMpos);
   verify_identifier_string("rt");
   //prevariable_position vcpos=restore_prevariable_position();
-  double dflog_det=restore_prevariable_derivative();
+  double dflog_det=fp->restore_prevariable_derivative();
   verify_identifier_string("ps");
 
   if (M.colsize() != M.rowsize())
@@ -377,14 +381,15 @@ dvariable ln_det_choleski_error(const dvar_matrix& MM,int & onerror)
  */
   double log_det=2.0*log_det1;
   dvariable vlog_det=nograd_assign(log_det);
+  grad_stack* GRAD_STACK1 = gradient_structure::GRAD_STACK1;
+  DF_FILE* fp = gradient_structure::fp;
   save_identifier_string("ps");
-  vlog_det.save_prevariable_position();
+  fp->save_prevariable_position(vlog_det);
   save_identifier_string("rt");
-  MM.save_dvar_matrix_value();
+  fp->save_dvar_matrix_value(MM);
   save_identifier_string("pl");
-  MM.save_dvar_matrix_position();
+  fp->save_dvar_matrix_position(MM);
   save_identifier_string("pa");
-  gradient_structure::GRAD_STACK1->
-      set_gradient_stack(df_ln_det_choleski);
+  GRAD_STACK1->set_gradient_stack(df_ln_det_choleski);
   return vlog_det;
 }

@@ -3,12 +3,12 @@ ifeq ($(OS),Windows_NT)
     CMDSHELL=cmd
     ADMB_HOME=..\\..\\..
   else
-    ifeq ($(findstring sh.exe,$(shell where sh.exe 2>&1 | findstr sh.exe)),sh.exe)
-      EXT=.sh
-    else
-      SHELL=cmd
+    ifndef TERM
+      export SHELL=cmd
       CMDSHELL=cmd
-      ADMB_HOME=..\\..\\..
+    endif
+    ifndef CMDSHELL
+      EXT=.sh
     endif
   endif
 endif
@@ -22,7 +22,6 @@ GTEST_DIR=googletest-read-only\\googletest
 else
 GTEST_DIR=googletest-read-only/googletest
 endif
-
 
 GTESTS_ALL=\
  test_atomic.cpp\
@@ -124,7 +123,6 @@ GTESTS_ALL=\
  test_cast.cpp\
  test_valarray.cpp\
  test_vector.cpp\
- test_xpools.cpp\
  test_issues.cpp\
  test_funnel.cpp\
  test_math.cpp\
@@ -171,6 +169,11 @@ GTESTS_ALL=\
  test_shareinfo.cpp\
  test_quadratic_prior.cpp\
  test_evaluate_function.cpp\
+ test_gradient_structure_thread.cpp\
+ test_dll_param_init_bounded_vector.cpp\
+ test_ad_double.cpp\
+ test_prevariable.cpp\
+ test_independent_variables.cpp\
  main.cpp
 
 ERRORS=\
@@ -185,7 +188,9 @@ ERRORS=\
  main.cpp
 
 GTESTS_DEV=\
- test_laplace_approximation_calculator.cpp\
+ test_xpools.cpp\
+ test_thread_funnel.obj\
+ thread_funnel5.obj\
  main.cpp
 
 ifdef GTESTS_DEV
@@ -241,6 +246,21 @@ endif
 
 memcheck: gtest-all
 	valgrind -v --tool=memcheck ./gtest-all
+
+ifeq ($(CMDSHELL),cmd)
+thread_funnel5.obj: thread_funnel5.cpp
+	CXXFLAGS=-I$(GTEST_DIR)\\include ..\\..\\admb -c $(ADMB_OPTIONS) test_thread_funnel.cpp
+else
+thread_funnel5.obj: ../thread_funnel/forest/thread_funnel5.cpp
+	CXXFLAGS="-I$(GTEST_DIR)/include -I../thread_funnel/forest" ../../admb$(EXT) -o thread_funnel5.obj -c $(ADMB_OPTIONS) ../thread_funnel/forest/thread_funnel5.cpp
+endif
+
+test_thread_funnel.obj: test_thread_funnel.cpp
+ifeq ($(CMDSHELL),cmd)
+	CXXFLAGS=-I$(GTEST_DIR)\\include ..\\..\\admb -c $(ADMB_OPTIONS) test_thread_funnel.cpp
+else
+	CXXFLAGS="-I$(GTEST_DIR)/include -I../thread_funnel/forest" ../../admb$(EXT) -c $(ADMB_OPTIONS) test_thread_funnel.cpp
+endif
 
 test_df1b2atan2.obj: test_df1b2atan2.cpp df1b2atan2.obj
 ifeq ($(CMDSHELL),cmd)
@@ -476,6 +496,8 @@ ifeq ($(CMDSHELL),cmd)
 	@del /Q sparseness.info
 	@del /Q gtest-finance.exe
 	@del /Q gtest-scalefactor.exe
+	@del /Q dmatrix.txt
+	@del /Q dvector.txt
 else
 	@rm -vf test_i4_array.txt
 	@rm -vf test_i5_array.txt
@@ -594,4 +616,6 @@ else
 	@rm -vf gtest-finance
 	@rm -vf gtest-scalefactor
 	@rm -vf sparseness.info
+	@rm -vf dmatrix.txt
+	@rm -vf dvector.txt
 endif

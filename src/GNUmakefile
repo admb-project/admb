@@ -5,11 +5,9 @@ ifeq ($(OS),Windows_NT)
   ifeq ($(SHELL),cmd)
     CMDSHELL=cmd
   else
-    ifneq ($(findstring sh.exe,$(shell where sh.exe 2>&1 | findstr sh.exe)),sh.exe)
-      ifneq ($(findstring cygpath.exe,$(shell where cygpath.exe 2>&1 | findstr cygpath.exe)),cygpath.exe)
-        SHELL=cmd
-        CMDSHELL=cmd
-      endif
+    ifndef TERM
+      export SHELL=cmd
+      CMDSHELL=cmd
     endif
   endif
   ifeq ($(CMDSHELL),cmd)
@@ -58,7 +56,7 @@ ifeq ($(CMDSHELL),cmd)
   endif
   OBJSDIR_:=$(OBJSDIR)
   OBJSDIR:=$(addsuffix \,$(OBJSDIR))
-  ADMB_VERSION:=$(shell if exist ..\VERSION type ..\VERSION)
+  ADMB_VERSION:=$(shell if exist ..\VERSION.txt type ..\VERSION.txt)
 else
   ifndef INSTALL_DIR
     INSTALL_DIR=/usr/local/
@@ -171,7 +169,7 @@ else
     endif
     OBJSDIR_:=$(OBJSDIR)
     OBJSDIR:=$(sort $(addsuffix /, $(OBJSDIR)))
-    ADMB_VERSION:=$(shell cat ../VERSION)
+    ADMB_VERSION:=$(shell cat ../VERSION.txt)
   endif
 endif
 
@@ -218,17 +216,27 @@ ifeq ($(CMDSHELL),cmd)
         ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
       else ifeq (GCCVER5,$(findstring GCCVER5,$(GCCMAJVER)))
         ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
-      else
+      else ifeq (GCCVER6,$(findstring GCCVER6,$(GCCMAJVER)))
+        ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
+      else ifeq (GCCVER7,$(findstring GCCVER7,$(GCCMAJVER)))
+        ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
+      else ifeq (GCCVER8,$(findstring GCCVER8,$(GCCMAJVER)))
         ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
+      else ifeq (GCCVER9,$(findstring GCCVER9,$(GCCMAJVER)))
+        ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
+      else ifeq (GCCVER10,$(findstring GCCVER10,$(GCCMAJVER)))
+        ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
+      else
+        ADCXXFLAGS:= -std=c++17 $(ADCXXFLAGS)
       endif
     endif
   endif
 else
   ifeq ("$(UNAME_S)","Darwin")
-    ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
+    ADCXXFLAGS:= -std=c++17 $(ADCXXFLAGS)
   else
     ifeq ($(CXX),clang++)
-      ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
+      ADCXXFLAGS:= -std=c++17 $(ADCXXFLAGS)
     else ifeq ($(CXX),icpc)
       ICPCMAJVER:=$(shell icpc -dumpversion | cut -f1 -d. )
       ifeq ("$(ICPCMAJVER)","17")
@@ -253,8 +261,18 @@ else
         endif
       else ifeq ("$(GCCMAJVER)","5")
         ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
-      else
+      else ifeq ("$(GCCMAJVER)","6")
+        ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
+      else ifeq ("$(GCCMAJVER)","7")
+        ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
+      else ifeq ("$(GCCMAJVER)","8")
         ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
+      else ifeq ("$(GCCMAJVER)","9")
+        ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
+      else ifeq ("$(GCCMAJVER)","10")
+        ADCXXFLAGS:= -std=c++14 $(ADCXXFLAGS)
+      else
+        ADCXXFLAGS:= -std=c++17 $(ADCXXFLAGS)
       endif
     endif
   endif
@@ -389,15 +407,16 @@ ifeq ($(CMDSHELL),cmd)
 	copy /Y ..\LICENSE.txt ${DIST}
 	$(DIST)\bin\sed.exe "s/\.md/\.txt/g" ..\README.md > ${DIST}\README.txt
 	copy /Y ..\CHANGES.md ${DIST}\CHANGES.txt
-	copy /Y ..\VERSION ${DIST}
-	pushd $(DIST) & cscript ..\..\scripts\create-admb-command-prompt.vbs & popd
+	copy /Y ..\VERSION.txt ${DIST}
+	pushd $(DIST) & ..\..\scripts\create-admb-command-prompt.bat & popd
 	pushd $(DIST)\bin & copy ..\..\..\scripts\set-admb-command-prompt.bat & popd
 	pushd $(DIST)\bin & copy ..\..\..\scripts\admb-command-prompt.cmd & popd
+	pushd .. & scripts\create-admb-command-prompt.bat & popd
 else
 	cp -f ../LICENSE.txt ${DIST}
 	cat ../README.md | sed 's/\.md/\.txt/g' > ${DIST}/README.txt
 	cp -f ../CHANGES.md ${DIST}/CHANGES.txt
-	cp -f ../VERSION ${DIST}
+	cp -f ../VERSION.txt ${DIST}
 endif
 
 bins:
@@ -824,7 +843,7 @@ else
 	cp ../docs/install/QuickStartUnix.md ../build/$(ADMB_VER)/INSTALL.txt
   endif
   ifeq ($(UNAME_S),Darwin)
-	cp ../docs/install/QuickStartMacOSZip.md ../build/$(ADMB_VER)/INSTALL.txt
+	cp ../docs/install/QuickStartUnix.md ../build/$(ADMB_VER)/INSTALL.txt
   endif
 	cp -R ../examples $(DIST)
 	cd ../build/ && zip -r $(ADMB_VER).zip $(ADMB_VER)

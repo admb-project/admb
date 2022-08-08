@@ -37,9 +37,11 @@ unsigned int size_count(const dmatrix& x)
   unsigned int count = 0;
   int min = x.rowmin();
   int max = x.rowmax();
+  const dvector* pxi = &x(min);
   for (int i = min;i <= max; ++i)
   {
-    count += size_count(x(i));
+    count += size_count(*pxi);
+    ++pxi;
   }
   return count;
 }
@@ -69,9 +71,11 @@ unsigned int size_count(const d3_array& x)
   unsigned int count = 0;
   int min = x.slicemin();
   int max = x.slicemax();
+  const dmatrix* pxi = &x(min);
   for (int i = min; i <= max; ++i)
   {
-    count += size_count(x(i));
+    count += size_count(*pxi);
+    ++pxi;
   }
   return count;
 }

@@ -16,14 +16,22 @@
  */
 dvar6_array operator/(const d6_array& m, const prevariable& d)
    {
-     RETURN_ARRAYS_INCREMENT();
+     gradient_structure* gs = gradient_structure::_instance;
+     gs->RETURN_ARRAYS_INCREMENT();
+
      dvar6_array tmp;
      tmp.allocate(m);
-     for (int i=tmp.indexmin();i<=tmp.indexmax();i++)
+     int min = tmp.indexmin();
+     int max = tmp.indexmax();
+     dvar5_array* ptmpi = &tmp(min);
+     const d5_array* pmi = &m(min);
+     for (int i=min;i<=max;++i)
      {
-       tmp(i)=m(i)/d;
+       *ptmpi = *pmi / d;
+       ++ptmpi;
+       ++pmi;
      }
-     RETURN_ARRAYS_DECREMENT();
+     gs->RETURN_ARRAYS_DECREMENT();
      return tmp;
    }
 
@@ -33,14 +41,21 @@ dvar6_array operator/(const d6_array& m, const prevariable& d)
  */
 dvar6_array operator/(const dvar6_array& m, const double d)
    {
-     RETURN_ARRAYS_INCREMENT();
+     gradient_structure* gs = gradient_structure::_instance;
+     gs->RETURN_ARRAYS_INCREMENT();
      dvar6_array tmp;
      tmp.allocate(m);
-     for (int i=tmp.indexmin();i<=tmp.indexmax();i++)
+     int min = tmp.indexmin();
+     int max = tmp.indexmax();
+     dvar5_array* ptmpi = &tmp(min);
+     const dvar5_array* pmi = &m(min);
+     for (int i=min;i<=max;++i)
      {
-       tmp(i)=m(i)/d;
+       *ptmpi = *pmi / d;
+       ++ptmpi;
+       ++pmi;
      }
-     RETURN_ARRAYS_DECREMENT();
+     gs->RETURN_ARRAYS_DECREMENT();
      return tmp;
    }
 
@@ -50,14 +65,21 @@ dvar6_array operator/(const dvar6_array& m, const double d)
  */
 dvar6_array operator/(const dvar6_array& m, const prevariable& d)
    {
-     RETURN_ARRAYS_INCREMENT();
+     gradient_structure* gs = gradient_structure::_instance;
+     gs->RETURN_ARRAYS_INCREMENT();
      dvar6_array tmp;
      tmp.allocate(m);
-     for (int i=tmp.indexmin();i<=tmp.indexmax();i++)
+     int min = tmp.indexmin();
+     int max = tmp.indexmax();
+     dvar5_array* ptmpi = &tmp(min);
+     const dvar5_array* pmi = &m(min);
+     for (int i=min;i<=max;++i)
      {
-       tmp(i)=m(i)/d;
+       *ptmpi = *pmi / d;
+       ++ptmpi;
+       ++pmi;
      }
-     RETURN_ARRAYS_DECREMENT();
+     gs->RETURN_ARRAYS_DECREMENT();
      return tmp;
    }
 
@@ -67,12 +89,17 @@ dvar6_array operator/(const dvar6_array& m, const prevariable& d)
  */
 void dvar6_array::operator/=(const prevariable& d)
    {
-     RETURN_ARRAYS_INCREMENT();
-     for (int i=indexmin();i<=indexmax();i++)
+     gradient_structure* gs = gradient_structure::_instance;
+     gs->RETURN_ARRAYS_INCREMENT();
+     int min = indexmin();
+     int max = indexmax();
+     dvar5_array* pti = t + min;
+     for (int i=min;i<=max;++i)
      {
-       (*this)(i)/=d;
+       *pti /= d;
+       ++pti;
      }
-     RETURN_ARRAYS_DECREMENT();
+     gs->RETURN_ARRAYS_DECREMENT();
    }
 
 /**
@@ -81,12 +108,17 @@ void dvar6_array::operator/=(const prevariable& d)
  */
 void dvar6_array::operator/=(const double& d)
    {
-     RETURN_ARRAYS_INCREMENT();
-     for (int i=indexmin();i<=indexmax();i++)
+     gradient_structure* gs = gradient_structure::_instance;
+     gs->RETURN_ARRAYS_INCREMENT();
+     int min = indexmin();
+     int max = indexmax();
+     dvar5_array* pti = t + min;
+     for (int i=min;i<=max;++i)
      {
-       (*this)(i)/=d;
+       *pti /= d;
+       ++pti;
      }
-     RETURN_ARRAYS_DECREMENT();
+     gs->RETURN_ARRAYS_DECREMENT();
    }
 
 /**
@@ -95,12 +127,18 @@ void dvar6_array::operator/=(const double& d)
  */
 dvariable sum(const dvar6_array& m)
 {
-  RETURN_ARRAYS_INCREMENT();
+  gradient_structure* gs = gradient_structure::_instance;
+  gs->RETURN_ARRAYS_INCREMENT();
   dvariable tmp=0.;
-  for (int i=m.indexmin();i<=m.indexmax();i++)
+  int min = m.indexmin();
+  int max = m.indexmax();
+  const dvar5_array* pmi = &m(min);
+  for (int i = min; i <= max; ++i)
   {
-    tmp+=sum(m.elem(i));
+    tmp+=sum(*pmi);
+
+    ++pmi;
   }
-  RETURN_ARRAYS_DECREMENT();
+  gs->RETURN_ARRAYS_DECREMENT();
   return tmp;
 }

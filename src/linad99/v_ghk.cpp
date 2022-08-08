@@ -15,7 +15,9 @@
 dvariable ghk(const dvar_vector& lower,const dvar_vector& upper,
   const dvar_matrix& Sigma, const dmatrix& eps)
 {
-  RETURN_ARRAYS_INCREMENT();
+  gradient_structure* gs = gradient_structure::_instance;
+  gs->RETURN_ARRAYS_INCREMENT();
+
   int n=lower.indexmax();
   int m=eps.indexmax();
   dvariable ssum=0.0;
@@ -45,7 +47,7 @@ dvariable ghk(const dvar_vector& lower,const dvar_vector& upper,
     }
     ssum+=weight;
   }
-  RETURN_ARRAYS_DECREMENT();
+  gs->RETURN_ARRAYS_DECREMENT();
   return ssum/m;
 }
 
@@ -56,7 +58,8 @@ dvariable ghk(const dvar_vector& lower,const dvar_vector& upper,
 dvariable ghk_m(const dvar_vector& upper,const dvar_matrix& Sigma,
   const dmatrix& eps)
 {
-  RETURN_ARRAYS_INCREMENT();
+  gradient_structure* gs = gradient_structure::_instance;
+  gs->RETURN_ARRAYS_INCREMENT();
   int n=upper.indexmax();
   int m=eps.indexmax();
   dvariable ssum=0.0;
@@ -81,7 +84,7 @@ dvariable ghk_m(const dvar_vector& upper,const dvar_matrix& Sigma,
     }
     ssum+=weight;
   }
-  RETURN_ARRAYS_DECREMENT();
+  gs->RETURN_ARRAYS_DECREMENT();
   return ssum/m;
 }
 
@@ -92,7 +95,8 @@ dvariable ghk_m(const dvar_vector& upper,const dvar_matrix& Sigma,
 dvariable ghk_choleski(const dvar_vector& lower,const dvar_vector& upper,
   const dvar_matrix& ch, const dmatrix& eps)
 {
-  RETURN_ARRAYS_INCREMENT();
+  gradient_structure* gs = gradient_structure::_instance;
+  gs->RETURN_ARRAYS_INCREMENT();
   int n=lower.indexmax();
   int m=eps.indexmax();
   dvariable ssum=0.0;
@@ -121,7 +125,7 @@ dvariable ghk_choleski(const dvar_vector& lower,const dvar_vector& upper,
     }
     ssum+=weight;
   }
-  RETURN_ARRAYS_DECREMENT();
+  gs->RETURN_ARRAYS_DECREMENT();
   return ssum/m;
 }
 
@@ -132,7 +136,9 @@ dvariable ghk_choleski(const dvar_vector& lower,const dvar_vector& upper,
 dvariable ghk_choleski_m(const dvar_vector& upper,
   const dvar_matrix& ch, const dmatrix& eps)
 {
-  RETURN_ARRAYS_INCREMENT();
+  gradient_structure* gs = gradient_structure::_instance;
+  gs->RETURN_ARRAYS_INCREMENT();
+
   int n=upper.indexmax();
   int m=eps.indexmax();
   dvariable ssum=0.0;
@@ -156,7 +162,7 @@ dvariable ghk_choleski_m(const dvar_vector& upper,
     }
     ssum+=weight;
   }
-  RETURN_ARRAYS_DECREMENT();
+  gs->RETURN_ARRAYS_DECREMENT();
   return ssum/m;
 }
 
@@ -169,7 +175,9 @@ void ghk_test(const dmatrix& eps,int i);
 dvariable ghk(const dvar_vector& lower,const dvar_vector& upper,
   const dvar_matrix& Sigma, const dmatrix& eps,int _i)
 {
-  RETURN_ARRAYS_INCREMENT();
+  gradient_structure* gs = gradient_structure::_instance;
+  gs->RETURN_ARRAYS_INCREMENT();
+
   int n=lower.indexmax();
   dvar_matrix ch=choleski_decomp(Sigma);
   dvar_vector l(1,n);
@@ -198,7 +206,7 @@ dvariable ghk(const dvar_vector& lower,const dvar_vector& upper,
       }
     }
   }
-  RETURN_ARRAYS_DECREMENT();
+  gs->RETURN_ARRAYS_DECREMENT();
   return weight;
 }
 
@@ -209,7 +217,9 @@ dvariable ghk(const dvar_vector& lower,const dvar_vector& upper,
 dvariable ghk_choleski_m_cauchy(const dvar_vector& upper,
   const dvar_matrix& ch, const dmatrix& eps)
 {
-  RETURN_ARRAYS_INCREMENT();
+  gradient_structure* gs = gradient_structure::_instance;
+  gs->RETURN_ARRAYS_INCREMENT();
+
   int n=upper.indexmax();
   int m=eps.indexmax();
   dvariable ssum=0.0;
@@ -233,7 +243,7 @@ dvariable ghk_choleski_m_cauchy(const dvar_vector& upper,
     }
     ssum+=weight;
   }
-  RETURN_ARRAYS_DECREMENT();
+  gs->RETURN_ARRAYS_DECREMENT();
   return ssum/m;
 }
 
@@ -244,7 +254,8 @@ dvariable ghk_choleski_m_cauchy(const dvar_vector& upper,
 dvariable ghk_choleski_m_logistic(const dvar_vector& upper,
   const dvar_matrix& ch, const dmatrix& eps)
 {
-  RETURN_ARRAYS_INCREMENT();
+  gradient_structure* gs = gradient_structure::_instance;
+  gs->RETURN_ARRAYS_INCREMENT();
   int n=upper.indexmax();
   int m=eps.indexmax();
   dvariable ssum=0.0;
@@ -268,6 +279,6 @@ dvariable ghk_choleski_m_logistic(const dvar_vector& upper,
     }
     ssum+=weight;
   }
-  RETURN_ARRAYS_DECREMENT();
+  gs->RETURN_ARRAYS_DECREMENT();
   return ssum/m;
 }

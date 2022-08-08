@@ -11,14 +11,37 @@ Describe new features, changes and improvements for each release.
 * Continually streamline installation and build process
 * Continually improve and update documentation
 
-ADMB-12.3-git
--------------
+ADMB-13.0
+---------
+*Released August 8, 2022*  
+
+#### New Supported Compilers
+
+* Microsoft Visual C++ 2022
 
 #### Changes and Improvements
 
+*  Major update to the program display outputs (See [Issue #221](https://github.com/admb-project/admb/issues/221)).  To change display use the command line option -display N with the ADMB program. To the quiet display set N to 0.  To use the new concise display set N to 1 (default).  To use older legacy display set N to 2.
+
+*  Change all exit statements to ad_exit as recommended by Dr. Dave Fournier (See [Issue #216](https://github.com/admb-project/admb/issues/216)).
+
+*  Ported source code to build and run with the ISO/IEC C++20 standard (See [Issue #223](https://github.com/admb-project/admb/issues/223)).
+
+*  Simplify linking of static library files with .lib or .a extension using the admb script (See [Changes 3fbfd6e](https://github.com/admb-project/admb/commit/3fbfd6edcf5a953a160ef54dcbee0397405519c0)).
+
+  For Microsoft Visual Studio,
+  ```
+  > admb.bat myfile.tpl mylibrary.lib
+  ```
+
+  For Unix,
+  ```
+  > admb myfile.tpl mylibrary.a
+  ```
+
 * Profiling diagnostic option -time has been disabled for releases.
   To develop and use the -time option, rebuild ADMB libraries with 
-  compiler macro DIAG_TIMER defined (See commands below).  ([See Changes a1667e3](https://github.com/admb-project/admb/commit/a1667e31cb862355932609a839e5962fa04823c4)).
+  compiler macro DIAG_TIMER defined (See [Changes a1667e3](https://github.com/admb-project/admb/commit/a1667e31cb862355932609a839e5962fa04823c4)).
 
   For Microsoft Visual Studio,
   ```
@@ -37,8 +60,20 @@ ADMB-12.3-git
 * Copy sparse headers to distribution includes.
 
 * Fixed typo bug in df1b2matrix& df1b2matrix::operator=(const df1b2variable&).
-  df1b2variable should be assign assigned to all elements in f1b2matrix if not empty.
-  ([See Changes 463db83](https://github.com/admb-project/admb/commit/463db839675fa17f2aa3852422d89e1a51f8715d)).
+  df1b2variable should be assign assigned to all elements in f1b2matrix if not empty
+  (See [Changes 463db83](https://github.com/admb-project/admb/commit/463db839675fa17f2aa3852422d89e1a51f8715d)).
+
+* Replaced ad_printf pointer to printf with ad_printf function for outputs.
+
+* Added new function feature **dtweedie** (See [Issue #234](https://github.com/admb-project/admb/issues/234)).
+
+* Renamed VERSION file to VERSION.txt to avoid compiler errors (See [Issue #240](https://github.com/admb-project/admb/issues/240)).
+
+* The default value for -iprint for printing function minimizer report is every 20 iterations instead of 10
+  (See [Changes 581d46c0](https://github.com/admb-project/admb/commit/581d46c0ba066e1ee2548048bc1683888f18b76d)).
+
+* Added new feature to code admb programs directly into C++ code instead of using a TPL.  
+  _Note &mdash; does not work for random effect models._
 
 ADMB-12.3
 ---------

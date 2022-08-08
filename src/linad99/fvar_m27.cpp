@@ -72,14 +72,23 @@ dvar_matrix XXX(const dvar_matrix& m)
  */
 dvar_matrix use_shape(const dvar_matrix& m)
 {
-  ivector cmin(m.rowmin(),m.rowmax());
-  ivector cmax(m.rowmin(),m.rowmax());
-  for (int i=m.rowmin();i<=m.rowmax();i++)
+  int min = m.rowmin();
+  int max = m.rowmax();
+  ivector cmin(min, max);
+  ivector cmax(min, max);
+  int* pcmini = cmin.get_v() + min;
+  int* pcmaxi = cmax.get_v() + min;
+  const dvar_vector* pmi = &m(min);
+  for (int i = min; i <= max; ++i)
   {
-    cmin(i)=m(i).indexmin();
-    cmax(i)=m(i).indexmax();
+    *pcmini = pmi->indexmin();
+    *pcmaxi = pmi->indexmax();
+
+    ++pmi;
+    ++pcmini;
+    ++pcmaxi;
   }
-  dvar_matrix tmp(m.rowmin(),m.rowmax(),cmin,cmax);
+  dvar_matrix tmp(min, max, cmin, cmax);
   return tmp;
 }
 
@@ -89,14 +98,24 @@ dvar_matrix use_shape(const dvar_matrix& m)
  */
 dmatrix use_shape(const dmatrix& m)
 {
-  ivector cmin(m.rowmin(),m.rowmax());
-  ivector cmax(m.rowmin(),m.rowmax());
-  for (int i=m.rowmin();i<=m.rowmax();i++)
+  int min = m.rowmin();
+  int max = m.rowmax();
+  ivector cmin(min, max);
+  ivector cmax(min, max);
+
+  int* pcmini = cmin.get_v() + min;
+  int* pcmaxi = cmax.get_v() + min;
+  const dvector* pmi = &m(min);
+  for (int i = min; i <= max; ++i)
   {
-    cmin(i)=m(i).indexmin();
-    cmax(i)=m(i).indexmax();
+    *pcmini = pmi->indexmin();
+    *pcmaxi = pmi->indexmax();
+
+    ++pmi;
+    ++pcmini;
+    ++pcmaxi;
   }
-  dmatrix tmp(m.rowmin(),m.rowmax(),cmin,cmax);
+  dmatrix tmp(min, max, cmin, cmax);
   return tmp;
 }
 
@@ -106,10 +125,18 @@ dmatrix use_shape(const dmatrix& m)
  */
 dvar_matrix pow(const dvar_matrix& m, int e)
 {
-  dvar_matrix tmp=use_shape(m);
-  for (int i=m.rowmin();i<=m.rowmax();i++)
+  dvar_matrix tmp = use_shape(m);
+
+  int min = m.rowmin();
+  int max = m.rowmax();
+  dvar_vector* ptmpi = &tmp(min);
+  const dvar_vector* pmi = &m(min);
+  for (int i = min; i <= max; ++i)
   {
-    tmp(i)=pow(m(i),e);
+    *ptmpi = pow(*pmi, e);
+
+    ++ptmpi;
+    ++pmi;
   }
   return tmp;
 }
@@ -120,10 +147,18 @@ dvar_matrix pow(const dvar_matrix& m, int e)
  */
 dvar_matrix pow(const dmatrix& m, const prevariable& e)
 {
-  dvar_matrix tmp=use_shape(m);
-  for (int i=m.rowmin();i<=m.rowmax();i++)
+  dvar_matrix tmp = use_shape(m);
+
+  int min = m.rowmin();
+  int max = m.rowmax();
+  dvar_vector* ptmpi = &tmp(min);
+  const dvector* pmi = &m(min);
+  for (int i = min; i <= max; ++i)
   {
-    tmp(i)=pow(m(i),e);
+    *ptmpi = pow(*pmi, e);
+
+    ++ptmpi;
+    ++pmi;
   }
   return tmp;
 }
@@ -134,10 +169,18 @@ dvar_matrix pow(const dmatrix& m, const prevariable& e)
  */
 dvar_matrix pow(const dvar_matrix& m, const prevariable& e)
 {
-  dvar_matrix tmp=use_shape(m);
-  for (int i=m.rowmin();i<=m.rowmax();i++)
+  dvar_matrix tmp = use_shape(m);
+
+  int min = m.rowmin();
+  int max = m.rowmax();
+  dvar_vector* ptmpi = &tmp(min);
+  const dvar_vector* pmi = &m(min);
+  for (int i = min; i <= max; ++i)
   {
-    tmp(i)=pow(m(i),e);
+    *ptmpi = pow(*pmi, e);
+
+    ++ptmpi;
+    ++pmi;
   }
   return tmp;
 }
@@ -148,10 +191,18 @@ dvar_matrix pow(const dvar_matrix& m, const prevariable& e)
  */
 dvar_matrix pow(const dvar_matrix& m, const double e)
 {
-  dvar_matrix tmp=use_shape(m);
-  for (int i=m.rowmin();i<=m.rowmax();i++)
+  dvar_matrix tmp = use_shape(m);
+
+  int min = m.rowmin();
+  int max = m.rowmax();
+  dvar_vector* ptmpi = &tmp(min);
+  const dvar_vector* pmi = &m(min);
+  for (int i = min; i <= max; ++i)
   {
-    tmp(i)=pow(m(i),e);
+    *ptmpi = pow(*pmi, e);
+
+    ++ptmpi;
+    ++pmi;
   }
   return tmp;
 }
@@ -162,10 +213,18 @@ dvar_matrix pow(const dvar_matrix& m, const double e)
  */
 dvar_matrix tan(const dvar_matrix& m)
 {
-  dvar_matrix tmp=use_shape(m);
-  for (int i=m.rowmin();i<=m.rowmax();i++)
+  dvar_matrix tmp = use_shape(m);
+
+  int min = m.rowmin();
+  int max = m.rowmax();
+  dvar_vector* ptmpi = &tmp(min);
+  const dvar_vector* pmi = &m(min);
+  for (int i = min; i <= max; ++i)
   {
-    tmp(i)=tan(m(i));
+    *ptmpi = tan(*pmi);
+
+    ++ptmpi;
+    ++pmi;
   }
   return tmp;
 }
@@ -176,10 +235,18 @@ dvar_matrix tan(const dvar_matrix& m)
  */
 dvar_matrix cos(const dvar_matrix& m)
 {
-  dvar_matrix tmp=use_shape(m);
-  for (int i=m.rowmin();i<=m.rowmax();i++)
+  dvar_matrix tmp = use_shape(m);
+
+  int min = m.rowmin();
+  int max = m.rowmax();
+  dvar_vector* ptmpi = &tmp(min);
+  const dvar_vector* pmi = &m(min);
+  for (int i = min; i <= max; ++i)
   {
-    tmp(i)=cos(m(i));
+    *ptmpi = cos(*pmi);
+
+    ++ptmpi;
+    ++pmi;
   }
   return tmp;
 }
@@ -190,10 +257,18 @@ dvar_matrix cos(const dvar_matrix& m)
  */
 dvar_matrix sin(const dvar_matrix& m)
 {
-  dvar_matrix tmp=use_shape(m);
-  for (int i=m.rowmin();i<=m.rowmax();i++)
+  dvar_matrix tmp = use_shape(m);
+
+  int min = m.rowmin();
+  int max = m.rowmax();
+  dvar_vector* ptmpi = &tmp(min);
+  const dvar_vector* pmi = &m(min);
+  for (int i = min; i <= max; ++i)
   {
-    tmp(i)=sin(m(i));
+    *ptmpi = sin(*pmi);
+
+    ++ptmpi;
+    ++pmi;
   }
   return tmp;
 }
@@ -204,10 +279,18 @@ dvar_matrix sin(const dvar_matrix& m)
  */
 dvar_matrix log(const dvar_matrix& m)
 {
-  dvar_matrix tmp=use_shape(m);
-  for (int i=m.rowmin();i<=m.rowmax();i++)
+  dvar_matrix tmp = use_shape(m);
+
+  int min = m.rowmin();
+  int max = m.rowmax();
+  dvar_vector* ptmpi = &tmp(min);
+  const dvar_vector* pmi = &m(min);
+  for (int i = min; i <= max; ++i)
   {
-    tmp(i)=log(m(i));
+    *ptmpi = log(*pmi);
+
+    ++ptmpi;
+    ++pmi;
   }
   return tmp;
 }
@@ -218,10 +301,18 @@ dvar_matrix log(const dvar_matrix& m)
  */
 dvar_matrix sqrt(const dvar_matrix& m)
 {
-  dvar_matrix tmp=use_shape(m);
-  for (int i=m.rowmin();i<=m.rowmax();i++)
+  dvar_matrix tmp = use_shape(m);
+
+  int min = m.rowmin();
+  int max = m.rowmax();
+  dvar_vector* ptmpi = &tmp(min);
+  const dvar_vector* pmi = &m(min);
+  for (int i = min; i <= max; ++i)
   {
-    tmp(i)=sqrt(m(i));
+    *ptmpi = sqrt(*pmi);
+
+    ++ptmpi;
+    ++pmi;
   }
   return tmp;
 }
@@ -232,10 +323,18 @@ dvar_matrix sqrt(const dvar_matrix& m)
  */
 dvar_matrix sqr(const dvar_matrix& m)
 {
-  dvar_matrix tmp=use_shape(m);
-  for (int i=m.rowmin();i<=m.rowmax();i++)
+  dvar_matrix tmp = use_shape(m);
+
+  int min = m.rowmin();
+  int max = m.rowmax();
+  dvar_vector* ptmpi = &tmp(min);
+  const dvar_vector* pmi = &m(min);
+  for (int i = min; i <= max; ++i)
   {
-    tmp(i)=sqr(m(i));
+    *ptmpi = sqr(*pmi);
+
+    ++ptmpi;
+    ++pmi;
   }
   return tmp;
 }
@@ -246,10 +345,18 @@ dvar_matrix sqr(const dvar_matrix& m)
  */
 dvar_matrix exp(const dvar_matrix& m)
 {
-  dvar_matrix tmp=use_shape(m);
-  for (int i=m.rowmin();i<=m.rowmax();i++)
+  dvar_matrix tmp = use_shape(m);
+
+  int min = m.rowmin();
+  int max = m.rowmax();
+  dvar_vector* ptmpi = &tmp(min);
+  const dvar_vector* pmi = &m(min);
+  for (int i = min; i <= max; ++i)
   {
-    tmp(i)=exp(m(i));
+    *ptmpi = exp(*pmi);
+
+    ++ptmpi;
+    ++pmi;
   }
   return tmp;
 }
@@ -260,10 +367,20 @@ dvar_matrix exp(const dvar_matrix& m)
  */
 dvar_matrix elem_div(const dvar_matrix& m, const dvar_matrix& m2)
 {
-  dvar_matrix tmp=use_shape(m);
-  for (int i=m.rowmin();i<=m.rowmax();i++)
+  dvar_matrix tmp = use_shape(m);
+
+  int min = m.rowmin();
+  int max = m.rowmax();
+  dvar_vector* ptmpi = &tmp(min);
+  const dvar_vector* pmi = &m(min);
+  const dvar_vector* pm2i = &m2(min);
+  for (int i = min; i <= max; ++i)
   {
-    tmp(i)=elem_div(m(i),m2(i));
+    *ptmpi = elem_div(*pmi, *pm2i);
+
+    ++ptmpi;
+    ++pmi;
+    ++pm2i;
   }
   return tmp;
 }
@@ -274,10 +391,20 @@ dvar_matrix elem_div(const dvar_matrix& m, const dvar_matrix& m2)
  */
 dvar_matrix elem_div(const dmatrix& m,const dvar_matrix& m2)
 {
-  dvar_matrix tmp=use_shape(m);
-  for (int i=m.rowmin();i<=m.rowmax();i++)
+  dvar_matrix tmp = use_shape(m);
+
+  int min = m.rowmin();
+  int max = m.rowmax();
+  dvar_vector* ptmpi = &tmp(min);
+  const dvector* pmi = &m(min);
+  const dvar_vector* pm2i = &m2(min);
+  for (int i = min; i <= max; ++i)
   {
-    tmp(i)=elem_div(m(i),m2(i));
+    *ptmpi = elem_div(*pmi, *pm2i);
+
+    ++ptmpi;
+    ++pmi;
+    ++pm2i;
   }
   return tmp;
 }
@@ -288,10 +415,20 @@ dvar_matrix elem_div(const dmatrix& m,const dvar_matrix& m2)
  */
 dvar_matrix elem_div(const dvar_matrix& m, const dmatrix& m2)
 {
-  dvar_matrix tmp=use_shape(m);
-  for (int i=m.rowmin();i<=m.rowmax();i++)
+  dvar_matrix tmp = use_shape(m);
+
+  int min = m.rowmin();
+  int max = m.rowmax();
+  dvar_vector* ptmpi = &tmp(min);
+  const dvar_vector* pmi = &m(min);
+  const dvector* pm2i = &m2(min);
+  for (int i = min; i <= max; ++i)
   {
-    tmp(i)=elem_div(m(i),m2(i));
+    *ptmpi = elem_div(*pmi, *pm2i);
+
+    ++ptmpi;
+    ++pmi;
+    ++pm2i;
   }
   return tmp;
 }
@@ -303,10 +440,20 @@ dvar_matrix elem_div(const dvar_matrix& m, const dmatrix& m2)
 dvar_matrix elem_prod(const dvar_matrix& m, const dvar_matrix& m2)
 {
   //dvar_matrix tmp=use_shape(m);
-  dvar_matrix tmp(m.indexmin(),m.indexmax());
-  for (int i=m.rowmin();i<=m.rowmax();i++)
+  int min = m.rowmin();
+  int max = m.rowmax();
+  dvar_matrix tmp(min, max);
+
+  dvar_vector* ptmpi = &tmp(min);
+  const dvar_vector* pmi = &m(min);
+  const dvar_vector* pm2i = &m2(min);
+  for (int i = min; i <= max; ++i)
   {
-    tmp(i)=elem_prod(m(i),m2(i));
+    *ptmpi = elem_prod(*pmi, *pm2i);
+
+    ++ptmpi;
+    ++pmi;
+    ++pm2i;
   }
   return tmp;
 }
@@ -317,10 +464,20 @@ dvar_matrix elem_prod(const dvar_matrix& m, const dvar_matrix& m2)
  */
 dvar_matrix elem_prod(const dmatrix& m, const dvar_matrix& m2)
 {
-  dvar_matrix tmp=use_shape(m);
-  for (int i=m.rowmin();i<=m.rowmax();i++)
+  dvar_matrix tmp = use_shape(m);
+
+  int min = m.rowmin();
+  int max = m.rowmax();
+  dvar_vector* ptmpi = &tmp(min);
+  const dvector* pmi = &m(min);
+  const dvar_vector* pm2i = &m2(min);
+  for (int i = min; i <= max; ++i)
   {
-    tmp(i)=elem_prod(m(i),m2(i));
+    *ptmpi = elem_prod(*pmi, *pm2i);
+
+    ++ptmpi;
+    ++pmi;
+    ++pm2i;
   }
   return tmp;
 }
@@ -331,10 +488,20 @@ dvar_matrix elem_prod(const dmatrix& m, const dvar_matrix& m2)
  */
 dvar_matrix elem_prod(const dvar_matrix& m, const dmatrix& m2)
 {
-  dvar_matrix tmp=use_shape(m);
-  for (int i=m.rowmin();i<=m.rowmax();i++)
+  dvar_matrix tmp = use_shape(m);
+
+  int min = m.rowmin();
+  int max = m.rowmax();
+  dvar_vector* ptmpi = &tmp(min);
+  const dvar_vector* pmi = &m(min);
+  const dvector* pm2i = &m2(min);
+  for (int i = min; i <= max; ++i)
   {
-    tmp(i)=elem_prod(m(i),m2(i));
+    *ptmpi = elem_prod(*pmi, *pm2i);
+
+    ++ptmpi;
+    ++pmi;
+    ++pm2i;
   }
   return tmp;
 }
@@ -345,10 +512,18 @@ dvar_matrix elem_prod(const dvar_matrix& m, const dmatrix& m2)
  */
 dvar_matrix operator+(const double x, const dvar_matrix& m)
 {
-  dvar_matrix tmp=use_shape(m);
-  for (int i=m.rowmin();i<=m.rowmax();i++)
+  dvar_matrix tmp = use_shape(m);
+
+  int min = m.rowmin();
+  int max = m.rowmax();
+  dvar_vector* ptmpi = &tmp(min);
+  const dvar_vector* pmi = &m(min);
+  for (int i = min; i <= max; ++i)
   {
-    tmp(i)=x+m(i);
+    *ptmpi = x + *pmi;
+
+    ++ptmpi;
+    ++pmi;
   }
   return tmp;
 }
@@ -359,10 +534,18 @@ dvar_matrix operator+(const double x, const dvar_matrix& m)
  */
 dvar_matrix operator*(const prevariable& x, const dvar_matrix& m)
 {
-  dvar_matrix tmp=use_shape(m);
-  for (int i=m.rowmin();i<=m.rowmax();i++)
+  dvar_matrix tmp = use_shape(m);
+
+  int min = m.rowmin();
+  int max = m.rowmax();
+  dvar_vector* ptmpi = &tmp(min);
+  const dvar_vector* pmi = &m(min);
+  for (int i = min; i <= max; ++i)
   {
-    tmp(i)=x*m(i);
+    *ptmpi = x * *pmi;
+
+    ++ptmpi;
+    ++pmi;
   }
   return tmp;
 }
@@ -373,10 +556,18 @@ dvar_matrix operator*(const prevariable& x, const dvar_matrix& m)
  */
 dvar_matrix operator+(const dvar_matrix& m, const double x)
 {
-  dvar_matrix tmp=use_shape(m);
-  for (int i=m.rowmin();i<=m.rowmax();i++)
+  dvar_matrix tmp = use_shape(m);
+
+  int min = m.rowmin();
+  int max = m.rowmax();
+  dvar_vector* ptmpi = &tmp(min);
+  const dvar_vector* pmi = &m(min);
+  for (int i = min; i <= max; ++i)
   {
-    tmp(i)=m(i)+x;
+    *ptmpi = *pmi + x;
+
+    ++ptmpi;
+    ++pmi;
   }
   return tmp;
 }
@@ -387,10 +578,18 @@ dvar_matrix operator+(const dvar_matrix& m, const double x)
  */
 dvar_matrix operator+(const dvariable& x, const dvar_matrix& m)
 {
-  dvar_matrix tmp=use_shape(m);
-  for (int i=m.rowmin();i<=m.rowmax();i++)
+  dvar_matrix tmp = use_shape(m);
+
+  int min = m.rowmin();
+  int max = m.rowmax();
+  dvar_vector* ptmpi = &tmp(min);
+  const dvar_vector* pmi = &m(min);
+  for (int i = min; i <= max; ++i)
   {
-    tmp(i)=x+m(i);
+    *ptmpi = x + *pmi;
+
+    ++ptmpi;
+    ++pmi;
   }
   return tmp;
 }
@@ -401,10 +600,18 @@ dvar_matrix operator+(const dvariable& x, const dvar_matrix& m)
  */
 dvar_matrix operator+(const dvar_matrix& m, const dvariable& x)
 {
-  dvar_matrix tmp=use_shape(m);
-  for (int i=m.rowmin();i<=m.rowmax();i++)
+  dvar_matrix tmp = use_shape(m);
+
+  int min = m.rowmin();
+  int max = m.rowmax();
+  dvar_vector* ptmpi = &tmp(min);
+  const dvar_vector* pmi = &m(min);
+  for (int i = min; i <= max; ++i)
   {
-    tmp(i)=m(i)+x;
+    *ptmpi = *pmi + x;
+
+    ++ptmpi;
+    ++pmi;
   }
   return tmp;
 }
@@ -415,10 +622,18 @@ dvar_matrix operator+(const dvar_matrix& m, const dvariable& x)
  */
 dvar_matrix operator*(const dvar_matrix& m, const prevariable& x)
 {
-  dvar_matrix tmp=use_shape(m);
-  for (int i=m.rowmin();i<=m.rowmax();i++)
+  dvar_matrix tmp = use_shape(m);
+
+  int min = m.rowmin();
+  int max = m.rowmax();
+  dvar_vector* ptmpi = &tmp(min);
+  const dvar_vector* pmi = &m(min);
+  for (int i = min; i <= max; ++i)
   {
-    tmp(i)=m(i)*x;
+    *ptmpi = *pmi * x;
+
+    ++ptmpi;
+    ++pmi;
   }
   return tmp;
 }
@@ -430,10 +645,17 @@ dvar_matrix operator*(const dvar_matrix& m, const prevariable& x)
 dvar_matrix operator-(const dvar_matrix& m, const double x)
 {
   dvar_matrix tmp=use_shape(m);
-  double t=-x;
-  for (int i=m.rowmin();i<=m.rowmax();i++)
+
+  int min = m.rowmin();
+  int max = m.rowmax();
+  dvar_vector* ptmpi = &tmp(min);
+  const dvar_vector* pmi = &m(min);
+  for (int i = min; i <= max; ++i)
   {
-    tmp(i)=m(i)+t;
+    *ptmpi = *pmi - x;
+
+    ++ptmpi;
+    ++pmi;
   }
   return tmp;
 }
@@ -444,10 +666,18 @@ dvar_matrix operator-(const dvar_matrix& m, const double x)
  */
 dvar_matrix operator-(const double x, const dvar_matrix& m)
 {
-  dvar_matrix tmp=use_shape(m);
-  for (int i=m.rowmin();i<=m.rowmax();i++)
+  dvar_matrix tmp = use_shape(m);
+
+  int min = m.rowmin();
+  int max = m.rowmax();
+  dvar_vector* ptmpi = &tmp(min);
+  const dvar_vector* pmi = &m(min);
+  for (int i = min; i <= max; ++i)
   {
-    tmp(i)=x-m(i);
+    *ptmpi = x - *pmi;
+
+    ++ptmpi;
+    ++pmi;
   }
   return tmp;
 }
@@ -458,10 +688,18 @@ dvar_matrix operator-(const double x, const dvar_matrix& m)
  */
 dvar_matrix operator-(const dvar_matrix& m, const dvariable& x)
 {
-  dvar_matrix tmp=use_shape(m);
-  for (int i=m.rowmin();i<=m.rowmax();i++)
+  dvar_matrix tmp = use_shape(m);
+
+  int min = m.rowmin();
+  int max = m.rowmax();
+  dvar_vector* ptmpi = &tmp(min);
+  const dvar_vector* pmi = &m(min);
+  for (int i = min; i <= max; ++i)
   {
-    tmp(i)=m(i)-x;
+    *ptmpi = *pmi - x;
+
+    ++ptmpi;
+    ++pmi;
   }
   return tmp;
 }
@@ -472,10 +710,18 @@ dvar_matrix operator-(const dvar_matrix& m, const dvariable& x)
  */
 dvar_matrix operator-(const dvariable& x, const dvar_matrix& m)
 {
-  dvar_matrix tmp=use_shape(m);
-  for (int i=m.rowmin();i<=m.rowmax();i++)
+  dvar_matrix tmp = use_shape(m);
+
+  int min = m.rowmin();
+  int max = m.rowmax();
+  dvar_vector* ptmpi = &tmp(min);
+  const dvar_vector* pmi = &m(min);
+  for (int i = min; i <= max; ++i)
   {
-    tmp(i)=x-m(i);
+    *ptmpi = x - *pmi;
+
+    ++ptmpi;
+    ++pmi;
   }
   return tmp;
 }

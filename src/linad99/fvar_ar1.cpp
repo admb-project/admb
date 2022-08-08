@@ -28,7 +28,8 @@ void dvar_vector::deallocate()
     {
       va = (double_and_int*) shape->trueptr;
       *(arr_link**) va = link_ptr;
-      arr_free(va);
+      gradient_structure* gs = gradient_structure::_instance;
+      gs->ARR_LIST1->arr_free(va);
       delete shape;
     }
     allocate();

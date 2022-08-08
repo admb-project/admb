@@ -2901,7 +2901,8 @@ dvariable ln_det(dvar_compressed_triplet& VM,hs_symbolic& S)
 dvariable ln_det(dvar_compressed_triplet& VM,hs_symbolic& S,
   dcompressed_triplet& s)
 {
-  RETURN_ARRAYS_INCREMENT();
+  gradient_structure* gs = gradient_structure::_instance;
+  gs->RETURN_ARRAYS_INCREMENT();
   int n=VM.get_n();
   dvar_hs_smatrix H(n,VM);
   //hs_symbolic S(VM,1);         // Fill reducing row-col permutation
@@ -2922,7 +2923,7 @@ dvariable ln_det(dvar_compressed_triplet& VM,hs_symbolic& S,
   }
   //set_gradstack_flag("AAC");
   dvariable tmp= 2.0*ln_det(L);
-  RETURN_ARRAYS_DECREMENT();
+  gs->RETURN_ARRAYS_DECREMENT();
   return tmp;
   //return L.x(0);
 }
@@ -3061,7 +3062,9 @@ int varchol(XCONST dvar_hs_smatrix &AA, XCONST hs_symbolic &T,
   dvar_hs_smatrix &LL, dcompressed_triplet & sparse_triplet2)
  //laplace_approximation_calculator * lapprox)
 {
-  RETURN_ARRAYS_INCREMENT(); //Need this statement because the function
+  gradient_structure* gs = gradient_structure::_instance;
+  DF_FILE* fp = gradient_structure::fp;
+  gs->RETURN_ARRAYS_INCREMENT(); //Need this statement because the function
   //ADUNCONST(hs_symbolic,S)
   //ADUNCONST(dvar_hs_smatrix,L)
   //ADUNCONST(dvar_hs_smatrix,A)
@@ -3149,40 +3152,41 @@ int varchol(XCONST dvar_hs_smatrix &AA, XCONST hs_symbolic &T,
   int nlkicount=lkicount;
   save_identifier_string("ty");
 
-  save_int_value(nxcount);
-  save_int_value(nlkicount);
-  save_int_value(nccount);
+  fp->save_int_value(nxcount);
+  fp->save_int_value(nlkicount);
+  fp->save_int_value(nccount);
 
   save_identifier_string("tu");
-  C.x.save_dvar_vector_position();
+  fp->save_dvar_vector_position(C.x);
   save_identifier_string("wy");
-  L.x.save_dvar_vector_position();
+  fp->save_dvar_vector_position(L.x);
   save_identifier_string("iy");
   save_ad_pointer(&S);
   save_ad_pointer(&sparse_triplet2);
   save_identifier_string("dg");
-  gradient_structure::GRAD_STACK1->
-      set_gradient_stack(dfcholeski_sparse);
-  RETURN_ARRAYS_DECREMENT(); //Need this statement because the function
+  gs->GRAD_STACK1->set_gradient_stack(dfcholeski_sparse);
+  gs->RETURN_ARRAYS_DECREMENT(); //Need this statement because the function
   return (1) ;
 }
 
 static void dfcholeski_sparse(void)
 {
+  DF_FILE* fp = gradient_structure::fp;
+
   verify_identifier_string("dg");
   dcompressed_triplet * sparse_triplet2  =
     ( dcompressed_triplet *) restore_ad_pointer();
   hs_symbolic & S  =
     *( hs_symbolic * ) restore_ad_pointer();
   verify_identifier_string("iy");
-  dvar_vector_position dpos=restore_dvar_vector_position();
+  dvar_vector_position dpos=fp->restore_dvar_vector_position();
   verify_identifier_string("wy");
-  dvar_vector_position cpos=restore_dvar_vector_position();
+  dvar_vector_position cpos=fp->restore_dvar_vector_position();
   verify_identifier_string("tu");
 
-  int nccount=restore_int_value();
-  int nlkicount=restore_int_value();
-  int nxcount=restore_int_value();
+  int nccount=fp->restore_int_value();
+  int nlkicount=fp->restore_int_value();
+  int nxcount=fp->restore_int_value();
 
   verify_identifier_string("ty");
 
@@ -3547,8 +3551,10 @@ void dvar_hs_smatrix::set_symbolic(hs_symbolic& s)
 
 void report_dvar_vector_derivatives(void)
 {
+  DF_FILE* fp = gradient_structure::fp;
+
   verify_identifier_string("jr");
-  /*dvar_vector_position dpos=*/restore_dvar_vector_position();
+  /*dvar_vector_position dpos=*/fp->restore_dvar_vector_position();
   //dvector  dfLx=restore_dvar_vector_derivatives(dpos);
   verify_identifier_string("jx");
 }
@@ -3556,10 +3562,13 @@ void report_dvar_vector_derivatives(void)
 
 void report_derivatives(const dvar_vector& x)
 {
+  gradient_structure* gs = gradient_structure::_instance;
+  DF_FILE* fp = gradient_structure::fp;
+
   save_identifier_string("jx");
-  x.save_dvar_vector_position();
-  gradient_structure::GRAD_STACK1->
-      set_gradient_stack(report_dvar_vector_derivatives);
+  fp->save_dvar_vector_position(x);
+
+  gs->GRAD_STACK1->set_gradient_stack(report_dvar_vector_derivatives);
   save_identifier_string("jr");
 }
 

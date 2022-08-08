@@ -14,40 +14,42 @@
  * Description not yet available.
  * \param
  */
-dvar_vector colsum(const dvar_matrix &v)
-  {
-    int cmin=v.colmin();
-    int cmax=v.colmax();
-    int rmin=v.rowmin();
-    int rmax=v.rowmax();
+dvar_vector colsum(const dvar_matrix& v)
+{
+  int cmin=v.colmin();
+  int cmax=v.colmax();
+  int rmin=v.rowmin();
+  int rmax=v.rowmax();
 
-    dvar_vector tmp(cmin,cmax);
-    tmp.initialize();
-    for (int j=cmin; j<=cmax; j++)
+  dvar_vector tmp(cmin, cmax);
+  tmp.initialize();
+  for (int j = cmin; j <= cmax; ++j)
+  {
+    for (int i = rmin; i <= rmax; ++i)
     {
-      for (int i=rmin; i<=rmax; i++)
-      {
-        tmp(j)+=v(i,j);
-      }
+      tmp(j) += v(i, j);
     }
-    return tmp;
   }
+  return tmp;
+}
 
 /**
  * Description not yet available.
  * \param
  */
-dvar_vector rowsum(const dvar_matrix &v)
-  {
-    //int cmin=v.colmin();
-    //int cmax=v.colmax();
-    int rmin=v.rowmin();
-    int rmax=v.rowmax();
+dvar_vector rowsum(const dvar_matrix& v)
+{
+  //int cmin=v.colmin();
+  //int cmax=v.colmax();
+  int rmin=v.rowmin();
+  int rmax=v.rowmax();
 
-    dvar_vector tmp(rmin,rmax);
-    for (int i=rmin; i<=rmax; i++)
-    {
-      tmp(i)=sum(v(i));
-    }
-    return tmp;
+  dvar_vector tmp(rmin, rmax);
+  const dvar_vector* pvi = &v(rmin);
+  for (int i = rmin; i <= rmax; ++i)
+  {
+    tmp(i) = sum(*pvi);
+    ++pvi;
   }
+  return tmp;
+}

@@ -23,11 +23,12 @@
         //this->elem(i)=0.0;
         va[i].x=0.0;
       }
+      grad_stack* GRAD_STACK1 = gradient_structure::GRAD_STACK1;
+      DF_FILE* fp = gradient_structure::fp;
       save_identifier_string("b");
-      this->save_dvar_vector_position();
+      fp->save_dvar_vector_position(*this);
       save_identifier_string("a");
-      gradient_structure::GRAD_STACK1->
-        set_gradient_stack(dv_init);
+      GRAD_STACK1->set_gradient_stack(dv_init);
     }
   }
 
@@ -38,9 +39,11 @@
  */
 void dv_init(void)
 {
+  DF_FILE* fp = gradient_structure::fp;
+
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("a");
-  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();
   verify_identifier_string("b");
   dvector dftmp(tmp_pos.indexmin(),tmp_pos.indexmax());
   for (int i=dftmp.indexmin();i<=dftmp.indexmax();i++)
@@ -71,9 +74,10 @@ void dvar_vector::initialize(const dvector& ww)
       //this->elem(i)=0.0;
       va[i].x=ww.elem(i);
     }
+    grad_stack* GRAD_STACK1 = gradient_structure::GRAD_STACK1;
+    DF_FILE* fp = gradient_structure::fp;
     save_identifier_string("b");
-    this->save_dvar_vector_position();
+    fp->save_dvar_vector_position(*this);
     save_identifier_string("a");
-    gradient_structure::GRAD_STACK1->
-      set_gradient_stack(dv_init);
+    GRAD_STACK1->set_gradient_stack(dv_init);
   }

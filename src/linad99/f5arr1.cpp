@@ -16,13 +16,21 @@
  */
 dvariable sum(const dvar5_array& m)
 {
-  RETURN_ARRAYS_INCREMENT();
+  gradient_structure* gs = gradient_structure::_instance;
+  gs->RETURN_ARRAYS_INCREMENT();
+
   dvariable tmp=0.;
-  for (int i=m.indexmin();i<=m.indexmax();i++)
+
+  int min = m.indexmin();
+  int max = m.indexmax();
+  const dvar4_array* pmi = &m(min);
+  for (int i = min; i <= max; ++i)
   {
-    tmp+=sum(m.elem(i));
+    tmp+=sum(*pmi);
+
+    ++pmi;
   }
-  RETURN_ARRAYS_DECREMENT();
+  gs->RETURN_ARRAYS_DECREMENT();
   return tmp;
 }
 
@@ -33,14 +41,15 @@ dvariable sum(const dvar5_array& m)
  */
 dvar5_array sqrt(const dvar5_array& m)
 {
-  RETURN_ARRAYS_INCREMENT();
+  gradient_structure* gs = gradient_structure::_instance;
+  gs->RETURN_ARRAYS_INCREMENT();
   dvar5_array tmp;
   tmp.allocate(m);
   for (int i=tmp.indexmin();i<=tmp.indexmax();i++)
   {
     tmp(i)=sqrt(m(i));
   }
-  RETURN_ARRAYS_DECREMENT();
+  gs->RETURN_ARRAYS_DECREMENT();
   return tmp;
 }
 
@@ -50,14 +59,15 @@ dvar5_array sqrt(const dvar5_array& m)
  */
 dvar5_array exp(const dvar5_array& m)
 {
-  RETURN_ARRAYS_INCREMENT();
+  gradient_structure* gs = gradient_structure::_instance;
+  gs->RETURN_ARRAYS_INCREMENT();
   dvar5_array tmp;
   tmp.allocate(m);
   for (int i=tmp.indexmin();i<=tmp.indexmax();i++)
   {
     tmp(i)=exp(m(i));
   }
-  RETURN_ARRAYS_DECREMENT();
+  gs->RETURN_ARRAYS_DECREMENT();
   return tmp;
 }
 
@@ -67,14 +77,15 @@ dvar5_array exp(const dvar5_array& m)
  */
 dvar5_array mfexp(const dvar5_array& m)
 {
-  RETURN_ARRAYS_INCREMENT();
+  gradient_structure* gs = gradient_structure::_instance;
+  gs->RETURN_ARRAYS_INCREMENT();
   dvar5_array tmp;
   tmp.allocate(m);
   for (int i=tmp.indexmin();i<=tmp.indexmax();i++)
   {
     tmp(i)=mfexp(m(i));
   }
-  RETURN_ARRAYS_DECREMENT();
+  gs->RETURN_ARRAYS_DECREMENT();
   return tmp;
 }
 
@@ -84,13 +95,14 @@ dvar5_array mfexp(const dvar5_array& m)
  */
 dvar5_array log(const dvar5_array& m)
 {
-  RETURN_ARRAYS_INCREMENT();
+  gradient_structure* gs = gradient_structure::_instance;
+  gs->RETURN_ARRAYS_INCREMENT();
   dvar5_array tmp;
   tmp.allocate(m);
   for (int i=tmp.indexmin();i<=tmp.indexmax();i++)
   {
     tmp(i)=log(m(i));
   }
-  RETURN_ARRAYS_DECREMENT();
+  gs->RETURN_ARRAYS_DECREMENT();
   return tmp;
 }

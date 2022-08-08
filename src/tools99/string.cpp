@@ -15,7 +15,7 @@ void adstring::allocate(const size_t sz)
   s =  new unsigned char[sz+1];
   if (!s) {
     cerr << "Error allocating memory for adstring" << endl;
-    exit(1);
+    ad_exit(1);
   }
   s--;
 }

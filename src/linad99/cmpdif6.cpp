@@ -24,22 +24,32 @@
 /**
  * Saves size and address information for a dmatrix to adjoint data file.
  */
-void dmatrix::save_dmatrix_position(void) const
+void dmatrix::save_dmatrix_position() const
 {
-  dmatrix_position tmp(*this);
-  size_t wsize=sizeof(int);
-  size_t wsize1=sizeof(void*);
+  gradient_structure::fp->save_dmatrix_position(*this);
+}
+void DF_FILE::save_dmatrix_position(const dmatrix& m)
+{
+  constexpr size_t wsize=sizeof(int);
+  constexpr size_t wsize1=sizeof(void*);
 
-  int min=rowmin();
-  int max=rowmax();
+  dmatrix_position tmp(m);
+
+  int min=m.rowmin();
+  int max=m.rowmax();
+  int* plbi = tmp.lb.get_v() + min;
+  int* pubi = tmp.ub.get_v() + min;
   for (int i=min;i<=max;i++)
   {
-    gradient_structure::get_fp()->fwrite(&(tmp.lb(i)),wsize);
-    gradient_structure::get_fp()->fwrite(&(tmp.ub(i)),wsize);
-    gradient_structure::get_fp()->fwrite(&(tmp.ptr(i)),wsize1);
-   }
-  gradient_structure::get_fp()->fwrite(&(tmp.row_min),wsize);
-  gradient_structure::get_fp()->fwrite(&(tmp.row_max),wsize);
+    fwrite(plbi, wsize);
+    fwrite(pubi, wsize);
+    fwrite(&(tmp.ptr(i)),wsize1);
+
+    ++plbi;
+    ++pubi;
+  }
+  fwrite(&(tmp.row_min),wsize);
+  fwrite(&(tmp.row_max),wsize);
 }
 
 /**
@@ -48,10 +58,14 @@ void dmatrix::save_dmatrix_position(void) const
  */
 void d3_array::save_d3_array_position() const
 {
+  gradient_structure::fp->save_d3_array_position(*this);
+}
+void DF_FILE::save_d3_array_position(const d3_array& a)
+{
   // saves the size and address information for a dvar_vector
-  int mmin=indexmin();
-  int mmax=indexmax();
-  size_t wsize = sizeof(int);
+  int mmin=a.indexmin();
+  int mmax=a.indexmax();
+  constexpr size_t wsize = sizeof(int);
 /*
   dmatrix_position tmp(*this);
   const int wsize=sizeof(int);
@@ -64,21 +78,27 @@ void d3_array::save_d3_array_position() const
     gradient_structure::get_fp()->fwrite(&(tmp.ptr(i)),wsize1);
    }
 */
-  gradient_structure::get_fp()->fwrite(&(mmin),wsize);
-  gradient_structure::get_fp()->fwrite(&(mmax),wsize);
+  fwrite(&(mmin),wsize);
+  fwrite(&(mmax),wsize);
 }
 
 /**
  * Description not yet available.
  * \param
  */
-d3_array_position restore_d3_array_position(void)
+d3_array_position restore_d3_array_position()
 {
+  return gradient_structure::fp->restore_d3_array_position();
+}
+d3_array_position DF_FILE::restore_d3_array_position()
+{
+  constexpr size_t wsize = sizeof(int);
+
   // saves the size and address information for a dvar_vector
   int mmin;
   int mmax;
-  gradient_structure::get_fp()->fread(&mmax,sizeof(int));
-  gradient_structure::get_fp()->fread(&mmin,sizeof(int));
+  fread(&mmax,wsize);
+  fread(&mmin,wsize);
   d3_array_position tmp(mmin,mmax);
   return tmp;
 }
@@ -87,19 +107,31 @@ d3_array_position restore_d3_array_position(void)
  * Reads back the size and address information for a dvar_matrix,
  * restores the size, address, and value information for a dvar_vector
  */
-dvar_matrix_position restore_dvar_matrix_position(void)
+dvar_matrix_position restore_dvar_matrix_position()
 {
+  return gradient_structure::fp->restore_dvar_matrix_position();
+}
+dvar_matrix_position DF_FILE::restore_dvar_matrix_position()
+{
+  constexpr size_t wsize = sizeof(int);
+  constexpr size_t wsize2 = sizeof(void*);
+
   int min;
   int max;
-  gradient_structure::get_fp()->fread(&max,sizeof(int));
-  gradient_structure::get_fp()->fread(&min,sizeof(int));
+  fread(&max, wsize);
+  fread(&min, wsize);
   dvar_matrix_position tmp(min,max);
   // cout << "tmp.ptr= " << tmp.ptr ;
+  int* plbi = tmp.lb.get_v() + max;
+  int* pubi = tmp.ub.get_v() + max;
   for (int i=max;i>=min;i--)
   {
-    gradient_structure::get_fp()->fread(&(tmp.ptr(i)),sizeof(void*));
-    gradient_structure::get_fp()->fread(&(tmp.ub(i)),sizeof(int));
-    gradient_structure::get_fp()->fread(&(tmp.lb(i)),sizeof(int));
+    fread(&(tmp.ptr(i)), wsize2);
+    fread(pubi, wsize);
+    fread(plbi, wsize);
+
+    --pubi;
+    --plbi;
   }
   return tmp;
 }
@@ -108,21 +140,33 @@ dvar_matrix_position restore_dvar_matrix_position(void)
  * Description not yet available.
  * \param
  */
-dmatrix_position restore_dmatrix_position(void)
+dmatrix_position restore_dmatrix_position()
 {
+  return gradient_structure::fp->restore_dmatrix_position();
+}
+dmatrix_position DF_FILE::restore_dmatrix_position()
+{
+  constexpr size_t wsize = sizeof(int);
+  constexpr size_t wsize2 = sizeof(void*);
+
   // reads back the size and address information for a dvar_matrix
   // restores the size, address, and value information for a dvar_vector
   int min;
   int max;
-  gradient_structure::get_fp()->fread(&max,sizeof(int));
-  gradient_structure::get_fp()->fread(&min,sizeof(int));
+  fread(&max, wsize);
+  fread(&min, wsize);
   dmatrix_position tmp(min,max);
   // cout << "tmp.ptr= " << tmp.ptr ;
+  int* plbi = tmp.lb.get_v() + max;
+  int* pubi = tmp.ub.get_v() + max;
   for (int i=max;i>=min;i--)
   {
-    gradient_structure::get_fp()->fread(&(tmp.ptr(i)),sizeof(void*));
-    gradient_structure::get_fp()->fread(&(tmp.ub(i)),sizeof(int));
-    gradient_structure::get_fp()->fread(&(tmp.lb(i)),sizeof(int));
+    fread(&(tmp.ptr(i)), wsize2);
+    fread(pubi, wsize);
+    fread(plbi, wsize);
+
+    --pubi;
+    --plbi;
   }
   return tmp;
 }
@@ -135,9 +179,13 @@ dmatrix restore_dvar_matrix_derivatives(const dvar_matrix_position& _pos)
 {
   dvar_matrix_position& pos= (dvar_matrix_position&) _pos;
   dmatrix tmp(pos);
-  for (int i=pos.row_max;i>=pos.row_min;i--)
+  int min = pos.row_min;
+  int max = pos.row_max;
+  dvector* ptmpi = &tmp(max);
+  for (int i = max; i >= min; --i)
   {
-    tmp(i)=restore_dvar_vector_derivatives(pos(i));
+    *ptmpi = restore_dvar_vector_derivatives(pos(i));
+    --ptmpi;
   }
   return tmp;
 }
@@ -150,9 +198,13 @@ dmatrix restore_dvar_matrix_der_nozero(const dvar_matrix_position& _pos)
 {
   dvar_matrix_position& pos= (dvar_matrix_position&) _pos;
   dmatrix tmp(pos);
-  for (int i=pos.row_max;i>=pos.row_min;i--)
+  int min = pos.row_min;
+  int max = pos.row_max;
+  dvector* ptmpi = &tmp(max);
+  for (int i = max; i >= min; --i)
   {
-    tmp(i)=restore_dvar_vector_der_nozero(pos(i));
+    *ptmpi = restore_dvar_vector_der_nozero(pos(i));
+    --ptmpi;
   }
   return tmp;
 }
@@ -176,14 +228,19 @@ dvector restore_dvar_matrix_derivative_row(const dvar_matrix_position& _pos,
 dvector restore_dvar_matrix_derivative_column(const dvar_matrix_position& _pos,
   const int& ii)
 {
-  dvar_matrix_position& pos= (dvar_matrix_position&) _pos;
-  dvector tmpvec(pos.rowmin(),pos.rowmax());
-  int min=tmpvec.indexmin();
-  int max=tmpvec.indexmax();
-  for (int i=min;i<=max;i++)
+  dvar_matrix_position& pos =(dvar_matrix_position&)_pos;
+
+  int min = pos.rowmin();
+  int max = pos.rowmax();
+  dvector tmpvec(min, max);
+
+  double* ptmpveci = tmpvec.get_v() + min;
+  for (int i = min; i <= max; ++i)
   {
-    tmpvec(i)=((pos(i)).va)[ii].xvalue();
-    ((pos(i)).va)[ii].xvalue()=0.;
+    *ptmpveci = ((pos(i)).va)[ii].xvalue();
+    ((pos(i)).va)[ii].xvalue() = 0.0;
+
+    ++ptmpveci;
   }
   return tmpvec;
 }
@@ -195,13 +252,21 @@ dvector restore_dvar_matrix_derivative_column(const dvar_matrix_position& _pos,
 dvar_vector nograd_assign(dvector tmp)
 {
   kkludge_object kg;
-  int min=tmp.indexmin();
-  int max=tmp.indexmax();
-  dvar_vector out(min,max,kg); // dvar_vector constructor that
-                               // doesn't do any initialization
-  for (int i=min;i<=max;i++)
+
+  int min = tmp.indexmin();
+  int max = tmp.indexmax();
+
+  // dvar_vector constructor that doesn't do any initialization
+  dvar_vector out(min, max, kg);
+
+  double_and_int* pouti = out.va + min;
+  double* ptmpi = tmp.get_v() + min;
+  for (int i = min; i <= max; ++i)
   {
-    value(out(i))=tmp(i);
+    pouti->x = *ptmpi;
+
+    ++pouti;
+    ++ptmpi;
   }
   return out;
 }
@@ -214,24 +279,48 @@ dvar_matrix nograd_assign(const dmatrix& m)
 {
   // cout << "Entering nograd assign"<<endl;
   //kkludge_object kg;
-  int nrl=m.rowmin();
-  int nrh=m.rowmax();
-  ivector ncl(nrl,nrh);
-  ivector nch(nrl,nrh);
-  int i;
-  for (i=nrl;i<=nrh;i++)
+  int nrl = m.rowmin();
+  int nrh = m.rowmax();
+  ivector ncl(nrl, nrh);
+  ivector nch(nrl, nrh);
+
+  int* pncli = ncl.get_v() + nrl;
+  int* pnchi = nch.get_v() + nrl;
+  const dvector* pmi = &m(nrl);
+  for (int i = nrl; i <= nrh; ++i)
   {
-    ncl(i)=m(i).indexmin();
-    nch(i)=m(i).indexmax();
+    *pncli = pmi->indexmin();
+    *pnchi = pmi->indexmax();
+
+    ++pncli;
+    ++pnchi;
+    ++pmi;
   }
-  dvar_matrix out(nrl,nrh,ncl,nch); // dvar_matrix constructor that
-                                       // doesn't do any initialization
-  for (i=nrl;i<=nrh;i++)
+
+  // dvar_matrix constructor that doesn't do any initialization
+  dvar_matrix out(nrl,nrh,ncl,nch);
+
+  pmi = &m(nrl);
+  pncli = ncl.get_v() + nrl;
+  pnchi = nch.get_v() + nrl;
+  dvar_vector* pouti = &out(nrl);
+  for (int i = nrl; i <= nrh; ++i)
   {
-    for (int j=ncl(i);j<=nch(i);j++)
+    int jmin = *pncli;
+    int jmax = *pnchi;
+    double* pmij = pmi->get_v() + jmin;
+    double_and_int* poutij = pouti->va + jmin;
+    for (int j = jmin; j <= jmax; ++j)
     {
-      value(out(i,j))=m(i,j);
+      poutij->x = *pmij;
+
+      ++pmij;
+      ++poutij;
     }
+    ++pmi;
+    ++pncli;
+    ++pnchi;
+    ++pouti;
     // out(i)=nograd_assign(m(i));
   }
   // cout << "Leaving nograd assign"<<endl;
@@ -250,20 +339,43 @@ dvar_matrix nograd_assign_trans(const dmatrix& m)
   int nrh=m.rowmax();
   ivector ncl(nrl,nrh);
   ivector nch(nrl,nrh);
-  int i;
-  for (i=nrl;i<=nrh;i++)
+
+  int* pncli = ncl.get_v() + nrl;
+  int* pnchi = nch.get_v() + nrl;
+  const dvector* pmi = &m(nrl);
+  for (int i = nrl; i <= nrh; ++i)
   {
-    ncl(i)=m(i).indexmin();
-    nch(i)=m(i).indexmax();
+    *pncli = pmi->indexmin();
+    *pnchi = pmi->indexmax();
+
+    ++pncli;
+    ++pnchi;
+    ++pmi;
   }
-  dvar_matrix out(nrl,nrh,ncl,nch); // dvar_matrix constructor that
-                                       // doesn't do any initialization
-  for (i=nrl;i<=nrh;i++)
+
+  // dvar_matrix constructor that doesn't do any initialization
+  dvar_matrix out(nrl,nrh,ncl,nch);
+
+  pncli = ncl.get_v() + nrl;
+  pnchi = nch.get_v() + nrl;
+  pmi = &m(nrl);
+  for (int i = nrl; i <= nrh; ++i)
   {
-    for (int j=ncl(i);j<=nch(i);j++)
+    int jmin = *pncli;
+    int jmax = *pnchi;
+    double* pmij = pmi->get_v() + jmin;
+    dvar_vector* poutj = &out(jmin);
+    for (int j = jmin; j <= jmax; ++j)
     {
-      value(out(j,i))=m(i,j);
+      (poutj->va + i)->x = *pmij;
+
+      ++poutj;
+      ++pmij;
     }
+
+    ++pmi;
+    ++pncli;
+    ++pnchi;
     // out(i)=nograd_assign(m(i));
   }
   // cout << "Leaving nograd assign"<<endl;
@@ -278,22 +390,31 @@ void nograd_assign_column(const dvar_matrix& m, const dvector& v, const int& ii)
 {
   // cout << "Entering nograd assign"<<endl;
   //kkludge_object kg;
-  if (ii<m.colmin()||ii>m.colmax()  ||
-   (v.indexmin()!=m.rowmin()) ||
-   (v.indexmax()!=m.rowmax()) )
+
+#ifndef OPT_LIB
+  if (ii < m.colmin() || ii > m.colmax()
+      || (v.indexmin() != m.rowmin())
+      || (v.indexmax() != m.rowmax()))
   {
     cerr << "Error -- Index out of bounds in\n"
       "void nograd_assign(const dvar_matrix& m,const dvector& v, const int& ii)"
       << endl;
     ad_exit(1);
   }
-  int min=v.indexmin();
-  int max=v.indexmax();
-  for (int j=min;j<=max;j++)
+#endif
+
+  int min = v.indexmin();
+  int max = v.indexmax();
+  double* pvj = v.get_v() + min;
+  const dvar_vector* pmj = &m(min);
+  for (int j = min; j <= max; ++j)
   {
-    value(m(j,ii))=v(j);
+    (pmj->va + ii)->x = *pvj;
+
+    ++pvj;
+    ++pmj;
   }
-    // out(i)=nograd_assign(m(i));
+  // out(i)=nograd_assign(m(i));
 }
 
 /**

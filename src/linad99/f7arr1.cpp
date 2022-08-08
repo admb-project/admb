@@ -16,14 +16,16 @@
  */
 dvar7_array operator/(const d7_array& m, const prevariable& d)
    {
-     RETURN_ARRAYS_INCREMENT();
+     gradient_structure* gs = gradient_structure::_instance;
+     gs->RETURN_ARRAYS_INCREMENT();
+
      dvar7_array tmp;
      tmp.allocate(m);
      for (int i=tmp.indexmin();i<=tmp.indexmax();i++)
      {
        tmp(i)=m(i)/d;
      }
-     RETURN_ARRAYS_DECREMENT();
+     gs->RETURN_ARRAYS_DECREMENT();
      return tmp;
    }
 
@@ -33,14 +35,15 @@ dvar7_array operator/(const d7_array& m, const prevariable& d)
  */
 dvar7_array operator/(const dvar7_array& m, const double d)
    {
-     RETURN_ARRAYS_INCREMENT();
+     gradient_structure* gs = gradient_structure::_instance;
+     gs->RETURN_ARRAYS_INCREMENT();
      dvar7_array tmp;
      tmp.allocate(m);
      for (int i=tmp.indexmin();i<=tmp.indexmax();i++)
      {
        tmp(i)=m(i)/d;
      }
-     RETURN_ARRAYS_DECREMENT();
+     gs->RETURN_ARRAYS_DECREMENT();
      return tmp;
    }
 
@@ -50,14 +53,15 @@ dvar7_array operator/(const dvar7_array& m, const double d)
  */
 dvar7_array operator/(const dvar7_array& m, const prevariable& d)
    {
-     RETURN_ARRAYS_INCREMENT();
+     gradient_structure* gs = gradient_structure::_instance;
+     gs->RETURN_ARRAYS_INCREMENT();
      dvar7_array tmp;
      tmp.allocate(m);
      for (int i=tmp.indexmin();i<=tmp.indexmax();i++)
      {
        tmp(i)=m(i)/d;
      }
-     RETURN_ARRAYS_DECREMENT();
+     gs->RETURN_ARRAYS_DECREMENT();
      return tmp;
    }
 
@@ -67,12 +71,13 @@ dvar7_array operator/(const dvar7_array& m, const prevariable& d)
  */
 void dvar7_array::operator/=(const prevariable& d)
    {
-     RETURN_ARRAYS_INCREMENT();
+     gradient_structure* gs = gradient_structure::_instance;
+     gs->RETURN_ARRAYS_INCREMENT();
      for (int i=indexmin();i<=indexmax();i++)
      {
        (*this)(i)/=d;
      }
-     RETURN_ARRAYS_DECREMENT();
+     gs->RETURN_ARRAYS_DECREMENT();
    }
 
 /**
@@ -81,12 +86,13 @@ void dvar7_array::operator/=(const prevariable& d)
  */
 void dvar7_array::operator/=(const double& d)
    {
-     RETURN_ARRAYS_INCREMENT();
+     gradient_structure* gs = gradient_structure::_instance;
+     gs->RETURN_ARRAYS_INCREMENT();
      for (int i=indexmin();i<=indexmax();i++)
      {
        (*this)(i)/=d;
      }
-     RETURN_ARRAYS_DECREMENT();
+     gs->RETURN_ARRAYS_DECREMENT();
    }
 
 /**
@@ -95,12 +101,18 @@ void dvar7_array::operator/=(const double& d)
  */
 dvariable sum(const dvar7_array& m)
 {
-  RETURN_ARRAYS_INCREMENT();
+  gradient_structure* gs = gradient_structure::_instance;
+  gs->RETURN_ARRAYS_INCREMENT();
   dvariable tmp=0.;
-  for (int i=m.indexmin();i<=m.indexmax();i++)
+  int min = m.indexmin();
+  int max = m.indexmax();
+  const dvar6_array* pmi = &m(min);
+  for (int i = min; i <= max; ++i)
   {
-    tmp+=sum(m.elem(i));
+    tmp += sum(*pmi);
+
+    ++pmi;
   }
-  RETURN_ARRAYS_DECREMENT();
+  gs->RETURN_ARRAYS_DECREMENT();
   return tmp;
 }

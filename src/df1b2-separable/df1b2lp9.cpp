@@ -11,7 +11,7 @@
 #include <admodel.h>
 #include <df1b2fun.h>
 #include <adrndeff.h>
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
 #endif
 
@@ -38,7 +38,7 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
     delete separable_function_difference;
     separable_function_difference=0;
   }
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(num_separable_calls > 0);
 #endif
 
@@ -50,29 +50,33 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
   dvector gmax(1,num_separable_calls);
   gmax.initialize();
 
+  int* pishapei = ishape.get_v() + 1;
   for (int i=1;i<=num_separable_calls;i++)
   {
-    int m=(*derindex)(i).indexmax();
-    ishape(i)=m;
+    int m = (*derindex)(i).indexmax();
+    *pishapei = m;
     if (m>0)
     {
-    pfmc1[i] = new fmm(m);
-    pfmc1[i]->iprint=0;
-    pfmc1[i]->crit=inner_crit;
-    pfmc1[i]->ireturn=0;
-    pfmc1[i]->itn=0;
-    pfmc1[i]->ifn=0;
-    pfmc1[i]->ialph=0;
-    pfmc1[i]->ihang=0;
-    pfmc1[i]->ihflag=0;
-    pfmc1[i]->maxfn=100;
-    pfmc1[i]->gmax=1.e+100;
-    pfmc1[i]->use_control_c=0;
+      fmm* pfmc1i = new fmm(m);
+      pfmc1i->iprint=0;
+      pfmc1i->crit=inner_crit;
+      pfmc1i->ireturn=0;
+      pfmc1i->itn=0;
+      pfmc1i->ifn=0;
+      pfmc1i->ialph=0;
+      pfmc1i->ihang=0;
+      pfmc1i->ihflag=0;
+      pfmc1i->maxfn=100;
+      pfmc1i->gmax=1.e+100;
+      pfmc1i->use_control_c=0;
+      pfmc1[i] = pfmc1i;
     }
     else
     {
       pfmc1[i]= (fmm *)(0);
     }
+
+    ++pishapei;
   }
   dmatrix gg(1,num_separable_calls,1,ishape);
   dmatrix ggb(1,num_separable_calls,1,ishape);
@@ -103,16 +107,22 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
     u.initialize();
   }
 
+  std::ostream& output_stream = get_output_stream();
   for (int ii=1;ii<=2;ii++)
   {
     // get the initial u into the uu's
+    dvector* puui = &uu(1);
     for (int i=1;i<=num_separable_calls;i++)
     {
       int m=(*derindex)(i).indexmax();
+      double* puuij = puui->get_v() + 1;
       for (int j=1;j<=m;j++)
       {
-        uu(i,j)=u((*derindex)(i)(j));
+        *puuij = u((*derindex)(i)(j));
+
+        ++puuij;
       }
+      ++puui;
     }
 
 #ifdef DIAG
@@ -196,18 +206,26 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
         vf+=pen;
 
         gradcalc(usize,g);
+        dvector* pggi = &gg(1);
         for (int i=1;i<=num_separable_calls;i++)
         {
           int m=(*derindex)(i).indexmax();
+          double* pggij = pggi->get_v() + 1;
           for (int j=1;j<=m;j++)
           {
-            gg(i,j)=g((*derindex)(i)(j));
+            *pggij = g((*derindex)(i)(j));
+
+            ++pggij;
           }
+
+          ++pggi;
         }
+	/*
         {
           ofstream ofs("l:/temp1.dat");
           ofs << g.indexmax() << " " << setprecision(15) << g << endl;
         }
+	*/
         if (saddlepointflag==2)
         {
           ff[1]=-(*separable_function_difference)(1);
@@ -256,8 +274,7 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
       u=ub;
     }
     double tmax=max(gmax);
-    cout <<  " inner maxg = " << tmax << endl;
-
+    output_stream <<  " inner maxg = " << std::scientific << setprecision(10) <<  tmax;
     if (tmax< 1.e-4) break;
   }
   fmc1.ireturn=0;

@@ -10,19 +10,13 @@
  */
 #include "fvar.hpp"
 
-/**
- * Description not yet available.
- * \param
- */
+/// Default Constructor
 dvar4_array::dvar4_array()
 {
   allocate();
 }
 
-/**
- * Description not yet available.
- * \param
- */
+/// Initializes to NULL
 void dvar4_array::allocate(void)
 {
   shape=NULL;

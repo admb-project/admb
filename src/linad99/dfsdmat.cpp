@@ -144,7 +144,7 @@ void dfsdmat::allocate(int _n)
   n=_n;
   if (gradient_structure::get_USE_FOR_HESSIAN())
   {
-    ptr=gradient_structure::hessian_ptr;
+    ptr = gradient_structure::_instance->hessian_ptr;
     shared_memory=1;
     disk_save_flag=1;
   }
@@ -197,7 +197,7 @@ dfsdmat::dfsdmat(int _n, const gradient_structure& gs)
 void dfsdmat::allocate(int _n, const gradient_structure& gs)
 {
   n=_n;
-  ptr= (double *) gs.ARRAY_MEMBLOCK_BASE;
+  ptr = (double*)(const_cast<gradient_structure&>(gs).ARR_LIST1->ARRAY_MEMBLOCK_BASE);
   shared_memory=1;
   minp=ptr;
   maxp=ptr+((n*(n+1))/2-1);

@@ -177,8 +177,6 @@ Macro definitions.
 // C language function prototypes
 extern "C"
 {
-   typedef int (*fptr) (const char *format, ...);
-   extern fptr ad_printf;
    typedef void (*exitptr) (int);
    extern exitptr ad_exit;
 
@@ -781,7 +779,6 @@ class dependent_variables_information
 dvar_vector_position restore_dvar_vector_position(void);
 dvector restore_dvar_vector_value(const dvar_vector_position & tmp);
 void arr_free(double_and_int *);
-double_and_int *arr_new(unsigned int sz);
 
 #include <gradient_structure.h>
 
@@ -856,6 +853,8 @@ public:
   void save_variables();
   void restore_variables();
 
+  double_and_int* gradnew();
+
   // check list integrity
   void check_list(void);
   size_t total_addresses() const;
@@ -867,7 +866,7 @@ public:
   friend void df_check_derivative_values(void);
   friend void df_check_derivative_values_indexed(void);
   friend void df_check_derivative_values_indexed_break(void);
-  friend void funnel_gradcalc(void);
+  friend void gradient_structure::funnel_gradcalc(void);
   friend void slave_gradcalc(void);
   friend void gradcalc(int nvar, const dvector& g);
   friend void gradloop();
@@ -920,6 +919,7 @@ void default_evaluation3ind(void);
  */
 class grad_stack
 {
+public:
    grad_stack_entry *true_ptr_first;
    grad_stack_entry *ptr_first;
    grad_stack_entry *ptr_last;
@@ -930,19 +930,19 @@ class grad_stack
    size_t length;
    size_t true_length;
 #endif
- public:
+
    grad_stack_entry * ptr;
- private:
+   char gradfile_name[61];
+   char gradfile_name1[61];
+   char gradfile_name2[61];
+   char var_store_file_name[61];
+
    //lvector * table;
    // js
    int _GRADFILE_PTR;  // should be int gradfile_handle;
    int _GRADFILE_PTR1;  // should be int gradfile_handle;
    int _GRADFILE_PTR2;  // should be int gradfile_handle;
    int _VARSSAV_PTR;  // should be int gradfile_handle;
-   char gradfile_name[61];
-   char gradfile_name1[61];
-   char gradfile_name2[61];
-   char var_store_file_name[61];
    void create_gradfile();
 #ifdef __BORLANDC__
    long end_pos;
@@ -954,7 +954,6 @@ class grad_stack
    OFF_T end_pos2;
 #endif
    //dmatrix *table;
- public:
    friend void gradcalc(int nvar, const dvector & g);
    friend void slave_gradcalc(void);
    friend void funnel_gradcalc(void);
@@ -967,9 +966,16 @@ class grad_stack
    friend void cleanup_temporary_files();
    ostream & operator  <<(grad_stack);
    void print();
-   grad_stack();
-   ~grad_stack();
-   void write_grad_stack_buffer(void);
+
+  grad_stack(): grad_stack(gradient_structure::GRADSTACK_BUFFER_SIZE) {}
+  grad_stack(const size_t size): grad_stack(size, 0) {}
+  grad_stack(const size_t size, const unsigned int id);
+  grad_stack(const grad_stack&) = delete;
+  ~grad_stack();
+
+  void write_grad_stack_buffer()
+    { write_grad_stack_buffer(gradient_structure::_instance); }
+  void write_grad_stack_buffer(gradient_structure*);
 
    void set_gradient_stack(void (*func) (void),
      double *dep_addr, double *ind_addr1 = NULL, double mult1 = 0,
@@ -1294,7 +1300,8 @@ class indvar_offset_list
    }
 };
 
-void gradfree(dlink *);
+double_and_int* gradnew();
+void gradfree(dlink* v);
 
 class prevariable_position;
 
@@ -1308,22 +1315,21 @@ object is passed on the stack.
 class prevariable
 {
 protected:
-#ifndef __SUN__
-  /**
-  Default constructor
-  */
-  prevariable()
+  /// Default constructor
+  prevariable() = delete;
+  prevariable(double_and_int* u): v(u)
   {
   }
-#endif
-#ifndef __NDPX__
-   prevariable(double_and_int * u)
-   {
-      v = u;
-   }
-#endif
 
 public:
+  /**
+  Copy Constructor
+
+  Note - Shallow copy is the same as 12.3 where copy constructor
+  is not declared.
+  */ 
+  prevariable(const prevariable& other): v(other.v) { }
+
   double_and_int* v; ///< pointer to the data
 
    friend class dvar_vector_iterator;
@@ -1394,9 +1400,9 @@ public:
 
 
  public:
-   void save_prevariable_position(void) const;
+   void save_prevariable_position() const;
    prevariable_position restore_prevariable_position(void);
-   void save_prevariable_value(void) const;
+   void save_prevariable_value() const;
    double restore_prevariable_value(void);
    double restore_prevariable_derivative(void);
 
@@ -1419,7 +1425,7 @@ public:
       return v;
    }
 
-   prevariable & operator=(const prevariable &);
+   prevariable& operator=(const prevariable&);
    prevariable & operator=(double);
 #if (__BORLANDC__  >= 0x0540)
    prevariable & operator=(const prevariable &) const;
@@ -1449,18 +1455,6 @@ public:
 #endif
 
  public:
-#ifdef __SUN__
-   prevariable(void)
-   {
-   }
-#endif
-#ifdef __NDPX__
-   prevariable(double_and_int * u)
-   {
-      v = u;
-   }
-#endif
-
    void initialize(void);
 
    friend char *fform(const char *, const prevariable &);
@@ -1517,30 +1511,110 @@ class df1_one_variable;
 class df1_two_variable;
 class df1_three_variable;
 
-  /**
-  Fundamental data type for reverse mode automatic differentiation.
-  \ingroup BAD
- */
-class dvariable:public prevariable
+/**
+Fundamental data type for reverse mode automatic differentiation.
+\ingroup BAD
+*/
+class dvariable: public prevariable
 {
- public:
-   dvariable();
-   ~dvariable();
-   dvariable(double t);
-   dvariable(const int &t);
-   dvariable(kkludge_object);
-   dvariable(const prevariable &);
-   dvariable & operator=(const prevariable &);
-   dvariable & operator =(const df1_one_variable & v);
-   dvariable & operator =(const df1_two_variable & v);
-   dvariable & operator =(const df1_three_variable & v);
-   dvariable & operator=(double);
+public:
+  /**
+  Default constructor.
+
+  Creates new zero value dvariable object.
+  */
+  dvariable(): prevariable(gradnew())
+  {
+    (*v).x = 0.0;
+
+#ifdef SAFE_INITIALIZE
+    gradient_structure::GRAD_STACK1->set_gradient_stack0(
+      default_evaluation0,&((*v).x));
+#endif
+  }
+  /**
+  Copy constructor for dvariable object; deep copy.
+  Allocates memory and assigns value of argument to new object.
+  \param t constant devariable object
+  */
+  dvariable(const dvariable& t): prevariable(gradnew())
+  {
+    prevariable::operator=(t);
+  }
+  /**
+  Creates dvariable instance from a double constant.
+  Creates new dvariable object,
+  Sets Value to the argument and initializes derivative information.
+  \param t constant double passed by value.
+  */
+  dvariable(const double t): prevariable(gradnew())
+  {
+    prevariable::operator=(t);
+  }
+  /**
+  Creates dvariable instance from a int constant.
+  Creates new dvariable object,
+  Sets value to the argument and initializes derivatve information.
+  \param t constant integer passed by reference.
+  */
+  dvariable(const int &t): dvariable(static_cast<double>(t)) {}
+  /**
+  Specialized constructor that does not create unnecessary entries
+  in the gradient structure; see function \ref nograd_assign.
+  */
+  dvariable(kkludge_object): prevariable(gradnew())
+  {
+    //(*v).nc=0;
+  }
+  /**
+  Constructor for dvariable object from its base class; deep copy.
+  Allocates memory and assigns value of argument to new object.
+  \param t constant prevariable object
+  */
+  dvariable(const prevariable& t): prevariable(gradnew())
+  {
+    //(*v).nc=0;
+    prevariable::operator=(t);
+  }
+  /** Destructor; frees memory on gradient stack.  */
+  virtual ~dvariable() { gradfree((dlink*)v); }
+
+  //dvariable& operator=(const dvariable&);
+  /**
+  Assigns a value to a dvariable object.
+  \param t constant object of type double.
+  \return prevariable reference
+  */
+  dvariable& operator=(const double x)
+  {
+    prevariable::operator=(x);
+    return *this;
+  }
+
+  dvariable& operator=(const dvariable& other)
+  {
+    prevariable::operator=(other);
+    return *this;
+  }
+  /**
+  Assigns a value to a dvariable object.
+  \param t constant reference to an object of type prevariable.
+  \return dvariable reference
+  */
+  dvariable& operator=(const prevariable& other)
+  {
+    prevariable::operator=(other);
+    return *this;
+  }
+  dvariable& operator=(const df1_one_variable&);
+  dvariable& operator=(const df1_two_variable&);
+  dvariable& operator=(const df1_three_variable&);
+
 #if defined(USE_DDOUBLE)
 #  undef double
-   dvariable & operator=(double);
 #  define double dd_real
 #endif
-   dvariable(const dvariable &);
+
 //#  if (__BORLANDC__  > 0x0520)
 //     dvariable& operator+=(const prevariable&);
 //#  endif
@@ -1774,9 +1848,9 @@ class ts_vector_shapex
    friend class dvar_vector;
 
 #  if defined(USE_VECTOR_SHAPE_POOL)
-   static ts_vector_shape_pool **xpool;
-   void *operator  new(size_t);
-   void operator  delete(void *ptr, size_t n);
+   static ts_vector_shape_pool** xpool;
+   void *operator new(size_t);
+   void operator delete(void *ptr, size_t n);
 #  endif
 
    unsigned int ncopies;
@@ -1853,23 +1927,38 @@ class predvar_vector
  * Description not yet available.
  * \param
  */
-class independent_variables:public dvector
+class independent_variables: public dvector
 {
- public:
-   independent_variables(const independent_variables & v):dvector(v)
-   {
-   }
+public:
+  /// Default Constructor
+  independent_variables(): dvector() {}
 
-   independent_variables(int ncl, int ncu):dvector(ncl, ncu)
-   {
-   }
-   // makes an array [ncl..ncu]
+  independent_variables(const independent_variables& other):
+    independent_variables(other.indexmin(), other.indexmax())
+  {
+    independent_variables::operator=(other);
+  }
 
-   independent_variables(unsigned int sz, double *x):dvector(sz, x)
-   {
-   }
+  independent_variables(int ncl, int ncu): dvector(ncl, ncu)
+  {
+  }
+  // makes an array [ncl..ncu]
 
-   independent_variables & operator=(const dvector & t);
+  independent_variables(unsigned int sz, double* x): dvector(sz, x)
+  {
+  }
+
+  independent_variables& operator=(const dvector& t);
+  independent_variables& operator=(const independent_variables& other)
+  {
+    if (get_v() == nullptr)
+    {
+      int min = other.indexmin();
+      int max = other.indexmax();
+      dvector::allocate(min, max);
+    }
+    return independent_variables::operator=(static_cast<const dvector&>(other));
+  }
 };
 
 dvariable dfatan1(dvariable, double, double, const prevariable & fpen);
@@ -1975,14 +2064,22 @@ class arr_list
    unsigned long int number_arr_links;
    friend class arr_link;
 
+  humungous_pointer ARRAY_MEMBLOCK_BASE;
+  humungous_pointer ARRAY_MEMBLOCK_SAVE;
+
  public:
-   arr_list(void)
+   arr_list()
    {
       last = 0;
       free_last = 0;
       last_offset = 0;
       max_last_offset = 0;
       number_arr_links = 0;
+   }
+   virtual ~arr_list()
+   {
+     ARRAY_MEMBLOCK_BASE.free();
+     ARRAY_MEMBLOCK_SAVE.free();
    }
 
   arr_link* get_last() const
@@ -2004,12 +2101,12 @@ class arr_list
    {
       max_last_offset = 0;
    }
-   friend double_and_int *arr_new(unsigned int);
-   friend void arr_free(double_and_int *);
-   friend void arr_remove(arr_link **);
-   friend void arr_free_list_remove(arr_link **);
-   friend void arr_free_add(arr_link *);
-   friend void arr_free_remove(arr_link *);
+
+  double_and_int* arr_new(unsigned int sz);
+  void arr_free(double_and_int* varr);
+  void arr_free_add(arr_link* tmp);
+  void arr_free_remove(arr_link* tmp);
+  void arr_remove(arr_link** pptr);
 };
 
 /**
@@ -2051,11 +2148,7 @@ public:
   unsigned int get_status() const
     { return status; }
 
-   friend double_and_int *arr_new(unsigned int);
-   friend void arr_free(double_and_int *);
-   friend void arr_remove(arr_link **);
-   friend void arr_free_remove(arr_link *);
-   friend void arr_free_add(arr_link *);
+  friend class arr_list;
 };
 
 #if defined(__NUMBERVECTOR__)
@@ -2177,8 +2270,8 @@ public:
    void allocate(const ad_integer &, const ad_integer &);
    void initialize(const dvector & ww);
    void initialize(void);
-   void save_dvar_vector_position(void) const;
-   void save_dvar_vector_value(void) const;
+   void save_dvar_vector_position() const;
+   void save_dvar_vector_value() const;
    void write_on(const ostream &) const;
    void write_on(const uostream &) const;
    void read_from(const istream &);
@@ -2520,8 +2613,8 @@ class dvar_matrix
 
    ~dvar_matrix();
 
-   void save_dvar_matrix_position(void) const;
-   void save_dvar_matrix_value(void) const;
+   void save_dvar_matrix_position() const;
+   void save_dvar_matrix_value() const;
 
    void fill(const char *);
    //void colfill(const int&n,...);
@@ -2807,10 +2900,11 @@ class dmatrix
   }
 
    void save_dmatrix_derivatives(const dvar_matrix_position & pos) const;
-   void save_dmatrix_derivatives_na(const dvar_matrix_position & pos)
-      const;
-   void save_dmatrix_value(void) const;
-   void save_dmatrix_position(void) const;
+   void save_dmatrix_derivatives_na(const dvar_matrix_position & pos) const;
+
+  void save_dmatrix_value() const;
+  void save_dmatrix_position() const;
+
    //void save_dmatrix_derivatives(void);
 
   int indexmin() const
@@ -3635,7 +3729,7 @@ class d3_array
    }
    // conclass cgors
    d3_array(void);
-   void save_d3_array_value(void) const;
+   void save_d3_array_value() const;
    void shallow_copy(const d3_array &);
    d3_array sub(int, int);
    d3_array(int sl, int sh, int nrl, int nrh, int ncl, int nch);
@@ -3644,7 +3738,7 @@ class d3_array
    d3_array(int sl, int sh);
    d3_array(const d3_array_position &);
 
-   void save_d3_array_position(void) const;
+   void save_d3_array_position() const;
 
    d3_array(int sl, int sh, int nrl, int nrh, const ivector & ncl, int nch);
 
@@ -4355,8 +4449,7 @@ class prevariable_position
 };
 
 double restore_prevariable_derivative(const prevariable_position & pre);
-double restore_prevariable_derivative(void);
-prevariable_position restore_prevariable_position(void);
+prevariable_position restore_prevariable_position();
 void save_double_derivative(double x, const prevariable_position & pos);
 double restore_prevariable_value(void);
 void save_double_value(double x);
@@ -4609,15 +4702,15 @@ void verify_identifier_string(const char *);
 
 
 ivector restore_ivector_value(const ivector_position &);
-ivector_position restore_ivector_position(void);
-dvar_matrix_position restore_dvar_matrix_position(void);
+ivector_position restore_ivector_position();
+dvar_matrix_position restore_dvar_matrix_position();
 dvector restore_dvar_matrix_derivative_row(const dvar_matrix_position& pos,
   const int &ii);
 dvector restore_dvar_matrix_derivative_column(const dvar_matrix_position& pos,
   const int &ii);
 dmatrix restore_dvar_matrix_derivatives(const dvar_matrix_position & pos);
 dmatrix restore_dvar_matrix_derivatives(void);
-double restore_prevariable_derivative(void);
+double restore_prevariable_derivative();
 double restore_double_value(void);
 int restore_int_value(void);
 void save_double_value(double x);
@@ -4629,7 +4722,7 @@ dvar_matrix nograd_assign(const dmatrix &);
 dvariable nograd_assign(double tmp);
 dvar_vector nograd_assign(dvector tmp);
 dmatrix restore_dvar_matrix_value(const dvar_matrix_position & mpos);
-dmatrix_position restore_dmatrix_position(void);
+dmatrix_position restore_dmatrix_position();
 dvector_position restore_dvector_position(void);
 dvector restore_dvector_value(const dvector_position &);
 dmatrix restore_dmatrix_value(const dmatrix_position &);
@@ -4642,7 +4735,7 @@ void save_dmatrix_derivatives(const dvar_matrix_position & pos, double x,
 dmatrix restore_dvar_matrix_der_nozero(const dvar_matrix_position & pos);
 dvector restore_dvar_vector_der_nozero(const dvar_vector_position & tmp);
 d3_array_position restore_d3_array_position(void);
-d3_array restore_d3_array_value(const d3_array_position &);
+d3_array restore_d3_array_value(const d3_array_position&);
 void nograd_assign_row(const dvar_matrix & m, const dvector & v,
   const int &ii);
 void nograd_assign_column(const dvar_matrix & m, const dvector & v,
@@ -7134,7 +7227,7 @@ inline d6_array& d7_array::elem(int i)
   if (i < indexmin() || i > indexmax())
   {
     cerr << "Error index out of bounds in\n"
-            "d5_array& d6_array::elem(int)" << endl;
+            "d5_array& d7_array::elem(int)" << endl;
     ad_exit(1);
   }
 #endif
@@ -7146,7 +7239,7 @@ inline const d6_array& d7_array::elem(int i) const
   if (i < indexmin() || i > indexmax())
   {
     cerr << "Error index out of bounds in\n"
-            "d5_array& d6_array::elem(int)" << endl;
+            "d5_array& d7_array::elem(int)" << endl;
     ad_exit(1);
   }
 #endif
@@ -7922,7 +8015,7 @@ class banded_symmetric_dmatrix
    banded_symmetric_dmatrix(int _min, int _max, int _bw);
 
    banded_symmetric_dmatrix(const dvar_matrix_position & mpos);
-   void save_dmatrix_value(void) const;
+   void save_dmatrix_value() const;
    void save_dmatrix_position(void) const;
    void save_dmatrix_derivatives(const dvar_matrix_position &) const;
 
@@ -7964,9 +8057,9 @@ class banded_symmetric_dmatrix
  */
 class banded_symmetric_dvar_matrix
 {
+ public:
    int bw;
    dvar_matrix d;
- public:
    void initialize(void);
    int bandwidth(void) const
    {
@@ -7989,8 +8082,8 @@ class banded_symmetric_dvar_matrix
       return d.rowmax();
    }
 
-   void save_dvar_matrix_value(void) const;
-   void save_dvar_matrix_position(void) const;
+   void save_dvar_matrix_value() const;
+   void save_dvar_matrix_position() const;
    banded_symmetric_dvar_matrix(int _min, int _max, int _bw);
    banded_symmetric_dvar_matrix(const banded_symmetric_dvar_matrix &);
 
@@ -8089,9 +8182,9 @@ class banded_lower_triangular_dmatrix
  */
 class banded_lower_triangular_dvar_matrix
 {
+public:
    int bw;
    dvar_matrix d;
- public:
    int bandwidth(void) const
    {
       return bw;
@@ -8113,8 +8206,8 @@ class banded_lower_triangular_dvar_matrix
       return d.rowmax();
    }
    void initialize(void);
-   void save_dvar_matrix_value(void) const;
-   void save_dvar_matrix_position(void) const;
+   void save_dvar_matrix_value() const;
+   void save_dvar_matrix_position() const;
 
    banded_lower_triangular_dvar_matrix(int _min, int _max, int _bw);
    banded_lower_triangular_dvar_matrix
@@ -8151,8 +8244,6 @@ class banded_lower_triangular_dvar_matrix
    {
       return *(double *) ((d.m[i - j]).va + i);
    }
-   friend banded_lower_triangular_dmatrix value
-      (const banded_lower_triangular_dvar_matrix & v);
 };
 
 ostream & operator<<(const ostream & ofs,
@@ -8403,24 +8494,30 @@ class ad_double
 protected:
   double d;
 public:
+  ad_double() = delete;
+
   operator double () const
   {
     return d;
   }
-  ad_double(const double& _d, const adkludge&):d(_d)
+  ad_double(const double& _d, const adkludge&): d(_d)
   {
   }
   ad_double(double _d):d(_d)
   {
   }
+  ad_double(const ad_double& other): ad_double(double(other))
+  {
+  }
+
   ad_double(const double_index_type& it);
-  ad_double make_ad_double(double _d)
+  static ad_double make_ad_double(double _d)
   {
     adkludge adk;
     //??Should parameter be d or _d?
-    return ad_double(d, adk);
+    return ad_double(_d, adk);
   }
-  ad_double& operator=(const ad_double&);
+  ad_double& operator=(const ad_double&) = delete;
 };
 
 /**
@@ -9378,5 +9475,29 @@ dvariable ln_det(dvar_compressed_triplet &, hs_symbolic &,
 dmatrix make_dmatrix(dcompressed_triplet & M);
 int norm2(const ivector &);
 int sumsq(const ivector & v);
+
+template <class ... Args>
+int ad_printf( FILE* stream, const char* format, Args ... args )
+{
+  return fprintf(stream, format, args...);
+}
+template <class ... Args>
+int ad_printf( const char* format, Args ... args )
+{
+  int result = printf(format, args...);
+  fflush(stdout);
+  return result;
+}
+std::ostream& get_output_stream();
+
+dvariable dtweedie(const double y, dvariable& mu, dvariable& phi, dvariable& p, const bool use_log);
+
+namespace defaults
+{
+  const int iprint = 20;
+  const int output = 1;
+  const int percentage = 20;
+  constexpr const int percentage_number = 100 / defaults::percentage;
+};
 
 #endif//#ifndef FVAR_HPP

@@ -34,6 +34,6 @@ TEST_F(test_dll_param_init_bounded_vector, allocate)
   ASSERT_EQ(4, v.indexmax());
   ASSERT_EQ(5, v.get_phase_start());
 
-  delete values;
+  delete [] values;
   values = nullptr;
 }

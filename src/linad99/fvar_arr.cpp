@@ -21,11 +21,6 @@
   #include <climits>
 #endif
 
-//extern double * NULL_ADDRESS;
-//extern grad_stack  * GRAD_STACK1; //js
-//extern indvar_offset_list * INDVAR_LIST;
-//extern unsigned  MAX_NVAR_OFFSET;
-
 /**
  * Description not yet available.
  * \param
@@ -45,12 +40,18 @@ dvar_vector& dvar_vector::shift(int min)
  */
 dvar_vector::dvar_vector(const independent_variables& t)
 {
-  allocate(t.indexmin(),t.indexmax());
+  int min = t.indexmin();
+  int max = t.indexmax();
+  allocate(min, max);
   if (va)
   {
-    for (int i=indexmin(); i<=indexmax(); i++)
+    double_and_int* pva = va + min;
+    double* pt = t.get_v() + min;
+    for (int i = min; i <= max; ++i)
     {
-      va[i].x=(t.v)[i];
+      pva->x = *pt;
+      ++pt;
+      ++pva;
     }
     make_indvar_list(*this);
   }
@@ -60,23 +61,29 @@ dvar_vector::dvar_vector(const independent_variables& t)
  * Description not yet available.
  * \param
  */
- dvar_vector::dvar_vector(const dvector& t)
- {
-   if (!t)
-   {
-     allocate();
-   }
-   else
-   {
-     va=NULL;
-     allocate(t.indexmin(),t.indexmax());
-     initialize();
-     for (int i = indexmin(); i <= indexmax(); i++)
-     {
-       va[i].x=(t.v)[i];
-     }
-   }
- }
+dvar_vector::dvar_vector(const dvector& t): va(nullptr)
+{
+  if (!t)
+  {
+    allocate();
+  }
+  else
+  {
+    int min = t.indexmin();
+    int max = t.indexmax();
+    allocate(min, max);
+    initialize();
+    double_and_int* pva = va + min;
+    double* pt = t.get_v() + min;
+    for (int i = min; i <= max; ++i)
+    {
+      va[i].x=(t.v)[i];
+      pva->x = *pt;
+      ++pt;
+      ++pva;
+    }
+  }
+}
 
 
 //#ifdef __BORLANDC__
@@ -151,47 +158,45 @@ dvar_vector::dvar_vector()
  */
 void make_indvar_list(const dvar_vector& t)
 {
-  if (!gradient_structure::instances)
+  gradient_structure::_instance->make_indvar_list(t);
+}
+void gradient_structure::make_indvar_list(const dvar_vector& t)
+{
+  int min = t.indexmin();
+  int max = t.indexmax();
+  unsigned int size = (unsigned int)(max - min + 1);
+  if (size > gradient_structure::MAX_NVAR_OFFSET)
   {
-    return;
-  }
-  if ((unsigned int)(t.indexmax()-t.indexmin()+1)
-    > gradient_structure::MAX_NVAR_OFFSET)
-  {
-   if (ad_printf)
-   {
-     (*ad_printf)("Current maximum number of independent variables is %d\n",
-        gradient_structure::MAX_NVAR_OFFSET);
-     (*ad_printf)("  You need to increase the global variable "
-     "MAX_NVAR_OFFSET to %d\n",t.indexmax()-t.indexmin()+1);
-     (*ad_printf)("  This can be done by putting the line\n"
-         "    gradient_structure::set_MAX_NVAR_OFFSET(%d);\n",
-        t.indexmax()-t.indexmin()+1);
-     (*ad_printf)("  before the declaration of the gradient_structure object.\n"
-        " or the command line option -mno %d\n",
-        t.indexmax()-t.indexmin()+1);
-   }
-   else
-   {
-     cerr << "Current maximum number of independent variables is "
-          << gradient_structure::MAX_NVAR_OFFSET << "\n"
-          <<  "  You need to increase the global variable MAX_NVAR_OFFSET to "
-          << (t.indexmax()-t.indexmin()+1) << "\n"
-          << "  This can be done by putting the line\n"
-          << "    'gradient_structure::set_MAX_NVAR_OFFSET("
-          << (t.indexmax()-t.indexmin()+1) << ");'\n"
-          << "  before the declaration of the gradient_structure object.\n"
-          << " or use the -mno 1149 command line option in AD Model Builder\n";
-   }
-   ad_exit(21);
+    ad_printf("Current maximum number of independent variables is %d\n",
+      gradient_structure::MAX_NVAR_OFFSET);
+    ad_printf("  You need to increase the global variable "
+      "MAX_NVAR_OFFSET to %d\n", size);
+    ad_printf("  This can be done by putting the line\n"
+      "    gradient_structure::set_MAX_NVAR_OFFSET(%d);\n", size);
+    ad_printf("  before the declaration of the gradient_structure object.\n"
+      " or the command line option -mno %d\n", size);
+    /*
+    cerr << "Current maximum number of independent variables is "
+         << gradient_structure::MAX_NVAR_OFFSET << "\n"
+         <<  "  You need to increase the global variable MAX_NVAR_OFFSET to "
+         << size << "\n"
+         << "  This can be done by putting the line\n"
+         << "    'gradient_structure::set_MAX_NVAR_OFFSET("
+         << size << ");'\n"
+         << "  before the declaration of the gradient_structure object.\n"
+         << " or use the -mno 1149 command line option in AD Model Builder\n";
+    */
+    ad_exit(1);
   }
 
-  for (int i=t.indexmin(); i<=t.indexmax(); i++)
+  double_and_int* pt = t.va + min;
+  for (int i = min; i <= max; ++i)
   {
-    unsigned int tmp = (unsigned int)(i - t.indexmin());
-    gradient_structure::INDVAR_LIST->put_address(tmp,&(t.va[i].x));
+    unsigned int tmp = (unsigned int)(i - min);
+    INDVAR_LIST->put_address(tmp, &(pt->x));
+    ++pt;
   }
-  gradient_structure::NVAR=t.indexmax()-t.indexmin()+1;
+  NVAR = size;
 }
 
 /**
@@ -272,11 +277,8 @@ void dvar_vector::allocate(int ncl, int nch)
   {
     index_min=ncl;
     index_max=nch;
-#ifndef OPT_LIB
-    assert(nch >= ncl);
-#endif
     unsigned int itemp = (unsigned int)(nch - ncl + 1);
-/*
+#ifdef DEBUG
     if (itemp<=0)
     {
          cerr << "Error in dvar_vector constructor max index must be"
@@ -284,8 +286,14 @@ void dvar_vector::allocate(int ncl, int nch)
             << "minindex = " << ncl << " maxindex = " << nch <<endl;
          ad_exit(1);
     }
-*/
-    if ((va = arr_new(itemp)) == 0)
+#endif
+    gradient_structure* gs = gradient_structure::_instance;
+    if (!gs)
+    {
+      cerr << "Error: instance of gradient_structure is a nullptr.\n";
+      ad_exit(1);
+    }
+    if ((va = gs->ARR_LIST1->arr_new(itemp)) == 0)
     {
       cerr << " Error trying to allocate memory for dvar_vector\n";
       ad_exit(1);

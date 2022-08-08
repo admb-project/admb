@@ -131,17 +131,19 @@ ivector_position::ivector_position(void)
  * Description not yet available.
  * \param
  */
-dvar_vector_position dvar_matrix_position::operator () (int i)
+dvar_vector_position dvar_matrix_position::operator()(int i)
 {
+#ifndef OPT_LIB
   if (i<row_min||i>row_max)
   {
     cerr << "Index out of range in\n"
         "  dvar_vector_position dvar_matrix_position::operator () (int i)"
       << endl;
   }
+#endif
   dvar_vector_position tmp;
-  tmp.min=lb(i);
-  tmp.max=ub(i);
+  tmp.min = *(lb.get_v() + i);
+  tmp.max = *(ub.get_v() + i);
   tmp.va=(double_and_int *) ptr(i);
   return tmp;
 }
@@ -150,17 +152,19 @@ dvar_vector_position dvar_matrix_position::operator () (int i)
  * Description not yet available.
  * \param
  */
-dvector_position dmatrix_position::operator () (int i)
+dvector_position dmatrix_position::operator()(int i)
 {
+#ifndef OPT_LIB
   if (i<row_min||i>row_max)
   {
     cerr << "Index out of range in\n"
         "  dvector_position dmatrix_position::operator () (int i)"
       << endl;
   }
+#endif
   dvector_position tmp;
-  tmp.min=lb(i);
-  tmp.max=ub(i);
+  tmp.min = *(lb.get_v() + i);
+  tmp.max = *(ub.get_v() + i);
   tmp.v=(double *) ptr(i);
   return tmp;
 }
@@ -169,26 +173,36 @@ dvector_position dmatrix_position::operator () (int i)
  * Description not yet available.
  * \param
  */
-dvar_matrix_position::dvar_matrix_position(const dvar_matrix& m,int x)
-  : lb(m.rowmin(),m.rowmax()), ub(m.rowmin(),m.rowmax()),
+dvar_matrix_position::dvar_matrix_position(const dvar_matrix& m,int x):
+  lb(m.rowmin(),m.rowmax()),
+  ub(m.rowmin(),m.rowmax()),
   ptr(m.rowmin(),m.rowmax())
-
 {
   row_min=m.rowmin();
   row_max=m.rowmax();
-  for (int i=row_min;i<=row_max;i++)
+
+  if (row_min <= row_max)
   {
-    if (allocated(m(i)))
+    const dvar_vector* pm = &m(row_min);
+    int* plb = lb.get_v() + row_min;
+    int* pub = ub.get_v() + row_min;
+    for (int i=row_min;i<=row_max;i++)
     {
-      lb(i)=m(i).indexmin();
-      ub(i)=m(i).indexmax();
-      ptr(i)=m(i).get_va();
-    }
-    else
-    {
-      lb(i)=0;
-      ub(i)=-1;
-      ptr(i)=0;
+      if (allocated(*pm))
+      {
+        *plb = pm->indexmin();
+        *pub = pm->indexmax();
+        ptr(i) = pm->get_va();
+      }
+      else
+      {
+        *plb = 0;
+        *pub = -1;
+        ptr(i) = 0;
+      }
+      ++pm;
+      ++plb;
+      ++pub;
     }
   }
 }
@@ -203,11 +217,18 @@ dmatrix_position::dmatrix_position(const dmatrix& m)
 {
   row_min=m.rowmin();
   row_max=m.rowmax();
-  for (int i=row_min;i<=row_max;i++)
+  const dvector* pmi = &m(row_min);
+  int* plbi = lb.get_v() + row_min;
+  int* pubi = ub.get_v() + row_min;
+  for (int i = row_min; i <= row_max; ++i)
   {
-    lb(i)=m(i).indexmin();
-    ub(i)=m(i).indexmax();
-    ptr(i)=m(i).get_v();
+    *plbi = pmi->indexmin();
+    *pubi = pmi->indexmax();
+    ptr(i) = pmi->get_v();
+
+    ++pmi;
+    ++plbi;
+    ++pubi;
   }
 }
 
@@ -220,11 +241,16 @@ dvar_matrix_position::dvar_matrix_position(int min,int max)
 {
   row_min=min;
   row_max=max;
+  int* plbi = lb.get_v() + row_min;
+  int* pubi = ub.get_v() + row_min;
   for (int i=row_min;i<=row_max;i++)
   {
-    lb(i)=0;
-    ub(i)=-1;
+    *plbi = 0;
+    *pubi = -1;
     ptr(i)=0;
+
+    ++plbi;
+    ++pubi;
   }
 }
 
@@ -237,11 +263,16 @@ dmatrix_position::dmatrix_position(int min,int max)
 {
   row_min=min;
   row_max=max;
+  int* plbi = lb.get_v() + row_min;
+  int* pubi = ub.get_v() + row_min;
   for (int i=row_min;i<=row_max;i++)
   {
-    lb(i)=0;
-    ub(i)=-1;
+    *plbi = 0;
+    *pubi = -1;
     ptr(i)=0;
+
+    ++plbi;
+    ++pubi;
   }
 }
 
@@ -286,7 +317,7 @@ int save_identifier_string(const char* str)
 #if defined(CHK_ID_STRING)
   //int wsize=sizeof(char);
   size_t length=strlen(str);
-  gradient_structure::get_fp()->fwrite(str,length);
+  gradient_structure::fp->fwrite(str,length);
 #endif
   return 0;
 }

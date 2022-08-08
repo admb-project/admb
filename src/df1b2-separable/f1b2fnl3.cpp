@@ -53,15 +53,26 @@ void laplace_approximation_calculator::
 
   dvector local_xadjoint(1,xs);
   dvector local_uadjoint(1,us);
+
+  int* plfe_indexi = lfe_index.get_v() + 1;
+  double* plocal_xadjointi = local_xadjoint.get_v() + 1;
   for (int i=1;i<=xs;i++)
   {
-    int ii=lfe_index(i);
-    local_xadjoint(i)=(*grad_x_u)(list(ii,1));
+    int ii = *plfe_indexi;
+    *plocal_xadjointi = (*grad_x_u)(list(ii,1));
+
+    ++plfe_indexi;
+    ++plocal_xadjointi;
   }
+  int* plre_indexi = lre_index.get_v() + 1;
+  double* plocal_uadjointi = local_xadjoint.get_v() + 1;
   for (int i=1;i<=us;i++)
   {
-    int ii=lre_index(i);
-    local_uadjoint(i)=(*grad_x_u)(list(ii,1));
+    int ii=*plre_indexi;
+    *plocal_uadjointi = (*grad_x_u)(list(ii,1));
+
+    ++plre_indexi;
+    ++plocal_uadjointi;
   }
   dvector tmp;
   if (us>0)
@@ -70,31 +81,59 @@ void laplace_approximation_calculator::
     dvector local_grad(1,us);
     dmatrix local_Dux(1,us,1,xs);
     local_Hess.initialize();
+
+    dvector* plocal_Hessi = &local_Hess(1);
+    plre_indexi = lre_index.get_v() + 1;
     for (int i=1;i<=us;i++)
     {
+      int i2=list(*plre_indexi, 2);
+
+      double* plocal_Hessij = plocal_Hessi->get_v() + 1;
+      int* plre_indexj = lre_index.get_v() + 1;
       for (int j=1;j<=us;j++)
       {
-        int i2=list(lre_index(i),2);
-        int j2=list(lre_index(j),2);
-        local_Hess(i,j)+=locy(i2).u_bar[j2-1];
+        int j2=list(*plre_indexj, 2);
+        *plocal_Hessij += locy(i2).u_bar[j2-1];
+
+        ++plocal_Hessij;
+        ++plre_indexj;
       }
+
+      ++plocal_Hessi;
+      ++plre_indexi;
     }
+    dvector* plocal_Duxi = &local_Dux(1);
+    plre_indexi = lre_index.get_v() + 1;
     for (int i=1;i<=us;i++)
     {
+      int i2=list(*plre_indexi, 2);
+
+      double* plocal_Duxij = plocal_Duxi->get_v() + 1;
+      int* plfe_indexj = lfe_index.get_v() + 1;
       for (int j=1;j<=xs;j++)
       {
-        int i2=list(lre_index(i),2);
-        int j2=list(lfe_index(j),2);
-        local_Dux(i,j)=locy(i2).u_bar[j2-1];
+        int j2=list(*plfe_indexj, 2);
+        *plocal_Duxij = locy(i2).u_bar[j2-1];
+
+        ++plfe_indexj;
+        ++plocal_Duxij;
       }
+
+      ++plre_indexi;
+      ++plocal_Duxi;
     }
     tmp=solve(local_Hess,local_uadjoint)*local_Dux;
   }
 
+  plfe_indexi = lfe_index.get_v() + 1;
+  double* ptmpi = tmp.get_v() + 1;
   for (int i=1;i<=xs;i++)
   {
-    int ii=lfe_index(i);
-    (*grad_x)(list(ii,1))+=tmp(i);
+    int ii = *plfe_indexi;
+    (*grad_x)(list(ii,1)) += *ptmpi;
+
+    ++plfe_indexi;
+    ++ptmpi;
   }
   f1b2gradlist->reset();
   f1b2gradlist->list.initialize();
@@ -149,10 +188,15 @@ void laplace_approximation_calculator::
   }
 
   dvector local_xadjoint(1,xs);  // First order derivative of ff wrt x
+  double* plocal_xadjointj = local_xadjoint.get_v() + 1;
+  int* plfe_indexj = lfe_index.get_v() + 1;
   for (int j=1;j<=xs;j++)
   {
-    int j2=list(lfe_index(j),2);
+    int j2=list(*plfe_indexj, 2);
     local_xadjoint(j)=ff.u_dot[j2-1];  // u_dot is the result of forward AD
+
+    ++plocal_xadjointj;
+    ++plfe_indexj;
   }
 
   if (us>0)
@@ -163,32 +207,58 @@ void laplace_approximation_calculator::
     dmatrix local_Dux(1,us,1,xs);
     local_Hess.initialize();
     dvector local_uadjoint(1,us);
+
+    dvector* plocal_Hessi = &local_Hess(1);
+    int* plre_indexi = lre_index.get_v() + 1;
     for (int i=1;i<=us;i++)
     {
+      int i2 = list(*plre_indexi, 2);
+
+      double* plocal_Hessij = plocal_Hessi->get_v() + 1;
+      int* plre_indexj = lre_index.get_v() + 1;
       for (int j=1;j<=us;j++)
       {
-        int i2=list(lre_index(i),2);
-        int j2=list(lre_index(j),2);
-        local_Hess(i,j)+=locy(i2).u_bar[j2-1];
+        int j2=list(*plre_indexj, 2);
+        *plocal_Hessij += locy(i2).u_bar[j2-1];
+
+	++plocal_Hessij;
+        ++plre_indexj;
       }
+      ++plocal_Hessi;
+      ++plre_indexi;
     }
 
     // First order derivative of separable function wrt u
+    plre_indexi = lre_index.get_v() + 1;
+    double* plocal_uadjointi = local_uadjoint.get_v() + 1;
     for (int i=1;i<=us;i++)
     {
-      int i2=list(lre_index(i),2);
-      local_uadjoint(i)= ff.u_dot[i2-1];
+      int i2=list(*plre_indexi, 2);
+      *plocal_uadjointi = ff.u_dot[i2-1];
+
+      ++plre_indexi;
+      ++plocal_uadjointi;
     }
 
     // Mixed derivatives wrt x and u needed in the sensitivity of u_hat wrt x
+    dvector* plocal_Duxi = &local_Dux(1);
+    plre_indexi = lre_index.get_v() + 1;
     for (int i=1;i<=us;i++)
     {
+      int i2=list(*plre_indexi,2);
+
+      int* plfe_indexj = lfe_index.get_v() + 1;
+      double* plocal_Duxij = plocal_Duxi->get_v() + 1;
       for (int j=1;j<=xs;j++)
       {
-        int i2=list(lre_index(i),2);
-        int j2=list(lfe_index(j),2);
-        local_Dux(i,j)=locy(i2).u_bar[j2-1];
+        int j2=list(*plfe_indexj, 2);
+        *plocal_Duxij = locy(i2).u_bar[j2-1];
+
+	++plocal_Duxij;
+        ++plfe_indexj;
       }
+      ++plocal_Duxi;
+      ++plre_indexi;
     }
 
     // Enter calculations for the derivative of log(det(Hessian))
@@ -200,14 +270,25 @@ void laplace_approximation_calculator::
     dmatrix Hessadjoint=get_gradient_for_hessian_calcs(local_Hess,f);
     initial_df1b2params::cobjfun+=f;  // Adds 0.5*log(det(local_Hess))
 
+    dvector* pHessadjointi = &Hessadjoint(1);
+    plre_indexi = lre_index.get_v() + 1;
     for (int i=1;i<=us;i++)
     {
+      int i2=list(*plre_indexi, 2);
+
+      double* pHessadjointij = pHessadjointi->get_v() + 1;
+      int* plre_indexj = lre_index.get_v() + 1;
       for (int j=1;j<=us;j++)
       {
-        int i2=list(lre_index(i),2);
-        int j2=list(lre_index(j),2);
-        locy(i2).get_u_bar_tilde()[j2-1]=Hessadjoint(i,j);
+        int j2=list(*plre_indexj, 2);
+        locy(i2).get_u_bar_tilde()[j2-1] = *pHessadjointij;
+
+        ++pHessadjointij;
+        ++plre_indexj;
       }
+
+      ++pHessadjointi;
+      ++plre_indexi;
     }
 
      df1b2variable::passnumber=2;
@@ -217,29 +298,51 @@ void laplace_approximation_calculator::
      df1b2_gradcalc1();
       dvector xtmp(1,xs);
       xtmp.initialize();
+
+      int* plfe_indexi = lfe_index.get_v() + 1;
+      double* pxtmpi = xtmp.get_v() + 1;
+      double* plocal_xadjointi = local_xadjoint.get_v() + 1;
       for (int i=1;i<=xs;i++)
       {
-        int i2=list(lfe_index(i),2);
-        xtmp(i)+=locy[i2].u_tilde[0];
-        local_xadjoint(i)+=locy[i2].u_tilde[0];
+        int i2=list(*plfe_indexi, 2);
+        *pxtmpi += locy[i2].u_tilde[0];
+        *plocal_xadjointi += locy[i2].u_tilde[0];
+
+	++plfe_indexi;
+	++pxtmpi;
+	++plocal_xadjointi;
       }
+
       dvector utmp(1,us);
       utmp.initialize();
+
+      int* plre_indexi = lre_index.get_v() + 1;
+      double* putmpi = utmp.get_v() + 1;
+      double* plocal_uadjointi = local_uadjoint.get_v() + 1;
       for (int i=1;i<=us;i++)
       {
-        int i2=list(lre_index(i),2);
-        utmp(i)+=locy[i2].u_tilde[0];
-        local_uadjoint(i)+=locy[i2].u_tilde[0];
+        int i2=list(*plre_indexi, 2);
+        *putmpi += locy[i2].u_tilde[0];
+        *plocal_uadjointi += locy[i2].u_tilde[0];
+
+	++putmpi;
+	++plre_indexi;
+	++plocal_uadjointi;
       }
       if (xs>0)
         local_xadjoint -= local_uadjoint*inv(local_Hess)*local_Dux;
     }
   }
+  int* plfe_indexi = lfe_index.get_v() + 1;
+  double* plocal_xadjointi = local_xadjoint.get_v() + 1;
   for (int i=1;i<=xs;i++)
   {
-    int ii=lfe_index(i);
+    int ii = *plfe_indexi;
     // Ads contribution to "global" gradient vector
-    xadjoint(list(ii,1))+=local_xadjoint(i);
+    xadjoint(list(ii,1)) += *plocal_xadjointi;
+
+    ++plocal_xadjointi;
+    ++plfe_indexi;
   }
   f1b2gradlist->reset();
   f1b2gradlist->list.initialize();
@@ -264,18 +367,35 @@ dmatrix laplace_approximation_calculator::get_gradient_for_hessian_calcs
   int nvar=us*us;
   independent_variables cy(1,nvar);
   cy.initialize();
-  int ii=1;
+
+  double* pcyii = cy.get_v() + 1;
+  const dvector* plocal_Hessi = &local_Hess(1);
   for (int i=1;i<=us;i++)
+  {
+    double* plocal_Hessij = plocal_Hessi->get_v() + 1;
     for (int j=1;j<=us;j++)
-      cy(ii++)=local_Hess(i,j);
+    {
+      *pcyii = *plocal_Hessij;
+
+      ++pcyii;
+      ++plocal_Hessij;
+    }
+    ++plocal_Hessi;
+  }
 
   dvar_vector vy=dvar_vector(cy);
   dvar_matrix vHess(1,us,1,us);
 
-  ii=1;
+  int ii=1;
+  dvar_vector* pvHessi = &vHess(1);
   for (int i=1;i<=us;i++)
+  {
     for (int j=1;j<=us;j++)
-      vHess(i,j)=vy(ii++);
+    {
+      (*pvHessi)(j) = vy(ii++);
+    }
+    ++pvHessi;
+  }
 
   dvariable vf=0.0;
   int sgn=0;
@@ -294,11 +414,24 @@ dmatrix laplace_approximation_calculator::get_gradient_for_hessian_calcs
   f=value(vf);
   dvector g(1,nvar);
   gradcalc(nvar,g);
+
   dmatrix hessadjoint(1,us,1,us);
-  ii=1;
+
+  dvector* phessadjointi = &hessadjoint(1);
+  double* pgii = g.get_v() + 1;
   for (int i=1;i<=us;i++)
+  {
+    double* phessadjointij = phessadjointi->get_v() + 1;
     for (int j=1;j<=us;j++)
-      hessadjoint(i,j)=g(ii++);
+    {
+      *phessadjointij = *pgii;
+
+      ++phessadjointij;
+      ++pgii;
+    }
+
+    ++phessadjointi;
+  }
 
   return hessadjoint;
 }

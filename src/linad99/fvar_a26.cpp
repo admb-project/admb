@@ -31,14 +31,15 @@ void dv_minuseq(void);
        elem_value(i) -= v1.elem_value(i);
      }
    }
-
+   grad_stack* GRAD_STACK1 = gradient_structure::GRAD_STACK1;
+   DF_FILE* fp = gradient_structure::fp;
    save_identifier_string("uuvv");
-   save_dvar_vector_position();  // for this->
-   v1.save_dvar_vector_position();
+   fp->save_dvar_vector_position(*this);  // for this->
+   fp->save_dvar_vector_position(v1);
    save_identifier_string("wwxx");
-    gradient_structure::GRAD_STACK1->
-            set_gradient_stack(dv_minuseq);
-   return(*this);
+   GRAD_STACK1->set_gradient_stack(dv_minuseq);
+
+   return *this;
  }
 
 /**
@@ -47,10 +48,12 @@ void dv_minuseq(void);
  */
 void dv_minuseq(void)
 {
+  DF_FILE* fp = gradient_structure::fp;
+
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("wwxx");
-  dvar_vector_position v1_pos=restore_dvar_vector_position();
-  dvar_vector_position this_pos=restore_dvar_vector_position();
+  dvar_vector_position v1_pos=fp->restore_dvar_vector_position();
+  dvar_vector_position this_pos=fp->restore_dvar_vector_position();
   verify_identifier_string("uuvv");
   dvector dfthis=-1.*restore_dvar_vector_der_nozero(this_pos);
   dfthis.save_dvector_derivatives(v1_pos);

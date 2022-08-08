@@ -20,10 +20,17 @@ Returns dvector with sine for each value of vec.
  */
 dvector sin(const dvector& vec)
 {
-  dvector results(vec.indexmin(), vec.indexmax());
-  for (int i = results.indexmin(); i <= results.indexmax(); ++i)
+  int min = vec.indexmin();
+  int max = vec.indexmax();
+  dvector results(min, max);
+  double* presultsi = results.get_v() + min;
+  double* pveci = vec.get_v() + min;
+  for (int i = min; i <= max; ++i)
   {
-    results.elem(i) = std::sin(vec.elem(i));
+    *presultsi = std::sin(*pveci);
+
+    ++presultsi;
+    ++pveci;
   }
   return results;
 }
@@ -34,10 +41,17 @@ Returns dvector with cosine for each value of vec.
  */
 dvector cos(const dvector& vec)
 {
-  dvector results(vec.indexmin(), vec.indexmax());
-  for (int i = results.indexmin(); i <= results.indexmax(); ++i)
+  int min = vec.indexmin();
+  int max = vec.indexmax();
+  dvector results(min, max);
+  double* presultsi = results.get_v() + min;
+  double* pveci = vec.get_v() + min;
+  for (int i = min; i <= max; ++i)
   {
-    results.elem(i) = std::cos(vec.elem(i));
+    *presultsi = std::cos(*pveci);
+
+    ++presultsi;
+    ++pveci;
   }
   return results;
 }
@@ -48,10 +62,17 @@ Returns dvector with tangent for each value of vec.
  */
 dvector tan(const dvector& vec)
 {
-  dvector results(vec.indexmin(), vec.indexmax());
-  for (int i = results.indexmin(); i <= results.indexmax(); ++i)
+  int min = vec.indexmin();
+  int max = vec.indexmax();
+  dvector results(min, max);
+  double* presultsi = results.get_v() + min;
+  double* pveci = vec.get_v() + min;
+  for (int i = min; i <= max; ++i)
   {
-    results.elem(i) = std::tan(vec.elem(i));
+    *presultsi = std::tan(*pveci);
+
+    ++presultsi;
+    ++pveci;
   }
   return results;
 }
@@ -62,10 +83,17 @@ Returns dvector with hyperbolic sine for each value of vec.
 */
 dvector sinh(const dvector& vec)
 {
-  dvector results(vec.indexmin(), vec.indexmax());
-  for (int i = results.indexmin(); i <= results.indexmax(); ++i)
+  int min = vec.indexmin();
+  int max = vec.indexmax();
+  dvector results(min, max);
+  double* presultsi = results.get_v() + min;
+  double* pveci = vec.get_v() + min;
+  for (int i = min; i <= max; ++i)
   {
-    results.elem(i) = std::sinh(vec.elem(i));
+    *presultsi = std::sinh(*pveci);
+
+    ++presultsi;
+    ++pveci;
   }
   return results;
 }
@@ -76,10 +104,17 @@ Returns dvector with hyperbolic cosine for each value of vec.
 */
 dvector cosh(const dvector& vec)
 {
-  dvector results(vec.indexmin(), vec.indexmax());
-  for (int i = results.indexmin(); i <= results.indexmax(); ++i)
+  int min = vec.indexmin();
+  int max = vec.indexmax();
+  dvector results(min, max);
+  double* presultsi = results.get_v() + min;
+  double* pveci = vec.get_v() + min;
+  for (int i = min; i <= max; ++i)
   {
-    results.elem(i) = std::cosh(vec.elem(i));
+    *presultsi = std::cosh(*pveci);
+
+    ++presultsi;
+    ++pveci;
   }
   return results;
 }
@@ -90,10 +125,17 @@ Returns dvector with hyperbolic tangent for each value of vec.
 */
 dvector tanh(const dvector& vec)
 {
-  dvector results(vec.indexmin(), vec.indexmax());
-  for (int i = results.indexmin(); i <= results.indexmax(); ++i)
+  int min = vec.indexmin();
+  int max = vec.indexmax();
+  dvector results(min, max);
+  double* presultsi = results.get_v() + min;
+  double* pveci = vec.get_v() + min;
+  for (int i = min; i <= max; ++i)
   {
-    results.elem(i) = std::tanh(vec.elem(i));
+    *presultsi = std::tanh(*pveci);
+
+    ++presultsi;
+    ++pveci;
   }
   return results;
 }
@@ -106,10 +148,17 @@ exponents.
 */
 dvector pow(const dvector& bases, const double exponent)
 {
-  dvector results(bases.indexmin(), bases.indexmax());
-  for (int i = results.indexmin(); i <= results.indexmax(); ++i)
+  int min = bases.indexmin();
+  int max = bases.indexmax();
+  dvector results(min, max);
+  double* presultsi = results.get_v() + min;
+  double* pbasesi = bases.get_v() + min;
+  for (int i = min; i <= max; ++i)
   {
-    results.elem(i) = std::pow(bases.elem(i), exponent);
+    *presultsi = std::pow(*pbasesi, exponent);
+
+    ++presultsi;
+    ++pbasesi;
   }
   return results;
 }
@@ -122,10 +171,17 @@ exponents.
 */
 dvector pow(const dvector& bases, int exponent)
 {
-  dvector results(bases.indexmin(), bases.indexmax());
-  for (int i = results.indexmin(); i <= results.indexmax(); ++i)
+  int min = bases.indexmin();
+  int max = bases.indexmax();
+  dvector results(min, max);
+  double* presultsi = results.get_v() + min;
+  double* pbasesi = bases.get_v() + min;
+  for (int i = min; i <= max; ++i)
   {
-    results.elem(i) = std::pow(bases.elem(i), exponent);
+    *presultsi = std::pow(*pbasesi, exponent);
+
+    ++presultsi;
+    ++pbasesi;
   }
   return results;
 }

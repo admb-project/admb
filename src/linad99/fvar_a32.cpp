@@ -29,14 +29,17 @@ dvar_vector dvar_vector::operator()(const ivector& u)
    {
      tmp.elem_value(i)=elem_value(u(i));
    }
+
+   grad_stack* GRAD_STACK1 = gradient_structure::GRAD_STACK1;
+   DF_FILE* fp = gradient_structure::fp;
    save_identifier_string("by");
-   save_dvar_vector_position();
-   tmp.save_dvar_vector_position();
-   u.save_ivector_value();
-   u.save_ivector_position();
+   fp->save_dvar_vector_position(*this);
+   fp->save_dvar_vector_position(tmp);
+   fp->save_ivector_value(u);
+   fp->save_ivector_position(u);
    save_identifier_string("ay");
-   gradient_structure::GRAD_STACK1->
-     set_gradient_stack(dv_subassign);
+   GRAD_STACK1->set_gradient_stack(dv_subassign);
+
    return tmp;
  }
 
@@ -44,15 +47,17 @@ dvar_vector dvar_vector::operator()(const ivector& u)
  * Description not yet available.
  * \param
  */
-void dv_subassign(void)
+void dv_subassign()
 {
+  DF_FILE* fp = gradient_structure::fp;
+
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("ay");
-  ivector_position u_pos=restore_ivector_position();
+  ivector_position u_pos=fp->restore_ivector_position();
   ivector u=restore_ivector_value(u_pos);
-  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();
   dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
-  dvar_vector_position t_pos=restore_dvar_vector_position();
+  dvar_vector_position t_pos=fp->restore_dvar_vector_position();
   dvector dft(t_pos.indexmin(),t_pos.indexmax());
   verify_identifier_string("by");
   dft.initialize();

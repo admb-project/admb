@@ -219,7 +219,7 @@ dvector laplace_approximation_calculator::banded_calculations_lme
   double maxg=max(fabs(get_gradient_lme(uhat,pfmin)));
   if (maxg > 1.e-12)
   {
-    cout << "max g = " << maxg << endl;
+    cout << "max g = " << std::scientific << setprecision(10) << maxg << endl;
   }
 
   double f2=0.0;
@@ -235,7 +235,6 @@ dvector laplace_approximation_calculator::banded_calculations_lme
 dvector laplace_approximation_calculator::get_gradient_lme
   (function_minimizer * pfmin)
 {
-  double f = 0.0;
   dvector g(1,usize);
   dvector ub(1,usize);
   independent_variables u(1,usize);
@@ -252,7 +251,7 @@ dvector laplace_approximation_calculator::get_gradient_lme
 
   objective_function_value::fun_without_pen=value(vf);
   vf+=pen;
-  f = value(vf);
+  double f = value(vf);
   gradcalc(usize, g);
   return g;
 }
@@ -264,7 +263,6 @@ dvector laplace_approximation_calculator::get_gradient_lme
 dvector laplace_approximation_calculator::get_gradient_lme
   (const dvector& x,function_minimizer * pfmin)
 {
-  double f = 0.0;
   dvector g(1,usize);
   dvector ub(1,usize);
   independent_variables u(1,usize);
@@ -280,7 +278,7 @@ dvector laplace_approximation_calculator::get_gradient_lme
 
   objective_function_value::fun_without_pen=value(vf);
   vf+=pen;
-  f = value(vf);
+  double f = value(vf);
   gradcalc(usize, g);
   return g;
 }

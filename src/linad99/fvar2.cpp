@@ -25,11 +25,14 @@
 #ifndef __SUN__
 #endif
 #include <math.h>
+#if !defined(OPT_LIB)
+#include <cassert>
+#endif
 
 /**
-  Creates an entry in the gradient structure linked list.
-  \return Pointer instance of class double_and_int
- */
+Creates an entry in the gradient structure linked list.
+\return Pointer instance of class double_and_int
+*/
 double_and_int* gradnew()
 {
 #if !defined(OPT_LIB)
@@ -41,10 +44,15 @@ double_and_int* gradnew()
     ad_exit(1);
   }
 #endif
-  dlink* tmp = gradient_structure::GRAD_LIST->last_remove();
+  return gradient_structure::_instance->GRAD_LIST->gradnew();
+}
+
+double_and_int* dlist::gradnew()
+{
+  dlink* tmp = last_remove();
   if (!tmp)
   {
-    tmp = gradient_structure::GRAD_LIST->create();
+    tmp = create();
   }
   //  cout << "In gradnew the address of the double * ptr is "
   //       << _farptr_tolong(tmp) << "\n";
@@ -56,100 +64,19 @@ double_and_int* gradnew()
  */
 void gradfree(dlink* v)
 {
-  if (gradient_structure::GRAD_LIST)
+#if !defined(OPT_LIB)
+  if (!gradient_structure::instances)
   {
-    if (gradient_structure::instances)
-    {
-      gradient_structure::GRAD_LIST->append(v);
-    }
-    else
-    {
-      delete (double_and_int*)v;
-      v = NULL;
-    }
+    //delete (double_and_int*)v;
+    v = NULL;
+    return;
   }
+#endif
+  gradient_structure::_instance->GRAD_LIST->append(v);
 }
 //prevariable::prevariable(const prevariable& t)
 //  {
 //     v=t.v;
 //     (*v).nc++;
 //  }
-/**
-  Constructor for dvariable object from its base class; deep copy.
-  Allocates memory and assigns value of argument to new object.
-  \param t constant prevariable object
- */
-dvariable::dvariable(const prevariable& t)
-{
-  v=gradnew();
-  //(*v).nc=0;
-  v->x=t.v->x;
-  gradient_structure::GRAD_STACK1->
-    set_gradient_stack(default_evaluation1,&(v->x),&(t.v->x));
-}
-/**
-  Copy constructor for dvariable object; deep copy.
-  Allocates memory and assigns value of argument to new object.
-  \param t constant devariable object
- */
-dvariable::dvariable(const dvariable& t): prevariable()
-{
-  v=gradnew();
-  v->x=t.v->x;
-  gradient_structure::GRAD_STACK1->
-    set_gradient_stack(default_evaluation1,&(v->x),&(t.v->x));
-}
-/**
-Default constructor.
 
-Creates new zero value dvariable object.
-*/
-dvariable::dvariable()
-{
-  v = gradnew();
-  (*v).x = 0.0;
-
-#ifdef SAFE_INITIALIZE
-  gradient_structure::GRAD_STACK1->set_gradient_stack0(
-    default_evaluation0,&((*v).x));
-#endif
-}
-/**
-Specialized constructor that does not create unnecessary entries
-in the gradient structure; see function \ref nograd_assign.
-*/
-dvariable::dvariable(kkludge_object)
-{
-  v = gradnew();
-  //(*v).nc=0;
-}
-/** Destructor; frees memory on gradient stack.  */
-dvariable::~dvariable() { gradfree((dlink*)v); }
-/**
-   Creates dvariable instance from a double constant.
-   Creates new dvariable object,
-   Sets Value to the argument and initializes derivative information.
-   \param t constant double passed by value.
- */
-dvariable::dvariable(const double t)
-{
-  v = gradnew();
-  v->x = t;
-  //(*v).nc=0;
-  gradient_structure::GRAD_STACK1->set_gradient_stack0(default_evaluation0,
-    &(v->x));
-}
-/**
-   Creates dvariable instance from a int constant.
-   Creates new dvariable object,
-   Sets value to the argument and initializes derivatve information.
-   \param t constant integer passed by reference.
- */
-dvariable::dvariable(const int& t)
-{
-  v = gradnew();
-  v->x = t;
-  //(*v).nc=0;
-  gradient_structure::GRAD_STACK1->set_gradient_stack0(default_evaluation0,
-    &(v->x) );
-}

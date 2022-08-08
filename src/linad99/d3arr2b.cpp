@@ -15,9 +15,15 @@ d3_array operator/(const d3_array& m, const double d)
 {
   d3_array tmp;
   tmp.allocate(m);
-  for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
+  int min = tmp.slicemin();
+  int max = tmp.slicemax();
+  dmatrix* ptmpi = &tmp(min);
+  const dmatrix* pmi = &m(min);
+  for (int i = min; i <= max; ++i)
   {
-    tmp(i)=m(i)/d;
+    *ptmpi = *pmi / d;
+    ++ptmpi;
+    ++pmi;
   }
   return tmp;
 }
@@ -26,8 +32,12 @@ Divide each element of d3_array by d.
 */
 void d3_array::operator/=(const double d)
 {
-  for (int i=slicemin();i<=slicemax();i++)
+  int min = slicemin();
+  int max = slicemax();
+  dmatrix* pti = t + min;
+  for (int i = min; i <= max; ++i)
   {
-    (*this)(i) /= d;
+    *pti /= d;
+    ++pti;
   }
 }

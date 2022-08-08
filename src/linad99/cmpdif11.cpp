@@ -25,48 +25,27 @@
  * Description not yet available.
  * \param
  */
-void banded_symmetric_dvar_matrix::save_dvar_matrix_value(void) const
+void banded_symmetric_dvar_matrix::save_dvar_matrix_value() const
 {
-  // saves the size, address, and value information for a dvar_matrix
-  int min=d.rowmin();
-  int max=d.rowmax();
-  for (int i=min;i<=max;i++)
-  {
-    d(i).save_dvar_vector_value();
-    d(i).save_dvar_vector_position();
-  }
+  gradient_structure::fp->save_dvar_matrix_value(d);
 }
 
 /**
  * Description not yet available.
  * \param
  */
-void banded_lower_triangular_dvar_matrix::save_dvar_matrix_value(void) const
+void banded_lower_triangular_dvar_matrix::save_dvar_matrix_value() const
 {
-  // saves the size, address, and value information for a dvar_matrix
-  int min=d.rowmin();
-  int max=d.rowmax();
-  for (int i=min;i<=max;i++)
-  {
-    d(i).save_dvar_vector_value();
-    d(i).save_dvar_vector_position();
-  }
+  gradient_structure::fp->save_dvar_matrix_value(d);
 }
 
 /**
  * Description not yet available.
  * \param
  */
-void banded_symmetric_dmatrix::save_dmatrix_value(void) const
+void banded_symmetric_dmatrix::save_dmatrix_value() const
 {
-  // saves the size, address, and value information for a dvar_matrix
-  int min=d.rowmin();
-  int max=d.rowmax();
-  for (int i=min;i<=max;i++)
-  {
-    d(i).save_dvector_value();
-    d(i).save_dvector_position();
-  }
+  gradient_structure::fp->save_dmatrix_value(d);
 }
 
 /**
@@ -76,6 +55,8 @@ void banded_symmetric_dmatrix::save_dmatrix_value(void) const
 banded_symmetric_dmatrix restore_banded_symmetric_dvar_matrix_value(
   const dvar_matrix_position& mpos)
 {
+  DF_FILE* fp = gradient_structure::fp;
+
   // restores the size, address, and value information for a dvar_matrix
   banded_symmetric_dmatrix out((const dvar_matrix_position&)mpos);
   //int ierr;
@@ -83,7 +64,7 @@ banded_symmetric_dmatrix restore_banded_symmetric_dvar_matrix_value(
   int max=out.rowmax();
   for (int i=max;i>=min;i--)
   {
-    dvar_vector_position vpos=restore_dvar_vector_position();
+    dvar_vector_position vpos=fp->restore_dvar_vector_position();
     out.d(i)=restore_dvar_vector_value(vpos);
   }
   return out;
@@ -97,6 +78,8 @@ banded_lower_triangular_dmatrix
 restore_banded_lower_triangular_dvar_matrix_value(
   const dvar_matrix_position& mpos)
 {
+  DF_FILE* fp = gradient_structure::fp;
+
   // restores the size, address, and value information for a dvar_matrix
   banded_lower_triangular_dmatrix out((const dvar_matrix_position&)mpos);
   //int ierr;
@@ -104,7 +87,7 @@ restore_banded_lower_triangular_dvar_matrix_value(
   int max=out.rowmax();
   for (int i=max;i>=min;i--)
   {
-    dvar_vector_position vpos=restore_dvar_vector_position();
+    dvar_vector_position vpos=fp->restore_dvar_vector_position();
     out.d(i)=restore_dvar_vector_value(vpos);
   }
   return out;
@@ -114,46 +97,18 @@ restore_banded_lower_triangular_dvar_matrix_value(
  * Description not yet available.
  * \param
  */
-void banded_symmetric_dvar_matrix::save_dvar_matrix_position(void) const
+void banded_symmetric_dvar_matrix::save_dvar_matrix_position() const
 {
-  // saves the size and address information for a dvar_vector
-  dvar_matrix_position tmp((*this).d,1);
-  size_t wsize = sizeof(int);
-  size_t wsize1 = sizeof(void*);
-
-  int min=rowmin();
-  int max=rowmax();
-  for (int i=min;i<=max;i++)
-  {
-    gradient_structure::get_fp()->fwrite(&(tmp.lb(i)),wsize);
-    gradient_structure::get_fp()->fwrite(&(tmp.ub(i)),wsize);
-    gradient_structure::get_fp()->fwrite(&(tmp.ptr(i)),wsize1);
-   }
-  gradient_structure::get_fp()->fwrite(&(tmp.row_min),wsize);
-  gradient_structure::get_fp()->fwrite(&(tmp.row_max),wsize);
+  gradient_structure::fp->save_dvar_matrix_position(d);
 }
 
 /**
  * Description not yet available.
  * \param
  */
-void banded_lower_triangular_dvar_matrix::save_dvar_matrix_position(void) const
+void banded_lower_triangular_dvar_matrix::save_dvar_matrix_position() const
 {
-  // saves the size and address information for a dvar_vector
-  dvar_matrix_position tmp((*this).d,1);
-  size_t wsize=sizeof(int);
-  size_t wsize1=sizeof(void*);
-
-  int min=rowmin();
-  int max=rowmax();
-  for (int i=min;i<=max;i++)
-  {
-    gradient_structure::get_fp()->fwrite(&(tmp.lb(i)),wsize);
-    gradient_structure::get_fp()->fwrite(&(tmp.ub(i)),wsize);
-    gradient_structure::get_fp()->fwrite(&(tmp.ptr(i)),wsize1);
-   }
-  gradient_structure::get_fp()->fwrite(&(tmp.row_min),wsize);
-  gradient_structure::get_fp()->fwrite(&(tmp.row_max),wsize);
+  gradient_structure::fp->save_dvar_matrix_position(d);
 }
 
 /**

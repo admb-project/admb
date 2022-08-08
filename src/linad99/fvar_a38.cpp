@@ -17,50 +17,76 @@
  * \param
  */
 dvar_vector operator*(const dvar_vector& t1,const prevariable& x)
+{
+  gradient_structure* gs = gradient_structure::_instance;
+  DF_FILE* fp = gradient_structure::fp;
+
+  gs->RETURN_ARRAYS_INCREMENT();
+
+  int min = t1.indexmin();
+  int max = t1.indexmax();
+  dvar_vector tmp(min, max);
+  //save_identifier_string("ccbb");
+  fp->save_prevariable_value(x);
+  fp->save_prevariable_position(x);
+
+  const double valuex = value(x);
+  double_and_int* ptmpi = tmp.va + min;
+  double_and_int* pt1i = t1.va + min;
+  for (int i = min; i <= max; ++i)
   {
-    RETURN_ARRAYS_INCREMENT();
-    dvar_vector tmp(t1.indexmin(),t1.indexmax());
-    save_identifier_string("ccbb");
-    x.save_prevariable_value();
-    x.save_prevariable_position();
-    for (int i=t1.indexmin(); i<=t1.indexmax(); i++)
-    {
-      tmp.elem_value(i)=t1.elem_value(i)*value(x);
-    }
-    t1.save_dvar_vector_value();
-    tmp.save_dvar_vector_position();
-    t1.save_dvar_vector_position();
-    save_identifier_string("DDaa");
-    RETURN_ARRAYS_DECREMENT();
-    gradient_structure::GRAD_STACK1->set_gradient_stack(DF_dv_dble_prod);
-    return(tmp);
+    ptmpi->x = pt1i->x * valuex;
+    ++ptmpi;
+    ++pt1i;
   }
+
+  fp->save_dvar_vector_value(t1);
+  fp->save_dvar_vector_position(tmp);
+  fp->save_dvar_vector_position(t1);
+  //save_identifier_string("DDaa");
+  gradient_structure::GRAD_STACK1->set_gradient_stack(DF_dv_dble_prod);
+
+  gs->RETURN_ARRAYS_DECREMENT();
+
+  return tmp;
+}
 
 /**
  * Description not yet available.
  * \param
  */
- void DF_dv_dble_prod(void)
- {
-    verify_identifier_string("DDaa");
-    dvar_vector_position t1_pos=restore_dvar_vector_position();
-    dvar_vector_position tmp_pos=restore_dvar_vector_position();
-    dvector t1=restore_dvar_vector_value(tmp_pos);
-    prevariable_position xpos=restore_prevariable_position();
-    double x=restore_prevariable_value();
-    dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
-    dvector dft1(t1_pos.indexmin(),t1_pos.indexmax());
-    verify_identifier_string("ccbb");
-    double dfx=0.;
-    for (int i=t1_pos.indexmax(); i>=t1_pos.indexmin(); i--)
-    {
+void DF_dv_dble_prod(void)
+{
+  DF_FILE* fp = gradient_structure::fp;
+
+  //verify_identifier_string("DDaa");
+  dvar_vector_position t1_pos=fp->restore_dvar_vector_position();
+  dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();
+  dvector t1=restore_dvar_vector_value(tmp_pos);
+  prevariable_position xpos=fp->restore_prevariable_position();
+  double x=fp->restore_prevariable_value();
+  dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
+  int min = t1_pos.indexmin();
+  int max = t1_pos.indexmax();
+  dvector dft1(min, max);
+  //verify_identifier_string("ccbb");
+  double dfx = 0.0;
+  double* pdftmpi = dftmp.get_v() + max;
+  double* pdft1i = dft1.get_v() + max;
+  double* pt1i = t1.get_v() + max;
+  for (int i = max; i >= min; --i)
+  {
       //tmp.elem_value(i)=value(x)*t1.elem_value(i)*value(x);
-      dfx+=dftmp(i)*t1(i);
-      dft1(i)=dftmp(i)*x;
-    }
-    save_double_derivative(dfx,xpos);
-    dft1.save_dvector_derivatives(t1_pos);
- }
+      dfx += *pdftmpi * *pt1i;
+      *pdft1i = *pdftmpi * x;
+
+      --pdftmpi;
+      --pdft1i;
+      --pt1i;
+  }
+  save_double_derivative(dfx,xpos);
+  dft1.save_dvector_derivatives(t1_pos);
+}
 
 /**
  * Description not yet available.

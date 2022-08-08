@@ -658,13 +658,18 @@ smartlist::smartlist(unsigned int _bufsize,const adstring& _filename):
   AD_ALLOCATE(buffer,char,bufsize,df1b2_gradlist)
   buffend=buffer+bufsize-1;
   bptr=buffer;
+#ifdef _MSC_VER
   fp = open((char*)filename,
     O_RDWR | O_CREAT | O_TRUNC | O_BINARY, S_IREAD | S_IWRITE);
+#else
+  fp = open((char*)filename,
+    O_RDWR | O_CREAT | O_TRUNC | O_BINARY, S_IRUSR | S_IWUSR);
+#endif
   if (fp == -1)
   {
     cerr << "Error trying to open file " << filename
          << " in class smartlist " << endl;
-    exit(1);
+    ad_exit(1);
   }
 }
 
@@ -682,7 +687,7 @@ ad_dstar::ad_dstar(void)
   if (!n)
   {
     cerr << "need to initialize size in class ad_dstar" << endl;
-    exit(1);
+    ad_exit(1);
   }
   p = new double[n];
 }

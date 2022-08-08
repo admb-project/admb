@@ -29,16 +29,19 @@
    int nrh=pos.row_max;
    const ivector& ncl=pos.lb;
    const ivector& nch=pos.ub;
-   #ifdef DIAG
-     myheapcheck("Entering dmatrix(nrl,nrh,ncl,nch)" );
-   #endif
-   if (nrl !=ncl.indexmin() || nrh !=ncl.indexmax() ||
-     nrl !=nch.indexmin() || nrh !=nch.indexmax())
+#ifdef DIAG
+   myheapcheck("Entering dmatrix(nrl,nrh,ncl,nch)" );
+#endif
+
+#ifndef OPT_LIB
+   if (nrl != ncl.indexmin() || nrh != ncl.indexmax()
+     || nrl != nch.indexmin() || nrh != nch.indexmax())
    {
      cerr << "Incompatible array bounds in "
      "dmatrix(int nrl,int nrh, const ivector& ncl, const ivector& nch)\n";
      ad_exit(1);
    }
+#endif
    index_min=nrl;
    index_max=nrh;
 
@@ -47,29 +50,35 @@
      cerr << " Error allocating memory in dmatrix contructor\n";
      ad_exit(21);
    }
-   if ( (shape = new mat_shapex(m))== 0)
+   if ( (shape = new mat_shapex(m)) == 0)
    {
      cerr << " Error allocating memory in dmatrix contructor\n";
      ad_exit(21);
    }
 
-
-   #ifdef DIAG
-     cerr << "Created a dmatrix with adress "<< farptr_tolong(m)<<"\n";
-   #endif
+#ifdef DIAG
+   cerr << "Created a dmatrix with adress "<< farptr_tolong(m)<<"\n";
+#endif
 
    m -= rowmin();
 
-   for (int i=rowmin(); i<=rowmax(); i++)
+   dvector* pm = m + nrl;
+   int* pncl = ncl.get_v() + nrl;
+   int* pnch = nch.get_v() + nrl;
+   for (int i = nrl; i <= nrh; ++i)
    {
-     m[i].allocate(ncl[i],nch[i]);
-     #ifdef DIAG
-       cerr << "Created a dvector with address "<< farptr_tolong((void*)(m+i))<<"\n";
-     #endif
+     pm->allocate(*pncl, *pnch);
+     ++pm;
+     ++pncl;
+     ++pnch;
+#ifdef DIAG
+     cerr << "Created a dvector with address "<< farptr_tolong((void*)(m+i))<<"\n";
+#endif
    }
-   #ifdef DIAG
-     myheapcheck("Leaving dmatrix(nrl,nrh,ncl,nch)" );
-   #endif
+
+#ifdef DIAG
+   myheapcheck("Leaving dmatrix(nrl,nrh,ncl,nch)" );
+#endif
  }
 
 /**
@@ -82,16 +91,20 @@
    int nrh=pos.row_max;
    const ivector& ncl=pos.lb;
    const ivector& nch=pos.ub;
-   #ifdef DIAG
+
+#ifdef DIAG
      myheapcheck("Entering dmatrix(nrl,nrh,ncl,nch)" );
-   #endif
-   if (nrl !=ncl.indexmin() || nrh !=ncl.indexmax() ||
-     nrl !=nch.indexmin() || nrh !=nch.indexmax())
+#endif
+
+#ifndef OPT_LIB
+   if (nrl != ncl.indexmin() || nrh != ncl.indexmax()
+       || nrl != nch.indexmin() || nrh != nch.indexmax())
    {
      cerr << "Incompatible array bounds in "
      "dmatrix(int nrl,int nrh, const ivector& ncl, const ivector& nch)\n";
      ad_exit(1);
    }
+#endif
    index_min=nrl;
    index_max=nrh;
 
@@ -107,17 +120,23 @@
      ad_exit(21);
    }
 
-   #ifdef DIAG
+#ifdef DIAG
      cerr << "Created a dmatrix with adress "<< farptr_tolong(m)<<"\n";
-   #endif
+#endif
 
    m -= rowmin();
 
-   for (int i=rowmin(); i<=rowmax(); i++)
+   dvector* pm = m + nrl;
+   int* pncl = ncl.get_v() + nrl;
+   int* pnch = nch.get_v() + nrl;
+   for (int i = nrl; i <= nrh; ++i)
    {
-     m[i].allocate(ncl[i],nch[i]);
+     pm->allocate(*pncl, *pnch);
+     ++pncl;
+     ++pnch;
+     ++pm;
    }
-   #ifdef DIAG
+#ifdef DIAG
      myheapcheck("Leaving dmatrix(nrl,nrh,ncl,nch)" );
-   #endif
+#endif
  }

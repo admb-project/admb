@@ -90,7 +90,7 @@ void ad_read_pass1(void)
   default:
     cerr << "illegal value for df1b2variable::pass = "
          << df1b2variable::passnumber << endl;
-    exit(1);
+    ad_exit(1);
   }
 }
 
@@ -115,7 +115,6 @@ void read_pass1_1(void)
   list.saveposition(); // save pointer to beginning of record;
   // save the pointer to the beginning of the record
   double xu;
-  double * xdot;
   //df1b2_header x,z;
   df1b2function1 * pf;
 
@@ -124,15 +123,16 @@ void read_pass1_1(void)
 #if defined(SAFE_ALL)
   checkidentiferstring("CX",list);
 #endif
+  constexpr size_t sizeofdouble = sizeof(double);
   df1b2_header * px=(df1b2_header *) list.bptr;
   list.bptr+=sizeof(df1b2_header);
   df1b2_header * pz=(df1b2_header *) list.bptr;
   list.bptr+=sizeof(df1b2_header);
   pf=*(df1b2function1 **) list.bptr;
   list.bptr+=sizeof(char*);
-  memcpy(&xu,list.bptr,sizeof(double));
-  list.bptr+=sizeof(double);
-  xdot=(double*)list.bptr;
+  memcpy(&xu,list.bptr,sizeofdouble);
+  list.bptr+=sizeofdouble;
+  double* xdot=(double*)list.bptr;
   list.restoreposition(); // save pointer to beginning of record;
 
   // Do first reverse paSS calculations
@@ -146,7 +146,7 @@ void read_pass1_1(void)
      test_smartlist& list2=f1b2gradlist->list2;
 
 
-  size_t total_bytes=2*nvar*sizeof(double);
+  size_t total_bytes=2*nvar*sizeofdouble;
 // string identifier debug stuff
 #if defined(SAFE_ALL)
   char ids[]="DU";
@@ -161,7 +161,6 @@ void read_pass1_1(void)
   memcpy(list2,ids,slen);
 #endif
 
-   const int sizeofdouble = (int)sizeof(double);
    memcpy(list2,pz->get_u_bar(),nvar*sizeofdouble);
    memcpy(list2,pz->get_u_dot_bar(),nvar*sizeofdouble);
    *nlist2.bptr=adptr_diff(list2.bptr,tmpptr2);
@@ -180,31 +179,42 @@ void read_pass1_1(void)
   double d2f=(pf->d2f)(xu);
   //double d3f=(pf->d3f)(xu);
 
+  double* px_u_bari = px->u_bar;
+  double* pz_u_bari = pz->u_bar;
   for (size_t i=0;i<nvar;i++)
   {
     //px->u_bar[i]+=(pf->df)(xu)* pz->u_bar[i];
-    px->u_bar[i]+=df * pz->u_bar[i];
+    *px_u_bari += df * *pz_u_bari;
+
+    ++px_u_bari;
+    ++pz_u_bari;
   }
+  px_u_bari = px->u_bar;
+  double* xdoti = xdot;
+  double* pz_u_dot_bari = pz->u_dot_bar;
   for (size_t i=0;i<nvar;i++)
   {
     //px->u_bar[i]+=(pf->d2f)(xu)*xdot[i]*pz->u_dot_bar[i];
-    px->u_bar[i]+=d2f*xdot[i]*pz->u_dot_bar[i];
+    *px_u_bari += d2f * *xdoti * *pz_u_dot_bari;
+
+    ++px_u_bari;
+    ++xdoti;
+    ++pz_u_dot_bari;
   }
+  double* px_u_dot_bari = px->u_dot_bar;
+  pz_u_dot_bari = pz->u_dot_bar;
   for (size_t i=0;i<nvar;i++)
   {
     //px->u_dot_bar[i]+=(pf->df)(xu)*pz->u_dot_bar[i];
-    px->u_dot_bar[i]+=df*pz->u_dot_bar[i];
+    *px_u_dot_bari += df * *pz_u_dot_bari;
+
+    ++px_u_dot_bari;
+    ++pz_u_dot_bari;
   }
 
   // !!!!!!!!!!!!!!!!!!!!!!
-  for (size_t i=0;i<nvar;i++)
-  {
-    pz->u_bar[i]=0;
-  }
-  for (size_t i=0;i<nvar;i++)
-  {
-    pz->u_dot_bar[i]=0;
-  }
+  memset(pz->u_bar, 0, nvar * sizeofdouble);
+  memset(pz->u_dot_bar, 0, nvar * sizeofdouble);
 
 #if defined(PRINT_DERS)
  print_derivatives(pz,"z");
@@ -259,7 +269,6 @@ void read_pass1_2(void)
   // bptr and bptr2 now both point to the beginning of their records
 
   double xu;
-  double * xdot;
   //df1b2_header x,z;
   df1b2function1 * pf;
 
@@ -277,7 +286,7 @@ void read_pass1_2(void)
   list.bptr+=sizeof(char*);
   memcpy(&xu,list.bptr,sizeof(double));
   list.bptr+=sizeof(double);
-  xdot=(double*)list.bptr;
+  double* xdot=(double*)list.bptr;
   list.restoreposition(num_bytes); // save pointer to beginning of record;
 
   double* zbar=(double*)list2.bptr;
@@ -297,40 +306,63 @@ void read_pass1_2(void)
 #endif
   // Do second "reverse-reverse" pass calculations
 
-  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  for (size_t i=0;i<nvar;i++)
-  {
-    z_bar_tilde[i]=0;
-    z_dot_bar_tilde[i]=0;
-  }
+  constexpr size_t sizeofdouble = sizeof(double);
+  memset(z_bar_tilde, 0, nvar * sizeofdouble);
+  memset(z_dot_bar_tilde, 0, nvar * sizeofdouble);
 
   double df=(pf->df)(xu);
   double d2f=(pf->d2f)(xu);
   double d3f=(pf->d3f)(xu);
+
+  double* px_bar_tildei = x_bar_tilde;
+  double* pzbari = zbar;
+  double* pz_bar_tildei = z_bar_tilde;
   for (size_t i=0;i<nvar;i++)
   {
     //*x_tilde+=(pf->d2f)(xu)*zbar[i]*x_bar_tilde[i];
-    *x_tilde+=d2f*zbar[i]*x_bar_tilde[i];
+    *x_tilde += d2f * *pzbari * *px_bar_tildei;
     //z_bar_tilde[i]+=(pf->df)(xu)*x_bar_tilde[i];
-    z_bar_tilde[i]+=df*x_bar_tilde[i];
+    *pz_bar_tildei += df * *px_bar_tildei;
+
+    ++px_bar_tildei;
+    ++pzbari;
+    ++pz_bar_tildei;
   }
 
+  double* pzdotbari = zdotbar;
+  double* pz_dot_bar_tildei = z_dot_bar_tilde;
+  double* px_dot_bar_tildei = x_dot_bar_tilde;
   for (size_t i=0;i<nvar;i++)
   {
     //*x_tilde+=(pf->d2f)(xu)*zdotbar[i]*x_dot_bar_tilde[i];
-    *x_tilde+=d2f*zdotbar[i]*x_dot_bar_tilde[i];
+    *x_tilde+=d2f * *pzdotbari * *px_dot_bar_tildei;
     //z_dot_bar_tilde[i]+=(pf->df)(xu)*x_dot_bar_tilde[i];
-    z_dot_bar_tilde[i]+=df*x_dot_bar_tilde[i];
+    *pz_dot_bar_tildei += df * *px_dot_bar_tildei;
+
+    ++pzdotbari;
+    ++pz_dot_bar_tildei;
+    ++px_dot_bar_tildei;
   }
 
+  px_bar_tildei = x_bar_tilde;
+  pzdotbari = zdotbar;
+  double* pxdoti = xdot;
+  double* px_dot_tildei = x_dot_tilde;
+  pz_dot_bar_tildei = z_dot_bar_tilde;
   for (size_t i=0;i<nvar;i++)
   {
     //x_dot_tilde[i]+=(pf->d2f)(xu)*zdotbar[i]*x_bar_tilde[i];
     //z_dot_bar_tilde[i]+=(pf->d2f)(xu)*xdot[i]*x_bar_tilde[i];
     //*x_tilde+=(pf->d3f)(xu)*xdot[i]*zdotbar[i]*x_bar_tilde[i];
-    x_dot_tilde[i]+=d2f*zdotbar[i]*x_bar_tilde[i];
-    z_dot_bar_tilde[i]+=d2f*xdot[i]*x_bar_tilde[i];
-    *x_tilde+=d3f*xdot[i]*zdotbar[i]*x_bar_tilde[i];
+    *px_dot_tildei += d2f * *pzdotbari * *px_bar_tildei;
+    *pz_dot_bar_tildei += d2f * *pxdoti * *px_bar_tildei;
+    *x_tilde += d3f * *pxdoti * *pzdotbari * *px_bar_tildei;
+
+    ++px_bar_tildei;
+    ++pzdotbari;
+    ++pxdoti;
+    ++px_dot_tildei;
+    ++pz_dot_bar_tildei;
   }
   list2.restoreposition();
 #if defined(PRINT_DERS)
@@ -359,7 +391,6 @@ void read_pass1_3(void)
   list.saveposition(); // save pointer to beginning of record;
   // save the pointer to the beginning of the record
   double xu;
-  double * xdot;
   //df1b2_header x,z;
   df1b2function1 * pf;
 
@@ -375,7 +406,7 @@ void read_pass1_3(void)
   list.bptr+=sizeof(char*);
   memcpy(&xu,list.bptr,sizeof(double));
   list.bptr+=sizeof(double);
-  xdot=(double*)list.bptr;
+  double* xdot=(double*)list.bptr;
   list.restoreposition(); // save pointer to beginning of record;
 
 #if defined(PRINT_DERS)
@@ -389,21 +420,31 @@ void read_pass1_3(void)
   double d2f=(pf->d2f)(xu);
   //*(px->u_tilde)+=(pf->df)(xu)* *(pz->u_tilde);
   *(px->u_tilde)+=df * *(pz->u_tilde);
+
+  double* pz_u_dot_tildei = pz->u_dot_tilde;
+  double* pxdoti = xdot;
   for (size_t i=0;i<nvar;i++)
   {
     //*(px->u_tilde)+=(pf->d2f)(xu)*xdot[i]*pz->u_dot_tilde[i];
-    *(px->u_tilde)+=d2f*xdot[i]*pz->u_dot_tilde[i];
+    *(px->u_tilde) += d2f * *pxdoti * *pz_u_dot_tildei;
+
+    ++pxdoti;
+    ++pz_u_dot_tildei;
   }
+
+  double* px_u_dot_tildei = px->u_dot_tilde;
+  pz_u_dot_tildei = pz->u_dot_tilde;
   for (size_t i=0;i<nvar;i++)
   {
     //px->u_dot_tilde[i]+=(pf->df)(xu)*pz->u_dot_tilde[i];
-    px->u_dot_tilde[i]+=df*pz->u_dot_tilde[i];
+    *px_u_dot_tildei += df * *pz_u_dot_tildei;
+
+    ++px_u_dot_tildei;
+    ++pz_u_dot_tildei;
   }
   *(pz->u_tilde)=0;
-  for (size_t i=0;i<nvar;i++)
-  {
-    pz->u_dot_tilde[i]=0;
-  }
+  constexpr size_t sizeofdouble = sizeof(double);
+  memset(pz->u_dot_tilde, 0, nvar * sizeofdouble);
 #if defined(PRINT_DERS)
  print_derivatives(pz,"z");
  print_derivatives(px,"x");

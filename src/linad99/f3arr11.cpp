@@ -18,9 +18,15 @@ dvar3_array mfexp(const dvar3_array& m)
 {
   dvar3_array tmp;
   tmp.allocate(m);
-  for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
+  int min = tmp.slicemin();
+  int max = tmp.slicemax();
+  dvar_matrix* ptmpi = &tmp(min);
+  const dvar_matrix* pmi = &m(min);
+  for (int i = min;i <= max; ++i)
   {
-    tmp(i) = mfexp(m(i));
+    *ptmpi = mfexp(*pmi);
+    ++ptmpi;
+    ++pmi;
   }
   return tmp;
 }
@@ -33,9 +39,15 @@ dvar3_array mfexp(const dvar3_array& m, const double d)
 {
   dvar3_array tmp;
   tmp.allocate(m);
-  for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
+  int min = tmp.slicemin();
+  int max = tmp.slicemax();
+  dvar_matrix* ptmpi = &tmp(min);
+  const dvar_matrix* pmi = &m(min);
+  for (int i = min;i <= max; ++i)
   {
-    tmp(i)=mfexp(m(i),d);
+    *ptmpi = mfexp(*pmi, d);
+    ++ptmpi;
+    ++pmi;
   }
   return tmp;
 }

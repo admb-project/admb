@@ -42,6 +42,7 @@
 #define __ADMB_IVECTOR_H__
 
 #include "vector_shapex.h"
+#include "gradient_structure.h"
 
 /**
 Array of integers(int) with indexes from index_min to indexmax.

@@ -8,7 +8,7 @@ shopt -s expand_aliases
 alias help='echo -e "
 Builds AD Model Builder executable or library.
 
-Release Version: 12.3
+Release Version: 13.0
 Location: $BASH_SOURCE
 
 Usage: admb [-c] [-d] [-f] [-g] [-p] [-r] model [src(s)]
@@ -111,6 +111,8 @@ do
   elif [ "${file: -2}" = ".o" -o "${file: -4}" = ".obj" ]; then
     objs="$objs $file"
     nontpls="$nontpls $file"
+  elif [ "${file: -2}" = ".a" ]; then
+    libs="$libs $file"
   else
     tpls="$tpls $file"
   fi
@@ -263,16 +265,18 @@ else
     CXXFLAGS=" $CXXFLAGS"
     LDFLAGS=" $LDFLAGS"
   else
-    CXXFLAGS="-O3 $CXXFLAGS"
-    LDFLAGS="-O3 $LDFLAGS"
+    if [ "$OS" != "Windows_NT" ]; then
+      CXXFLAGS="-O2 $CXXFLAGS"
+      LDFLAGS="-O2 $LDFLAGS"
+    fi
   fi
 fi
 if [ "`uname`" == "Darwin" ]; then
-  CXXFLAGS="-std=c++14 $CXXFLAGS"
-  LDFLAGS="-std=c++14 $LDFLAGS"
+  CXXFLAGS="-std=c++17 $CXXFLAGS"
+  LDFLAGS="-std=c++17 $LDFLAGS"
 elif [ "$CXX" == "clang++" ]; then
-  CXXFLAGS="-std=c++11 $CXXFLAGS"
-  LDFLAGS="-std=c++11 $LDFLAGS"
+  CXXFLAGS="-std=c++17 $CXXFLAGS"
+  LDFLAGS="-std=c++17 $LDFLAGS"
 elif [ "$CXX" == "icpc" ]; then
   ICPCMAJVER="`icpc -dumpversion | cut -f1 -d.`"
   if [ "$ICPCMAJVER" == "17" ]; then
@@ -304,9 +308,24 @@ elif [ "$CXX" == "g++" ]; then
   elif [ "$GCCMAJVER" == "5" ]; then
     CXXFLAGS="-std=c++11 $CXXFLAGS"
     LDFLAGS="-std=c++11 $LDFLAGS"
-  else
+  elif [ "$GCCMAJVER" == "6" ]; then
+    CXXFLAGS="-std=c++11 $CXXFLAGS"
+    LDFLAGS="-std=c++11 $LDFLAGS"
+  elif [ "$GCCMAJVER" == "7" ]; then
+    CXXFLAGS="-std=c++11 $CXXFLAGS"
+    LDFLAGS="-std=c++11 $LDFLAGS"
+  elif [ "$GCCMAJVER" == "8" ]; then
     CXXFLAGS="-std=c++14 $CXXFLAGS"
     LDFLAGS="-std=c++14 $LDFLAGS"
+  elif [ "$GCCMAJVER" == "9" ]; then
+    CXXFLAGS="-std=c++14 $CXXFLAGS"
+    LDFLAGS="-std=c++14 $LDFLAGS"
+  elif [ "$GCCMAJVER" == "10" ]; then
+    CXXFLAGS="-std=c++14 $CXXFLAGS"
+    LDFLAGS="-std=c++14 $LDFLAGS"
+  else
+    CXXFLAGS="-std=c++17 $CXXFLAGS"
+    LDFLAGS="-std=c++17 $LDFLAGS"
   fi
 fi
 CXXFLAGS="$CXXFLAGS -D_USE_MATH_DEFINES"
@@ -524,6 +543,9 @@ do
       fi
     fi
   fi
+  if [ ! -z  "$libs" ]; then
+    CMD="$CMD $libs"
+  fi
   echo -e \*\*\* Linking: $file $objs\\n$CMD\\n
   eval $CMD
   if [[ -z $dll ]]; then
@@ -633,6 +655,9 @@ if [[ "$tplobjs" == "" ]]; then
         fi
       fi
     fi
+  fi
+  if [ ! -z  "$libs" ]; then
+    CMD="$CMD $libs"
   fi
   echo -e \*\*\* Linking: $listobjs\\n$CMD\\n
   eval $CMD

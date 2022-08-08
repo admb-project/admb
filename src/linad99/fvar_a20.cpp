@@ -19,7 +19,7 @@ void dv_assign(void);
   #include <memory.h>
 #endif
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
 #endif
 
@@ -46,39 +46,27 @@ dvar_vector& dvar_vector::operator=(const dvar_vector& t)
      int mmin=indexmin();
      int mmax=indexmax();
 #ifndef OPT_LIB
-     assert(mmax >= mmin);
-#endif
      if (mmin != t.indexmin() || mmax != t.indexmax())
      {
        cerr << " Incompatible bounds in dvar_vector& dvar_vector::operator ="
          " (const dvar_vector& t)\n";
        ad_exit(21);
      }
+#endif
      if (va != t.va)
      {
-#ifdef OPT_LIB
+       constexpr size_t sizeofdouble = sizeof(double);
        size_t size = (size_t)(mmax - mmin + 1);
-       memcpy(&elem_value(mmin), &t.elem_value(mmin), size * sizeof(double));
-#else
-       #ifndef USE_ASSEMBLER
-         for (int i=mmin; i<=mmax; i++)
-         {
-           va[i].x = (t.va[i]).x;
-         }
-       #else
-         int min=t.indexmin();
-         int n=t.indexmax()-min+1;
-         dw_block_move(&(this->elem_value(min)),&(t.elem_value(min)),n);
-       #endif
-#endif
+       memcpy(va + mmin, t.va + mmin, size * sizeofdouble);
 
+       grad_stack* GRAD_STACK1 = gradient_structure::GRAD_STACK1;
+       DF_FILE* fp = gradient_structure::fp;
        // The derivative list considerations
-       save_identifier_string("bbbb");
-       t.save_dvar_vector_position();
-       this->save_dvar_vector_position();
-       save_identifier_string("aaaa");
-       gradient_structure::GRAD_STACK1->
-         set_gradient_stack(dv_assign);
+       //save_identifier_string("bbbb");
+       fp->save_dvar_vector_position(t);
+       fp->save_dvar_vector_position(*this);
+       //save_identifier_string("aaaa");
+       GRAD_STACK1->set_gradient_stack(dv_assign);
      }
    }
    return (*this);
@@ -95,18 +83,22 @@ dvar_vector& dvar_vector::operator=(const prevariable& t)
  {
    int mmin=indexmin();
    int mmax=indexmax();
+   double valuet = value(t);
+   double_and_int* pvai = va + mmin;
    for (int i=mmin; i<=mmax; i++)
    {
-     va[i].x = value(t);
+     pvai->x = valuet;
+     ++pvai;
    }
 
+   grad_stack* GRAD_STACK1 = gradient_structure::GRAD_STACK1;
+   DF_FILE* fp = gradient_structure::fp;
    // The derivative list considerations
    save_identifier_string("dddd");
-   t.save_prevariable_position();
-   this->save_dvar_vector_position();
+   fp->save_prevariable_position(t);
+   fp->save_dvar_vector_position(*this);
    save_identifier_string("ssss");
-   gradient_structure::GRAD_STACK1->
-     set_gradient_stack(dv_eqprev);
+   GRAD_STACK1->set_gradient_stack(dv_eqprev);
    return (*this);
  }
 
@@ -121,16 +113,19 @@ dvar_vector& dvar_vector::operator=(const double t)
  {
    int mmin=indexmin();
    int mmax=indexmax();
+   double_and_int* pvai = va + mmin;
    for (int i=mmin; i<=mmax; i++)
    {
-     va[i].x = t;
+     pvai->x = t;
+     ++pvai;
    }
+   grad_stack* GRAD_STACK1 = gradient_structure::GRAD_STACK1;
+   DF_FILE* fp = gradient_structure::fp;
    // The derivative list considerations
    save_identifier_string("trut");
-   this->save_dvar_vector_position();
+   fp->save_dvar_vector_position(*this);
    save_identifier_string("ssss");
-   gradient_structure::GRAD_STACK1->
-     set_gradient_stack(dv_eqdoub);
+   GRAD_STACK1->set_gradient_stack(dv_eqdoub);
    return (*this);
  }
 /**
@@ -138,9 +133,10 @@ Adjoint to compute gradient for dvar_vector::operator=(const double).
 */
 void dv_eqdoub(void)
 {
+  DF_FILE* fp = gradient_structure::fp;
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("ssss");
-  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();
   dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
   verify_identifier_string("trut");
 }
@@ -149,17 +145,24 @@ Adjoint to compute gradient for dvar_vector::operator=(const prevariable&).
 */
 void dv_eqprev(void)
 {
+  DF_FILE* fp = gradient_structure::fp;
+
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("ssss");
-  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();
   dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
-  prevariable_position t_pos=restore_prevariable_position();
+  prevariable_position t_pos=fp->restore_prevariable_position();
   verify_identifier_string("dddd");
-  double dft=0.;
-  for (int i=dftmp.indexmin();i<=dftmp.indexmax();i++)
+  double dft = 0.0;
+  int min = dftmp.indexmin();
+  int max = dftmp.indexmax();
+  double* pdftmpi = dftmp.get_v() + min;
+  for (int i = min; i <= max; ++i)
   {
     //vtmp.elem(i)=t;
-    dft+=dftmp.elem(i);
+    dft += *pdftmpi;
+
+    ++pdftmpi;
   }
   save_double_derivative(dft,t_pos);
 }
@@ -168,37 +171,27 @@ Adjoint to compute gradients for dvar_vector::operator=(const dvar_vector&)
 */
 void dv_assign(void)
 {
-  // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
-  verify_identifier_string("aaaa");
-  dvar_vector_position tmp_pos=restore_dvar_vector_position();
-  dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
-  dvar_vector_position t_pos=restore_dvar_vector_position();
-  verify_identifier_string("bbbb");
-  dvector dft(dftmp.indexmin(),dftmp.indexmax());
-#ifndef OPT_LIB
-  assert(dftmp.indexmax() >= dftmp.indexmin());
-#endif
-#ifdef OPT_LIB
-  int mmin=dftmp.indexmin();
-  int mmax=dftmp.indexmax();
-  size_t size = (size_t)(mmax - mmin + 1);
-  memcpy(&dft.elem(mmin),&dftmp.elem(mmin), size * sizeof(double));
+  DF_FILE* fp = gradient_structure::fp;
 
-#else
-  #ifndef USE_ASSEMBLER
+  // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
+  //verify_identifier_string("aaaa");
+  dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();
+  dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
+  dvar_vector_position t_pos=fp->restore_dvar_vector_position();
+  //verify_identifier_string("bbbb");
+
   int mmin=dftmp.indexmin();
   int mmax=dftmp.indexmax();
-  for (int i=mmin;i<=mmax;i++)
-  {
-    //vtmp.elem(i)=value(v1.elem(i))+value(v2.elem(i));
-    dft.elem(i)=dftmp.elem(i);
-  }
-  #else
-  int mmin=dftmp.indexmin();
-  int n=dftmp.indexmax()-mmin+1;
-     dw_block_move(&(dft.elem(mmin)),&(dftmp.elem(mmin)),n);
-  #endif
+
+#ifdef DEBUG
+  assert(mmax >= mmin);
 #endif
+
+  dvector dft(mmin, mmax);
+
+  constexpr size_t sizeofdouble = sizeof(double);
+  size_t size = (size_t)(mmax - mmin + 1);
+  memcpy(dft.get_v() + mmin, dftmp.get_v() + mmin, size * sizeofdouble);
 
   dft.save_dvector_derivatives(t_pos);
 }

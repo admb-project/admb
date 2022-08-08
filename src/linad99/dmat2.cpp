@@ -31,9 +31,14 @@ Norm of a matrix; constant object.
 double norm(const dmatrix& m1)
 {
   double tmp = 0;
-  for (int i = m1.rowmin(); i <= m1.rowmax(); ++i)
+  int min = m1.rowmin();
+  int max = m1.rowmax();
+  const dvector* pm1i = &m1(min);
+  for (int i = min; i <= max; ++i)
   {
-    tmp += norm2(m1.elem(i));
+    tmp += norm2(*pm1i);
+
+    ++pm1i;
   }
   return sqrt(tmp);
 }
@@ -45,9 +50,14 @@ Norm squared of a matrix; constant object.
 double norm2(const dmatrix& m1)
 {
   double tmp = 0;
-  for (int i = m1.rowmin(); i <= m1.rowmax(); ++i)
+  int min = m1.rowmin();
+  int max = m1.rowmax();
+  const dvector* pm1i = &m1(min);
+  for (int i = min; i <= max; ++i)
   {
-    tmp += norm2(m1.elem(i));
+    tmp += norm2(*pm1i);
+
+    ++pm1i;
   }
   return tmp;
 }

@@ -6,6 +6,9 @@
 @brief Global and static types for ad_comm, initial_params and objective_function_values classes.
 */
 
+#ifdef DEBUG
+  #include <cassert>
+#endif
 #include <admodel.h>
 
  int initial_params::straight_through_flag=0;
@@ -32,3 +35,18 @@ adpvm_manager* ad_comm::pvm_manager = NULL;
  int ad_comm::no_ln_det_choleski_flag=0;
  char ** ad_comm::argv=NULL;
  double objective_function_value::fun_without_pen=0;
+
+int function_minimizer::output_flag = defaults::output;
+
+_THREAD DF_FILE* gradient_structure::fp = nullptr;
+_THREAD gradient_structure* gradient_structure::_instance = nullptr;
+_THREAD grad_stack* gradient_structure::GRAD_STACK1 = nullptr;
+
+std::ostream& get_output_stream()
+{
+  if (function_minimizer::output_flag < 2 && ad_comm::global_logfile)
+  {
+    return *ad_comm::global_logfile;
+  }
+  return std::cout;
+}

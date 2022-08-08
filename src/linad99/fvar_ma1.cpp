@@ -16,7 +16,9 @@
  */
 dvar_vector operator*(const dvector& x, const dvar_matrix& m)
  {
-   RETURN_ARRAYS_INCREMENT();
+   gradient_structure* gs = gradient_structure::_instance;
+   gs->RETURN_ARRAYS_INCREMENT();
+
    if (x.indexmin() != m.rowmin() || x.indexmax() != m.rowmax())
    {
      cerr << " Incompatible array bounds in "
@@ -35,6 +37,6 @@ dvar_vector operator*(const dvector& x, const dvar_matrix& m)
      }
      tmp[j]=sum;
    }
-   RETURN_ARRAYS_DECREMENT();
+   gs->RETURN_ARRAYS_DECREMENT();
    return(tmp);
  }

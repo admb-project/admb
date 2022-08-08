@@ -104,16 +104,19 @@ dvar_matrix choleski_decomp_positive(const dvar_matrix& MM, double eps,
 
   value(_fpen)=fpen;
   dvar_matrix vc=nograd_assign(L);
+
+  grad_stack* GRAD_STACK1 = gradient_structure::GRAD_STACK1;
+  DF_FILE* fp = gradient_structure::fp;
   save_identifier_string("qs");
-  _fpen.save_prevariable_position();
-  save_double_value(eps);
-  vc.save_dvar_matrix_position();
-  MM.save_dvar_matrix_value();
+  fp->save_prevariable_position(_fpen);
+  fp->save_double_value(eps);
+  fp->save_dvar_matrix_position(vc);
+  fp->save_dvar_matrix_value(MM);
   save_identifier_string("rl");
-  MM.save_dvar_matrix_position();
+  fp->save_dvar_matrix_position(MM);
   save_identifier_string("lo");
-  gradient_structure::GRAD_STACK1->
-      set_gradient_stack(dfcholeski_decomp_positive);
+  GRAD_STACK1->set_gradient_stack(dfcholeski_decomp_positive);
+
   return vc;
 }
 
@@ -123,13 +126,15 @@ dvar_matrix choleski_decomp_positive(const dvar_matrix& MM, double eps,
  */
 void dfcholeski_decomp_positive(void)
 {
+  DF_FILE* fp = gradient_structure::fp;
+
   verify_identifier_string("lo");
-  dvar_matrix_position MMpos=restore_dvar_matrix_position();
+  dvar_matrix_position MMpos=fp->restore_dvar_matrix_position();
   verify_identifier_string("rl");
-  dmatrix M=restore_dvar_matrix_value(MMpos);
-  dvar_matrix_position vcpos=restore_dvar_matrix_position();
-  double eps=restore_double_value();
-  prevariable_position fpenpos=restore_prevariable_position();
+  dmatrix M=fp->restore_dvar_matrix_value(MMpos);
+  dvar_matrix_position vcpos=fp->restore_dvar_matrix_position();
+  double eps=fp->restore_double_value();
+  prevariable_position fpenpos=fp->restore_prevariable_position();
   verify_identifier_string("qs");
   dmatrix dfL=restore_dvar_matrix_derivatives(vcpos);
   double dfpen=restore_prevariable_derivative(fpenpos);

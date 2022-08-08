@@ -15,7 +15,7 @@
 dvar_vector spline(const dvector &x,const dvar_vector&y,double yp1,double ypn);
 dvar_vector spline(const dvector &x,const dvar_vector&y,dvariable yp1,
   dvariable ypn);
-dvariable spline_cubic_val2(int n, const dvector& t, const prevariable tval,
+dvariable spline_cubic_val2(int n, const dvector& t, const prevariable& tval,
   const dvar_vector& y, const dvar_vector& ypp);
 dvariable spline_cubic_val(int n, const dvector& t, double tval,
   const dvar_vector& y, const dvar_vector& ypp);
@@ -38,9 +38,10 @@ dvar_vector spline_cubic_set (int n, const dvector& t, const dvar_vector& y,
 dvariable splint(const dvector& _xa,const dvar_vector& _ya,
     const dvar_vector& _y2a,double x)
 {
-  RETURN_ARRAYS_INCREMENT();
+  gradient_structure* gs = gradient_structure::_instance;
+  gs->RETURN_ARRAYS_INCREMENT();
   dvariable ret = spline_cubic_val(_xa.size(), _xa, x, _ya, _y2a);
-  RETURN_ARRAYS_DECREMENT();
+  gs->RETURN_ARRAYS_DECREMENT();
   return ret;
 }
 
@@ -56,9 +57,10 @@ dvariable splint(const dvector& _xa,const dvar_vector& _ya,
 dvariable splint(const dvector& _xa,const dvar_vector& _ya,
     const dvar_vector& _y2a, const prevariable& _x)
 {
-  RETURN_ARRAYS_INCREMENT();
+  gradient_structure* gs = gradient_structure::_instance;
+  gs->RETURN_ARRAYS_INCREMENT();
   dvariable ret = spline_cubic_val2(_xa.size(), _xa, _x, _ya, _y2a);
-  RETURN_ARRAYS_DECREMENT();
+  gs->RETURN_ARRAYS_DECREMENT();
   return ret;
 }
 
@@ -404,7 +406,7 @@ dvariable spline_cubic_val(int n,  const dvector& _t, double tval,
  * \param ypp the second derivatives of the spline at the knots
  * \return the value of the spline at tval
 */
-dvariable spline_cubic_val2(int n, const dvector& _t, const prevariable tval,
+dvariable spline_cubic_val2(int n, const dvector& _t, const prevariable& tval,
   const dvar_vector& _y, const dvar_vector& _ypp)
 //
 //  Purpose:

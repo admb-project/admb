@@ -33,19 +33,26 @@ Extract copy of jth column vector from matrix m.
 */
 dvector extract_column(const dmatrix& matrix, int j)
 {
+#ifndef OPT_LIB
   if (j < matrix.colmin() || j > matrix.colmax())
   {
     cerr << "Error: Invalid matrix column index specified in "
          << "dvector extract_column(const dmatrix&, int).\n",
     ad_exit(1);
   }
+#endif
   int min = matrix.rowmin();
   int max = matrix.rowmax();
   dvector column(min, max);
 
+  double* pcolumni = column.get_v() + min;
+  const dvector* pmatrixi = &matrix(min);
   for (int i = min; i <= max; ++i)
   {
-    column.elem(i) = matrix.elem(i,j);
+    *pcolumni = *(pmatrixi->get_v() + j);
+
+    ++pmatrixi;
+    ++pcolumni;
   }
   return column;
 }

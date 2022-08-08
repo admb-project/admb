@@ -16,7 +16,8 @@
  */
 dvar_matrix operator+(const dvar_matrix& m1, const dmatrix& m2)
  {
-   RETURN_ARRAYS_INCREMENT();
+   gradient_structure* gs = gradient_structure::_instance;
+   gs->RETURN_ARRAYS_INCREMENT();
 
    if (m1.colmin() != m2.colmin() || m1.colmax() != m2.colmax())
    {
@@ -32,7 +33,7 @@ dvar_matrix operator+(const dvar_matrix& m1, const dmatrix& m2)
    {
      tmp(i)=m1(i)+m2(i);
    }
-   RETURN_ARRAYS_DECREMENT();
+   gs->RETURN_ARRAYS_DECREMENT();
    return(tmp);
  }
 
@@ -42,7 +43,8 @@ dvar_matrix operator+(const dvar_matrix& m1, const dmatrix& m2)
  */
  dvar_matrix operator+(const dvar_matrix& m1, const dvar_matrix& m2)
  {
-   RETURN_ARRAYS_INCREMENT();
+   gradient_structure* gs = gradient_structure::_instance;
+   gs->RETURN_ARRAYS_INCREMENT();
 
    if (m1.colmin() != m2.colmin() || m1.colmax() != m2.colmax())
    {
@@ -59,7 +61,7 @@ dvar_matrix operator+(const dvar_matrix& m1, const dmatrix& m2)
    {
      tmp(i)=m1(i)+m2(i);
    }
-   RETURN_ARRAYS_DECREMENT();
+   gs->RETURN_ARRAYS_DECREMENT();
    return(tmp);
  }
 
@@ -69,7 +71,8 @@ dvar_matrix operator+(const dvar_matrix& m1, const dmatrix& m2)
  */
 dvar_matrix operator+(const dmatrix& m1, const dvar_matrix& m2)
  {
-   RETURN_ARRAYS_INCREMENT();
+   gradient_structure* gs = gradient_structure::_instance;
+   gs->RETURN_ARRAYS_INCREMENT();
 
    if (m1.colmin() != m2.colmin() || m1.colmax() != m2.colmax())
    {
@@ -84,6 +87,6 @@ dvar_matrix operator+(const dmatrix& m1, const dvar_matrix& m2)
    {
      tmp(i)=m1(i)+m2(i);
    }
-   RETURN_ARRAYS_DECREMENT();
+   gs->RETURN_ARRAYS_DECREMENT();
    return(tmp);
  }

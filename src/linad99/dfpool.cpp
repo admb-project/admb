@@ -15,10 +15,6 @@
 
 #if defined(USE_VECTOR_SHAPE_POOL)
 
-bool cleanup_arr_link_xpool = false;
-bool cleanup_vector_shape_xpool = false;
-bool cleanup_vector_shapex_xpool = false;
-
 vector_shape_pool* arr_link::xpool = nullptr;
 vector_shape_pool* vector_shape::xpool = nullptr;
 vector_shape_pool* vector_shapex::xpool = nullptr;
@@ -29,7 +25,6 @@ void cleanup_xpools()
   {
     if (arr_link::xpool->num_allocated > 0)
     {
-      cleanup_arr_link_xpool = true;
     }
     else
     {
@@ -41,7 +36,6 @@ void cleanup_xpools()
   {
     if (vector_shape::xpool->num_allocated > 0)
     {
-      cleanup_vector_shape_xpool = true;
     }
     else
     {
@@ -53,7 +47,6 @@ void cleanup_xpools()
   {
     if (vector_shapex::xpool->num_allocated > 0)
     {
-      cleanup_vector_shapex_xpool = true;
     }
     else
     {
@@ -94,13 +87,10 @@ void* vector_shape::operator new(size_t n)
 void vector_shape::operator delete(void* ptr, size_t)
 {
   xpool->free(ptr);
-  if (cleanup_vector_shape_xpool)
+  if (xpool->num_allocated <= 0)
   {
-    if (xpool->num_allocated <= 0)
-    {
-      delete xpool;
-      xpool = nullptr;
-    }
+    delete xpool;
+    xpool = nullptr;
   }
 }
 /**
@@ -125,13 +115,10 @@ void* arr_link::operator new(size_t n)
 void arr_link::operator delete(void* ptr, size_t)
 {
   xpool->free(ptr);
-  if (cleanup_arr_link_xpool)
+  if (xpool->num_allocated <= 0)
   {
-    if (xpool->num_allocated <= 0)
-    {
-      delete xpool;
-      xpool = nullptr;
-    }
+    delete xpool;
+    xpool = nullptr;
   }
 }
 /**
@@ -156,13 +143,10 @@ void* vector_shapex::operator new(size_t n)
 void vector_shapex::operator delete(void* ptr, size_t)
 {
   xpool->free(ptr);
-  if (cleanup_vector_shapex_xpool)
+  if (xpool->num_allocated <= 0)
   {
-    if (xpool->num_allocated <= 0)
-    {
-      delete xpool;
-      xpool = nullptr;
-    }
+    delete xpool;
+    xpool = nullptr;
   }
 }
 

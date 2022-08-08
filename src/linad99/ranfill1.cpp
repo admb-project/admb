@@ -32,14 +32,16 @@
  */
 void dvar_vector::fill_seqadd(const double base, const double offset)
   {
-    RETURN_ARRAYS_INCREMENT();
+    gradient_structure* gs = gradient_structure::_instance;
+    gs->RETURN_ARRAYS_INCREMENT();
+
     double temp=0;
     for (int i=indexmin(); i<=indexmax(); i++)
     {
        elem(i) =base+temp;
        temp    =temp+offset;
     }
-    RETURN_ARRAYS_DECREMENT();
+    gs->RETURN_ARRAYS_DECREMENT();
   }
 /**
  * Fills column of a matrix with a sequence of the form base, base+offset, base+2*offset,...
@@ -73,13 +75,14 @@ void dvar_matrix::colfill_seqadd(const int& j, const double base,
   const double offset)
   {
     double temp=0;
-    RETURN_ARRAYS_INCREMENT();
+    gradient_structure* gs = gradient_structure::_instance;
+    gs->RETURN_ARRAYS_INCREMENT();
     for (int i=rowmin(); i<=rowmax(); i++)
     {
       elem(i,j) =base+temp;
       temp      =temp+offset;
     }
-    RETURN_ARRAYS_DECREMENT();
+    gs->RETURN_ARRAYS_DECREMENT();
   }
 
 /**
@@ -94,13 +97,14 @@ void dvar_matrix::rowfill_seqadd(const int& i, const double base,
   const double offset)
   {
     double temp=0;
-    RETURN_ARRAYS_INCREMENT();
+    gradient_structure* gs = gradient_structure::_instance;
+    gs->RETURN_ARRAYS_INCREMENT();
     for (int j=colmin(); j<=colmax(); j++)
     {
       elem(i,j) =base+temp;
       temp      =temp+offset;
     }
-    RETURN_ARRAYS_DECREMENT();
+    gs->RETURN_ARRAYS_DECREMENT();
   }
 
 /**
@@ -113,12 +117,13 @@ void dvar_matrix::rowfill_seqadd(const int& i, const double base,
  */
 void dvar_matrix::colfill(int j, const dvar_vector& v)
   {
-    RETURN_ARRAYS_INCREMENT();
+    gradient_structure* gs = gradient_structure::_instance;
+    gs->RETURN_ARRAYS_INCREMENT();
     for (int i=rowmin(); i<=rowmax(); i++)
     {
       (*this)[i][j]=v[i];
     }
-    RETURN_ARRAYS_DECREMENT();
+    gs->RETURN_ARRAYS_DECREMENT();
   }
 
 /**
@@ -131,11 +136,12 @@ void dvar_matrix::colfill(int j, const dvar_vector& v)
  */
 void dvar_matrix::rowfill(int i, const dvar_vector& v)
   {
-    RETURN_ARRAYS_INCREMENT();
+    gradient_structure* gs = gradient_structure::_instance;
+    gs->RETURN_ARRAYS_INCREMENT();
     // for (int j=colmin(); j<=colmax(); j++)
     // {
     //   (*this)[i][j]=v[j];
     // }
     (*this)[i]=v;
-    RETURN_ARRAYS_DECREMENT();
+    gs->RETURN_ARRAYS_DECREMENT();
   }

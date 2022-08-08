@@ -56,12 +56,15 @@ dvar_matrix::dvar_matrix(const dmatrix& other)
   {
      cerr << " Error allocating memory in dvar_matrix contructor"<<endl;
   }
-
-  m -= rowmin();
-  for (int i = rowmin(); i <= rowmax(); ++i)
+  m -= index_min;
+  const dvector* pother = &other(index_min);
+  dvar_vector* pm = m + index_min;
+  for (int i = index_min; i <= index_max; ++i)
   {
-    m[i].allocate(other(i).indexmin(), other(i).indexmax());
-    elem(i) = other.elem(i);
+    pm->allocate(pother->indexmin(), pother->indexmax());
+    *pm = *pother;
+    ++pother;
+    ++pm;
   }
 }
 /**
@@ -128,15 +131,15 @@ dvar_matrix::dvar_matrix(int nrl, int nrh, int ncl, int nch)
  */
  dvar_matrix::dvar_matrix(const param_init_bounded_number_matrix& pibnm)
  {
-   int indexmin = pibnm.indexmin();
-   int indexmax = pibnm.indexmax();
-   allocate(indexmin, indexmax);
+   int min = pibnm.indexmin();
+   int max = pibnm.indexmax();
+   allocate(min, max);
 
 #ifndef OPT_LIB
    initialize();
 #endif
 
-   for (int i = indexmin; i <= indexmax; i++)
+   for (int i = min; i <= max; ++i)
    {
      dvar_vector v(pibnm(i));
      this->operator()(i) = v;
@@ -193,9 +196,12 @@ void dvar_matrix::allocate(int nrl, int nrh)
       ad_exit(1);
     }
     m -= rowmin();
+
+    dvar_vector* pva = m + nrl;
     for (int i = nrl; i <= nrh; ++i)
     {
-      elem(i).allocate();
+      pva->allocate();
+      ++pva;
     }
   }
 }
@@ -210,9 +216,11 @@ Allocates AD variable matrix with dimensions nrl to nrh by ncl to nch.
 void dvar_matrix::allocate(int nrl, int nrh, int ncl, int nch)
 {
   allocate(nrl, nrh);
+  dvar_vector* pva = m + nrl;
   for (int i = nrl; i <= nrh; ++i)
   {
-    elem(i).allocate(ncl, nch);
+    pva->allocate(ncl, nch);
+    ++pva;
   }
 }
 /**
@@ -249,9 +257,13 @@ void dvar_matrix::allocate(const dmatrix& m1)
       cerr << " Error allocating memory in dvar_matrix contructor\n";
     }
     m -= rowmin();
+    dvar_vector* pva = m + nrl;
+    const dvector* pm1 = &m1(nrl);
     for (int i = nrl; i <= nrh; ++i)
     {
-      m[i].allocate(m1(i));
+      pva->allocate(*pm1);
+      ++pva;
+      ++pm1;
     }
   }
   else
@@ -282,9 +294,13 @@ void dvar_matrix::allocate(const dvar_matrix& m1)
       cerr << " Error allocating memory in dvar_matrix contructor"<<endl;
     }
     m -= rowmin();
+    dvar_vector* pva = m + nrl;
+    const dvar_vector* pm1 = &m1(nrl);
     for (int i = nrl; i <= nrh; ++i)
     {
-      m[i].allocate(m1(i));
+      pva->allocate(*pm1);
+      ++pva;
+      ++pm1;
     }
   }
   else
@@ -347,9 +363,15 @@ void dvar_matrix::allocate(
        cerr << " Error allocating memory in dvar_matrix contructor"<<endl;
     }
     m -= rowmin();
+    dvar_vector* pva = m + nrl;
+    int* pncli = ncl.get_v() + nrl;
+    int* pnchi = nch.get_v() + nrl;
     for (int i = nrl; i <= nrh; ++i)
     {
-      m[i].allocate(ncl[i], nch[i]);
+      pva->allocate(*pncli, *pnchi);
+      ++pva;
+      ++pncli;
+      ++pnchi;
     }
   }
 }
@@ -401,9 +423,13 @@ void dvar_matrix::allocate(int nrl, int nrh, int ncl, const ivector& nch)
       cerr << " Error allocating memory in dvar_matrix contructor"<<endl;
     }
     m -= rowmin();
+    dvar_vector* pm = m + nrl;
+    int* pnchi = nch.get_v() + nrl;
     for (int i = nrl; i <= nrh; ++i)
     {
-      m[i].allocate(ncl,nch[i]);
+      pm->allocate(ncl, *pnchi);
+      ++pm;
+      ++pnchi;
     }
   }
 }
@@ -418,9 +444,11 @@ where ncl is a vector of indexes.
 void dvar_matrix::allocate(int nrl, int nrh, const ivector& ncl, int nch)
 {
   allocate(nrl, nrh);
+  dvar_vector* pva = m + nrl;
   for (int i = nrl; i <= nrh; ++i)
   {
-    elem(i).allocate(ncl(i), nch);
+    pva->allocate(ncl(i), nch);
+    ++pva;
   }
 }
 /**
@@ -492,18 +520,26 @@ dvar_matrix& dvar_matrix::operator=(const dvar_matrix& other)
   }
   else
   {
-    if (rowmin() != other.rowmin() || rowmax() != other.rowmax())
+    int min = index_min;
+    int max = index_max;
+#ifndef OPT_LIB
+    if (min != other.rowmin() || max != other.rowmax())
     {
       cerr << "Error: Incompatible array bounds in "
             "dvar_matrix& dvar_matrix::operator=(const dvar_matrix&)\n";
       ad_exit(1);
     }
+#endif
     // check for condition that both matrices don't point to the same object
     if (m != other.m)
     {
-      for (int i = rowmin(); i <= rowmax(); ++i)
+      dvar_vector* pm = m + min;
+      const dvar_vector* pother = &other(min);
+      for (int i = min; i <= max; ++i)
       {
-        elem(i) = other.elem(i);
+        *pm = *pother;
+	++pm;
+	++pother;
       }
     }
   }
@@ -514,17 +550,29 @@ Assigns scalar matrix values to dvar_matrix.
 
 \param matrix dmatrix
 */
-dvar_matrix& dvar_matrix::operator=(const dmatrix& matrix)
+dvar_matrix& dvar_matrix::operator=(const dmatrix& other)
 {
-  if (rowmin() != matrix.rowmin() || rowmax() != matrix.rowmax())
+  int min = index_min;
+  int max = index_max;
+
+#ifndef OPT_LIB
+  if (min != other.rowmin() || max != other.rowmax())
   {
     cerr << "Error: Incompatible array bounds in "
          << "dvar_matrix& dvar_matrix::operator=(const dmatrix&)\n";
     ad_exit(1);
   }
-  for (int i = rowmin(); i <= rowmax(); ++i)
+#endif
+  if (m)
   {
-    elem(i) = matrix.elem(i);
+    dvar_vector* pm = m + min;
+    const dvector* pother = &other(min);
+    for (int i = min; i <= max; ++i)
+    {
+      *pm = *pother;
+      ++pm;
+      ++pother;
+    }
   }
   return *this;
 }

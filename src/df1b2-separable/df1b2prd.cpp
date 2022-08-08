@@ -120,7 +120,7 @@ void ad_read_pass2_prod(void)
   default:
     cerr << "illegal value for df1b2variable::pass = "
          << df1b2variable::passnumber << endl;
-    exit(1);
+    ad_exit(1);
   }
 }
 
@@ -159,12 +159,14 @@ void read_pass2_1_prod(void)
   bptr+=sizeof(df1b2_header);
   //pf=*(df1b2function2 **) bptr;
   //bptr+=sizeof(char*);
-  memcpy(&xu,bptr,sizeof(double));
-  bptr+=sizeof(double);
-  memcpy(&yu,bptr,sizeof(double));
-  bptr+=sizeof(double);
+  constexpr size_t sizeofdouble = sizeof(double);
+  size_t total_bytes=2*nvar*sizeofdouble;
+  memcpy(&xu,bptr,sizeofdouble);
+  bptr+=sizeofdouble;
+  memcpy(&yu,bptr,sizeofdouble);
+  bptr+=sizeofdouble;
   double * xdot=(double*)bptr;
-  bptr+=nvar*sizeof(double);
+  bptr+=nvar*sizeofdouble;
   double * ydot=(double*)bptr;
 
   list.restoreposition(); // save pointer to beginning of record;
@@ -177,7 +179,6 @@ void read_pass2_1_prod(void)
   // save identifier 1
      test_smartlist & list2 = f1b2gradlist->list2;
 
-  size_t total_bytes=2*nvar*sizeof(double);
 // string identifier debug stuff
 #if defined(SAFE_ALL)
   char ids[]="QK";
@@ -193,57 +194,80 @@ void read_pass2_1_prod(void)
 #endif
 
   fixed_smartlist2 & nlist2 = f1b2gradlist->nlist2;
-  size_t sizeofdouble = sizeof(double);
   memcpy(list2,pz->get_u_bar(),nvar*sizeofdouble);
   memcpy(list2,pz->get_u_dot_bar(),nvar*sizeofdouble);
   *nlist2.bptr=adptr_diff(list2.bptr,tmpptr);
   ++nlist2;
 
   // Do first reverse pass calculations
+  double* px_u_bari = px->u_bar;
+  double* pz_u_bari = pz->u_bar;
   for (size_t i=0;i<nvar;i++)
   {
    //px->u_bar[i]+=(pf->df1)(xu,yu)*pz->u_bar[i];
-    px->u_bar[i]+=yu*pz->u_bar[i];
+    *px_u_bari += yu * *pz_u_bari;
+    ++px_u_bari;
+    ++pz_u_bari;
   }
+  double* py_u_bari = py->u_bar;
+  pz_u_bari = pz->u_bar;
   for (size_t i=0;i<nvar;i++)
   {
     //py->u_bar[i]+=(pf->df2)(xu,yu)*pz->u_bar[i];
-    py->u_bar[i]+=xu*pz->u_bar[i];
+    *py_u_bari += xu * *pz_u_bari;
+    ++py_u_bari;
+    ++pz_u_bari;
   }
 
+  px_u_bari = px->u_bar;
+  double* pz_u_dot_bari = pz->u_dot_bar;
+  double* ydoti = ydot;
   for (size_t i=0;i<nvar;i++)
   {
     //px->u_bar[i]+=(pf->d2f11)(xu,yu)*xdot[i]*pz->u_dot_bar[i];
     //px->u_bar[i]+=(pf->d2f12)(xu,yu)*ydot[i]*pz->u_dot_bar[i];
-    px->u_bar[i]+=ydot[i]*pz->u_dot_bar[i];
+    *px_u_bari += *ydoti * *pz_u_dot_bari;
+    ++px_u_bari;
+    ++pz_u_dot_bari;
+    ++ydoti;
   }
 
+  py_u_bari = py->u_bar;
+  double* xdoti = xdot;
+  pz_u_dot_bari = pz->u_dot_bar;
   for (size_t i=0;i<nvar;i++)
   {
     //py->u_bar[i]+=(pf->d2f22)(xu,yu)*ydot[i]*pz->u_dot_bar[i];
     //py->u_bar[i]+=(pf->d2f12)(xu,yu)*xdot[i]*pz->u_dot_bar[i];
-    py->u_bar[i]+=xdot[i]*pz->u_dot_bar[i];
+    *py_u_bari += *xdoti * *pz_u_dot_bari;
+
+    ++py_u_bari;
+    ++xdoti;
+    ++pz_u_dot_bari;
   }
+  double* px_u_dot_bari = px->u_dot_bar;
+  pz_u_dot_bari = pz->u_dot_bar;
   for (size_t i=0;i<nvar;i++)
   {
     //px->u_dot_bar[i]+=(pf->df1)(xu,yu)*pz->u_dot_bar[i];
-    px->u_dot_bar[i]+=yu*pz->u_dot_bar[i];
+    *px_u_dot_bari += yu * *pz_u_dot_bari;
+
+    ++px_u_dot_bari;
+    ++pz_u_dot_bari;
   }
+  double* py_u_dot_bari = py->u_dot_bar;
+  pz_u_dot_bari = pz->u_dot_bar;
   for (size_t i=0;i<nvar;i++)
   {
     //py->u_dot_bar[i]+=(pf->df2)(xu,yu)*pz->u_dot_bar[i];
-    py->u_dot_bar[i]+=xu*pz->u_dot_bar[i];
+    *py_u_dot_bari += xu * *pz_u_dot_bari;
+    ++py_u_dot_bari;
+    ++pz_u_dot_bari;
   }
 
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  for (size_t i=0;i<nvar;i++)
-  {
-    pz->u_bar[i]=0;
-  }
-  for (size_t i=0;i<nvar;i++)
-  {
-    pz->u_dot_bar[i]=0;
-  }
+  memset(pz->u_bar, 0, nvar * sizeofdouble);
+  memset(pz->u_dot_bar, 0, nvar * sizeofdouble);
 }
 
 /**
@@ -260,10 +284,11 @@ void read_pass2_2_prod(void)
   unsigned int nvar=df1b2variable::nvar;
   test_smartlist & list=f1b2gradlist->list;
 
+  constexpr size_t sizeofdouble = sizeof(double);
   //int total_bytes=3*sizeof(df1b2_header)+sizeof(char*)
   //  +2*(nvar+1)*sizeof(double);
   size_t total_bytes=3*sizeof(df1b2_header)
-    +2*(nvar+1)*sizeof(double);
+    +2*(nvar+1)*sizeofdouble;
 // string identifier debug stuff
 #if defined(SAFE_ALL)
   char ids[]="DL";
@@ -313,12 +338,12 @@ void read_pass2_2_prod(void)
   list.bptr+=sizeof(df1b2_header);
   //pf=*(df1b2function2 **) list.bptr;
   //list.bptr+=sizeof(char*);
-  memcpy(&xu,list.bptr,sizeof(double));
+  memcpy(&xu,list.bptr,sizeofdouble);
   list.bptr+=sizeof(double);
-  memcpy(&yu,list.bptr,sizeof(double));
+  memcpy(&yu,list.bptr,sizeofdouble);
   list.bptr+=sizeof(double);
   xdot=(double*)list.bptr;
-  list.bptr+=nvar*sizeof(double);
+  list.bptr+=nvar*sizeofdouble;
   ydot=(double*)list.bptr;
   list.restoreposition(num_bytes); // save pointer to beginning of record;
 
@@ -341,29 +366,39 @@ void read_pass2_2_prod(void)
   double * z_dot_bar_tilde=pz->get_u_dot_bar_tilde();
   // Do second "reverse-reverse" pass calculations
 
-  for (size_t i=0;i<nvar;i++)
-  {
-    z_bar_tilde[i]=0;
-    z_dot_bar_tilde[i]=0;
-  }
+  memset(z_bar_tilde, 0, nvar * sizeofdouble);
+  memset(z_dot_bar_tilde, 0, nvar * sizeofdouble);
 
   // start with x and add y
+  double* x_bar_tildei = x_bar_tilde;
+  double* zbari = zbar;
+  double* z_bar_tildei = z_bar_tilde;
   for (size_t i=0;i<nvar;i++)
   {
     //*x_tilde+=(pf->d2f11)(xu,yu)*zbar[i]*x_bar_tilde[i];
     //z_bar_tilde[i]+=(pf->df1)(xu,yu)*x_bar_tilde[i];
     //*y_tilde+=(pf->d2f12)(xu,yu)*zbar[i]*x_bar_tilde[i];
-    z_bar_tilde[i]+=yu*x_bar_tilde[i];
-    *y_tilde+=zbar[i]*x_bar_tilde[i];
-  }
+    *z_bar_tildei += yu * *x_bar_tildei;
+    *y_tilde += *zbari * *x_bar_tildei;
 
+    ++x_bar_tildei;
+    ++zbari;
+    ++z_bar_tildei;
+  }
+  double* x_dot_bar_tildei = x_dot_bar_tilde;
+  double* zdotbari = zdotbar;
+  double* z_dot_bar_tildei = z_dot_bar_tilde;
   for (size_t i=0;i<nvar;i++)
   {
     //*x_tilde+=(pf->d2f11)(xu,yu)*zdotbar[i]*x_dot_bar_tilde[i];
     //*y_tilde+=(pf->d2f12)(xu,yu)*zdotbar[i]*x_dot_bar_tilde[i];
     //z_dot_bar_tilde[i]+=(pf->df1)(xu,yu)*x_dot_bar_tilde[i];
-    *y_tilde+=zdotbar[i]*x_dot_bar_tilde[i];
-    z_dot_bar_tilde[i]+=yu*x_dot_bar_tilde[i];
+    *y_tilde += *zdotbari * *x_dot_bar_tildei;
+    *z_dot_bar_tildei += yu * *x_dot_bar_tildei;
+
+    ++x_dot_bar_tildei;
+    ++zdotbari;
+    ++z_dot_bar_tildei;
   }
 
   /*
@@ -376,24 +411,36 @@ void read_pass2_2_prod(void)
   }
   */
   // start with y and add x
+  double* y_bar_tildei = y_bar_tilde;
+  zbari = zbar;
+  z_bar_tildei = z_bar_tilde;
   for (size_t i=0;i<nvar;i++)
   {
     //*y_tilde+=(pf->d2f22)(xu,yu)*zbar[i]*y_bar_tilde[i];
     //*x_tilde+=(pf->d2f12)(xu,yu)*zbar[i]*y_bar_tilde[i];
     //z_bar_tilde[i]+=(pf->df2)(xu,yu)*y_bar_tilde[i];
-    *x_tilde+=zbar[i]*y_bar_tilde[i];
-    z_bar_tilde[i]+=xu*y_bar_tilde[i];
-  }
+    *x_tilde += *zbari * *y_bar_tildei;
+    *z_bar_tildei += xu * *y_bar_tildei;
 
+    ++y_bar_tildei;
+    ++zbari;
+    ++z_bar_tildei;
+  }
+  double* y_dot_bar_tildei = y_dot_bar_tilde;
+  zdotbari = zdotbar;
+  z_dot_bar_tildei = z_dot_bar_tilde;
   for (size_t i=0;i<nvar;i++)
   {
     //*y_tilde+=(pf->d2f22)(xu,yu)*zdotbar[i]*y_dot_bar_tilde[i];
     //*x_tilde+=(pf->d2f12)(xu,yu)*zdotbar[i]*y_dot_bar_tilde[i];
     //z_dot_bar_tilde[i]+=(pf->df2)(xu,yu)*y_dot_bar_tilde[i];
-    *x_tilde+=zdotbar[i]*y_dot_bar_tilde[i];
-    z_dot_bar_tilde[i]+=xu*y_dot_bar_tilde[i];
-  }
+    *x_tilde += *zdotbari * *y_dot_bar_tildei;
+    *z_dot_bar_tildei += xu * *y_dot_bar_tildei;
 
+    ++y_dot_bar_tildei;
+    ++zdotbari;
+    ++z_dot_bar_tildei;
+  }
   /*
   for (i=0;i<nvar;i++)
   {
@@ -403,23 +450,45 @@ void read_pass2_2_prod(void)
     *x_tilde+=(pf->d3f122)(xu,yu)*ydot[i]*zdotbar[i]*y_bar_tilde[i];
   }
   */
+  x_bar_tildei = x_bar_tilde;
+  zdotbari = zdotbar;
+  double* ydoti = ydot;
+  double* y_dot_tildei = y_dot_tilde;
+  z_dot_bar_tildei = z_dot_bar_tilde;
   for (size_t i=0;i<nvar;i++)
   {
     //*x_tilde+=(pf->d3f112)(xu,yu)*ydot[i]*zdotbar[i]*x_bar_tilde[i];
     //*y_tilde+=(pf->d3f122)(xu,yu)*ydot[i]*zdotbar[i]*x_bar_tilde[i];
     //y_dot_tilde[i]+=(pf->d2f12)(xu,yu)*zdotbar[i]*x_bar_tilde[i];
     //z_dot_bar_tilde[i]+=(pf->d2f12)(xu,yu)*ydot[i]*x_bar_tilde[i];
-    y_dot_tilde[i]+=zdotbar[i]*x_bar_tilde[i];
-    z_dot_bar_tilde[i]+=ydot[i]*x_bar_tilde[i];
+    *y_dot_tildei += *zdotbari * *x_bar_tildei;
+    *z_dot_bar_tildei += *ydoti * *x_bar_tildei;
+
+    ++x_bar_tildei;
+    ++zdotbari;
+    ++ydoti;
+    ++y_dot_tildei;
+    ++z_dot_bar_tildei;
   }
+  y_bar_tildei = y_bar_tilde;
+  double* xdoti = xdot;
+  zdotbari = zdotbar;
+  double* x_dot_tildei = x_dot_tilde;
+  z_dot_bar_tildei = z_dot_bar_tilde;
   for (size_t i=0;i<nvar;i++)
   {
     //*x_tilde+=(pf->d3f112)(xu,yu)*xdot[i]*zdotbar[i]*y_bar_tilde[i];
     //*y_tilde+=(pf->d3f122)(xu,yu)*xdot[i]*zdotbar[i]*y_bar_tilde[i];
     //x_dot_tilde[i]+=(pf->d2f12)(xu,yu)*zdotbar[i]*y_bar_tilde[i];
     //z_dot_bar_tilde[i]+=(pf->d2f12)(xu,yu)*xdot[i]*y_bar_tilde[i];
-    x_dot_tilde[i]+=zdotbar[i]*y_bar_tilde[i];
-    z_dot_bar_tilde[i]+=xdot[i]*y_bar_tilde[i];
+    *x_dot_tildei += *zdotbari * *y_bar_tildei;
+    *z_dot_bar_tildei += *xdoti * *y_bar_tildei;
+
+    ++y_bar_tildei;
+    ++xdoti;
+    ++zdotbari;
+    ++x_dot_tildei;
+    ++z_dot_bar_tildei;
   }
 }
 
@@ -462,12 +531,13 @@ void read_pass2_3_prod(void)
   list.bptr+=sizeof(df1b2_header);
   //pf=*(df1b2function2 **) list.bptr;
   //list.bptr+=sizeof(char*);
-  memcpy(&xu,list.bptr,sizeof(double));
-  list.bptr+=sizeof(double);
-  memcpy(&yu,list.bptr,sizeof(double));
-  list.bptr+=sizeof(double);
+  constexpr size_t sizeofdouble = sizeof(double);
+  memcpy(&xu,list.bptr,sizeofdouble);
+  list.bptr+=sizeofdouble;
+  memcpy(&yu,list.bptr,sizeofdouble);
+  list.bptr+=sizeofdouble;
   xdot=(double*)list.bptr;
-  list.bptr+=nvar*sizeof(double);
+  list.bptr+=nvar*sizeofdouble;
   ydot=(double*)list.bptr;
   list.restoreposition(); // save pointer to beginning of record;
 
@@ -475,25 +545,37 @@ void read_pass2_3_prod(void)
   //*(py->u_tilde)+=(pf->df2)(xu,yu)* *(pz->u_tilde);
   *(px->u_tilde)+=yu* *(pz->u_tilde);
   *(py->u_tilde)+=xu* *(pz->u_tilde);
+
+  double* pz_u_dot_tildei = pz->u_dot_tilde;
+  double* xdoti = xdot;
+  double* ydoti = ydot;
   for (size_t i=0;i<nvar;i++)
   {
     //*(px->u_tilde)+=(pf->d2f11)(xu,yu)*xdot[i]*pz->u_dot_tilde[i];
     //*(py->u_tilde)+=(pf->d2f12)(xu,yu)*xdot[i]*pz->u_dot_tilde[i];
-    *(py->u_tilde)+=xdot[i]*pz->u_dot_tilde[i];
+    *(py->u_tilde) += *xdoti * *pz_u_dot_tildei;
     //*(py->u_tilde)+=(pf->d2f22)(xu,yu)*ydot[i]*pz->u_dot_tilde[i];
     //*(px->u_tilde)+=(pf->d2f12)(xu,yu)*ydot[i]*pz->u_dot_tilde[i];
-    *(px->u_tilde)+=ydot[i]*pz->u_dot_tilde[i];
+    *(px->u_tilde) += *ydoti * *pz_u_dot_tildei;
+
+    ++pz_u_dot_tildei;
+    ++xdoti;
+    ++ydoti;
   }
+  double* px_u_dot_tildei = px->u_dot_tilde;
+  double* py_u_dot_tildei = py->u_dot_tilde;
+  pz_u_dot_tildei = pz->u_dot_tilde;
   for (size_t i=0;i<nvar;i++)
   {
     //px->u_dot_tilde[i]+=(pf->df1)(xu,yu)*pz->u_dot_tilde[i];
     //py->u_dot_tilde[i]+=(pf->df2)(xu,yu)*pz->u_dot_tilde[i];
-    px->u_dot_tilde[i]+=yu*pz->u_dot_tilde[i];
-    py->u_dot_tilde[i]+=xu*pz->u_dot_tilde[i];
+    *px_u_dot_tildei += yu * *pz_u_dot_tildei;
+    *py_u_dot_tildei += xu * *pz_u_dot_tildei;
+
+    ++px_u_dot_tildei;
+    ++py_u_dot_tildei;
+    ++pz_u_dot_tildei;
   }
   *(pz->u_tilde)=0;
-  for (size_t i=0;i<nvar;i++)
-  {
-    pz->u_dot_tilde[i]=0;
-  }
+  memset(pz->u_dot_tilde, 0, nvar * sizeofdouble);
 }

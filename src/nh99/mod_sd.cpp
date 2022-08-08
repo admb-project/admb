@@ -11,6 +11,7 @@
   #define DOS386
 #endif
 
+#include <chrono>
 #include <df1b2fun.h>
 #include <admodel.h>
 
@@ -36,8 +37,77 @@ void  set_covariance_matrix(const dmatrix& m)
   GAUSS_varcovariance_matrix = &((dmatrix&)(m) );
 }
 
+#include <string>
+std::string get_elapsed_time(
+  const std::chrono::time_point<std::chrono::system_clock>& from,
+  const std::chrono::time_point<std::chrono::system_clock>& to)
+{
+  std::stringstream ss;
+
+  /*
+  using namespace std::chrono_literals;
+  auto elapsed = 86400000ms * 2 + 3600000ms * 11 + 60000ms * 34 + 1500ms;
+  //(2d 11h 34m 1.5s)
+  */
+  auto elapsed = to - from;
+  auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(elapsed);
+  auto count = ms.count();
+
+  if (count >= 86400000)
+  {
+    ss << (count / 86400000) << " d ";
+    count %= 86400000;
+  }
+  if (count >= 3600000)
+  {
+    ss << (count / 3600000) << " h ";
+    count %= 3600000;
+  }
+  if (count >= 60000)
+  {
+    ss << (count / 60000) << " m ";
+    count %= 60000;
+  }
+  ss << setprecision(2) << (static_cast<double>(count) * 0.001) << " s";
+
+/*
+  double runtime = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
+  // Depending on how long it ran convert to sec/min/hour/days so
+  // the outputs are interpretable
+  std::string u; // units
+  if(runtime<=60){
+    u=" s";
+  } else if(runtime > 60 && runtime <=60*60){
+    runtime/=60; u=" mins";
+  } else if(runtime > (60*60) && runtime <= (360*24)){
+    runtime/=(60*60); u=" hours";
+  } else {
+    runtime/=(24*60*60); u=" days";
+  }
+  runtime=std::round(runtime * 10.0) / 10.0;
+  cout << " done! (" << runtime  << u << ")" <<  endl;
+*/
+
+  return std::move(ss.str());
+}
+
+void print_elapsed_time(
+  const std::chrono::time_point<std::chrono::system_clock>& from,
+  const std::chrono::time_point<std::chrono::system_clock>& to)
+{
+  cout << " done (" << get_elapsed_time(from, to) << ") " << endl;
+}
+
 void function_minimizer::sd_routine(void)
 {
+  std::chrono::time_point<std::chrono::system_clock> from_start;
+  if (function_minimizer::output_flag == 1)
+  {
+    from_start = std::chrono::system_clock::now();
+    cout << "Starting standard error calculations... " ;
+    cout.flush();
+  }
+
   int nvar=initial_params::nvarcalc(); // get the number of active parameters
   dvector x(1,nvar);
   initial_params::xinit(x); // get the number of active parameters
@@ -98,13 +168,13 @@ void function_minimizer::sd_routine(void)
     {
       cerr << "Incorrect number of independent variables in file"
         " model.cov" << endl;
-      exit(1);
+      ad_exit(1);
     }
     cif >> S;
     if (!cif)
     {
       cerr << "error reading covariance matrix from model.cov" << endl;
-      exit(1);
+      ad_exit(1);
     }
   }
   int sgn;
@@ -152,6 +222,7 @@ void function_minimizer::sd_routine(void)
         {
           cif >> tv;
           dvector tmpsub(1,nvar);
+	  bool bad_vars=false;
           for (int i=1;i<=ndvar;i++)
           {
             for (int j=1;j<=nvar;j++)
@@ -167,14 +238,27 @@ void function_minimizer::sd_routine(void)
             }
             diag(i+nvar)=tmp(i+nvar);
 
-            if (diag(i+nvar)<=0.0)
+            if (diag(i + nvar) <= 0.0)
             {
-              cerr << "Estimated covariance matrix may not"
-               " be positive definite" << endl;
-              cerr << sort(eigenvalues(S)) << endl;
+              std::ostream& output_stream = get_output_stream();
+              output_stream << "Estimated covariance matrix may not be positive definite.\n"
+	                    << std::scientific << setprecision(10) << sort(eigenvalues(S)) << endl;
+
+	      if(function_minimizer::output_flag==1)
+              {
+                // If first variable print message, otherwise tack it on
+                if(!bad_vars)
+                  cout << "\n Warning: Non-positive variance of sdreport variables: ";
+                else
+                  cout << ", ";
+
+                cout << i + nvar;
+                bad_vars=true;
+              }
             }
             ofs << endl;
           }
+	  if (bad_vars) cout << endl;
         }
       }
       else  // have random effects
@@ -215,15 +299,31 @@ void function_minimizer::sd_routine(void)
           }
         }
 
+	dvector* pBSi = &BS(1);
+	double* pscalei = scale.get_v() + 1;
+	double* ptmpi = tmp.get_v() + 1;
+	double* pdiagi = diag.get_v() + 1;
         for (int i=1;i<=nvar1;i++)
         {
+	  double* pBSij = pBSi->get_v() + 1;
+	  double* ptmpj = tmp.get_v() + 1;
+	  double* pscalej = scale.get_v() + 1;
           for (int j=1;j<=i;j++)
           {
-            tmp(j)=BS(i,j)*scale(i)*scale(j);
-            ofs << tmp(j) << " ";
+            *ptmpj = *pBSij * *pscalei * *pscalej;
+            ofs << *ptmpj << " ";
+
+	    ++ptmpj;
+	    ++pBSij;
+	    ++pscalej;
           }
           ofs << endl;
-          diag(i)=tmp(i);
+          *pdiagi = *ptmpi;
+
+	  ++pBSi;
+	  ++ptmpi;
+	  ++pscalei;
+	  ++pdiagi;
         }
 
         if (ndvar>0)
@@ -331,7 +431,7 @@ void function_minimizer::sd_routine(void)
       {
         cerr << "Estimated covariance matrix may not be positive definite"
        << endl;
-        exit(1);
+        ad_exit(1);
       }
       else
       {
@@ -344,7 +444,7 @@ void function_minimizer::sd_routine(void)
       {
         cerr << "Estimated covariance matrix may not be positive definite"
        << endl;
-        exit(1);
+        ad_exit(1);
       }
       else if (diag(i)==0.0)
       {
@@ -388,29 +488,37 @@ void function_minimizer::sd_routine(void)
 
     if (GAUSS_varcovariance_matrix) (*GAUSS_varcovariance_matrix).initialize();
 
+    double* pdiagi = diag.get_v() + 1;
     for (int i=1;i<=nvar1+ndvar;i++)
     {
+      double* ptmpj = tmp.get_v() + 1;
       for (int j=1;j<=i;j++)
       {
-        cif >> tmp(j);
+        cif >> *ptmpj;
+
+	++ptmpj;
       }
+      ptmpj = tmp.get_v() + 1;
+      double* pdiagj = diag.get_v() + 1;
       for (int j=1;j<=i;j++)
       {
-        if (diag(i)==0.0 || diag(j)==0.0)
+        if (*pdiagi == 0.0 || *pdiagj == 0.0)
         {
-          tmp(j)=0.0;
+          *ptmpj = 0.0;
         }
         else
         {
           if (i!=j)
           {
-            tmp(j)/=(diag(i)*diag(j));
+            *ptmpj /= (*pdiagi * *pdiagj);
           }
           else
           {
-            tmp(j)=1;
+            *ptmpj = 1;
           }
         }
+	++ptmpj;
+	++pdiagj;
       }
       ofs << "  " << setw(4) << i << "   ";
       ofsd << "  " << setw(4) << i << "   ";
@@ -423,7 +531,7 @@ void function_minimizer::sd_routine(void)
         {
           if (param_labels[lc]==likeprof_params::likeprofptr[ix]->label())
           {
-            likeprof_params::likeprofptr[ix]->get_sigma()=diag(i);
+            likeprof_params::likeprofptr[ix]->get_sigma()= *pdiagi;
           }
         }
       }
@@ -442,32 +550,35 @@ void function_minimizer::sd_routine(void)
       }
       ofs << setscientific() << setw(11) << setprecision(4) << param_values(i)
           << " ";
-      ofs << setscientific() << setw(10) << setprecision(4) << diag(i) << " ";
+      ofs << setscientific() << setw(10) << setprecision(4) << *pdiagi << " ";
 
       if (GAUSS_varcovariance_matrix)
       {
         if (GAUSS_varcovariance_matrix->indexmax()>=i)
-          (*GAUSS_varcovariance_matrix) (i,1)=diag(i);
+          (*GAUSS_varcovariance_matrix) (i,1)= *pdiagi;
       }
 
       ofsd << setscientific() << setw(11) << setprecision(4) << param_values(i)
            << " ";
-      ofsd << setscientific() << setw(10) << setprecision(4) << diag(i);
+      ofsd << setscientific() << setw(10) << setprecision(4) << *pdiagi;
+      ptmpj = tmp.get_v() + 1;
       for (int j=1;j<=i;j++)
       {
-        ofs << " " << setfixed() << setprecision(4) << setw(7)
-            << tmp(j);
+        ofs << " " << setfixed() << setprecision(4) << setw(7) << *ptmpj;
         if (GAUSS_varcovariance_matrix)
         {
           if (GAUSS_varcovariance_matrix->indexmax()>=i  &&
             (*GAUSS_varcovariance_matrix)(i).indexmax()>j)
           {
-            (*GAUSS_varcovariance_matrix) (i,j+1)=tmp(j);
+            (*GAUSS_varcovariance_matrix) (i,j+1) = *ptmpj;
           }
         }
+	++ptmpj;
       }
       ofs << endl;
       ofsd << endl;
+
+      ++pdiagi;
     }
   }
 #if defined(_MSC_VER)
@@ -478,5 +589,10 @@ void function_minimizer::sd_routine(void)
   {
     char msg[40] = {"Error trying to delete temporary file "};
     cerr << msg << "admodel.tmp" << endl;
+  }
+
+  if (function_minimizer::output_flag == 1)
+  {
+    print_elapsed_time(from_start, std::chrono::system_clock::now());
   }
 }

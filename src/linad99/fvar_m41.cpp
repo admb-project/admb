@@ -33,15 +33,18 @@ dvar_vector solve(const banded_lower_triangular_dvar_matrix& m,
     }
     x.elem_value(i)=(v.elem_value(i)-ssum)/m.elem_value(i,i);
   }
+
+  grad_stack* GRAD_STACK1 = gradient_structure::GRAD_STACK1;
+  DF_FILE* fp = gradient_structure::fp;
   save_identifier_string("rt");
-  m.save_dvar_matrix_value();
-  m.save_dvar_matrix_position();
-  v.save_dvar_vector_value();
-  v.save_dvar_vector_position();
-  x.save_dvar_vector_position();
+  fp->save_dvar_matrix_value(m.d);
+  fp->save_dvar_matrix_position(m.d);
+  fp->save_dvar_vector_value(v);
+  fp->save_dvar_vector_position(v);
+  fp->save_dvar_vector_position(x);
   save_identifier_string("ww");
-  gradient_structure::GRAD_STACK1->
-      set_gradient_stack(dfbltsolve);
+  GRAD_STACK1->set_gradient_stack(dfbltsolve);
+
   return x;
 }
 
@@ -64,15 +67,16 @@ dvar_vector solve(const banded_lower_triangular_dvar_matrix& m,
     }
     value(x(i))=(value(v(i))-ssum)/value(m(i,i));
   }
+  gradient_structure* gs = gradient_structure::get();
+  DF_FILE* fp = gs->fp;
   save_identifier_string("rt");
   m.save_dvar_matrix_value();
   m.save_dvar_matrix_position();
-  v.save_dvar_vector_value();
-  v.save_dvar_vector_position();
-  x.save_dvar_vector_position();
+  v.save_dvar_vector_value(fp);
+  v.save_dvar_vector_position(fp);
+  x.save_dvar_vector_position(fp);
   save_identifier_string("ww");
-  gradient_structure::GRAD_STACK1->
-      set_gradient_stack(dfbltsolve);
+  gs->GRAD_STACK1->set_gradient_stack(dfbltsolve);
   return x;
 }
 */
@@ -83,11 +87,13 @@ dvar_vector solve(const banded_lower_triangular_dvar_matrix& m,
  */
 void dfbltsolve(void)
 {
+  DF_FILE* fp = gradient_structure::fp;
+
   verify_identifier_string("ww");
-  dvar_vector_position xpos=restore_dvar_vector_position();
-  dvar_vector_position vpos=restore_dvar_vector_position();
+  dvar_vector_position xpos=fp->restore_dvar_vector_position();
+  dvar_vector_position vpos=fp->restore_dvar_vector_position();
   dvector v=restore_dvar_vector_value(vpos);
-  dvar_matrix_position mpos=restore_dvar_matrix_position();
+  dvar_matrix_position mpos=fp->restore_dvar_matrix_position();
   banded_lower_triangular_dmatrix m=
     restore_banded_lower_triangular_dvar_matrix_value(mpos);
   verify_identifier_string("rt");

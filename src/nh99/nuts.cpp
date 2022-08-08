@@ -31,7 +31,7 @@ void read_hessian_matrix_and_scale1(int nvar, const dmatrix& _SS, double s, int 
    * -hyeps      The step size to use. If not specified it will be adapted (recommended).
    * -duration   The maximum runtime in minutes.
    * -mcdiag     Initial mass matrix is unit diagonal
-   * -mcpin NAME Read in MCMC starting values for __active parameters only__ from file NAME. 
+   * -mcpin NAME Read in MCMC starting values for __active parameters only__ from file NAME.
    * -warmup     The number of warmup iterations during which adaptation occurs.
    * -refresh    How often to refresh the console output (defaults to 10%)
    * -adapt_mass Do diagonal mass matrix adaptation
@@ -44,8 +44,8 @@ void read_hessian_matrix_and_scale1(int nvar, const dmatrix& _SS, double s, int 
    * \param int iseed0 Initial seed value for simulations.
    * \param double dscale Scale value used only if -mcdiag is specified. Disabled for NUTS.
    * \param int restart_flag Restart the MCMC, even if -mcr is specified. Disalbed for NUTS.
-   * \return Nothing. Creates file <model>.psv with bounded parameters, and various files used 
-             by R package adnuts for diagnostics. 
+   * \return Nothing. Creates file <model>.psv with bounded parameters, and various files used
+             by R package adnuts for diagnostics.
 **/
 
 void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
@@ -127,7 +127,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   }
   // console refresh rate
   int refresh=1;
-  if(nmcmc>10) refresh = (int)floor(nmcmc/10); 
+  if(nmcmc>10) refresh = (int)floor(nmcmc/10);
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-refresh",nopt))>-1) {
     int iii=atoi(ad_comm::argv[on+1]);
     if (iii < -1) {
@@ -138,7 +138,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       refresh=iii;
     }
   }
-  
+
   // Number of leapfrog steps.
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-hynstep",nopt))>-1) {
     cerr << "Error: hynstep argument not allowed with NUTS " << endl;
@@ -209,7 +209,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       adapt_init_buffer=_adapt_init_buffer;
     }
   }
-  
+
   // Max treedpeth is the number of times a NUTS trajectory will double in
   // length before stopping. Thus length <= 2^max_treedepth+1
   int max_treedepth=12;
@@ -342,7 +342,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     cerr << "Cannot start algorithm, something is wrong with the mass matrix" << endl;
     ad_exit(1);
   }
-      
+
   /// Mass matrix and inverse are now ready to be used.
 
   /// Prepare initial value. Need to both back-transform, and then rotate
@@ -423,19 +423,19 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       adapt_mass=0; adapt_mass_dense=0;
     }
   }
-  if( adapt_mass){ 
+  if( adapt_mass){
     cout << "Chain " << chain << ": Using diagonal mass matrix adaptation" << endl;
   } else if(adapt_mass_dense) {
     cout << "Chain " << chain << ": Using dense mass matrix adaptation" << endl;
   } else {
     cout << "Chain " << chain << ": Not using mass matrix adaptation" << endl;
   }
-  
+
   if(verbose_adapt_mass==1){
     dvector tmp=diagonal(S);
     cout << "Chain " << chain << ": Initial margial variances: min=" << min(tmp) << " and max=" << max(tmp) << endl;
   }
-  
+
   if(diag_option)  cout << "Chain " << chain <<": Initializing with unit diagonal mass matrix" << endl;
   // write sampler parameters in format used by Shinystan
   dvector epsvec(1,nmcmc+1), epsbar(1,nmcmc+1), Hbar(1,nmcmc+1);
@@ -470,7 +470,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   dvector gr(1,nvar);		// gradients in unbounded space
   dvector gr2(1,nvar);		// gradients in rotated space
 
-  
+
   dvariable jac=0.0;
   dvariable userNLL=0.0;
 
@@ -487,17 +487,17 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   // get_hybrid_mc will return gradients of 0. No idea why but
   // leave this here.
   gradcalc(nvar,gr);
-   
+
   std::clock_t start0 = clock();
   double nll=get_hybrid_monte_carlo_value(nvar,y0,gr);
-  double time_gradient = ( std::clock()-start0)/(double) CLOCKS_PER_SEC;
+  double time_gradient = static_cast<double>(std::clock()-start0) / CLOCKS_PER_SEC;
   gr2=rotate_gradient(gr, chd);
   // Can now inverse rotate y0 to be x0 (algorithm space)
   independent_variables x0(1,nvar); // inits in algorithm space
   x0=rotate_pars(chdinv,y0);
   // Now have z0, y0, x0, objective fn value, gradients in
   // unbounded (y) and rotated (x) space all at the intial value.
-  
+
   cout << "Chain " << chain << ": Initial negative log density= " << userNLL <<
     ", Jacobian= " << jac << ", Total= " << userNLL-jac << endl;
   cout << "Chain " << chain << ": Gradient eval took " << time_gradient <<
@@ -517,7 +517,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   independent_variables theta(1,nvar);
   // kind of a misnomer here: theta is in "x" or algorithm space
   // (before applying the mass matrix rotation, and before the
-  // bounding functions are applied) 
+  // bounding functions are applied)
   theta=x0;
   independent_variables z(1,nvar);
   independent_variables ynew(1,nvar); // local copy of y
@@ -566,7 +566,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
   dmatrix adm2(1,nvar,1,nvar);
   int is2=0; int is3=0;
   int iseps=0;
-  
+
   dmatrix metric(1,nvar,1,nvar); // holds updated metric
   if(diagnostic_flag){
     cout << "Initial chd=" << chd << endl;
@@ -601,7 +601,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     rminus_end=p; rplus_end=p;
     gr2minus_end=gr2; gr2plus_end=gr2; gr2prime=gr2;
     nllprime=nll; grprime=gr;
-    Hprime=H0; 
+    Hprime=H0;
     while (s) {
       value = randu(rng);	   // runif(1)
       v = 2 * (value < 0.5) - 1;
@@ -677,7 +677,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
       alphasum+=alpha;
     }
 
-    // Mass matrix adaptation. 
+    // Mass matrix adaptation.
     bool slow=slow_phase(is, warmup, adapt_init_buffer, adapt_term_buffer);
     // If in slow phase, do adaptation of mass matrix
     if( (adapt_mass || adapt_mass_dense) & slow){
@@ -704,7 +704,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
 	    metric=adm2/(is3-1);
 	    if(verbose_adapt_mass==1){
 	      dvector tmp=diagonal(metric);
-	      cout << "Chain " << chain << 
+	      cout << "Chain " << chain <<
 		": Iteration " << is << ": Estimated dense variances, min=" << min(tmp) << " and max=" << max(tmp) << endl;
 	    }
 	  }
@@ -774,8 +774,8 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     adaptation <<  alpha << "," <<  eps <<"," << j <<","
 	       << _nfevals <<"," << _divergent <<"," << -H << "," << -nll << endl;
     print_mcmc_progress(is, nmcmc, warmup, chain, refresh);
-    if(is ==warmup) time_warmup = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
-    time_total = ( std::clock()-start)/(double) CLOCKS_PER_SEC;
+    if(is ==warmup) time_warmup = static_cast<double>(std::clock()-start) / CLOCKS_PER_SEC;
+    time_total = static_cast<double>(std::clock()-start) / CLOCKS_PER_SEC;
     nsamples=is;
     if(use_duration==1 && time_total > duration){
       // If duration option used, break loop after <duration> minutes.
@@ -789,7 +789,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
     ofstream metricsave("adapted_metric.txt", ios::trunc);
     metricsave << metric;
   }
-  
+
   // Information about run
   if(ndivergent>0)
     cout << "Chain " << chain <<": There were " << ndivergent << " divergent transitions after warmup" << endl;

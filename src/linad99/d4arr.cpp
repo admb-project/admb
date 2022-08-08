@@ -45,9 +45,14 @@ Return the sum total of all the elements in darray.
 double sum(const d4_array& darray)
 {
   double total = 0.0;
-  for (int i = darray.indexmin(); i <= darray.indexmax(); ++i)
+
+  int min = darray.indexmin();
+  int max = darray.indexmax();
+  const d3_array* pdarrayi = &darray(min);
+  for (int i = min; i <= max; ++i)
   {
-    total += sum(darray.elem(i));
+    total += sum(*pdarrayi);
+    ++pdarrayi;
   }
   return total;
 }
@@ -143,9 +148,14 @@ d4_array& d4_array::operator=(const d4_array& other)
          << " d4_array& d4_array::operator=(const d4_array&).\n";
     ad_exit(1);
   }
+  d3_array* pti = t + min;
+  const d3_array* potheri = &other(min);
   for (int i = min; i <= max; ++i)
   {
-    elem(i) = other.elem(i);
+    *pti = *potheri;
+
+    ++pti;
+    ++potheri;
   }
   return *this;
 }
@@ -156,10 +166,17 @@ Allocate d4_array with same dimensions as other.
 */
 void d4_array::allocate(const d4_array& other)
 {
-  allocate(other.hslicemin(), other.hslicemax());
-  for (int i = hslicemin(); i <= hslicemax(); ++i)
+  int min = other.hslicemin();
+  int max = other.hslicemax();
+  allocate(min, max);
+  d3_array* pti = t + min;
+  const d3_array* potheri = &other(min);
+  for (int i = min; i <= max; ++i)
   {
-    elem(i).allocate(other.elem(i));
+    pti->allocate(*potheri);
+
+    ++pti;
+    ++potheri;
   }
 }
 
@@ -343,9 +360,11 @@ void d4_array::allocate(
     ad_exit(1);
   }
   t -= hslicemin();
+  d3_array* pti = t + hsl;
   for (int i = hsl; i <= hsu; ++i)
   {
-    (*this)(i).allocate(sl, sh, nrl, nrh, ncl, nch);
+    pti->allocate(sl, sh, nrl, nrh, ncl, nch);
+    ++pti;
   }
 }
 /**
@@ -380,9 +399,11 @@ void d4_array::allocate(
     ad_exit(1);
   }
   t -= hslicemin();
+  d3_array* pti = t + hsl;
   for (int i = hsl; i <= hsu; ++i)
   {
-    (*this)(i).allocate(sl, sh, nrl, nrh, ncl, nch);
+    pti->allocate(sl, sh, nrl, nrh, ncl, nch);
+    ++pti;
   }
 }
 /**
@@ -417,9 +438,19 @@ void d4_array::allocate(
     ad_exit(1);
   }
   t -= hslicemin();
+  d3_array* pti = t + hsl;
+  const int* pnrli = nrl.get_v() + hsl;
+  const int* pnrhi = nrh.get_v() + hsl;
+  const int* pncli = ncl.get_v() + hsl;
+  const int* pnchi = nch.get_v() + hsl;
   for (int i = hsl; i <= hsu; ++i)
   {
-    (*this)(i).allocate(sl, sh, nrl(i), nrh(i), ncl(i), nch(i));
+    pti->allocate(sl, sh, *pnrli, *pnrhi, *pncli, *pnchi);
+    ++pti;
+    ++pnrli;
+    ++pnrhi;
+    ++pncli;
+    ++pnchi;
   }
 }
 /**
@@ -464,9 +495,15 @@ void d4_array::allocate(
     ad_exit(1);
   }
   t -= hslicemin();
+  d3_array* pti = t + hsl;
+  const int* pshi = sh.get_v() + hsl;
+  const ivector* pnrhi = &nrh(hsl);
   for (int i = hsl; i <= hsu; ++i)
   {
-    (*this)(i).allocate(sl, sh(i), nrl, nrh(i), ncl, nch);
+    pti->allocate(sl, *pshi, nrl, *pnrhi, ncl, nch);
+    ++pti;
+    ++pshi;
+    ++pnrhi;
   }
 }
 
@@ -494,16 +531,20 @@ d4_array::d4_array(int hsl,int hsu, int sl,int sh,ivector nrl,ivector nrh,
  * Description not yet available.
  * \param
  */
- void d4_array::initialize()
- {
-   if (!(!(*this)))  // only initialize allocated objects
-   {
-     for (int i=hslicemin();i<=hslicemax();i++)
-     {
-       elem(i).initialize();
-     }
-   }
- }
+void d4_array::initialize()
+{
+  if (!(!(*this)))  // only initialize allocated objects
+  {
+    int min = hslicemin();
+    int max = hslicemax();
+    d3_array* pti = t + min;
+    for (int i = min; i <= max; ++i)
+    {
+      pti->initialize();
+      ++pti;
+    }
+  }
+}
 
 /**
  * Description not yet available.
@@ -538,9 +579,17 @@ void d4_array::allocate(
     ad_exit(1);
   }
   t -= hslicemin();
+  d3_array* pti = t + hsl;
+  const int* pshi = sh.get_v() + hsl;
+  const ivector* pnrhi = &nrh(hsl);
+  const imatrix* pnchi = &nch(hsl);
   for (int i = hsl; i <= hsu; ++i)
   {
-    (*this)(i).allocate(sl, sh(i), nrl, nrh(i), ncl, nch(i));
+    pti->allocate(sl, *pshi, nrl, *pnrhi, ncl, *pnchi);
+
+    ++pti;
+    ++pshi;
+    ++pnchi;
   }
 }
 
@@ -591,6 +640,7 @@ void d4_array::allocate(
       ad_exit(1);
     }
     t -= int(hsl);
+    d3_array* pti = t + hsl;
     for (int i=hsl; i<=hsu; i++)
     {
       const index_type& rsl=sl[i];
@@ -601,7 +651,8 @@ void d4_array::allocate(
       const index_type& rnch=nch[i];
       const ad_integer& aa=ad_integer(rsl);
       const ad_integer& bb=ad_integer(rsh);
-      (*this)(i).allocate(aa,bb,rnrl,rnrh,rncl,rnch);
+      pti->allocate(aa,bb,rnrl,rnrh,rncl,rnch);
+      ++pti;
       //(*this)(i).allocate(sl[i],sh[i],nrl[i],nrh[i],ncl[i],nch[i]);
     }
   }
@@ -644,6 +695,7 @@ void d4_array::allocate(
            << __FILE__ << ':' << __LINE__ << '\n';
     }
     t -= hsl;
+    d3_array* pti = t + hsl;
     for (int i=hsl; i<=hsu; i++)
     {
       const index_type& rsl=sl[i];
@@ -654,7 +706,8 @@ void d4_array::allocate(
       const index_type& rnch=nch[i];
       const ad_integer& aa=ad_integer(rsl);
       const ad_integer& bb=ad_integer(rsh);
-      (*this)(i).allocate(aa,bb,rnrl,rnrh,rncl,rnch);
+      pti->allocate(aa,bb,rnrl,rnrh,rncl,rnch);
+      ++pti;
       //(*this)(i).allocate(sl[i],sh[i],nrl[i],nrh[i],ncl[i],nch[i]);
     }
   }
@@ -694,6 +747,7 @@ void d4_array::allocate(
            << __FILE__ << ':' << __LINE__ << '\n';
     }
     t -= int(hsl);
+    d3_array* pti = t + hsl;
     for (int i = hsl; i <= hsu; ++i)
     {
       const index_type& rsl = sl[i];
@@ -702,7 +756,8 @@ void d4_array::allocate(
       const index_type& rnrh = nrh[i];
       const ad_integer& aa = ad_integer(rsl);
       const ad_integer& bb = ad_integer(rsh);
-      (*this)(i).allocate(aa, bb, rnrl, rnrh);
+      pti->allocate(aa, bb, rnrl, rnrh);
+      ++pti;
     }
   }
   else
@@ -741,13 +796,15 @@ void d4_array::allocate(
       ad_exit(21);
     }
     t -= int(hsl);
+    d3_array* pti = t + hsl;
     for (int i=hsl; i<=hsu; i++)
     {
       const index_type& rsl=sl[i];
       const index_type& rsh=sh[i];
       const ad_integer& aa=ad_integer(rsl);
       const ad_integer& bb=ad_integer(rsh);
-      (*this)(i).allocate(aa,bb);
+      pti->allocate(aa,bb);
+      ++pti;
     }
   }
   else
@@ -784,9 +841,11 @@ void d4_array::allocate(ad_integer hsl, ad_integer hsu)
       ad_exit(1);
     }
     t -= static_cast<int>(hsl);
+    d3_array* pti = t + hsl;
     for (int i = hsl; i <= hsu; ++i)
     {
-      elem(i).allocate();
+      pti->allocate();
+      ++pti;
     }
   }
 }

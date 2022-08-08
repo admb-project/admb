@@ -35,10 +35,18 @@
 dvar_matrix mfexp(const dvar_matrix& m)
 {
   dvar_matrix tmp;
-  tmp.allocate(m.indexmin(),m.indexmax());
-  for (int i=m.rowmin();i<=m.rowmax();i++)
+
+  int min = m.indexmin();
+  int max = m.indexmax();
+  tmp.allocate(min, max);
+  dvar_vector* ptmpi = &tmp(min);
+  const dvar_vector* pmi = &m(min);
+  for (int i = min; i <= max; ++i)
   {
-    tmp(i)=mfexp(m(i));
+    *ptmpi = mfexp(*pmi);
+
+    ++ptmpi;
+    ++pmi;
   }
   return tmp;
 }
@@ -50,10 +58,18 @@ dvar_matrix mfexp(const dvar_matrix& m)
 dvar_matrix mfexp(const dvar_matrix& m, const double d)
 {
   dvar_matrix tmp;
-  tmp.allocate(m.indexmin(),m.indexmax());
-  for (int i=m.rowmin();i<=m.rowmax();i++)
+
+  int min = m.indexmin();
+  int max = m.indexmax();
+  tmp.allocate(min, max);
+  dvar_vector* ptmpi = &tmp(min);
+  const dvar_vector* pmi = &m(min);
+  for (int i = min; i <= max; ++i)
   {
-    tmp(i)=mfexp(m(i),d);
+    *ptmpi = mfexp(*pmi, d);
+
+    ++ptmpi;
+    ++pmi;
   }
   return tmp;
 }

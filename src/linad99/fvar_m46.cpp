@@ -19,7 +19,7 @@ dvar_vector diagonal(const dvar_matrix& m)
   if (m.indexmin() != m.colmin() || m.indexmax() != m.colmax())
   {
     cerr << "Error matrix not square in function diagonal" << endl;
-    exit(21);
+    ad_exit(21);
   }
   int mmin=m.indexmin();
   int mmax=m.indexmax();

@@ -18,17 +18,20 @@ Subtracts x from each element of t1 into a dvar_vector.
 */
 dvar_vector operator-(const dvar_vector& t1, const double x)
 {
-  RETURN_ARRAYS_INCREMENT();
+  gradient_structure* gs = gradient_structure::_instance;
+  gs->RETURN_ARRAYS_INCREMENT();
+
   dvar_vector tmp(t1.indexmin(),t1.indexmax());
   save_identifier_string("ucbb");
   for (int i=t1.indexmin(); i<=t1.indexmax(); i++)
   {
     tmp.elem_value(i)=t1.elem_value(i)-x;
   }
-  tmp.save_dvar_vector_position();
-  t1.save_dvar_vector_position();
+  DF_FILE* fp = gradient_structure::fp;
+  fp->save_dvar_vector_position(tmp);
+  fp->save_dvar_vector_position(t1);
   save_identifier_string("dduu");
-  RETURN_ARRAYS_DECREMENT();
+  gs->RETURN_ARRAYS_DECREMENT();
   gradient_structure::GRAD_STACK1->set_gradient_stack(DF_dv_cdble_diff);
   return(tmp);
 }
@@ -38,9 +41,11 @@ Adjoint function for operator-(const dvar_vector&, const double)
 */
 void DF_dv_cdble_diff(void)
 {
+  DF_FILE* fp = gradient_structure::fp;
+
   verify_identifier_string("dduu");
-  dvar_vector_position t1_pos=restore_dvar_vector_position();
-  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvar_vector_position t1_pos=fp->restore_dvar_vector_position();
+  dvar_vector_position tmp_pos=fp->restore_dvar_vector_position();
   dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
   dvector dft1(t1_pos.indexmin(),t1_pos.indexmax());
   verify_identifier_string("ucbb");

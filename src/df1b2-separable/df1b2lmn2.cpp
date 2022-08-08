@@ -280,7 +280,8 @@ void function_minimizer::limited_memory_quasi_newton_block(int nvar,int _crit,
         {
           lapprox->check_hessian_type(this);
         }
-        cout << "Hessian type = " << lapprox->hesstype << endl;
+        std::ostream& output_stream = get_output_stream();
+        output_stream << "Hessian type = " << lapprox->hesstype << endl;
       }
     }
 

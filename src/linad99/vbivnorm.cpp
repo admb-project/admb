@@ -261,12 +261,13 @@ dvariable mvbvu_(const dvariable *sh,const  dvariable *sk,
 */
 dvariable cumbvn(const dvariable& x,const dvariable& y,const dvariable& rho)
 {
-  RETURN_ARRAYS_INCREMENT();
+  gradient_structure* gs = gradient_structure::_instance;
+  gs->RETURN_ARRAYS_INCREMENT();
   dvariable retval;
   dvariable mx=-x;
   dvariable my=-y;
   retval=mvbvu_(&mx,&my,&rho);
-  RETURN_ARRAYS_DECREMENT();
+  gs->RETURN_ARRAYS_DECREMENT();
   return retval;
 }
 
@@ -282,12 +283,13 @@ dvariable cumbvn(const dvariable& x,const dvariable& y,const dvariable& rho)
 dvariable cumbvn(const dvariable& xl,const dvariable& yl,
   const dvariable& xu,const dvariable& yu,const dvariable& rho)
 {
-  RETURN_ARRAYS_INCREMENT();
+  gradient_structure* gs = gradient_structure::_instance;
+  gs->RETURN_ARRAYS_INCREMENT();
   dvariable my=cumbvn(xl,yl,rho);
   my+=cumbvn(xu,yu,rho);
   my-=cumbvn(xl,yu,rho);
   my-=cumbvn(xu,yl,rho);
-  RETURN_ARRAYS_DECREMENT();
+  gs->RETURN_ARRAYS_DECREMENT();
   return my;
 }
 
@@ -296,7 +298,8 @@ dvariable mvphi_(dvariable*);
 dvariable mvbvu_(const dvariable *sh,const dvariable *sk,const dvariable *r__)
 {
   //cout << " " << *r__;
-  RETURN_ARRAYS_INCREMENT();
+  gradient_structure* gs = gradient_structure::_instance;
+  gs->RETURN_ARRAYS_INCREMENT();
     //dvariable pr;
     //if (*zz>0)
      // pr=sfabs(*zz);
@@ -484,7 +487,7 @@ dvariable mvbvu_(const dvariable *sh,const dvariable *sk,const dvariable *r__)
     }
     }
     ret_val = bvn;
-    RETURN_ARRAYS_DECREMENT();
+    gs->RETURN_ARRAYS_DECREMENT();
     return ret_val;
 } /* mvbvu_ */
 
@@ -500,7 +503,8 @@ int debug_switch=0;
 dvariable mvphi_(dvariable *z__)
 {
   if (debug_switch) cout << "  " << *z__;
-  RETURN_ARRAYS_INCREMENT();
+  gradient_structure* gs = gradient_structure::_instance;
+  gs->RETURN_ARRAYS_INCREMENT();
     /* System generated locals */
     dvariable d__1,ret_val;
 
@@ -574,6 +578,6 @@ dvariable mvphi_(dvariable *z__)
     }
     ret_val = p;
 
-    RETURN_ARRAYS_DECREMENT();
+    gs->RETURN_ARRAYS_DECREMENT();
     return ret_val;
 } /* mvphi_ */

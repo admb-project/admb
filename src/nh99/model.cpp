@@ -187,7 +187,7 @@ int initial_params::nvarcalc()
     }
     return ntypes;
   }
-
+  
   int initial_params::stddev_vscale(const dvar_vector& d,const dvar_vector& x)
   {
     int ii=1;
@@ -914,6 +914,7 @@ param_init_bounded_vector::param_init_bounded_vector():
   initial_params(),
   minb(0),
   maxb(0)
+  
 {
   //add_to_list();
 }
@@ -1293,7 +1294,7 @@ void initial_params::set_random_effects_inactive(void) {;}
 pinitial_params& adlist_ptr::operator[](int i)
 {
 #ifdef DEBUG
-  assert(i < current);
+  assert(static_cast<unsigned int>(i) < current);
 #endif
 
   unsigned int index = static_cast<unsigned int>(i);

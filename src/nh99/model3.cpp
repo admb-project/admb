@@ -61,9 +61,15 @@ void copy_value_to_vector(const dvar_vector& x, const dvector& _v,
     {
       int mmin=x.indexmin();
       int mmax=x.indexmax();
+      const double_and_int* pxi = x.va + mmin;
+      double* pvii = v.get_v() + ii;
       for (int i=mmin;i<=mmax;i++)
       {
-        v(ii++)=value(x(i));
+        *pvii = pxi->x;
+
+	++pxi;
+	++pvii;
+	++ii;
       }
     }
   }
@@ -74,9 +80,11 @@ void copy_value_to_vector(const dvar_matrix& x, const dvector& v, const int& ii)
     {
       int mmin=x.rowmin();
       int mmax=x.rowmax();
+      const dvar_vector* pxi = &x(mmin);
       for (int i=mmin;i<=mmax;i++)
       {
-        copy_value_to_vector(x(i),v,ii);
+        copy_value_to_vector(*pxi,v,ii);
+	++pxi;
       }
     }
   }
@@ -86,9 +94,11 @@ void copy_value_to_vector(const dvar3_array& x, const dvector& v, const int& ii)
     {
       int mmin=x.slicemin();
       int mmax=x.slicemax();
+      const dvar_matrix* pxi = &x(mmin);
       for (int i=mmin;i<=mmax;i++)
       {
-        copy_value_to_vector(x(i),v,ii);
+        copy_value_to_vector(*pxi,v,ii);
+	++pxi;
       }
     }
   }
@@ -152,10 +162,14 @@ void restore_value_from_vector(const dvar_vector& _x, const dvector& v,
     {
       int mmin=x.indexmin();
       int mmax=x.indexmax();
+      double* pvii = v.get_v() + ii;
       for (int i=mmin;i<=mmax;i++)
       {
         //v(ii++)=value(x(i));
-        x(i)=v(ii++);
+        x(i) = *pvii;
+
+	++pvii;
+	++ii;
       }
     }
   }
@@ -167,9 +181,11 @@ void restore_value_from_vector(const dvar_matrix& x, const dvector& v,
     {
       int mmin=x.rowmin();
       int mmax=x.rowmax();
+      const dvar_vector* pxi = &x(mmin);
       for (int i=mmin;i<=mmax;i++)
       {
-        restore_value_from_vector(x(i),v,ii);
+        restore_value_from_vector(*pxi,v,ii);
+	++pxi;
       }
     }
   }
@@ -180,9 +196,11 @@ void restore_value_from_vector(dvar3_array& x, const dvector& v, const int& ii)
     {
       int mmin=x.slicemin();
       int mmax=x.slicemax();
+      const dvar_matrix* pxi = &x(mmin);
       for (int i=mmin;i<=mmax;i++)
       {
-        restore_value_from_vector(x(i),v,ii);
+        restore_value_from_vector(*pxi,v,ii);
+	++pxi;
       }
     }
   }

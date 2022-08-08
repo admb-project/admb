@@ -18,3 +18,15 @@ TEST_F(test_data_int, set_to_zero)
   
   ASSERT_EQ(result, 0);
 }
+TEST_F(test_data_int, assignment)
+{
+  data_int data;
+
+  data = 5;
+  ASSERT_EQ((int)data, 5);
+
+  data_int other;
+
+  other = data;
+  ASSERT_EQ((int)other, 5);
+}

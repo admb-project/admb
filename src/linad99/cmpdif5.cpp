@@ -10,20 +10,32 @@
  */
 #include "fvar.hpp"
 #include <string.h>
-#include <cassert>
+
+#ifdef DEBUG
+  #include <cassert>
+#endif
 
 /**
  * Description not yet available.
  * \param
  */
-void dmatrix::save_dmatrix_value(void) const
+void dmatrix::save_dmatrix_value() const
+{
+  gradient_structure::fp->save_dmatrix_value(*this);
+}
+void DF_FILE::save_dmatrix_value(const dmatrix& m)
 {
   // saves the size, address, and value information for a dvar_matrix
   //int ierr;
-  for (int i=rowmin();i<=rowmax();i++)
+  int min = m.rowmin();
+  int max = m.rowmax();
+  const dvector* pmi = &m(min);
+  for (int i = min; i <= max; ++i)
   {
-    ((*this)(i).save_dvector_value());
-    ((*this)(i).save_dvector_position());
+    save_dvector_value(*pmi);
+    save_dvector_position(*pmi);
+
+    ++pmi;
   }
 }
 
@@ -31,14 +43,23 @@ void dmatrix::save_dmatrix_value(void) const
  * Description not yet available.
  * \param
  */
-void d3_array::save_d3_array_value(void) const
+void d3_array::save_d3_array_value() const
+{
+  gradient_structure::fp->save_d3_array_value(*this);
+}
+void DF_FILE::save_d3_array_value(const d3_array& a)
 {
   // saves the size, address, and value information for a dvar_matrix
   //int ierr;
-  for (int i=indexmin();i<=indexmax();i++)
+  int min = a.indexmin();
+  int max = a.indexmax();
+  const dmatrix* pai = &a(min);
+  for (int i = min; i <= max; ++i)
   {
-    ((*this)(i).save_dmatrix_value());
-    ((*this)(i).save_dmatrix_position());
+    save_dmatrix_value(*pai);
+    save_dmatrix_position(*pai);
+
+    ++pai;
   }
 }
 
@@ -48,15 +69,22 @@ void d3_array::save_d3_array_value(void) const
  */
 dmatrix restore_dvar_matrix_value(const dvar_matrix_position& mpos)
 {
+  return gradient_structure::fp->restore_dvar_matrix_value(mpos);
+}
+dmatrix DF_FILE::restore_dvar_matrix_value(const dvar_matrix_position& mpos)
+{
   // restores the size, address, and value information for a dvar_matrix
   dmatrix out((const dvar_matrix_position&)mpos);
   //int ierr;
-  int min=out.rowmin();
-  int max=out.rowmax();
-  for (int i=max;i>=min;i--)
+  int min = out.rowmin();
+  int max = out.rowmax();
+  dvector* pouti = &out(max);
+  for (int i = max;i >= min; --i)
   {
-    dvar_vector_position vpos=restore_dvar_vector_position();
-    out(i)=restore_dvar_vector_value(vpos);
+    dvar_vector_position vpos = restore_dvar_vector_position();
+    *pouti = restore_dvar_vector_value(vpos);
+
+    --pouti;
   }
   return out;
 }
@@ -67,16 +95,23 @@ dmatrix restore_dvar_matrix_value(const dvar_matrix_position& mpos)
  */
 dmatrix restore_dmatrix_value(const dmatrix_position& mpos)
 {
+  return gradient_structure::fp->restore_dmatrix_value(mpos);
+}
+dmatrix DF_FILE::restore_dmatrix_value(const dmatrix_position& mpos)
+{
   // restores the size, address, and value information for a dvar_matrix
   //  the size, address, and value information for a dvar_matrix
-  dmatrix out((const dmatrix_position&) mpos);
+  dmatrix out((const dmatrix_position&)mpos);
   //int ierr;
   int min=out.rowmin();
   int max=out.rowmax();
-  for (int i=max;i>=min;i--)
+  dvector* pouti = &out(max);
+  for (int i = max; i >= min; --i)
   {
-    dvector_position vpos=restore_dvector_position();
-    out(i)=restore_dvector_value(vpos);
+    dvector_position vpos = restore_dvector_position();
+    *pouti = restore_dvector_value(vpos);
+
+    --pouti;
   }
   return out;
 }
@@ -87,16 +122,23 @@ dmatrix restore_dmatrix_value(const dmatrix_position& mpos)
  */
 d3_array restore_d3_array_value(const d3_array_position& mpos)
 {
+  return gradient_structure::fp->restore_d3_array_value(mpos);
+}
+d3_array DF_FILE::restore_d3_array_value(const d3_array_position& mpos)
+{
   // restores the size, address, and value information for a dvar_matrix
   //  the size, address, and value information for a dvar_matrix
   d3_array out((const d3_array_position&) mpos);
   //int ierr;
-  int min=out.indexmin();
-  int max=out.indexmax();
-  for (int i=max;i>=min;i--)
+  int min = out.indexmin();
+  int max = out.indexmax();
+  dmatrix* pouti = &out(max);
+  for (int i = max; i >= min; --i)
   {
     dmatrix_position vpos=restore_dmatrix_position();
-    out(i)=restore_dmatrix_value(vpos);
+    *pouti = restore_dmatrix_value(vpos);
+
+    --pouti;
   }
   return out;
 }
@@ -107,22 +149,23 @@ d3_array restore_d3_array_value(const d3_array_position& mpos)
  */
 dvector restore_dvar_vector_derivatives(const dvar_vector_position& tmp)
 {
-  // puts the derivative values from a dvar_vector's guts into a dvector
-  dvector tempvec(tmp.indexmin(),tmp.indexmax());
-  double_and_int * va=tmp.va;
+  int min = tmp.indexmin();
+  int max = tmp.indexmax();
 
-#ifndef USE_ASSEMBLER
-  for (int i=tmp.indexmin();i<=tmp.indexmax();i++)
+  // puts the derivative values from a dvar_vector's guts into a dvector
+  dvector tempvec(min, max);
+  double_and_int* va = tmp.va + min;
+
+  double* ptmpvec = tempvec.get_v() + min;
+  for (int i = min; i <= max; ++i)
   {
-    tempvec(i)=va[i].xvalue();
-    va[i].xvalue()=0.;
+    //tempvec(i)=va[i].xvalue();
+    //va[i].xvalue()=0.;
+    *ptmpvec = va->x;
+    va->x = 0.0;
+    ++va;
+    ++ptmpvec;
   }
-#else
-     int min=tmp.indexmin();
-     int n=tmp.max-min+1;
-     dw_block_move(&(tempvec.elem(min)),&(va[min].xvalue()),n);
-     dp_block_initialize(&(va[min].xvalue()),n);
-#endif
 
 //  _dp_vector_add
 //  _dp_vector_elem_div
@@ -142,19 +185,24 @@ dvector restore_dvar_vector_derivatives(const dvar_vector_position& tmp)
 dvector restore_dvar_vector_der_nozero(const dvar_vector_position& tmp)
 {
   // puts the derivative values from a dvar_vector's guts into a dvector
-  dvector tempvec(tmp.min,tmp.max);
-  double_and_int * va=tmp.va;
+  int min = tmp.min;
+  int max = tmp.max;
+  dvector tempvec(min, max);
+  double_and_int* va = tmp.va + min;
 
-  #ifndef USE_ASSEMBLER
-    for (int i=tmp.indexmin();i<=tmp.indexmax();i++)
-    {
-      tempvec(i)=va[i].xvalue();
-    }
-  #else
-     int min=tmp.indexmin();
-     int n=tmp.indexmax()-min+1;
-     dw_block_move(&(tempvec.elem(min)),&(va[min].xvalue()),n);
-  #endif
+#ifdef USE_ASSEMBLER
+  int min=tmp.indexmin();
+  int n=tmp.indexmax()-min+1;
+  dw_block_move(&(tempvec.elem(min)),&(va[min].xvalue()),n);
+#else
+  double* ptempvec = tempvec.get_v() + min;
+  for (int i = min; i <= max; ++i)
+  {
+    *ptempvec = va->x;
+    ++va;
+    ++ptempvec;
+  }
+#endif
   return tempvec;
 }
 
@@ -163,27 +211,22 @@ Puts the derivative values in a dvector into a dvar_vector's guts.
 */
 void dvector::save_dvector_derivatives(const dvar_vector_position& pos) const
 {
-  const int min = indexmin();
-  const int max = indexmax();
+  const int min = pos.indexmin();
+  const int max = pos.indexmax();
 
+#ifdef DEBUG
   //Check for incompatible array sizes
-  assert(min == pos.indexmin() && max == pos.indexmax());
+  assert(min == indexmin() && max == indexmax());
+#endif
 
-#ifdef USE_ASSEMBLER
-  double_and_int* ptr = pos.va;
-  int n=max-min+1;
-  dp_vector_add(&(ptr[min].xvalue()), &(ptr[min].xvalue()),
-    &(this->elem(min)), n);
-#else
-  double_and_int* dest = &pos.va[min];
-  double* source = &v[min];
+  double_and_int* dest = pos.va + min;
+  double* source = v + min;
   for (int i = min; i <= max; ++i)
   {
     dest->x += *source;
     ++source;
     ++dest;
   }
-#endif
 }
 
 /**
@@ -193,25 +236,26 @@ void dvector::save_dvector_derivatives(const dvar_vector_position& pos) const
 void dvector::save_dvector_derivatives_na(const dvar_vector_position& pos) const
 {
   // puts the derivative values in a dvector into a dvar_vector's guts
-  int min=indexmin();
-  int max=indexmax();
-  if (min!=pos.indexmin() || max!=pos.indexmax())
+  int min = pos.indexmin();
+  int max = pos.indexmax();
+
+#ifndef OPT_LIB
+  if (min != indexmin() || max != indexmax())
   {
     cerr << "Incompatible array sizes in " <<
     "void dvector::save_dvector_derivatives_na(const dvar_vector_position& pos)"
     << endl;
   }
-  double_and_int * ptr=pos.va;
-
-#ifndef USE_ASSEMBLER
-  for (int i=min;i<=max;i++)
-  {
-    ptr[i].xvalue()=(*this)(i);
-  }
-#else
-     int n=max-min+1;
-     dw_block_move(&(ptr[min].xvalue()),&(this->elem(min)),n);
 #endif
+
+  double_and_int* dest = pos.va + min;
+  double* source = v + min;
+  for (int i = min; i <= max; ++i)
+  {
+    dest->x = *source;
+    ++dest;
+    ++source;
+  }
 }
 
 /**
@@ -244,16 +288,20 @@ void dmatrix::save_dmatrix_derivatives(const dvar_matrix_position& _pos) const
   // puts the derivative values in a dvector into a dvar_vector's guts
   int min=rowmin();
   int max=rowmax();
-  if (min!=pos.row_min||max!=pos.row_max)
+#ifndef OPT_LIB
+  if (min != pos.row_min || max != pos.row_max)
   {
     cerr << "Incompatible array sizes in " <<
     "void dmatrix::save_dmatrix__derivatives(const dvar_matrix_position& pos)"
     << endl;
   }
+#endif
+  dvector* pmi = m + min;
   for (int i=min;i<=max;i++)
   {
-    if (allocated((*this)(i)))
-      (*this)(i).save_dvector_derivatives(pos(i));
+    if (allocated(*pmi))
+      pmi->save_dvector_derivatives(pos(i));
+    ++pmi;
   }
 }
 
@@ -268,16 +316,21 @@ void dmatrix::save_dmatrix_derivatives_na(const dvar_matrix_position& _pos)
   // puts the derivative values in a dvector into a dvar_vector's guts
   int min=rowmin();
   int max=rowmax();
+#ifndef OPT_LIB
   if (min!=pos.row_min||max!=pos.row_max)
   {
     cerr << "Incompatible array sizes in " <<
     "void dmatrix::save_dmatrix__derivatives(const dvar_matrix_position& pos)"
     << endl;
   }
-  for (int i=min;i<=max;i++)
+#endif
+
+  dvector* pmi = m + min;
+  for (int i = min; i <= max; ++i)
   {
-    if (allocated((*this)(i)))
-      (*this)(i).save_dvector_derivatives_na(pos(i));
+    if (allocated(*pmi))
+      pmi->save_dvector_derivatives_na(pos(i));
+    ++pmi;
   }
 }
 
@@ -285,21 +338,30 @@ void dmatrix::save_dmatrix_derivatives_na(const dvar_matrix_position& _pos)
  * Description not yet available.
  * \param
  */
-void dvar_matrix::save_dvar_matrix_position(void) const
+void dvar_matrix::save_dvar_matrix_position() const
+{
+  gradient_structure::fp->save_dvar_matrix_position(*this);
+}
+void DF_FILE::save_dvar_matrix_position(const dvar_matrix& m)
 {
   // saves the size and address information for a dvar_vector
-  dvar_matrix_position tmp(*this,1);
-  size_t wsize=sizeof(int);
-  size_t wsize1=sizeof(void*);
+  dvar_matrix_position tmp(m,1);
+  constexpr size_t wsize=sizeof(int);
+  constexpr size_t wsize1=sizeof(void*);
 
-  int min=rowmin();
-  int max=rowmax();
-  for (int i=min;i<=max;i++)
+  int min=m.rowmin();
+  int max=m.rowmax();
+  int* ptmplbi = tmp.lb.get_v() + min;
+  int* ptmpubi = tmp.ub.get_v() + min;
+  for (int i=min;i<=max;++i)
   {
-    gradient_structure::get_fp()->fwrite(&(tmp.lb(i)),wsize);
-    gradient_structure::get_fp()->fwrite(&(tmp.ub(i)),wsize);
-    gradient_structure::get_fp()->fwrite(&(tmp.ptr(i)),wsize1);
-   }
-  gradient_structure::get_fp()->fwrite(&(tmp.row_min),wsize);
-  gradient_structure::get_fp()->fwrite(&(tmp.row_max),wsize);
+    fwrite(ptmplbi, wsize);
+    fwrite(ptmpubi, wsize);
+    fwrite(&(tmp.ptr(i)), wsize1);
+
+    ++ptmplbi;
+    ++ptmpubi;
+  }
+  fwrite(&(tmp.row_min), wsize);
+  fwrite(&(tmp.row_max), wsize);
 }

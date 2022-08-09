@@ -64,14 +64,12 @@ double_and_int* dlist::gradnew()
  */
 void gradfree(dlink* v)
 {
-#if !defined(OPT_LIB)
   if (!gradient_structure::instances)
   {
     //delete (double_and_int*)v;
     v = NULL;
     return;
   }
-#endif
   gradient_structure::_instance->GRAD_LIST->append(v);
 }
 //prevariable::prevariable(const prevariable& t)

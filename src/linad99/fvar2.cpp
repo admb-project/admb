@@ -36,7 +36,7 @@ Creates an entry in the gradient structure linked list.
 double_and_int* gradnew()
 {
 #if !defined(OPT_LIB)
-  if (!gradient_structure::instances)
+  if (!gradient_structure::_instance)
   {
     cerr << "Error -- you are trying to create a dvariable object"
             " when there is " << endl << "no object of type"
@@ -64,13 +64,11 @@ double_and_int* dlist::gradnew()
  */
 void gradfree(dlink* v)
 {
-  if (!gradient_structure::instances)
+  if (gradient_structure::_instance)
   {
-    //delete (double_and_int*)v;
-    v = NULL;
-    return;
+    gradient_structure::_instance->GRAD_LIST->append(v);
   }
-  gradient_structure::_instance->GRAD_LIST->append(v);
+  v = NULL;
 }
 //prevariable::prevariable(const prevariable& t)
 //  {

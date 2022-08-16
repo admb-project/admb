@@ -96,7 +96,9 @@ void test_smartlist::allocate(const size_t _bufsize,const adstring& _filename)
     ad_exit(1);
   }
 
-  /*off_t pos=*/lseek(fp,0L,SEEK_CUR);
+#ifdef DEBUG
+  off_t pos=lseek(fp,0L,SEEK_CUR);
+#endif
 }
 
 /**

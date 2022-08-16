@@ -24,7 +24,7 @@ void fixed_smartlist::reset(void)
   end_saved=0;
   bptr=buffer;
   eof_flag=0;
-  /*off_t pos=*/lseek(fp,0L,SEEK_CUR);
+  //off_t pos=lseek(fp,0L,SEEK_CUR);
   endof_file_ptr=lseek(fp,0L,SEEK_SET);
   written_flag=0;
 }
@@ -88,10 +88,12 @@ void fixed_smartlist::allocate(const size_t _bufsize,const adstring& _filename)
          << " in class fixed_smartlist " << endl;
     ad_exit(1);
   }
+#ifdef DEBUG
   else
   {
-    /*off_t pos=*/lseek(fp, 0L, SEEK_CUR);
+    off_t pos=lseek(fp, 0L, SEEK_CUR);
   }
+#endif
 }
 
 /**

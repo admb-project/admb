@@ -94,7 +94,8 @@ else
       endif
     endif
   endif
-  ifeq ($(CXX),g++)
+  #ifeq ($(CXX),g++)
+  ifeq (g++, $(findstring g++, $(CXX)))
     ifeq ($(UNAME_S),Darwin)
       ifeq (clang-10,$(findstring clang-10,$(shell $(CXX) --version)))
         CXXVERSION=-clang10

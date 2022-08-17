@@ -360,3 +360,43 @@ bcc-install:
 	cd src& $(MAKE) -fbcc.mak install
 bcc-clean:
 	cd src& $(MAKE) -fbcc.mak clean
+
+#GNU
+g++-x: g++-x-all
+g++-x-all:
+	$(MAKE) g++-x-dist
+	$(MAKE) g++-x-shared
+	$(MAKE) --directory=src CC=$(CC) CXX=$(CXX) copy
+g++-x-dist:
+	$(MAKE) g++-x-core
+	$(MAKE) g++-x-contribs
+g++-x-debug:
+	$(MAKE) g++-x-all DEBUG=yes
+g++-x-core:
+	$(MAKE) --directory=src CC=$(CC) CXX=$(CXX) all
+g++-x-contribs: g++-x-core
+	$(MAKE) --directory=contrib CC=$(CC) CXX=$(CXX) all
+g++-x-docs:
+	$(MAKE) --directory=docs CC=$(CC) CXX=$(CXX) all
+g++-x-gtests:
+	$(MAKE) --directory=tests CC=$(CC) CXX=$(CXX) unit-gtests
+g++-x-coverage:
+	$(MAKE) --directory=src CC=$(CC) CXX=$(CXX) SAFE_ONLY=yes dist
+	$(MAKE) --directory=tests CC=$(CC) CXX=$(CXX) coverage
+g++-x-verify:
+	$(MAKE) --directory=tests CC=$(CC) CXX=$(CXX) verify
+g++-x-shared:
+	$(MAKE) --directory=src CC=$(CC) CXX=$(CXX) SHARED=-shared shared
+	$(MAKE) --directory=contrib CC=$(CC) CXX=$(CXX) SHARED=-shared shared
+g++-x-install:
+	$(MAKE) --directory=src CC=$(CC) CXX=$(CXX) install
+g++-x-check:
+	$(MAKE) --directory=src CC=$(CC) CXX=$(CXX) check
+g++-x-clean:
+	$(MAKE) --directory=src CC=$(CC) CXX=$(CXX) clean
+	$(MAKE) --directory=contrib CC=$(CC) CXX=$(CXX) clean
+	$(MAKE) --directory=scripts CC=$(CC) CXX=$(CXX) clean
+	$(MAKE) --directory=tests CC=$(CC) CXX=$(CXX) clean
+	$(MAKE) --directory=examples CC=$(CC) CXX=$(CXX) clean
+g++-x-zip:
+	$(MAKE) --directory=src CC=$(CC) CXX=$(CXX) zip

@@ -111,7 +111,8 @@ else
   ifndef OSNAME
     $(warning Unknown UNAME_S = "$(UNAME_S)" results in empty OSNAME.)
   else
-    ifeq ($(CXX),g++)
+    #ifeq ($(CXX),g++)
+    ifeq (g++,$(findstring g++, $(CXX)))
       ifeq ($(UNAME_S),Darwin)
         ifeq (clang-10,$(findstring clang-10,$(shell $(CXX) --version)))
           CXXVERSION=-clang10
@@ -210,6 +211,7 @@ endif
 
 ifeq ($(CMDSHELL),cmd)
   ifeq ($(CXX),g++)
+  #ifeq (g++, $(findstring g++, $(CXX))
     ifeq ($(findstring g++.exe,$(shell where g++.exe 2>&1 | findstr g++.exe)),g++.exe)
       GCCMAJVER:="GCCVER$(shell gcc -dumpversion)"
       ifeq (GCCVER4,$(findstring GCCVER4,$(GCCMAJVER)))
@@ -246,10 +248,10 @@ else
       endif
     else ifeq ($(CXX),CC)
       ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
-    else ifeq ($(CXX),g++)
-      GCCMAJVER:=$(shell gcc -dumpversion | cut -f1 -d. )
+    else ifeq (g++, $(findstring g++, $(CXX)))
+      GCCMAJVER:=$(shell $(CC) -dumpversion | cut -f1 -d. )
       ifeq ("$(GCCMAJVER)","4")
-        GCCMINVER:=$(shell gcc -dumpversion | cut -f2 -d. )
+        GCCMINVER:=$(shell $(CC) -dumpversion | cut -f2 -d. )
         ifeq ("$(GCCMINVER)","9")
           ADCXXFLAGS:= -std=c++11 $(ADCXXFLAGS)
         else
@@ -317,7 +319,7 @@ CXXFLAGS_OPT_LIB:=$(subst -D_USE_MATH_DEFINES,-DOPT_LIB -D_USE_MATH_DEFINES,$(CX
 ifeq ($(CXX),c++)
 CXXFLAGS_OPT_LIB:=$(subst -Wextra,-Wextra,$(CXXFLAGS_OPT_LIB))
 endif
-ifeq ($(CXX),g++)
+ifeq (g++, $(findstring g++, $(CXX)))
 CXXFLAGS_OPT_LIB:=$(subst -Wextra,-Wextra,$(CXXFLAGS_OPT_LIB))
 endif
 ifneq ($(CXX),CC)

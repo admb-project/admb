@@ -180,7 +180,7 @@ if [[ "$UNAME_S" =~ "_NT" ]]; then
     fi
   fi
 fi
-if [ "$CXX" == "g++" ]; then
+if [[ "$CXX" =~ "g++" ]]; then
   if [ "$UNAME_S" == "Darwin" ]; then
     if [[ "`$CXX --version`" =~ "clang-11" ]]; then
       CXXVERSION=$OS_NAME-clang11
@@ -192,8 +192,13 @@ if [ "$CXX" == "g++" ]; then
       fi
     fi
   else
-    DUMPVERSION="`g++ -dumpversion | cut -f1 -d. `"
-    CXXVERSION="$OS_NAME-$CXX$DUMPVERSION"
+    if [[ "$CXX" =~ "g++-" ]]; then
+      CXXTMP=g++
+    else
+      CXXTMP=$CXX
+    fi
+    DUMPVERSION="`$CXX -dumpversion | cut -f1 -d. `"
+    CXXVERSION="$OS_NAME-$CXXTMP$DUMPVERSION"
   fi
 fi
 if [ "$CXX" == "clang++" ]; then

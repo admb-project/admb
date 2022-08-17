@@ -400,7 +400,7 @@ else
       ifeq ($(findstring Homebrew,$(shell $(CXX) --version)),Homebrew)
 	$(CXX) -shared $(LDFLAGS) -o ../build/$(ADMB_VER)/lib/libadmb$(OSNAME)$(CXXVERSION).so -Wl,-force_load ../build/$(ADMB_VER)/lib/libadmb$(OSNAME)$(CXXVERSION)-shared.a
       else
-        $(CXX) -shared $(LDFLAGS) -o ../build/$(ADMB_VER)/lib/libadmb$(OSNAME)$(CXXVERSION).so -Wl,--whole-archive ../build/$(ADMB_VER)/lib/libadmb$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
+	$(CXX) -shared $(LDFLAGS) -o ../build/$(ADMB_VER)/lib/libadmb$(OSNAME)$(CXXVERSION).so -Wl,--whole-archive ../build/$(ADMB_VER)/lib/libadmb$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
       endif
       ifndef SAFE_ONLY
         ifeq ($(findstring Homebrew,$(shell $(CXX) --version)),Homebrew)

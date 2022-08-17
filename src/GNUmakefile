@@ -111,14 +111,18 @@ else
   ifndef OSNAME
     $(warning Unknown UNAME_S = "$(UNAME_S)" results in empty OSNAME.)
   else
-    ifeq ($(CXX),g++)
+    ifeq ($(findstring g++,$(CXX)),g++)
       ifeq ($(UNAME_S),Darwin)
-        ifeq (clang-10,$(findstring clang-10,$(shell $(CXX) --version)))
-          CXXVERSION=-clang10
-        else ifeq (clang-11,$(findstring clang-11,$(shell $(CXX) --version)))
-          CXXVERSION=-clang11
+        ifeq ($(findstring Homebrew,$(shell $(CXX) --version)),Homebrew)
+          CXXVERSION=-g++$(basename $(basename $(shell $(CXX) -dumpversion)))
         else
-          CXXVERSION=-clang
+          ifeq (clang-10,$(findstring clang-10,$(shell $(CXX) --version)))
+            CXXVERSION=-clang10
+          else ifeq (clang-11,$(findstring clang-11,$(shell $(CXX) --version)))
+            CXXVERSION=-clang11
+          else
+            CXXVERSION=-clang
+          endif
         endif
       else
         CXXVERSION=-g++$(basename $(basename $(shell $(CXX) -dumpversion)))
@@ -137,7 +141,7 @@ else
         CXXVERSION=-clang++$(basename $(basename $(shell $(CXX) -dumpversion)))
       endif
     endif
-    ifeq ($(CXX),c++)
+    ifeq ($(findstring c++,$(CXX)),c++)
       ifeq ($(UNAME_S),Darwin)
         ifeq (clang-10,$(findstring clang-10,$(shell $(CXX) --version)))
           CXXVERSION=-clang10
@@ -393,9 +397,17 @@ else
 	$(CXX) -shared $(LDFLAGS) -o ../build/$(ADMB_VER)/lib/libadmbo$(OSNAME)$(CXXVERSION).so -Wl,-force_load ../build/$(ADMB_VER)/lib/libadmbo$(OSNAME)$(CXXVERSION)-shared.a
       endif
     else
-	$(CXX) -shared $(LDFLAGS) -o ../build/$(ADMB_VER)/lib/libadmb$(OSNAME)$(CXXVERSION).so -Wl,--whole-archive ../build/$(ADMB_VER)/lib/libadmb$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
+      ifeq ($(findstring Homebrew,$(shell $(CXX) --version)),Homebrew)
+	$(CXX) -shared $(LDFLAGS) -o ../build/$(ADMB_VER)/lib/libadmb$(OSNAME)$(CXXVERSION).so -Wl,-force_load ../build/$(ADMB_VER)/lib/libadmb$(OSNAME)$(CXXVERSION)-shared.a
+      else
+        $(CXX) -shared $(LDFLAGS) -o ../build/$(ADMB_VER)/lib/libadmb$(OSNAME)$(CXXVERSION).so -Wl,--whole-archive ../build/$(ADMB_VER)/lib/libadmb$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
+      endif
       ifndef SAFE_ONLY
-	$(CXX) -shared $(LDFLAGS) -o ../build/$(ADMB_VER)/lib/libadmbo$(OSNAME)$(CXXVERSION).so -Wl,--whole-archive ../build/$(ADMB_VER)/lib/libadmbo$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
+        ifeq ($(findstring Homebrew,$(shell $(CXX) --version)),Homebrew)
+	  $(CXX) -shared $(LDFLAGS) -o ../build/$(ADMB_VER)/lib/libadmbo$(OSNAME)$(CXXVERSION).so -Wl,-force_load ../build/$(ADMB_VER)/lib/libadmbo$(OSNAME)$(CXXVERSION)-shared.a
+        else
+	  $(CXX) -shared $(LDFLAGS) -o ../build/$(ADMB_VER)/lib/libadmbo$(OSNAME)$(CXXVERSION).so -Wl,--whole-archive ../build/$(ADMB_VER)/lib/libadmbo$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
+        endif
       endif
     endif
   endif

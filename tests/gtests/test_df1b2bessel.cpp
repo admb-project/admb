@@ -105,7 +105,7 @@ TEST_F(test_df1b2bessel, bessy0)
     double bessy0(double);
     double expected = bessy0(value(v));
 
-    ASSERT_EQ(expected, value(result));
+    ASSERT_DOUBLE_EQ(expected, value(result));
 
     v.deallocate();
 
@@ -146,7 +146,7 @@ TEST_F(test_df1b2bessel, bessj1)
     double bessj1(double);
     double expected = bessj1(value(v));
 
-    ASSERT_EQ(expected, value(result));
+    ASSERT_DOUBLE_EQ(expected, value(result));
 
     v.deallocate();
 
@@ -187,7 +187,7 @@ TEST_F(test_df1b2bessel, bessy1)
     double bessy1(double);
     double expected = bessy1(value(v));
 
-    ASSERT_EQ(expected, value(result));
+    ASSERT_DOUBLE_EQ(expected, value(result));
 
     v.deallocate();
 

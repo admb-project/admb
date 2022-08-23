@@ -342,7 +342,11 @@ else
   CXXFLAGS="$CXXFLAGS -I. -I\"$ADMB_HOME/include\""
 fi
 if [[ "$static" == "-static" || "$CXX" == "adcomp-x86_64-w64-mingw32" ]]; then
-  LDFLAGS="--static $LDFLAGS"
+  if [[ "`$CXX --version`" =~ "Homebrew" ]]; then
+    LDFLAGS="-Bstatic $LDFLAGS"
+  else
+    LDFLAGS="--static $LDFLAGS"
+  fi
 fi
 tplsrcs=
 for model in $tpls

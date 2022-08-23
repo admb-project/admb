@@ -380,9 +380,17 @@ ifeq ($(DEBUG),yes)
 	$(CXX) -shared $(LDFLAGS) -o ../build/$(ADMB_VER)/lib/libadmbo$(OSNAME)$(CXXVERSION).so -Wl,-force_load ../build/$(ADMB_VER)/lib/libadmbo$(OSNAME)$(CXXVERSION)-shared-debug.a
       endif
     else
+      ifeq ($(findstring Homebrew,$(shell $(CXX) --version)),Homebrew)
+	$(CXX) -shared $(LDFLAGS) -o ../build/$(ADMB_VER)/lib/libadmb$(OSNAME)$(CXXVERSION).so -Wl,-force_load ../build/$(ADMB_VER)/lib/libadmb$(OSNAME)$(CXXVERSION)-shared-debug.a
+      else
 	$(CXX) -shared $(LDFLAGS) -o ../build/$(ADMB_VER)/lib/libadmb$(OSNAME)$(CXXVERSION).so -Wl,--whole-archive ../build/$(ADMB_VER)/lib/libadmb$(OSNAME)$(CXXVERSION)-shared-debug.a -Wl,--no-whole-archive
+      endif
       ifndef SAFE_ONLY
-	$(CXX) -shared $(LDFLAGS) -o ../build/$(ADMB_VER)/lib/libadmbo$(OSNAME)$(CXXVERSION).so -Wl,--whole-archive ../build/$(ADMB_VER)/lib/libadmbo$(OSNAME)$(CXXVERSION)-shared-debug.a -Wl,--no-whole-archive
+        ifeq ($(findstring Homebrew,$(shell $(CXX) --version)),Homebrew)
+	  $(CXX) -shared $(LDFLAGS) -o ../build/$(ADMB_VER)/lib/libadmbo$(OSNAME)$(CXXVERSION).so -Wl,-force_load ../build/$(ADMB_VER)/lib/libadmbo$(OSNAME)$(CXXVERSION)-shared-debug.a
+        else
+	  $(CXX) -shared $(LDFLAGS) -o ../build/$(ADMB_VER)/lib/libadmbo$(OSNAME)$(CXXVERSION).so -Wl,--whole-archive ../build/$(ADMB_VER)/lib/libadmbo$(OSNAME)$(CXXVERSION)-shared-debug.a -Wl,--no-whole-archive
+        endif
       endif
     endif
   endif

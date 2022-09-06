@@ -9,6 +9,8 @@ pella_t:
 	../../admb pella_t
 
 run:
+	cp ../../examples/admb/pella_t/pella_t.dat .
+
 	echo -1.0 > penalty.dat
 	./$(NAME)
 	mv $(NAME).par $(NAME)_penalty_none.par

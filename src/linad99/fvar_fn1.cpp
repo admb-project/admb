@@ -21,18 +21,9 @@ Compute exponential variable
 */
 prevariable& exp(const prevariable& v1)
 {
-  double tmp;
   //Avoid underflow for large negative values
   // https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/exp-expf
-  if (v1.v->x <= -708.3964)
-  {
-    cout.flush();
-    tmp = 0.0;
-  }
-  else
-  {
-    tmp = std::exp(v1.v->x);
-  }
+  double tmp = v1.v->x > -708.3964 ?  std::exp(v1.v->x) : 0.0;
 
 #ifdef DIAG
   /** \todo Must remove macros below once support
@@ -50,9 +41,9 @@ prevariable& exp(const prevariable& v1)
 
   dvariable* RETURN_PTR = gradient_structure::next_RETURN_PTR();
 
-  RETURN_PTR->v->x=tmp;
-  gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
-    &(RETURN_PTR->v->x), &(v1.v->x),tmp);
+  RETURN_PTR->v->x = tmp;
+  gradient_structure::GRAD_STACK1->set_gradient_stack(
+    default_evaluation, &(RETURN_PTR->v->x), &(v1.v->x), tmp);
 
   return *RETURN_PTR;
 }

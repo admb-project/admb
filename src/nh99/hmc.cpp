@@ -301,7 +301,7 @@ void function_minimizer::shmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
   dvector p(1,nvar);		// momentum vector
   p.fill_randn(rng);
   // Copy initial value to parsave in case first trajectory rejected
-  initial_params::copy_all_values(parsave,1.0);
+  initial_params::copy_all_values(parsave, 1);
   double iaccept=0.0;
   // The gradient and params at beginning of trajectory, in case rejected.
   dvector gr2begin(1,nvar); gr2begin=gr2;
@@ -340,7 +340,7 @@ void function_minimizer::shmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
       ybegin=y;
       gr2begin=gr2;
       nllbegin=nll;
-      initial_params::copy_all_values(parsave,1.0);
+      initial_params::copy_all_values(parsave, 1);
     } else {
       // Reject and don't update anything to reuse initials for next trajectory
       y=ybegin;

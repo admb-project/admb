@@ -6,13 +6,13 @@ PATH=..\utilities;$(PATH);..\utilities\shared
 
 #SAFE_ALL= /DSAFE_ALL
 
-!IF ([cl 2>&1 | findstr /C:" 19." > nul] == 0)
+!IF ([cl 2>&1 | findstr " 19" > nul] == 0)
 CXXVERSION=-cl19
 !ELSE
 CXXVERSION=-cl
 !ENDIF
 
-!IF ([cl 2>&1 | findstr /C:" x64" > nul] == 0)
+!IF ([cl 2>&1 | findstr "x64" > nul] == 0)
 OSNAME=win64
 !ELSE
 OSNAME=win32

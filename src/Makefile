@@ -12,7 +12,7 @@ CXXVERSION=-cl19
 CXXVERSION=-cl
 !ENDIF
 
-!IF ([cl 2>&1 | findstr "x64" > nul] == 0)
+!IF ([cl 2>&1 | findstr " x64" > nul] == 0)
 OSNAME=win64
 !ELSE
 OSNAME=win32

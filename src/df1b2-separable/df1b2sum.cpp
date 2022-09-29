@@ -141,47 +141,32 @@ void read_pass2_1_sum(void)
   // save for second reverse pass
   // save identifier 1
 
-  double* px_u_bar = px->u_bar;
-  double* pz_u_bar = pz->u_bar;
   for (unsigned int i=0;i<nvar;i++)
   {
-    *px_u_bar += *pz_u_bar;
-
-    ++px_u_bar;
-    ++pz_u_bar;
+    px->u_bar[i]+=pz->u_bar[i];
   }
-  double* py_u_bar = py->u_bar;
-  pz_u_bar = pz->u_bar;
   for (unsigned int i=0;i<nvar;i++)
   {
-    *py_u_bar += *pz_u_bar;
-
-    ++py_u_bar;
-    ++pz_u_bar;
+    py->u_bar[i]+=pz->u_bar[i];
   }
-  double* px_u_dot_bar = px->u_dot_bar;
-  double* pz_u_dot_bar = pz->u_dot_bar;
   for (unsigned int i=0;i<nvar;i++)
   {
-    *px_u_dot_bar += *pz_u_dot_bar;
-
-    ++px_u_dot_bar;
-    ++pz_u_dot_bar;
+    px->u_dot_bar[i]+=pz->u_dot_bar[i];
   }
-  double* py_u_dot_bar = py->u_dot_bar;
-  pz_u_dot_bar = pz->u_dot_bar;
   for (unsigned int i=0;i<nvar;i++)
   {
-    *py_u_dot_bar += *pz_u_dot_bar;
-
-    ++py_u_dot_bar;
-    ++pz_u_dot_bar;
+    py->u_dot_bar[i]+=pz->u_dot_bar[i];
   }
 
-  constexpr size_t sizeofdouble = sizeof(double);
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  memset(pz->u_bar, 0, nvar * sizeofdouble);
-  memset(pz->u_dot_bar, 0, nvar * sizeofdouble);
+  for (unsigned int i=0;i<nvar;i++)
+  {
+    pz->u_bar[i]=0;
+  }
+  for (unsigned int i=0;i<nvar;i++)
+  {
+    pz->u_dot_bar[i]=0;
+  }
 }
 
 /**
@@ -230,9 +215,12 @@ void read_pass2_2_sum(void)
   double * z_bar_tilde=pz->get_u_bar_tilde();
   double * z_dot_bar_tilde=pz->get_u_dot_bar_tilde();
   // Do second "reverse-reverse" pass calculations
-  constexpr size_t sizeofdouble = sizeof(double);
-  memset(z_bar_tilde, 0, nvar * sizeofdouble);
-  memset(z_dot_bar_tilde, 0, nvar * sizeofdouble);
+
+  for (unsigned int i=0;i<nvar;i++)
+  {
+    z_bar_tilde[i]=0;
+    z_dot_bar_tilde[i]=0;
+  }
 
   // start with x and add y
   for (unsigned int i=0;i<nvar;i++)
@@ -300,6 +288,8 @@ void read_pass2_3_sum(void)
     py->u_dot_tilde[i]+=pz->u_dot_tilde[i];
   }
   *(pz->u_tilde)=0;
-  constexpr size_t sizeofdouble = sizeof(double);
-  memset(pz->u_dot_tilde, 0, nvar * sizeofdouble);
+  for (unsigned int i=0;i<nvar;i++)
+  {
+    pz->u_dot_tilde[i]=0;
+  }
 }

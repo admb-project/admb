@@ -71,7 +71,7 @@ void grad_stack::set_gradient_stack(void (* func)(void), double * dep_addr,
  */
 prevariable& operator*(double x, const prevariable& v2)
 {
-  dvariable* RETURN_PTR = gradient_structure::next_RETURN_PTR();
+  dvariable* RETURN_PTR = gradient_structure::_instance->RETURN_PTR == gradient_structure::_instance->MAX_RETURN ? gradient_structure::_instance->RETURN_PTR = gradient_structure::_instance->MIN_RETURN : ++gradient_structure::_instance->RETURN_PTR;
 
   RETURN_PTR->v->x = x * v2.v->x;
   gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation2,
@@ -85,7 +85,7 @@ prevariable& operator*(double x, const prevariable& v2)
  */
 prevariable& operator*(const prevariable& v1, double x)
 {
-  dvariable* RETURN_PTR = gradient_structure::next_RETURN_PTR();
+  dvariable* RETURN_PTR = gradient_structure::_instance->RETURN_PTR == gradient_structure::_instance->MAX_RETURN ? gradient_structure::_instance->RETURN_PTR = gradient_structure::_instance->MIN_RETURN : ++gradient_structure::_instance->RETURN_PTR;
 
   RETURN_PTR->v->x = v1.v->x * x;
   gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation2,

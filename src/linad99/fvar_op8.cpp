@@ -17,7 +17,7 @@ Returns variable result of v1 cubed.
 */
 prevariable& cube(const prevariable& v1)
 {
-  dvariable* RETURN_PTR = gradient_structure::next_RETURN_PTR();
+  dvariable* RETURN_PTR = gradient_structure::_instance->RETURN_PTR == gradient_structure::_instance->MAX_RETURN ? gradient_structure::_instance->RETURN_PTR = gradient_structure::_instance->MIN_RETURN : ++gradient_structure::_instance->RETURN_PTR;
 
   double x=value(v1);
   double x2=x*x;
@@ -37,7 +37,7 @@ Returns variable result of v1 raised to the power of four.
 */
 prevariable& fourth(const prevariable& v1)
 {
-  dvariable* RETURN_PTR = gradient_structure::next_RETURN_PTR();
+  dvariable* RETURN_PTR = gradient_structure::_instance->RETURN_PTR == gradient_structure::_instance->MAX_RETURN ? gradient_structure::_instance->RETURN_PTR = gradient_structure::_instance->MIN_RETURN : ++gradient_structure::_instance->RETURN_PTR;
 
   double x=value(v1);
   double x2=x*x;

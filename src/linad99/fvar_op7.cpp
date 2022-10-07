@@ -11,7 +11,7 @@ Return the computed square of variable, then set gradient_structure.
 */
 dvariable& square(const prevariable& variable)
 {
-  dvariable* RETURN_PTR = gradient_structure::next_RETURN_PTR();
+  dvariable* RETURN_PTR = gradient_structure::_instance->RETURN_PTR == gradient_structure::_instance->MAX_RETURN ? gradient_structure::_instance->RETURN_PTR = gradient_structure::_instance->MIN_RETURN : ++gradient_structure::_instance->RETURN_PTR;
 
   double& x = value(variable);
   RETURN_PTR->v->x = x * x;

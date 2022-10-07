@@ -37,7 +37,7 @@ prevariable& pow(const prevariable& v1, const double u)
             " prevariable& pow(const prevariable& v1, const double u)" << endl;
   }
 #endif
-  dvariable* RETURN_PTR = gradient_structure::next_RETURN_PTR();
+  dvariable* RETURN_PTR = gradient_structure::_instance->RETURN_PTR == gradient_structure::_instance->MAX_RETURN ? gradient_structure::_instance->RETURN_PTR = gradient_structure::_instance->MIN_RETURN : ++gradient_structure::_instance->RETURN_PTR;
 
   double x=::pow(v1.v->x,u-1);
   double y=x* v1.v->x;
@@ -64,7 +64,7 @@ prevariable& pow(const prevariable& v1, const double u)
  */
 prevariable& sin(const prevariable& v1)
 {
-  dvariable* RETURN_PTR = gradient_structure::next_RETURN_PTR();
+  dvariable* RETURN_PTR = gradient_structure::_instance->RETURN_PTR == gradient_structure::_instance->MAX_RETURN ? gradient_structure::_instance->RETURN_PTR = gradient_structure::_instance->MIN_RETURN : ++gradient_structure::_instance->RETURN_PTR;
 
   RETURN_PTR->v->x=::sin(v1.v->x);
   gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
@@ -79,7 +79,7 @@ prevariable& sin(const prevariable& v1)
  */
 prevariable& sigmoid(const prevariable& v1)
 {
-  dvariable* RETURN_PTR = gradient_structure::next_RETURN_PTR();
+  dvariable* RETURN_PTR = gradient_structure::_instance->RETURN_PTR == gradient_structure::_instance->MAX_RETURN ? gradient_structure::_instance->RETURN_PTR = gradient_structure::_instance->MIN_RETURN : ++gradient_structure::_instance->RETURN_PTR;
 
   double tmp=v1.v->x;
 
@@ -104,7 +104,7 @@ prevariable& sigmoid(const prevariable& v1)
     */
 prevariable& fabs(const prevariable& v1)
 {
-  dvariable* RETURN_PTR = gradient_structure::next_RETURN_PTR();
+  dvariable* RETURN_PTR = gradient_structure::_instance->RETURN_PTR == gradient_structure::_instance->MAX_RETURN ? gradient_structure::_instance->RETURN_PTR = gradient_structure::_instance->MIN_RETURN : ++gradient_structure::_instance->RETURN_PTR;
 
   double tmp=v1.v->x;
   RETURN_PTR->v->x=fabs(tmp);
@@ -124,12 +124,12 @@ prevariable& fabs(const prevariable& v1)
     */
 prevariable& sfabs(const prevariable& v1)
 {
+  dvariable* RETURN_PTR = gradient_structure::_instance->RETURN_PTR == gradient_structure::_instance->MAX_RETURN ? gradient_structure::_instance->RETURN_PTR = gradient_structure::_instance->MIN_RETURN : ++gradient_structure::_instance->RETURN_PTR;
+
   #define cutoff 0.001 //  h
   #define cutoff2 0.000001
   double a = 2./cutoff; // 2.0/h
   double b = 1./cutoff2; // 1.0/(h*h)
-
-  dvariable* RETURN_PTR = gradient_structure::next_RETURN_PTR();
 
   double tmp1=v1.v->x;
   double tmp=::fabs(tmp1);
@@ -177,7 +177,7 @@ prevariable& sfabs(const prevariable& v1)
  */
 prevariable& cos(const prevariable& v1)
 {
-  dvariable* RETURN_PTR = gradient_structure::next_RETURN_PTR();
+  dvariable* RETURN_PTR = gradient_structure::_instance->RETURN_PTR == gradient_structure::_instance->MAX_RETURN ? gradient_structure::_instance->RETURN_PTR = gradient_structure::_instance->MIN_RETURN : ++gradient_structure::_instance->RETURN_PTR;
 
   RETURN_PTR->v->x=::cos(v1.v->x);
   gradient_structure::GRAD_STACK1->set_gradient_stack(
@@ -193,7 +193,7 @@ prevariable& cos(const prevariable& v1)
  */
 prevariable& log(const prevariable& v1)
 {
-  dvariable* RETURN_PTR = gradient_structure::next_RETURN_PTR();
+  dvariable* RETURN_PTR = gradient_structure::_instance->RETURN_PTR == gradient_structure::_instance->MAX_RETURN ? gradient_structure::_instance->RETURN_PTR = gradient_structure::_instance->MIN_RETURN : ++gradient_structure::_instance->RETURN_PTR;
 
   RETURN_PTR->v->x=::log(v1.v->x);
   gradient_structure::GRAD_STACK1->set_gradient_stack(
@@ -209,7 +209,7 @@ prevariable& log(const prevariable& v1)
  */
 prevariable& log10(const prevariable& v1)
 {
-  dvariable* RETURN_PTR = gradient_structure::next_RETURN_PTR();
+  dvariable* RETURN_PTR = gradient_structure::_instance->RETURN_PTR == gradient_structure::_instance->MAX_RETURN ? gradient_structure::_instance->RETURN_PTR = gradient_structure::_instance->MIN_RETURN : ++gradient_structure::_instance->RETURN_PTR;
 
   RETURN_PTR->v->x=::log10(v1.v->x);
   gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,

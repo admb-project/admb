@@ -38,14 +38,14 @@ prevariable& exp(const prevariable& v1)
   }
   #endif
 #endif
+  if (++gradient_structure::_instance->RETURN_PTR > gradient_structure::_instance->MAX_RETURN) 
+    gradient_structure::_instance->RETURN_PTR = gradient_structure::_instance->MIN_RETURN;
 
-  dvariable* RETURN_PTR = gradient_structure::_instance->RETURN_PTR == gradient_structure::_instance->MAX_RETURN ? gradient_structure::_instance->RETURN_PTR = gradient_structure::_instance->MIN_RETURN : ++gradient_structure::_instance->RETURN_PTR;
-
-  RETURN_PTR->v->x = tmp;
+  gradient_structure::_instance->RETURN_PTR->v->x = tmp;
   gradient_structure::GRAD_STACK1->set_gradient_stack(
-    default_evaluation, &(RETURN_PTR->v->x), &(v1.v->x), tmp);
+    default_evaluation, &(gradient_structure::_instance->RETURN_PTR->v->x), &(v1.v->x), tmp);
 
-  return *RETURN_PTR;
+  return *gradient_structure::_instance->RETURN_PTR;
 }
 
 /**

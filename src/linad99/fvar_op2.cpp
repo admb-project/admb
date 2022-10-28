@@ -32,13 +32,14 @@
  */
 prevariable& operator+(const double x, const prevariable& v2)
 {
-  dvariable* RETURN_PTR = gradient_structure::_instance->RETURN_PTR == gradient_structure::_instance->MAX_RETURN ? gradient_structure::_instance->RETURN_PTR = gradient_structure::_instance->MIN_RETURN : ++gradient_structure::_instance->RETURN_PTR;
+  if (++gradient_structure::_instance->RETURN_PTR > gradient_structure::_instance->MAX_RETURN) 
+    gradient_structure::_instance->RETURN_PTR = gradient_structure::_instance->MIN_RETURN;
 
-  RETURN_PTR->v->x = x + (v2.v->x);
+  gradient_structure::_instance->RETURN_PTR->v->x = x + (v2.v->x);
   gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation1,
-    &(RETURN_PTR->v->x),&(v2.v->x));
+    &(gradient_structure::_instance->RETURN_PTR->v->x),&(v2.v->x));
 
-  return *RETURN_PTR;
+  return *gradient_structure::_instance->RETURN_PTR;
 }
 
 /**
@@ -47,13 +48,14 @@ prevariable& operator+(const double x, const prevariable& v2)
  */
 prevariable& operator+(const prevariable& v1, const double x)
 {
-  dvariable* RETURN_PTR = gradient_structure::_instance->RETURN_PTR == gradient_structure::_instance->MAX_RETURN ? gradient_structure::_instance->RETURN_PTR = gradient_structure::_instance->MIN_RETURN : ++gradient_structure::_instance->RETURN_PTR;
+  if (++gradient_structure::_instance->RETURN_PTR > gradient_structure::_instance->MAX_RETURN) 
+    gradient_structure::_instance->RETURN_PTR = gradient_structure::_instance->MIN_RETURN;
 
-  RETURN_PTR->v->x=v1.v->x+ x;
+  gradient_structure::_instance->RETURN_PTR->v->x=v1.v->x+ x;
   gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation1,
-    &(RETURN_PTR->v->x), &(v1.v->x));
+    &(gradient_structure::_instance->RETURN_PTR->v->x), &(v1.v->x));
 
-  return *RETURN_PTR;
+  return *gradient_structure::_instance->RETURN_PTR;
 }
 
 /**
@@ -62,13 +64,14 @@ prevariable& operator+(const prevariable& v1, const double x)
  */
 prevariable& operator-(const prevariable& v1, const prevariable& v2)
 {
-  dvariable* RETURN_PTR = gradient_structure::_instance->RETURN_PTR == gradient_structure::_instance->MAX_RETURN ? gradient_structure::_instance->RETURN_PTR = gradient_structure::_instance->MIN_RETURN : ++gradient_structure::_instance->RETURN_PTR;
+  if (++gradient_structure::_instance->RETURN_PTR > gradient_structure::_instance->MAX_RETURN) 
+    gradient_structure::_instance->RETURN_PTR = gradient_structure::_instance->MIN_RETURN;
 
-  RETURN_PTR->v->x=v1.v->x - v2.v->x;
+  gradient_structure::_instance->RETURN_PTR->v->x = v1.v->x - v2.v->x;
   gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation4m,
-    &(RETURN_PTR->v->x),&(v1.v->x),&(v2.v->x));
+    &(gradient_structure::_instance->RETURN_PTR->v->x), &(v1.v->x), &(v2.v->x));
 
-  return *RETURN_PTR;
+  return *gradient_structure::_instance->RETURN_PTR;
 }
 
 /**
@@ -77,13 +80,14 @@ prevariable& operator-(const prevariable& v1, const prevariable& v2)
  */
 prevariable& operator-(const prevariable& v1, const double x)
 {
-  dvariable* RETURN_PTR = gradient_structure::_instance->RETURN_PTR == gradient_structure::_instance->MAX_RETURN ? gradient_structure::_instance->RETURN_PTR = gradient_structure::_instance->MIN_RETURN : ++gradient_structure::_instance->RETURN_PTR;
+  if (++gradient_structure::_instance->RETURN_PTR > gradient_structure::_instance->MAX_RETURN) 
+    gradient_structure::_instance->RETURN_PTR = gradient_structure::_instance->MIN_RETURN;
 
-  RETURN_PTR->v->x=v1.v->x - x;
+  gradient_structure::_instance->RETURN_PTR->v->x=v1.v->x - x;
   gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation1,
-    &(RETURN_PTR->v->x), &(v1.v->x));
+    &(gradient_structure::_instance->RETURN_PTR->v->x), &(v1.v->x));
 
-  return *RETURN_PTR;
+  return *gradient_structure::_instance->RETURN_PTR;
 }
 
 /**
@@ -92,13 +96,14 @@ prevariable& operator-(const prevariable& v1, const double x)
  */
 prevariable& operator-(const double x, const prevariable& v2)
 {
-  dvariable* RETURN_PTR = gradient_structure::_instance->RETURN_PTR == gradient_structure::_instance->MAX_RETURN ? gradient_structure::_instance->RETURN_PTR = gradient_structure::_instance->MIN_RETURN : ++gradient_structure::_instance->RETURN_PTR;
+  if (++gradient_structure::_instance->RETURN_PTR > gradient_structure::_instance->MAX_RETURN) 
+    gradient_structure::_instance->RETURN_PTR = gradient_structure::_instance->MIN_RETURN;
 
-  RETURN_PTR->v->x = x - v2.v->x;
+  gradient_structure::_instance->RETURN_PTR->v->x = x - v2.v->x;
   gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation1m,
-    &(RETURN_PTR->v->x), &(v2.v->x));
+    &(gradient_structure::_instance->RETURN_PTR->v->x), &(v2.v->x));
 
-  return *RETURN_PTR;
+  return *gradient_structure::_instance->RETURN_PTR;
 }
 
 /**
@@ -107,13 +112,14 @@ prevariable& operator-(const double x, const prevariable& v2)
  */
 prevariable& operator-(const prevariable& v1)
 {
-  dvariable* RETURN_PTR = gradient_structure::_instance->RETURN_PTR == gradient_structure::_instance->MAX_RETURN ? gradient_structure::_instance->RETURN_PTR = gradient_structure::_instance->MIN_RETURN : ++gradient_structure::_instance->RETURN_PTR;
+  if (++gradient_structure::_instance->RETURN_PTR > gradient_structure::_instance->MAX_RETURN) 
+    gradient_structure::_instance->RETURN_PTR = gradient_structure::_instance->MIN_RETURN;
 
-  RETURN_PTR->v->x = -(v1.v->x);
+  gradient_structure::_instance->RETURN_PTR->v->x = -(v1.v->x);
   gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation1m,
-    &(RETURN_PTR->v->x),&(v1.v->x));
+    &(gradient_structure::_instance->RETURN_PTR->v->x),&(v1.v->x));
 
-  return *RETURN_PTR;
+  return *gradient_structure::_instance->RETURN_PTR;
 }
 
 /**
@@ -122,15 +128,16 @@ prevariable& operator-(const prevariable& v1)
  */
 prevariable& operator/(const prevariable& v1, const prevariable& v2)
 {
-  dvariable* RETURN_PTR = gradient_structure::_instance->RETURN_PTR == gradient_structure::_instance->MAX_RETURN ? gradient_structure::_instance->RETURN_PTR = gradient_structure::_instance->MIN_RETURN : ++gradient_structure::_instance->RETURN_PTR;
+  if (++gradient_structure::_instance->RETURN_PTR > gradient_structure::_instance->MAX_RETURN) 
+    gradient_structure::_instance->RETURN_PTR = gradient_structure::_instance->MIN_RETURN;
 
   double x = 1 / v2.v->x;
   double y = v1.v->x * x;
-  RETURN_PTR->v->x = y;
+  gradient_structure::_instance->RETURN_PTR->v->x = y;
   gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation3,
-     &(RETURN_PTR->v->x),&(v1.v->x),x,&(v2.v->x),-y*x);
+     &(gradient_structure::_instance->RETURN_PTR->v->x),&(v1.v->x),x,&(v2.v->x),-y*x);
 
-  return *RETURN_PTR;
+  return *gradient_structure::_instance->RETURN_PTR;
 }
 
 /**
@@ -139,16 +146,17 @@ prevariable& operator/(const prevariable& v1, const prevariable& v2)
  */
 prevariable& operator/(const double u, const prevariable& v2)
 {
-  dvariable* RETURN_PTR = gradient_structure::_instance->RETURN_PTR == gradient_structure::_instance->MAX_RETURN ? gradient_structure::_instance->RETURN_PTR = gradient_structure::_instance->MIN_RETURN : ++gradient_structure::_instance->RETURN_PTR;
+  if (++gradient_structure::_instance->RETURN_PTR > gradient_structure::_instance->MAX_RETURN) 
+    gradient_structure::_instance->RETURN_PTR = gradient_structure::_instance->MIN_RETURN;
 
   double x = 1 / v2.v->x;
   double y = u * x;
-  RETURN_PTR->v->x = y;
+  gradient_structure::_instance->RETURN_PTR->v->x = y;
 
   gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
-    &(RETURN_PTR->v->x), &(v2.v->x),-y*x);
+    &(gradient_structure::_instance->RETURN_PTR->v->x), &(v2.v->x),-y*x);
 
-  return *RETURN_PTR;
+  return *gradient_structure::_instance->RETURN_PTR;
 }
 
 /**
@@ -157,15 +165,16 @@ prevariable& operator/(const double u, const prevariable& v2)
  */
 prevariable& operator/(const prevariable& v1, const double u)
 {
-  dvariable* RETURN_PTR = gradient_structure::_instance->RETURN_PTR == gradient_structure::_instance->MAX_RETURN ? gradient_structure::_instance->RETURN_PTR = gradient_structure::_instance->MIN_RETURN : ++gradient_structure::_instance->RETURN_PTR;
+  if (++gradient_structure::_instance->RETURN_PTR > gradient_structure::_instance->MAX_RETURN) 
+    gradient_structure::_instance->RETURN_PTR = gradient_structure::_instance->MIN_RETURN;
 
   double x = 1 / u;
   double y = v1.v->x * x;
 
-  RETURN_PTR->v->x = y;
+  gradient_structure::_instance->RETURN_PTR->v->x = y;
 
   gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
-    &(RETURN_PTR->v->x), &(v1.v->x),x);
+    &(gradient_structure::_instance->RETURN_PTR->v->x), &(v1.v->x),x);
 
-  return *RETURN_PTR;
+  return *gradient_structure::_instance->RETURN_PTR;
 }

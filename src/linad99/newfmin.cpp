@@ -188,20 +188,17 @@ int get_maxpar(const dvector& g)
   int min = g.indexmin();
   int max = g.indexmax();
 
-  double* pg = g.get_v() + min;
   int maxpar = min;
-  double gmax = fabs(*pg);
+  double gmax = fabs(g(min));
 
-  ++pg;
   for (int i = min + 1; i <= max; ++i)
   {
-    double v = fabs(*pg);
+    double v = fabs(g(i));
     if (v > gmax)
     {
       gmax = v;
       maxpar = i;
     }
-    ++pg;
   }
   return maxpar;
 }
@@ -383,17 +380,8 @@ void fmm::fmin(const double& _f, const dvector &_x, const dvector& _g)
 
      /* xx is reserved for the updated values of independent variables,
         at the moment put the current values */
-  {
-     double* pxi = x.get_v() + 1;
-     double* pxxi = xx.get_v() + 1;
      for (i=1; i<=n; i++)
-     {
-       *pxxi = *pxi;
-
-       ++pxi;
-       ++pxxi;
-     }
-  }
+           xx.elem(i)=x.elem(i);
   tracing_message(traceflag,"A10");
 
       /* itn - iteration counter */
@@ -404,15 +392,8 @@ void fmm::fmin(const double& _f, const dvector &_x, const dvector& _g)
        /* initialize funval vector,
           it will contain last 10 function values (10-th is the most recent)
           needed to stop minimization in case if f(1)-f(10)<min_improve  */
-      {
-        double* pfunvali = funval.get_v() + 1;
-        for (i=1; i< 11; i++)
-        {
-          *pfunvali = 0.0;
-
-	  ++pfunvali;
-	}
-      }
+       for (i=1; i< 11; i++)
+          funval.elem(i)=0.;
   tracing_message(traceflag,"A11");
       ihang = 0;  /* flag, =1 when function minimizer is not making progress */
       llog=1;
@@ -451,20 +432,11 @@ void fmm::fmin(const double& _f, const dvector &_x, const dvector& _g)
       if(dfn == 0.)
          z = 0.0;
   tracing_message(traceflag,"A14");
-  {
-    double* pxi = x.get_v() + 1;
-    double* pxxi = xx.get_v() + 1;
-    double* pxsavei = xsave.get_v() + 1;
-    for (i=1; i<=n; i++)
-    {
-      *pxsavei = *pxi;
-      *pxi= *pxxi;
-
-      ++pxi;
-      ++pxxi;
-      ++pxsavei;
-    }
-  }
+      for (i=1; i<=n; i++)
+      {
+        xsave.elem(i)=x.elem(i);
+        x.elem(i)=xx.elem(i);
+      }
   ireturn=1; /* upon next entry will go to call1 */
   tracing_message(traceflag,"A15");
       if (h.disk_save())
@@ -485,29 +457,14 @@ void fmm::fmin(const double& _f, const dvector &_x, const dvector& _g)
         cout << "finished hessian restore" << endl;
       }
   tracing_message(traceflag,"A18");
-  {
-    double* pxi = x.get_v() + 1;
-    double* pxsavei = xsave.get_v() + 1;
-    for (i=1; i<=n; i++)
-    {
-      *pxi = *pxsavei;
-      ++pxi;
-      ++pxsavei;
-    }
-  }
+      for (i=1; i<=n; i++)
+      {
+        x.elem(i)=xsave.elem(i);
+      }
   ireturn=3;
   tracing_message(traceflag,"A19");
-  {
-    double* pgi = g.get_v() + 1;
-    double* pgbesti = gbest.get_v() + 1;
-    for ( i=1; i<=n; i++)
-    {
-      *pgbesti = *pgi;
-
-      ++pgi;
-      ++pgbesti;
-    }
-  }
+      for ( i=1; i<=n; i++)
+         gbest.elem(i)=g.elem(i);
   tracing_message(traceflag,"A20");
       funval.elem(10) = f;
       df=dfn;
@@ -528,16 +485,10 @@ label20: /* check for convergence */
          ihang = 1;
       gmax = 0;
       /* satisfy convergence criterion? */
+      for ( i=1; i<=n; i++)
       {
-        double* pg = g.get_v() + 1;
-        for (i = 1; i <= n; ++i)
-        {
-          double gi = *pg;
-          double fabsgi = fabs(gi);
-          if(fabsgi > crit) iconv = 2;
-          if(fabsgi > fabs(gmax)) gmax = gi;
-            ++pg;
-        }
+        if(fabs(g.elem(i)) > crit) iconv = 2;
+        if(fabs(g.elem(i)) > fabs(gmax) ) gmax = g.elem(i);
       }
       /* exit if either convergence or no improvement has been achieved
          during last 10 iterations */
@@ -602,17 +553,9 @@ label7003: /* Printing table header */
 label21 : /* Calculating Newton step */
       /* found good search direction, increment iteration number */
       itn=itn+1;
-      {
-        double* pxi = x.get_v() + 1;
-        double* pxxi = xx.get_v() + 1;
-        for (i=1; i<=n; i++)
-	{
-          *pxi = *pxxi;
-	  ++pxi;
-	  ++pxxi;
-	}
-        w.elem(1)=-g.elem(1);
-      }
+      for (i=1; i<=n; i++)
+         x.elem(i)=xx.elem(i);
+      w.elem(1)=-g.elem(1);
 
 #if defined(DIAG)
       cout << __FILE__ << ':' << __LINE__ << ' ' << fmintime.get_elapsed_time_and_reset() << endl;
@@ -621,63 +564,39 @@ label21 : /* Calculating Newton step */
       /* solving system of linear equations H_(k+1) * (x_(k+1)-x(k)) = -g_k
          to get next search direction
          p_k = (x_(k+1)-x(k)) = - inv(H_(k+1)) * g_k */
+      for (i=2; i<=n; i++)
       {
-        double* pgi = g.get_v() + 2;
-	double* pwi = w.get_v() + 2;
-        for (i=2; i<=n; i++)
+        i1=i-1;
+        z=-g.elem(i);
+        double * pd=&(h.elem(i,1));
+        double * pw=&(w.elem(1));
+        for (j=1; j<=i1; j++)
         {
-          i1=i-1;
-          z = -(*pgi);
-          double * pd=&(h.elem(i,1));
-          double* pw = w.get_v() + 1;
-          for (j=1; j<=i1; j++)
-          {
-            z -= *pd * *pw;
-	    ++pd;
-	    ++pw;
-          }
-          *pwi = z;
-
-	  ++pwi;
-	  ++pgi;
+          z-=*pd++ * *pw++;
         }
+        w.elem(i)=z;
       }
       w.elem(is+n)=w.elem(n)/h.elem(n,n);
       {
         dvector tmp(1,n);
         tmp.initialize();
-	double* ptmpi = tmp.get_v() + 1;
         for (i=1; i<=n1; i++)
         {
           j=i;
           double * pd=&(h.elem(n-j+1,n-1));
           double qd=w.elem(is+np-j);
-          double* pt = tmp.get_v() + 1;
+          double * pt=&(tmp(1));
           for (int ii=1; ii<=n1; ii++)
           {
-            *pt += *pd * qd;
-
-	    ++pt;
-	    --pd;
+            *pt++ +=*pd-- * qd;
           }
-          w.elem(is+n-i)=w.elem(n-i)/h.elem(n-i,n-i) - *ptmpi;
-
-	  ++ptmpi;
+          w.elem(is+n-i)=w.elem(n-i)/h.elem(n-i,n-i)-tmp(i);
         }
       }/* w(n+1,2n) now contains search direction
           with current Hessian approximation */
       gs=0.0;
-      {
-        double* pgi = g.get_v() + 1;
-        double* pwis = w.get_v() + is + 1;
-        for (i=1; i<=n; i++)
-        {
-          gs += *pwis * *pgi;/* gs = -inv(H_k)*g_k*df(x_k+alpha_k*p_k) */
-
-          ++pwis;
-          ++pgi;
-        }
-      }
+      for (i=1; i<=n; i++)
+         gs+=w.elem(is+i)*g.elem(i);/* gs = -inv(H_k)*g_k*df(x_k+alpha_k*p_k) */
       iexit=2;
       if(gs >= 0.0)
          goto label92; /* exit with error */
@@ -703,37 +622,19 @@ label30: /* Taking a step, updating x */
         iexit=1;
       }
       if(quit_flag) goto label92;
+      for (i=1; i<=n; i++)
       {
-        double* pw = w.get_v() + is + 1;
-        double* pxx = xx.get_v() + 1;
-        for (i=1; i<=n; i++)
-        {
-          /* w(n+1,2n) has the next direction to go */
-          z = alpha * *pw;
-          /* new independent vector values */
-          *pxx += z;
-
-          ++pw;
-          ++pxx;
-        }
-        double* px = x.get_v() + 1;
-        double* pg = g.get_v() + 1;
-        pxx = xx.get_v() + 1;
-        double* pxsave = xsave.get_v() + 1;
-        double* pgsave = gsave.get_v() + 1;
-        for (i=1; i<=n; i++)
-        { /* save previous values and update x return value */
-          *pxsave = *px;
-          *pgsave = *pg;
-          *px = *pxx;
-          fsave = f;
-
-          ++px;
-          ++pg;
-          ++pxx;
-          ++pxsave;
-          ++pgsave;
-        }
+        /* w(n+1,2n) has the next direction to go */
+        z=alpha*w.elem(is+i);
+        /* new independent vector values */
+        xx.elem(i)+=z;
+      }
+      for (i=1; i<=n; i++)
+      { /* save previous values and update x return value */
+        xsave.elem(i)=x.elem(i);
+        gsave.elem(i)=g.elem(i);
+        x.elem(i)=xx.elem(i);
+        fsave = f;
       }
       fsave = f;
       ireturn=2;
@@ -752,24 +653,11 @@ label30: /* Taking a step, updating x */
         cout << "finished hessian restore" << endl;
       }
       /* restore x_k, g(x_k) and g(x_k+alpha*p_k) */
+      for (i=1; i<=n; i++)
       {
-        double* px = x.get_v() + 1;
-        double* pw = w.get_v() + 1;
-        double* pg = g.get_v() + 1;
-        double* pgsave = gsave.get_v() + 1;
-        double* pxsave = xsave.get_v() + 1;
-        for (i=1; i<=n; i++)
-        {
-          *px = *pxsave; //x_k
-          *pw = *pg;     //g(x_k+alpha*p_k)
-          *pg = *pgsave; //g(x_k)
-
-          ++px;
-          ++pw;
-          ++pg;
-          ++pgsave;
-          ++pxsave;
-        }
+        x.elem(i)=xsave.elem(i); //x_k
+        w.elem(i)=g.elem(i);     //g(x_k+alpha*p_k)
+        g.elem(i)=gsave.elem(i); //g(x_k)
       }
       fy = f;
       f = fsave; /* now fy is a new function value, f is the old one */
@@ -778,19 +666,10 @@ label30: /* Taking a step, updating x */
       if (fy <= fbest)
       {
         fbest=fy;
-        double* px = x.get_v() + 1;
-        double* pw = w.get_v() + 1;
-        double* pxx = xx.get_v() + 1;
-        double* pgbest = gbest.get_v() + 1;
         for (i=1; i<=n; i++)
         {
-          *px = *pxx;
-          *pgbest = *pw;
-
-          ++px;
-          ++pw;
-          ++pgbest;
-          ++pxx;
+          x.elem(i)=xx.elem(i);
+          gbest.elem(i)=w.elem(i);
         }
       }
       /* what to do if CTRL-C keys were pressed */
@@ -876,17 +755,8 @@ label30: /* Taking a step, updating x */
       gys=0.0;
 
       /* gys = transpose(p_k) * df(x_k+alpha_k*p_k) */
-      {
-        double* pwi = w.get_v() + 1;
-        double* pwis = w.get_v() + is + 1;
-        for (i=1; i<= n; i++)
-        {
-          gys += *pwi * *pwis;
-
-          ++pwi;
-          ++pwis;
-        }
-      }
+      for (i=1; i<= n; i++)
+         gys+=w.elem(i)*w.elem(is+i);
 
       /* bad step; unless modified by the user, fringe default = 0 */
       if(fy>f+fringe)
@@ -928,17 +798,8 @@ label30: /* Taking a step, updating x */
 label40: /* new step is not acceptable, stepping back and
             start backtracking along the Newton direction
             trying a smaller value of alpha */
-      {
-        double* pxxi = xx.get_v() + 1;
-        double* pwis = w.get_v() + is + 1;
-        for (i=1;i<=n;i++)
-        {
-          *pxxi -= alpha * *pwis;
-
-          ++pwis;
-          ++pxxi;
-        }
-      }
+      for (i=1;i<=n;i++)
+         xx.elem(i)-=alpha*w.elem(is+i);
       if (alpha == 0.)
       {
         ialph=1;
@@ -980,54 +841,22 @@ label50: /* compute Hessian updating terms */
       xxlink=1;
       if(dgs+alpha*gso>0.0)
          goto label52;
-
-      {
-        double* pg = g.get_v() + 1;
-        double* pw = w.get_v() + 1;
-        double* pwu = w.get_v() + iu + 1;
-        for (i=1;i<=n;i++)
-        {
-          *pwu = *pw - *pg;
-
-          ++pg;
-          ++pw;
-          ++pwu;
-        }
-      }
+      for (i=1;i<=n;i++)
+         w.elem(iu+i)=w.elem(i)-g.elem(i);
       /* now w(n+1,2n) = df(x_k+alpha_k*p_k)-df(x_k) */
       sig=1.0/(alpha*dgs);
       goto label70;
 label52: /* compute Hessian updating terms */
       zz=alpha/(dgs-alpha*gso);
       z=dgs*zz-1.0;
-      {
-        double* pg = g.get_v() + 1;
-        double* pw = w.get_v() + 1;
-        double* pwu = w.get_v() + iu + 1;
-        for (i=1;i<=n;i++)
-        {
-          *pwu = z * *pg + *pw;
-
-          ++pg;
-          ++pw;
-          ++pwu;
-        }
-      }
+      for (i=1;i<=n;i++)
+         w.elem(iu+i)=z*g.elem(i)+w.elem(i);
       sig=1.0/(zz*dgs*dgs);
       goto label70;
 label60: /* compute Hessian updating terms */
       xxlink=2;
-      {
-double* pg = g.get_v() + 1;
-double* pw = w.get_v() + iu + 1;
-        for (i=1;i<=n;i++)
-        {
-          *pw = *pg;
-
-          ++pg;
-          ++pw;
-        }
-      }
+      for (i=1;i<=n;i++)
+         w.elem(iu+i)=g.elem(i);
       if(dgs+alpha*gso>0.0)
          goto label62;
       sig=1.0/gso;
@@ -1036,17 +865,8 @@ label62: /* compute Hessian updating terms */
       sig=-zz;
       goto label70;
 label65: /* save in g the gradient df(x_k+alpha*p_k) */
-      {
-        double* pg = g.get_v() + 1;
-        double* pw = w.get_v() + 1;
-        for (i=1;i<=n;i++)
-        {
-          *pg = *pw;
-
-          ++pg;
-          ++pw;
-        }
-      }
+      for (i=1;i<=n;i++)
+         g.elem(i)=w.elem(i);
       goto  label20; //convergence check
 label70:  // Hessian update
       w.elem(iv+1)=w.elem(iu+1);
@@ -1055,77 +875,49 @@ label70:  // Hessian update
       cout << __FILE__ << ':' << __LINE__ << ' ' << fmintime.get_elapsed_time_and_reset() << endl;
 #endif
 
+      for (i=2;i<=n;i++)
       {
-        for (i=2;i<=n;i++)
-        {
-           i1=i-1;
-           z=w.elem(iu+i);
-           double* ph = &(h.elem(i,1));
-           double* pw = &(w.elem(iv+1));
-           for (j=1;j<=i1;j++)
-           {
-             z -= *ph * *pw;
-
-             ++ph;
-             ++pw;
-           }
-           w.elem(iv+i)=z;
-        }
+         i1=i-1;
+         z=w.elem(iu+i);
+         double * pd=&(h.elem(i,1));
+         double * pw=&(w.elem(iv+1));
+         for (j=1;j<=i1;j++)
+         {
+           z-=*pd++ * *pw++;
+         }
+         w.elem(iv+i)=z;
       }
 
 #if defined(DIAG)
       cout << __FILE__ << ':' << __LINE__ << ' ' << fmintime.get_elapsed_time_and_reset() << endl;
 #endif
-      {
-        double* pwiv = w.get_v() + iv + 1;
-        double* pwib = w.get_v() + ib + 1;
-        for (i=1;i<=n;i++)
-        {  /* BFGS updating formula */
-          z = h.elem(i,i) + sig * *pwiv * *pwiv;
-          if (z <= 0.0)
+      for (i=1;i<=n;i++)
+      {  /* BFGS updating formula */
+         z=h.elem(i,i)+sig*w.elem(iv+i)*w.elem(iv+i);
+         if(z <= 0.0)
             z=dmin;
-          if (z < dmin)
+         if(z<dmin)
             dmin=z;
-
-          h.elem(i,i)=z;
-          *pwib = *pwiv * sig / z;
-          sig -= *pwib * *pwib * z;
-
-          ++pwiv;
-          ++pwib;
-        }
-        double* qd = w.get_v() + iu + 2;//&(w.elem(iu+j));
-        for (j=2;j<=n;j++)
-        {
-          double* pd=&(h.elem(j,1));
-          double* rd = w.get_v() + iv + 1;//&(w.elem(iv+1));
-          double* pwib = w.get_v() + ib + 1;
-          for (i=1;i<j;i++)
-          {
-            *qd-=*pd * *rd;
-            *pd += *pwib * *qd;
-
-            ++pd;
-            ++rd;
-            ++pwib;
-          }
-
-          ++qd;
-        }
+         h.elem(i,i)=z;
+         w.elem(ib+i)=w.elem(iv+i)*sig/z;
+         sig-=w.elem(ib+i)*w.elem(ib+i)*z;
+       }
+      for (j=2;j<=n;j++)
+      {
+         double * pd=&(h.elem(j,1));
+         double * qd=&(w.elem(iu+j));
+         double * rd=&(w.elem(iv+1));
+         for (i=1;i<j;i++)
+         {
+            *qd-=*pd * *rd++;
+            *pd++ +=w.elem(ib+i)* *qd;
+         }
       }
       if (xxlink == 1) goto label60;
       if (xxlink == 2) goto label65;
 /*label90:*/
-      {
-        double* pg = g.get_v() + 1;
-        double* pw = w.get_v() + 1;
-        for (i=1;i<=n;i++)
-        {
-          *pg = *pw;
-          ++pg;
-          ++pw;
-        }
-      }
+      for (i=1;i<=n;i++)
+         g.elem(i)=w.elem(i);
 label92: /* Exit with error */
 if (iprint>0)
   {

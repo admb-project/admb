@@ -518,11 +518,12 @@ public:
   vector_shape& operator=(const vector_shape&) =  delete;
 #endif
 public:
-
-   unsigned int ncopies;
-   void shift(int min);
    int index_min;
    int index_max;
+   unsigned int ncopies;
+   unsigned int padding;
+
+   void shift(int min);
  private:
    friend class dvector;
    //friend class tdvector;

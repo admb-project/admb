@@ -447,10 +447,11 @@ dfpool::dfpool()
 /**
 Constructor
 */
-dfpool::dfpool(const size_t sz)
+dfpool::dfpool(const size_t sz):
+  size(sz < sizeof(link *)?sizeof(link*):sz)
 {
-  constexpr size_t sizeofptr = sizeof(link*);
-  size = sz + sizeofptr - sz % sizeofptr;
+  //constexpr size_t sizeofptr = sizeof(link*);
+  //size = sz + sizeofptr - sz % sizeofptr;
   dfpool_vector_flag=0;
   last_chunk=0;
   head = 0;

@@ -346,22 +346,18 @@ void DF_FILE::save_dvar_matrix_position(const dvar_matrix& m)
 {
   // saves the size and address information for a dvar_vector
   dvar_matrix_position tmp(m,1);
-  constexpr size_t wsize=sizeof(int);
-  constexpr size_t wsize1=sizeof(void*);
 
   int min=m.rowmin();
   int max=m.rowmax();
-  int* ptmplbi = tmp.lb.get_v() + min;
-  int* ptmpubi = tmp.ub.get_v() + min;
-  for (int i=min;i<=max;++i)
-  {
-    fwrite(ptmplbi, wsize);
-    fwrite(ptmpubi, wsize);
-    fwrite(&(tmp.ptr(i)), wsize1);
+  int size = max - min + 1;
 
-    ++ptmplbi;
-    ++ptmpubi;
-  }
+  constexpr size_t wsize1 = sizeof(void*);
+  fwrite(&tmp.ptr.elem(min), wsize1 * size);
+
+  constexpr size_t wsize = sizeof(int);
+  fwrite(tmp.lb.get_v() + min, wsize * size);
+  fwrite(tmp.ub.get_v() + min, wsize * size);
+
   fwrite(&(tmp.row_min), wsize);
   fwrite(&(tmp.row_max), wsize);
 }

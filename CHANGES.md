@@ -11,6 +11,20 @@ Describe new features, changes and improvements for each release.
 * Continually streamline installation and build process
 * Continually improve and update documentation
 
+ADMB-13.1
+---------
+*Released December 23, 2022*  
+
+#### Changes and Improvements
+
+* Fixed build files for building arm64 processor (See [Issue 277](https://github.com/admb-project/admb/issues/277). Reported by @jonrh.
+
+* Fixed build for building with Visual Studio compiler (See [Issue 274](https://github.com/admb-project/admb/issues/274). Reported by @Ash12H.
+
+* Allow build to use compiler which includes version (ie g++-12) (See [Issue 270](https://github.com/admb-project/admb/issues/270). Thanks to @yukio-takeuchi for contributing changes. 
+
+* Improve the runtime performance(See [Issue 267](https://github.com/admb-project/admb/issues/267).
+
 ADMB-13.0
 ---------
 *Released August 8, 2022*  

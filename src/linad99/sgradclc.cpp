@@ -124,7 +124,9 @@ void gradient_structure::gradcalc(int nvar, const dvector& _g)
 
   int& _GRADFILE_PTR = GRAD_STACK1->_GRADFILE_PTR;
 
+#ifdef GRAD_DIAG
   LSEEK(_GRADFILE_PTR,0L,SEEK_CUR);
+#endif
 
   if (GRAD_STACK1->ptr <= GRAD_STACK1->ptr_first)
   {
@@ -179,9 +181,7 @@ void gradient_structure::gradcalc(int nvar, const dvector& _g)
   {
 #ifdef GRAD_DIAG
     long int ttmp =
-#endif
     LSEEK(GRAD_STACK1->_GRADFILE_PTR, 0, SEEK_CUR);
-#ifdef GRAD_DIAG
     cout << "Offset in file at end of gradcalc is " << ttmp
          << " bytes from the beginning\n";
 #endif

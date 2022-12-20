@@ -30,26 +30,21 @@ void dmatrix::save_dmatrix_position() const
 }
 void DF_FILE::save_dmatrix_position(const dmatrix& m)
 {
-  constexpr size_t wsize=sizeof(int);
-  constexpr size_t wsize1=sizeof(void*);
-
   dmatrix_position tmp(m);
 
   int min=m.rowmin();
   int max=m.rowmax();
-  int* plbi = tmp.lb.get_v() + min;
-  int* pubi = tmp.ub.get_v() + min;
-  for (int i=min;i<=max;i++)
-  {
-    fwrite(plbi, wsize);
-    fwrite(pubi, wsize);
-    fwrite(&(tmp.ptr(i)),wsize1);
+  size_t size = max - min + 1;
 
-    ++plbi;
-    ++pubi;
-  }
-  fwrite(&(tmp.row_min),wsize);
-  fwrite(&(tmp.row_max),wsize);
+  constexpr size_t wsize1=sizeof(void*);
+  fwrite(&tmp.ptr.elem(min), wsize1 * size);
+
+  constexpr size_t wsize = sizeof(int);
+  fwrite(tmp.lb.get_v() + min, wsize * size);
+  fwrite(tmp.ub.get_v() + min, wsize * size);
+
+  fwrite(&(tmp.row_min), wsize);
+  fwrite(&(tmp.row_max), wsize);
 }
 
 /**
@@ -114,25 +109,21 @@ dvar_matrix_position restore_dvar_matrix_position()
 dvar_matrix_position DF_FILE::restore_dvar_matrix_position()
 {
   constexpr size_t wsize = sizeof(int);
-  constexpr size_t wsize2 = sizeof(void*);
 
   int min;
   int max;
   fread(&max, wsize);
   fread(&min, wsize);
   dvar_matrix_position tmp(min,max);
-  // cout << "tmp.ptr= " << tmp.ptr ;
-  int* plbi = tmp.lb.get_v() + max;
-  int* pubi = tmp.ub.get_v() + max;
-  for (int i=max;i>=min;i--)
-  {
-    fread(&(tmp.ptr(i)), wsize2);
-    fread(pubi, wsize);
-    fread(plbi, wsize);
 
-    --pubi;
-    --plbi;
-  }
+  int size = max - min + 1;
+
+  fread(tmp.ub.get_v() + min, wsize * size);
+  fread(tmp.lb.get_v() + min, wsize * size);
+
+  constexpr size_t wsize2 = sizeof(void*);
+  fread(&tmp.ptr.elem(min), wsize2 * size);
+
   return tmp;
 }
 
@@ -146,28 +137,23 @@ dmatrix_position restore_dmatrix_position()
 }
 dmatrix_position DF_FILE::restore_dmatrix_position()
 {
-  constexpr size_t wsize = sizeof(int);
-  constexpr size_t wsize2 = sizeof(void*);
-
   // reads back the size and address information for a dvar_matrix
   // restores the size, address, and value information for a dvar_vector
+  constexpr size_t wsize = sizeof(int);
   int min;
   int max;
   fread(&max, wsize);
   fread(&min, wsize);
+
   dmatrix_position tmp(min,max);
   // cout << "tmp.ptr= " << tmp.ptr ;
-  int* plbi = tmp.lb.get_v() + max;
-  int* pubi = tmp.ub.get_v() + max;
-  for (int i=max;i>=min;i--)
-  {
-    fread(&(tmp.ptr(i)), wsize2);
-    fread(pubi, wsize);
-    fread(plbi, wsize);
+  int size = max - min + 1;
+  fread(tmp.ub.get_v() + min, wsize * size);
+  fread(tmp.lb.get_v() + min, wsize * size);
 
-    --pubi;
-    --plbi;
-  }
+  constexpr size_t wsize2 = sizeof(void*);
+  fread(&tmp.ptr.elem(min), wsize2 * size);
+
   return tmp;
 }
 

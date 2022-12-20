@@ -21,18 +21,9 @@ Compute exponential variable
 */
 prevariable& exp(const prevariable& v1)
 {
-  double tmp;
   //Avoid underflow for large negative values
   // https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/exp-expf
-  if (v1.v->x <= -708.3964)
-  {
-    cout.flush();
-    tmp = 0.0;
-  }
-  else
-  {
-    tmp = std::exp(v1.v->x);
-  }
+  double tmp = v1.v->x > -708.3964 ?  std::exp(v1.v->x) : 0.0;
 
 #ifdef DIAG
   /** \todo Must remove macros below once support
@@ -47,14 +38,14 @@ prevariable& exp(const prevariable& v1)
   }
   #endif
 #endif
+  if (++gradient_structure::_instance->RETURN_PTR > gradient_structure::_instance->MAX_RETURN) 
+    gradient_structure::_instance->RETURN_PTR = gradient_structure::_instance->MIN_RETURN;
 
-  dvariable* RETURN_PTR = gradient_structure::next_RETURN_PTR();
+  gradient_structure::_instance->RETURN_PTR->v->x = tmp;
+  gradient_structure::GRAD_STACK1->set_gradient_stack(
+    default_evaluation, &(gradient_structure::_instance->RETURN_PTR->v->x), &(v1.v->x), tmp);
 
-  RETURN_PTR->v->x=tmp;
-  gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
-    &(RETURN_PTR->v->x), &(v1.v->x),tmp);
-
-  return *RETURN_PTR;
+  return *gradient_structure::_instance->RETURN_PTR;
 }
 
 /**
@@ -63,14 +54,14 @@ prevariable& exp(const prevariable& v1)
  */
 prevariable& atan(const prevariable& v1)
 {
-  dvariable* RETURN_PTR = gradient_structure::next_RETURN_PTR();
+  if (++gradient_structure::_instance->RETURN_PTR > gradient_structure::_instance->MAX_RETURN) 
+    gradient_structure::_instance->RETURN_PTR = gradient_structure::_instance->MIN_RETURN;
 
-  RETURN_PTR->v->x= ::atan(v1.v->x);
+  gradient_structure::_instance->RETURN_PTR->v->x= ::atan(v1.v->x);
   gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
-    &(RETURN_PTR->v->x),
-    &(v1.v->x),1./(1.+v1.v->x * v1.v->x) );
+    &(gradient_structure::_instance->RETURN_PTR->v->x), &(v1.v->x), 1./(1.+v1.v->x * v1.v->x));
 
-  return *RETURN_PTR;
+  return *gradient_structure::_instance->RETURN_PTR;
 }
 
 /**
@@ -79,13 +70,14 @@ prevariable& atan(const prevariable& v1)
  */
 prevariable& ldexp(const prevariable& v1, const int& exponent)
 {
-  dvariable* RETURN_PTR = gradient_structure::next_RETURN_PTR();
+  if (++gradient_structure::_instance->RETURN_PTR > gradient_structure::_instance->MAX_RETURN) 
+    gradient_structure::_instance->RETURN_PTR = gradient_structure::_instance->MIN_RETURN;
 
-  RETURN_PTR->v->x=::ldexp(v1.v->x, exponent);
+  gradient_structure::_instance->RETURN_PTR->v->x=::ldexp(v1.v->x, exponent);
   gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
-    &(RETURN_PTR->v->x), &(v1.v->x),pow(2.0,exponent));
+    &(gradient_structure::_instance->RETURN_PTR->v->x), &(v1.v->x),pow(2.0,exponent));
 
-  return *RETURN_PTR;
+  return *gradient_structure::_instance->RETURN_PTR;
 }
 
 /**
@@ -94,6 +86,9 @@ prevariable& ldexp(const prevariable& v1, const int& exponent)
  */
 prevariable& sqrt(const prevariable& v1)
 {
+  if (++gradient_structure::_instance->RETURN_PTR > gradient_structure::_instance->MAX_RETURN) 
+    gradient_structure::_instance->RETURN_PTR = gradient_structure::_instance->MIN_RETURN;
+
   double tmp = v1.v->x;
   if (tmp == 0.0)
   {
@@ -103,12 +98,11 @@ prevariable& sqrt(const prevariable& v1)
   }
   tmp = ::sqrt(tmp);
 
-  dvariable* RETURN_PTR = gradient_structure::next_RETURN_PTR();
-  RETURN_PTR->v->x=tmp;
+  gradient_structure::_instance->RETURN_PTR->v->x=tmp;
   gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
-    &(RETURN_PTR->v->x), &(v1.v->x),1./(2.*tmp));
+    &(gradient_structure::_instance->RETURN_PTR->v->x), &(v1.v->x),1./(2.*tmp));
 
-  return *RETURN_PTR;
+  return *gradient_structure::_instance->RETURN_PTR;
 }
 
 /**
@@ -143,14 +137,16 @@ prevariable& sqr(const prevariable& v1)
  */
 prevariable& tan(const prevariable& v1)
 {
+  if (++gradient_structure::_instance->RETURN_PTR > gradient_structure::_instance->MAX_RETURN) 
+    gradient_structure::_instance->RETURN_PTR = gradient_structure::_instance->MIN_RETURN;
+
   double t = ::tan(v1.v->x);
 
-  dvariable* RETURN_PTR = gradient_structure::next_RETURN_PTR();
-  RETURN_PTR->v->x= t;
+  gradient_structure::_instance->RETURN_PTR->v->x= t;
   gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
-    &(RETURN_PTR->v->x), &(v1.v->x), 1+t*t);
+    &(gradient_structure::_instance->RETURN_PTR->v->x), &(v1.v->x), 1+t*t);
 
-  return *RETURN_PTR;
+  return *gradient_structure::_instance->RETURN_PTR;
 }
 
 /**
@@ -159,14 +155,16 @@ prevariable& tan(const prevariable& v1)
  */
 prevariable& tanh(const prevariable& v1)
 {
+  if (++gradient_structure::_instance->RETURN_PTR > gradient_structure::_instance->MAX_RETURN) 
+    gradient_structure::_instance->RETURN_PTR = gradient_structure::_instance->MIN_RETURN;
+
   double t = ::tanh(v1.v->x);
-  dvariable* RETURN_PTR = gradient_structure::next_RETURN_PTR();
 
-  RETURN_PTR->v->x= t;
+  gradient_structure::_instance->RETURN_PTR->v->x= t;
   gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
-    &(RETURN_PTR->v->x), &(v1.v->x), 1.0-t*t);
+    &(gradient_structure::_instance->RETURN_PTR->v->x), &(v1.v->x), 1.0-t*t);
 
-  return *RETURN_PTR;
+  return *gradient_structure::_instance->RETURN_PTR;
 }
 /**
  * Description not yet available.
@@ -174,14 +172,14 @@ prevariable& tanh(const prevariable& v1)
  */
 prevariable& acos(const prevariable& v1)
 {
-  dvariable* RETURN_PTR = gradient_structure::next_RETURN_PTR();
+  if (++gradient_structure::_instance->RETURN_PTR > gradient_structure::_instance->MAX_RETURN) 
+    gradient_structure::_instance->RETURN_PTR = gradient_structure::_instance->MIN_RETURN;
 
-  RETURN_PTR->v->x=::acos(v1.v->x);
+  gradient_structure::_instance->RETURN_PTR->v->x=::acos(v1.v->x);
   gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
-    &(RETURN_PTR->v->x),
-    &(v1.v->x),-1./::sqrt(1.- v1.v->x * v1.v->x));
+    &(gradient_structure::_instance->RETURN_PTR->v->x), &(v1.v->x),-1./::sqrt(1.- v1.v->x * v1.v->x));
 
-  return *RETURN_PTR;
+  return *gradient_structure::_instance->RETURN_PTR;
 }
 
 /**
@@ -190,14 +188,14 @@ prevariable& acos(const prevariable& v1)
  */
 prevariable& asin(const prevariable& v1)
 {
-  dvariable* RETURN_PTR = gradient_structure::next_RETURN_PTR();
+  if (++gradient_structure::_instance->RETURN_PTR > gradient_structure::_instance->MAX_RETURN) 
+    gradient_structure::_instance->RETURN_PTR = gradient_structure::_instance->MIN_RETURN;
 
-  RETURN_PTR->v->x=::asin(v1.v->x);
+  gradient_structure::_instance->RETURN_PTR->v->x=::asin(v1.v->x);
   gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
-    &(RETURN_PTR->v->x),
-    &(v1.v->x),1./::sqrt(1.- v1.v->x * v1.v->x));
+    &(gradient_structure::_instance->RETURN_PTR->v->x), &(v1.v->x),1./::sqrt(1.- v1.v->x * v1.v->x));
 
-  return *RETURN_PTR;
+  return *gradient_structure::_instance->RETURN_PTR;
 }
 
 /**
@@ -206,18 +204,19 @@ prevariable& asin(const prevariable& v1)
  */
 prevariable& pow(const prevariable& v1, const prevariable& v2)
 {
+  if (++gradient_structure::_instance->RETURN_PTR > gradient_structure::_instance->MAX_RETURN) 
+    gradient_structure::_instance->RETURN_PTR = gradient_structure::_instance->MIN_RETURN;
+
   double x=::pow(v1.v->x,(v2.v->x)-1);
   double y=x* v1.v->x;
 
-  dvariable* RETURN_PTR = gradient_structure::next_RETURN_PTR();
-
-  RETURN_PTR->v->x=y;
+  gradient_structure::_instance->RETURN_PTR->v->x=y;
   gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
-    &(RETURN_PTR->v->x),
+    &(gradient_structure::_instance->RETURN_PTR->v->x),
     &(v1.v->x), v2.v->x * x  ,&(v2.v->x),
     y * ::log(v1.v->x));
 
-  return *RETURN_PTR;
+  return *gradient_structure::_instance->RETURN_PTR;
 }
 
 /**
@@ -226,15 +225,16 @@ prevariable& pow(const prevariable& v1, const prevariable& v2)
  */
 prevariable& pow(const double u, const prevariable& v1)
 {
+  if (++gradient_structure::_instance->RETURN_PTR > gradient_structure::_instance->MAX_RETURN) 
+    gradient_structure::_instance->RETURN_PTR = gradient_structure::_instance->MIN_RETURN;
+
   double y = ::pow(u,(v1.v->x));
 
-  dvariable* RETURN_PTR = gradient_structure::next_RETURN_PTR();
-
-  RETURN_PTR->v->x=y;
+  gradient_structure::_instance->RETURN_PTR->v->x=y;
   gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
-    &(RETURN_PTR->v->x), &(v1.v->x), y * ::log(u));
+    &(gradient_structure::_instance->RETURN_PTR->v->x), &(v1.v->x), y * ::log(u));
 
-  return *RETURN_PTR;
+  return *gradient_structure::_instance->RETURN_PTR;
 }
 
 /**
@@ -243,13 +243,14 @@ prevariable& pow(const double u, const prevariable& v1)
  */
 prevariable& sinh(const prevariable& v1)
 {
-  dvariable* RETURN_PTR = gradient_structure::next_RETURN_PTR();
+  if (++gradient_structure::_instance->RETURN_PTR > gradient_structure::_instance->MAX_RETURN) 
+    gradient_structure::_instance->RETURN_PTR = gradient_structure::_instance->MIN_RETURN;
 
-  RETURN_PTR->v->x=::sinh(v1.v->x);
+  gradient_structure::_instance->RETURN_PTR->v->x=::sinh(v1.v->x);
   gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
-    &(RETURN_PTR->v->x), &(v1.v->x),::cosh(v1.v->x));
+    &(gradient_structure::_instance->RETURN_PTR->v->x), &(v1.v->x),::cosh(v1.v->x));
 
-  return *RETURN_PTR;
+  return *gradient_structure::_instance->RETURN_PTR;
 }
 
 /**
@@ -258,13 +259,14 @@ prevariable& sinh(const prevariable& v1)
  */
 prevariable& cosh(const prevariable& v1)
 {
-  dvariable* RETURN_PTR = gradient_structure::next_RETURN_PTR();
+  if (++gradient_structure::_instance->RETURN_PTR > gradient_structure::_instance->MAX_RETURN) 
+    gradient_structure::_instance->RETURN_PTR = gradient_structure::_instance->MIN_RETURN;
 
-  RETURN_PTR->v->x=::cosh(v1.v->x);
+  gradient_structure::_instance->RETURN_PTR->v->x=::cosh(v1.v->x);
   gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
-    &(RETURN_PTR->v->x), &(v1.v->x),::sinh(v1.v->x));
+    &(gradient_structure::_instance->RETURN_PTR->v->x), &(v1.v->x),::sinh(v1.v->x));
 
-  return *RETURN_PTR;
+  return *gradient_structure::_instance->RETURN_PTR;
 }
 
 /**

@@ -62,7 +62,11 @@ else
     ifeq (i686,$(findstring i686,$(shell $(CXX) -dumpmachine)))
       OSNAME=-i686-linux
     else
-      OSNAME=-x86_64-linux
+      ifeq (x86_64,$(findstring x86_64,$(shell $(CXX) -dumpmachine)))
+        OSNAME=-x86_64-linux
+      else
+        OSNAME=-arm64-linux
+      endif
     endif
   endif
   ifeq ($(UNAME_S),Darwin)
@@ -94,14 +98,18 @@ else
       endif
     endif
   endif
-  ifeq ($(CXX),g++)
+  ifeq ($(findstring g++,$(CXX)),g++)
     ifeq ($(UNAME_S),Darwin)
-      ifeq (clang-10,$(findstring clang-10,$(shell $(CXX) --version)))
-        CXXVERSION=-clang10
-      else ifeq (clang-11,$(findstring clang-11,$(shell $(CXX) --version)))
-        CXXVERSION=-clang11
+      ifeq ($(findstring Homebrew,$(shell $(CXX) --version)),Homebrew)
+        CXXVERSION=-g++$(basename $(basename $(shell $(CXX) -dumpversion)))
       else
-        CXXVERSION=-clang
+        ifeq (clang-10,$(findstring clang-10,$(shell $(CXX) --version)))
+          CXXVERSION=-clang10
+        else ifeq (clang-11,$(findstring clang-11,$(shell $(CXX) --version)))
+          CXXVERSION=-clang11
+        else
+          CXXVERSION=-clang
+        endif
       endif
     else
       CXXVERSION=-g++$(basename $(basename $(shell $(CXX) -dumpversion)))
@@ -176,9 +184,17 @@ ifeq ($(DEBUG),yes)
 	$(CXX) -shared $(LDFLAGS) -o ../build/$(ADMB_VER)/lib/libadmb-contribo$(OSNAME)$(CXXVERSION).so -Wl,-force_load ../build/$(ADMB_VER)/lib/libadmb-contribo$(OSNAME)$(CXXVERSION)-shared-debug.a
       endif
     else
+      ifeq ($(findstring Homebrew,$(shell $(CXX) --version)),Homebrew)
+	$(CXX) -shared $(LDFLAGS) -o ../build/$(ADMB_VER)/lib/libadmb-contrib$(OSNAME)$(CXXVERSION).so -Wl,-force_load ../build/$(ADMB_VER)/lib/libadmb-contrib$(OSNAME)$(CXXVERSION)-shared-debug.a
+      else
 	$(CXX) -shared $(LDFLAGS) -o ../build/$(ADMB_VER)/lib/libadmb-contrib$(OSNAME)$(CXXVERSION).so -Wl,--whole-archive ../build/$(ADMB_VER)/lib/libadmb-contrib$(OSNAME)$(CXXVERSION)-shared-debug.a -Wl,--no-whole-archive
+      endif
       ifndef SAFE_ONLY
-	$(CXX) -shared $(LDFLAGS) -o ../build/$(ADMB_VER)/lib/libadmb-contribo$(OSNAME)$(CXXVERSION).so -Wl,--whole-archive ../build/$(ADMB_VER)/lib/libadmb-contribo$(OSNAME)$(CXXVERSION)-shared-debug.a -Wl,--no-whole-archive
+        ifeq ($(findstring Homebrew,$(shell $(CXX) --version)),Homebrew)
+	  $(CXX) -shared $(LDFLAGS) -o ../build/$(ADMB_VER)/lib/libadmb-contribo$(OSNAME)$(CXXVERSION).so -Wl,-force_load ../build/$(ADMB_VER)/lib/libadmb-contribo$(OSNAME)$(CXXVERSION)-shared-debug.a
+        else
+	  $(CXX) -shared $(LDFLAGS) -o ../build/$(ADMB_VER)/lib/libadmb-contribo$(OSNAME)$(CXXVERSION).so -Wl,--whole-archive ../build/$(ADMB_VER)/lib/libadmb-contribo$(OSNAME)$(CXXVERSION)-shared-debug.a -Wl,--no-whole-archive
+        endif
       endif
     endif
   endif
@@ -195,9 +211,17 @@ else
 	$(CXX) -shared $(LDFLAGS) -o ../build/$(ADMB_VER)/lib/libadmb-contribo$(OSNAME)$(CXXVERSION).so -Wl,-force_load ../build/$(ADMB_VER)/lib/libadmb-contribo$(OSNAME)$(CXXVERSION)-shared.a
       endif
     else
+      ifeq ($(findstring Homebrew,$(shell $(CXX) --version)),Homebrew)
+	$(CXX) -shared $(LDFLAGS) -o ../build/$(ADMB_VER)/lib/libadmb-contrib$(OSNAME)$(CXXVERSION).so -Wl,-force_load ../build/$(ADMB_VER)/lib/libadmb-contrib$(OSNAME)$(CXXVERSION)-shared.a
+      else
 	$(CXX) -shared $(LDFLAGS) -o ../build/$(ADMB_VER)/lib/libadmb-contrib$(OSNAME)$(CXXVERSION).so -Wl,--whole-archive ../build/$(ADMB_VER)/lib/libadmb-contrib$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
+      endif
       ifndef SAFE_ONLY
-	$(CXX) -shared $(LDFLAGS) -o ../build/$(ADMB_VER)/lib/libadmb-contribo$(OSNAME)$(CXXVERSION).so -Wl,--whole-archive ../build/$(ADMB_VER)/lib/libadmb-contribo$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
+        ifeq ($(findstring Homebrew,$(shell $(CXX) --version)),Homebrew)
+	  $(CXX) -shared $(LDFLAGS) -o ../build/$(ADMB_VER)/lib/libadmb-contribo$(OSNAME)$(CXXVERSION).so -Wl,-force_load ../build/$(ADMB_VER)/lib/libadmb-contribo$(OSNAME)$(CXXVERSION)-shared.a
+        else
+	  $(CXX) -shared $(LDFLAGS) -o ../build/$(ADMB_VER)/lib/libadmb-contribo$(OSNAME)$(CXXVERSION).so -Wl,--whole-archive ../build/$(ADMB_VER)/lib/libadmb-contribo$(OSNAME)$(CXXVERSION)-shared.a -Wl,--no-whole-archive
+        endif
       endif
     endif
   endif

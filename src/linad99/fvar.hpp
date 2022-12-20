@@ -518,11 +518,12 @@ public:
   vector_shape& operator=(const vector_shape&) =  delete;
 #endif
 public:
-
-   unsigned int ncopies;
-   void shift(int min);
    int index_min;
    int index_max;
+   unsigned int ncopies;
+   unsigned int padding;
+
+   void shift(int min);
  private:
    friend class dvector;
    //friend class tdvector;
@@ -9491,9 +9492,12 @@ int ad_printf( FILE* stream, const char* format, Args ... args )
 template <class ... Args>
 int ad_printf( const char* format, Args ... args )
 {
+	/*
   int result = printf(format, args...);
   fflush(stdout);
   return result;
+  */
+  return printf(format, args...);
 }
 std::ostream& get_output_stream();
 

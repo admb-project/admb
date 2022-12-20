@@ -1,17 +1,17 @@
 !IFNDEF ADMB_VER
 ADMB_VER=admb
 !ENDIF
-!IF ([cl /? 2>&1 | findstr /C:"Compiler Version 19." > nul] == 0)
+
+!IF ([cl 2>&1 | findstr " 19" > nul] == 0)
 CXXVERSION=-cl19
 !ELSE
 CXXVERSION=-cl
 !ENDIF
-!IF ([cl /? 2>&1 | findstr /C:" x64" > nul] == 0)
+
+!IF ([cl 2>&1 | findstr " x64" > nul] == 0)
 OSNAME=win64
-!ELSEIF ([cl /? 2>&1 | findstr /C:" x86" > nul] == 0)
-OSNAME=win32
 !ELSE
-OSNAME=vs
+OSNAME=win32
 !ENDIF
 
 DESTDIR=..\build\$(ADMB_VER)

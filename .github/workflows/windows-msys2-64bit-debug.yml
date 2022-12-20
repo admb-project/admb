@@ -11,12 +11,12 @@ jobs:
     - uses: actions/checkout@v2
     - name: clean
       run: |
-        set PATH=C:\msys64\usr\bin;C:\msys64\mingw64\bin;%PATH%
+        set PATH=C:\PortableGit\bin;C:\msys64\usr\bin;C:\msys64\mingw64\bin;%PATH%
         make clean
       shell: cmd
     - name: build debug
       run: |
-        set PATH=C:\msys64\usr\bin;C:\msys64\mingw64\bin;%PATH%
+        set PATH=C:\PortableGit\bin;C:\msys64\usr\bin;C:\msys64\mingw64\bin;%PATH%
         make -j 4 DEBUG=yes
         make -j 4 shared DEBUG=yes
       shell: cmd
@@ -27,7 +27,7 @@ jobs:
         path: build\\admb
     - name: tests
       run: |
-        set PATH=C:\msys64\usr\bin;C:\msys64\mingw64\bin;%PATH%
+        set PATH=C:\PortableGit\bin;C:\msys64\usr\bin;C:\msys64\mingw64\bin;%PATH%
         make verify DEBUG=yes SAFE_ONLY=yes TESTS_REMOTE=no
       shell: cmd
     - name: Artifact

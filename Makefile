@@ -47,11 +47,11 @@ zip: $(CXX)-zip
 
 #Microsoft Visual C++
 cl: cl-all
-cl-all: 
+cl-all:
 	nmake /nologo cl-dist
 	nmake /nologo cl-shared
 	pushd src& nmake /nologo copy
-cl-dist: 
+cl-dist:
 	nmake /nologo cl-contribs
 cl-debug:
 	pushd src& nmake /nologo DEBUG=!DEBUG! all
@@ -84,11 +84,11 @@ cl-zip:
 
 #GNU
 g++: g++-all
-g++-all: 
+g++-all:
 	$(MAKE) g++-dist
 	$(MAKE) g++-shared
 	$(MAKE) --directory=src CC=gcc CXX=g++ copy
-g++-dist: 
+g++-dist:
 	$(MAKE) g++-core
 	$(MAKE) g++-contribs
 g++-debug:
@@ -121,6 +121,45 @@ g++-clean:
 	$(MAKE) --directory=examples CC=gcc CXX=g++ clean
 g++-zip:
 	$(MAKE) --directory=src CC=gcc CXX=g++ zip
+
+g++-12: g++-12-all
+g++-12-all:
+	$(MAKE) g++-12-dist
+	$(MAKE) g++-12-shared
+	$(MAKE) --directory=src CC=gcc-12 CXX=g++-12 copy
+g++-12-dist:
+	$(MAKE) g++-12-core
+	$(MAKE) g++-12-contribs
+g++-12-debug:
+	$(MAKE) g++-12-all DEBUG=yes
+g++-12-core:
+	$(MAKE) --directory=src CC=gcc-12 CXX=g++-12 all
+g++-12-contribs: g++-12-core
+	$(MAKE) --directory=contrib CC=gcc-12 CXX=g++-12 all
+g++-12-docs:
+	$(MAKE) --directory=docs CC=gcc-12 CXX=g++-12 all
+g++-12-gtests:
+	$(MAKE) --directory=tests CC=gcc-12 CXX=g++-12 unit-gtests
+g++-12-coverage:
+	$(MAKE) --directory=src CC=gcc-12 CXX=g++-12 SAFE_ONLY=yes dist
+	$(MAKE) --directory=tests CC=gcc-12 CXX=g++-12 coverage
+g++-12-verify:
+	$(MAKE) --directory=tests CC=gcc-12 CXX=g++-12 verify
+g++-12-shared:
+	$(MAKE) --directory=src CC=gcc-12 CXX=g++-12 SHARED=-shared shared
+	$(MAKE) --directory=contrib CC=gcc-12 CXX=g++-12 SHARED=-shared shared
+g++-12-install:
+	$(MAKE) --directory=src CC=gcc-12 CXX=g++-12 install
+g++-12-check:
+	$(MAKE) --directory=src CC=gcc-12 CXX=g++-12 check
+g++-12-clean:
+	$(MAKE) --directory=src CC=gcc-12 CXX=g++-12 clean
+	$(MAKE) --directory=contrib CC=gcc-12 CXX=g++-12 clean
+	$(MAKE) --directory=scripts CC=gcc-12 CXX=g++-12 clean
+	$(MAKE) --directory=tests CC=gcc-12 CXX=g++-12 clean
+	$(MAKE) --directory=examples CC=gcc-12 CXX=g++-12 clean
+g++-12-zip:
+	$(MAKE) --directory=src CC=gcc-12 CXX=g++-12 zip
 
 #clang
 clang++: clang++-all
@@ -190,7 +229,7 @@ c++-shared:
 c++-install:
 	$(MAKE) --directory=src CC=cc CXX=c++ install
 c++-check:
-	$(MAKE) --directory=src CC=cc CXX=c++ check 
+	$(MAKE) --directory=src CC=cc CXX=c++ check
 c++-clean:
 	$(MAKE) --directory=src CC=cc CXX=c++ clean
 	$(MAKE) --directory=contrib CC=cc CXX=c++ clean
@@ -274,11 +313,11 @@ icpc-zip:
 
 #AMD
 openCC: openCC-all
-openCC-all: 
+openCC-all:
 	$(MAKE) openCC-dist
 	$(MAKE) openCC-shared
 	$(MAKE) --directory=src CC=opencc CXX=openCC copy
-openCC-dist: 
+openCC-dist:
 	$(MAKE) openCC-contribs
 openCC-debug:
 	$(MAKE) openCC-all DEBUG=yes
@@ -337,7 +376,7 @@ analyze-c++-shared:
 analyze-c++-install:
 	$(MAKE) --directory=src CC=analyze-cc CXX=analyze-c++ install
 analyze-c++-check:
-	$(MAKE) --directory=src CC=analyze-cc CXX=analyze-c++ check 
+	$(MAKE) --directory=src CC=analyze-cc CXX=analyze-c++ check
 analyze-c++-clean:
 	$(MAKE) --directory=src CC=analyze-cc CXX=analyze-c++ clean
 	$(MAKE) --directory=contrib CC=analyze-cc CXX=analyze-c++ clean

@@ -11,15 +11,16 @@ Return the computed square of variable, then set gradient_structure.
 */
 dvariable& square(const prevariable& variable)
 {
-  dvariable* RETURN_PTR = gradient_structure::next_RETURN_PTR();
+  if (++gradient_structure::_instance->RETURN_PTR > gradient_structure::_instance->MAX_RETURN) 
+    gradient_structure::_instance->RETURN_PTR = gradient_structure::_instance->MIN_RETURN;
 
   double& x = value(variable);
-  RETURN_PTR->v->x = x * x;
+  gradient_structure::_instance->RETURN_PTR->v->x = x * x;
 
   gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation2,
-     &(RETURN_PTR->v->x), &(variable.v->x), 2 * x );
+     &(gradient_structure::_instance->RETURN_PTR->v->x), &(variable.v->x), 2.0 * x );
 
-  return *RETURN_PTR;
+  return *gradient_structure::_instance->RETURN_PTR;
 }
 /**
 Return results of computing the square of variable matrix.

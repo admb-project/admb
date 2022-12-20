@@ -1,11 +1,13 @@
 include objects.lst
 
-!IF ([cl /? 2>&1 | findstr /C:"Compiler Version 19." > nul] == 0)
+!IF ([cl 2>&1 | findstr " 19" > nul] == 0)
 CXXVERSION=-cl19
+!ELSE
+CXXVERSION=-cl
 !ENDIF
-!IF ([cl /? 2>&1 | findstr /C:" x64" > nul] == 0)
+!IF ([cl 2>&1 | findstr " x64" > nul] == 0)
 OSNAME=-win64
-!ELSEIF ([cl /? 2>&1 | findstr /C:" x86" > nul] == 0)
+!ELSE
 OSNAME=-win32
 !ENDIF
 
@@ -16,9 +18,12 @@ SAF=$(OBJECTS: = ..\..\build\objects\win64-cl19-debug\contrib-saflp-src-)
 !ELSEIF "$(CXXVERSION)"=="-cl19" && "$(OSNAME)"=="-win32"
 OPT=$(OBJECTS: = ..\..\build\objects\win32-cl19-debug\contrib-optlp-src-)
 SAF=$(OBJECTS: = ..\..\build\objects\win32-cl19-debug\contrib-saflp-src-)
+!ELSEIF "$(CXXVERSION)"=="-cl" && "$(OSNAME)"=="-win64"
+OPT=$(OBJECTS: = ..\..\build\objects\win64-cl-debug\contrib-optlp-src-)
+SAF=$(OBJECTS: = ..\..\build\objects\win64-cl-debug\contrib-saflp-src-)
 !ELSE
-OPT=$(OBJECTS: = ..\..\build\objects\win-cl-debug\contrib-optlp-src-)
-SAF=$(OBJECTS: = ..\..\build\objects\win-cl-debug\contrib-saflp-src-)
+OPT=$(OBJECTS: = ..\..\build\objects\win32-cl-debug\contrib-optlp-src-)
+SAF=$(OBJECTS: = ..\..\build\objects\win32-cl-debug\contrib-saflp-src-)
 !ENDIF
 !ELSE
 !IF "$(CXXVERSION)"=="-cl19" && "$(OSNAME)"=="-win64"
@@ -27,9 +32,12 @@ SAF=$(OBJECTS: = ..\..\build\objects\win64-cl19\contrib-saflp-src-)
 !ELSEIF "$(CXXVERSION)"=="-cl19" && "$(OSNAME)"=="-win32"
 OPT=$(OBJECTS: = ..\..\build\objects\win32-cl19\contrib-optlp-src-)
 SAF=$(OBJECTS: = ..\..\build\objects\win32-cl19\contrib-saflp-src-)
+!ELSEIF "$(CXXVERSION)"=="-cl" && "$(OSNAME)"=="-win64"
+OPT=$(OBJECTS: = ..\..\build\objects\win64-cl\contrib-optlp-src-)
+SAF=$(OBJECTS: = ..\..\build\objects\win64-cl\contrib-saflp-src-)
 !ELSE
-OPT=$(OBJECTS: = ..\..\build\objects\win-cl\contrib-optlp-src-)
-SAF=$(OBJECTS: = ..\..\build\objects\win-cl\contrib-saflp-src-)
+OPT=$(OBJECTS: = ..\..\build\objects\win32-cl\contrib-optlp-src-)
+SAF=$(OBJECTS: = ..\..\build\objects\win32-cl\contrib-saflp-src-)
 !ENDIF
 !ENDIF
 

@@ -180,20 +180,25 @@ if [[ "$UNAME_S" =~ "_NT" ]]; then
     fi
   fi
 fi
-if [ "$CXX" == "g++" ]; then
+if [[ "$CXX" =~ "g++" ]]; then
   if [ "$UNAME_S" == "Darwin" ]; then
-    if [[ "`$CXX --version`" =~ "clang-11" ]]; then
-      CXXVERSION=$OS_NAME-clang11
+    if [[ "`$CXX --version`" =~ "Homebrew" ]]; then
+      DUMPVERSION="`$CXX -dumpversion | cut -f1 -d. `"
+      CXXVERSION="$OS_NAME-g++$DUMPVERSION"
     else
-      if [[ "`$CXX --version`" =~ "clang-10" ]]; then
-        CXXVERSION=$OS_NAME-clang10
+      if [[ "`$CXX --version`" =~ "clang-11" ]]; then
+        CXXVERSION=$OS_NAME-clang11
       else
-        CXXVERSION=$OS_NAME-clang
+        if [[ "`$CXX --version`" =~ "clang-10" ]]; then
+          CXXVERSION=$OS_NAME-clang10
+        else
+          CXXVERSION=$OS_NAME-clang
+        fi
       fi
     fi
   else
-    DUMPVERSION="`g++ -dumpversion | cut -f1 -d. `"
-    CXXVERSION="$OS_NAME-$CXX$DUMPVERSION"
+    DUMPVERSION="`$CXX -dumpversion | cut -f1 -d. `"
+    CXXVERSION="$OS_NAME-g++$DUMPVERSION"
   fi
 fi
 if [ "$CXX" == "clang++" ]; then
@@ -337,7 +342,11 @@ else
   CXXFLAGS="$CXXFLAGS -I. -I\"$ADMB_HOME/include\""
 fi
 if [[ "$static" == "-static" || "$CXX" == "adcomp-x86_64-w64-mingw32" ]]; then
-  LDFLAGS="--static $LDFLAGS"
+  if [[ "`$CXX --version`" =~ "Homebrew" ]]; then
+    LDFLAGS="-Bstatic $LDFLAGS"
+  else
+    LDFLAGS="--static $LDFLAGS"
+  fi
 fi
 tplsrcs=
 for model in $tpls

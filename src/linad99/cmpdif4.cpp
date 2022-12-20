@@ -129,17 +129,9 @@ void dvector::save_dvector_value() const
 }
 void DF_FILE::save_dvector_value(const dvector& v)
 {
-  // int ierr=save_dvector_position();
-  //int wsize=sizeof(double);
-  //int num_rec;
   int min = v.indexmin();
   int max = v.indexmax();
-  double* pv = v.get_v() + min;
-  for (int i = min; i <= max; ++i)
-  {
-    fwrite(*pv);
-    ++pv;
-  }
+  fwrite(v.get_v() + min, sizeof(double) * (max - min + 1));
 }
 
 /**
@@ -181,13 +173,8 @@ dvector DF_FILE::restore_dvector_value(const dvector_position& tmp)
   int min = tmp.indexmin();
   int max = tmp.indexmax();
   dvector temp_vec(min, max);
-  constexpr size_t size = sizeof(double);
-  double* ptemp_vec = temp_vec.get_v() + max;
-  for (int i = max; i >= min; --i)
-  {
-    fread(ptemp_vec, size);
-    --ptemp_vec;
-  }
+  fread(temp_vec.get_v() + min, sizeof(double) * (max - min + 1));
+
   return temp_vec;
 }
 

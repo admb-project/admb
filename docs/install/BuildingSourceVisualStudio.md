@@ -1,7 +1,7 @@
 # ADMB Building Source with Visual Studio
 
-*ADMB-13.0*  
-*Released August 8, 2022*  
+*ADMB-13.1*  
+*Released December 23, 2022*  
 
 Describe building ADMB from source for Windows and Visual C++ compilers.
 
@@ -14,19 +14,13 @@ Building Source
 
 1. **Download**
 
-   Download source distribution [admb-13.0-src.zip](https://github.com/admb-project/admb/releases/download/admb-13.0/admb-13.0-src.zip).
+   Download source distribution [admb-13.1-src.zip](https://github.com/admb-project/admb/releases/download/admb-13.1/admb-13.1-src.zip).
 
    Double click downloaded zip file and extract admb directory to **C:\\admb\\>**.
 
 2. **Build**
 
-   Open Visual Studio **Developer Command Prompt** window
-
-   * For Visual C++ 2015, Double click **Developer Command Prompt for VS2015** in **Visual Studio Tools**.
-
-   * For Visual C++ 2017, Double click **Developer Command Prompt for VS2017** in **Visual Studio Tools**.
-
-   * For Visual C++ 2019, Double click **Developer Command Prompt for VS2019** in **Visual Studio Tools**.
+   Double click Visual Studio **Developer Command Prompt** in **Visual Studio Tools**.
 
    In the Visual Studio **Developer Command Prompt** window, use the steps below to build ADMB.
 

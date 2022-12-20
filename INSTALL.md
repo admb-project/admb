@@ -1,7 +1,7 @@
 ADMB Project  
 ============
-*ADMB-13.0*  
-*Released August 8, 2022*  
+*ADMB-13.1*  
+*Released December 23, 2022*  
 
 ADMB Installation procedures
 
@@ -14,7 +14,7 @@ Read [QuickStartWindows](docs/install/QuickStartWindows.md).
 
 **MacOS**
 
-MacOS installers will not be available with ADMB-13.0, please read the [BuildingSourceUnix](docs/install/BuildingSourceUnix.md).
+MacOS installers will not be available starting from ADMB-13.0, please read the [BuildingSourceUnix](docs/install/BuildingSourceUnix.md).
 
 **Unix**
 

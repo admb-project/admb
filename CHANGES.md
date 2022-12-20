@@ -17,11 +17,11 @@ ADMB-13.1
 
 #### Changes and Improvements
 
-* Fixed build files for building arm64 processor (See [Issue 277](https://github.com/admb-project/admb/issues/277). Reported by @jonrh.
+* Fixed build files for building arm64 processor (See [Issue 277](https://github.com/admb-project/admb/issues/277)). Reported by @jonrh.
 
-* Fixed build for building with Visual Studio compiler (See [Issue 274](https://github.com/admb-project/admb/issues/274). Reported by @Ash12H.
+* Fixed build for building with Visual Studio compiler (See [Issue 274](https://github.com/admb-project/admb/issues/274)). Reported by @Ash12H.
 
-* Allow build to use compiler which includes version (ie g++-12) (See [Issue 270](https://github.com/admb-project/admb/issues/270). Thanks to @yukio-takeuchi for contributing changes. 
+* Allow build to use compiler which includes version (ie g++-12) (See [Issue 270](https://github.com/admb-project/admb/issues/270)). Thanks to @yukio-takeuchi for contributing changes. 
 
 * Improve the runtime performance(See [Issue 267](https://github.com/admb-project/admb/issues/267).
 

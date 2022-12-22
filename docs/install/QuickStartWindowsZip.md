@@ -22,7 +22,7 @@ Quick Start
 
    To use ADMB, locate and double click **ADMB Command Prompt** in **C:\admb-13.1** folder.
 
-   In the **ADMB Command Prompt** window, use the steps below to build and run the simple example.
+   In the **ADMB Command Prompt** window, use the commands below to build and run the simple example.
 
    Change to simple example directory.
 
@@ -58,5 +58,7 @@ GDB, and Git.
 
 AD Studio 1.0 comes with ADMB 12.0, which is one version older than 12.1.
 
----
-For help and support, contact <users@admb-project.org>.
+Help
+----
+
+For help and support, please post on the [ADMB Discussions](https://github.com/admb-project/admb/discussions).

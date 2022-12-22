@@ -15,6 +15,12 @@ The following tools are required to be installed on the local Linux computer.
 * GNU C++
 * GNU stream editor (sed)
 
+Below are the operating systems supported for linux. 
+
+* Fedora 36
+* Ubuntu 20.04
+* Centos 7
+
 Quick Start
 -----------
 
@@ -32,7 +38,7 @@ Quick Start
 
 3. **Use** ADMB
 
-   In the **Terminal** window, use the steps below to build and run the simple example.
+   In the **Terminal** window, use the commands below to build and run the simple example.
 
    Change to simple example directory.       
 
@@ -54,5 +60,7 @@ Quick Start
 
    Read [manuals](http://www.admb-project.org/docs/manuals/) for more information.
 
----
-For help and support, contact <users@admb-project.org>.
+Help
+----
+
+For help and support, please post on the [ADMB Discussions](https://github.com/admb-project/admb/discussions).

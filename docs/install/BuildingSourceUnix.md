@@ -68,7 +68,7 @@ Building Source
 
 3. **Test**
 
-   In the **Terminal** window, use the steps below to build and run the simple example.
+   In the **Terminal** window, use the command below to build and run the simple example.
 
    Build examples
 
@@ -112,5 +112,7 @@ Building Source
 
    Read [manuals](http://www.admb-project.org/docs/manuals/) for more information.
 
----
-For help and support, contact <users@admb-project.org>.
+Help
+----
+
+For help and support, please post on the [ADMB Discussions](https://github.com/admb-project/admb/discussions).

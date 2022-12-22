@@ -1,5 +1,5 @@
-#define ADMB_VERSION "ADMB-13.0"
-#define ADMB_VERSION2 "admb-13.0"
+#define ADMB_VERSION "ADMB-13.1"
+#define ADMB_VERSION2 "admb-13.1"
 
 [Setup]
 PrivilegesRequired=none
@@ -21,7 +21,7 @@ Compression=lzma2/ultra64
 Name: {#ADMB_VERSION2}; Description: {#ADMB_VERSION}
 
 [Files]
-Source: "..\..\..\build\admb-13.0\*"; DestDir: "{app}"; Flags: recursesubdirs
+Source: "..\..\..\build\admb-13.1\*"; DestDir: "{app}"; Flags: recursesubdirs
 Source: "..\..\set-admb-command-prompt.bat"; DestDir: "{app}\bin"
 Source: "..\..\..\CHANGES.md"; DestDir: "{app}"; DestName: "CHANGES.txt"
 Source: "..\..\..\LICENSE.txt"; DestDir: "{app}"

@@ -12,9 +12,9 @@ Installation
 
 Read [QuickStartWindows](docs/install/QuickStartWindows.md).  
 
-**MacOS**
+**MacOS** Read [BuildingSourceUnix](docs/install/BuildingSourceUnix.md) to build release from source.
 
-MacOS installers will not be available starting from ADMB-13.0, please read the [BuildingSourceUnix](docs/install/BuildingSourceUnix.md).
+_Note &mdash; Installers for MacOS are no longer available starting from ADMB-13.0._
 
 **Unix**
 

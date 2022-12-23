@@ -23,7 +23,7 @@ ADMB-13.1
 
 * Allow build to use compiler which includes version (ie g++-12) (See [Issue 270](https://github.com/admb-project/admb/issues/270)). Thanks to @yukio-takeuchi for contributing changes. 
 
-* Improve the runtime performance(See [Issue 267](https://github.com/admb-project/admb/issues/267).
+* Improve the runtime performance(See [Issue 267](https://github.com/admb-project/admb/issues/267)).
 
 ADMB-13.0
 ---------

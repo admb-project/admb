@@ -12,7 +12,9 @@ Installation
 
 Read [QuickStartWindows](docs/install/QuickStartWindows.md).  
 
-**MacOS** Read [BuildingSourceUnix](docs/install/BuildingSourceUnix.md) to build release from source.
+**MacOS** 
+
+Read [BuildingSourceUnix](docs/install/BuildingSourceUnix.md) to build release from source.
 
 _Note &mdash; Installers for MacOS are no longer available starting from ADMB-13.0._
 
@@ -31,7 +33,7 @@ To build with Windows and Visual Studio, read the [BuildingSourceVisualStudio](d
 
 **Unix**
 
-To build with Linux, MacOS, Solaris BSD or MinGW-w64 in Windows, read the [BuildingSourceUnix](docs/install/BuildingSourceUnix.md).
+To build with Linux, MacOS, Solaris, BSD or MinGW-w64 in Windows, read the [BuildingSourceUnix](docs/install/BuildingSourceUnix.md).
 
 ---
 For help and support, email <users@admb-project.org>.

@@ -15,9 +15,6 @@ jobs:
         r-version: 'release'
         rtools-version: '42'
         windows-path-include-rtools: true
-    - name: get info on gcc version
-        run: |
-          g++ -v
     - name: clean
       run: |
         utilities\make clean SHELL=

@@ -10,11 +10,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Set up R
-        uses: r-lib/actions/setup-r@v2
-        with:
-          r-version: 'release'
-          rtools-version: '42'
-          windows-path-include-rtools: true
+      uses: r-lib/actions/setup-r@v2
+      with:
+        r-version: 'release'
+        rtools-version: '42'
+        windows-path-include-rtools: true
     - name: get info on gcc version
         run: |
           g++ -v

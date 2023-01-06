@@ -5,7 +5,7 @@ on: [push]
 jobs:
   build:
 
-    runs-on: [self-hosted, windows]
+    runs-on: windows-latest 
     
     steps:
     - uses: actions/checkout@v2
@@ -20,12 +20,10 @@ jobs:
           g++ -v
     - name: clean
       run: |
-        set PATH=C:\PortableGit\bin;%PATH%
         utilities\make clean SHELL=
       shell: cmd
     - name: build
       run: |
-        set PATH=C:\PortableGit\bin;%PATH%
         utilities\make -j 4 SHELL=
         utilities\make -j 4 shared SHELL=
       shell: cmd
@@ -36,7 +34,6 @@ jobs:
         path: build\\admb
     - name: debug
       run: |
-        set PATH=C:\PortableGit\bin;%PATH%
         utilities\make -j 4 DEBUG=yes SHELL=
         utilities\make -j 4 shared DEBUG=yes SHELL=
       shell: cmd
@@ -47,7 +44,6 @@ jobs:
         path: build\\admb
     - name: tests
       run: |
-        set PATH=C:\PortableGit\bin;%PATH%
         utilities\make verify SHELL= DEBUG=yes SAFE_ONLY=yes
       shell: cmd
     - name: Artifact

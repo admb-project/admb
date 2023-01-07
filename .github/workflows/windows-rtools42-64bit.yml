@@ -22,7 +22,6 @@ jobs:
     - name: build
       run: |
         utilities\make -j 4 SHELL=
-        utilities\make -j 4 shared SHELL=
       shell: cmd
     - name: Artifact
       uses: actions/upload-artifact@v1
@@ -32,7 +31,6 @@ jobs:
     - name: debug
       run: |
         utilities\make -j 4 DEBUG=yes SHELL=
-        utilities\make -j 4 shared DEBUG=yes SHELL=
       shell: cmd
     - name: Artifact
       uses: actions/upload-artifact@v1

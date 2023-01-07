@@ -15,6 +15,7 @@ jobs:
         r-version: 'release'
         rtools-version: '42'
         windows-path-include-rtools: true
+        update-rtools: true
     - name: clean
       run: |
         utilities\make clean SHELL=

@@ -540,7 +540,7 @@ else
 	rm -vf ${DIST}/lib/libadmb$(OSNAME)$(CXXVERSION)$(SHARED).a
 	rm -vf ${DIST}/lib/libadmbo$(OSNAME)$(CXXVERSION)$(SHARED).a
   endif
-	$(AR) -rs $(LIBSDIR)libadmb$(OSNAME)$(CXXVERSION)$(SHARED).a $(shell $(OBJSDIR)saflp-linad99-[f]*.obj)
+	$(AR) -rs $(LIBSDIR)libadmb$(OSNAME)$(CXXVERSION)$(SHARED).a $(shell dir /B $(OBJSDIR)saflp-linad99-[f]*.obj)
 	$(AR) -rs $(LIBSDIR)libadmb$(OSNAME)$(CXXVERSION)$(SHARED).a $(OBJSDIR)saflp-linad99-[^f]*.obj
 	$(AR) -rs $(LIBSDIR)libadmb$(OSNAME)$(CXXVERSION)$(SHARED).a $(OBJSDIR)saflp-df1b2-separable-*.obj
 	$(AR) -rs $(LIBSDIR)libadmb$(OSNAME)$(CXXVERSION)$(SHARED).a $(OBJSDIR)saflp-nh99-*.obj

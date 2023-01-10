@@ -540,12 +540,15 @@ else
 	rm -vf ${DIST}/lib/libadmb$(OSNAME)$(CXXVERSION)$(SHARED).a
 	rm -vf ${DIST}/lib/libadmbo$(OSNAME)$(CXXVERSION)$(SHARED).a
   endif
-	$(AR) -rs $(LIBSDIR)libadmb$(OSNAME)$(CXXVERSION)$(SHARED).a $(shell dir /B $(OBJSDIR)saflp-linad99-[f]*.obj)
+	$(AR) -rs $(LIBSDIR)libadmb$(OSNAME)$(CXXVERSION)$(SHARED).a $(addprefix $(OBJSDIR),$(OBJECTS))
+  ifdef SAFE_ONLY2
+	$(AR) -rs $(LIBSDIR)libadmb$(OSNAME)$(CXXVERSION)$(SHARED).a $(OBJSDIR)saflp-linad99-[f]*.obj
 	$(AR) -rs $(LIBSDIR)libadmb$(OSNAME)$(CXXVERSION)$(SHARED).a $(OBJSDIR)saflp-linad99-[^f]*.obj
 	$(AR) -rs $(LIBSDIR)libadmb$(OSNAME)$(CXXVERSION)$(SHARED).a $(OBJSDIR)saflp-df1b2-separable-*.obj
 	$(AR) -rs $(LIBSDIR)libadmb$(OSNAME)$(CXXVERSION)$(SHARED).a $(OBJSDIR)saflp-nh99-*.obj
 	$(AR) -rs $(LIBSDIR)libadmb$(OSNAME)$(CXXVERSION)$(SHARED).a $(OBJSDIR)saflp-tools99-*.obj
 	$(AR) -rs $(LIBSDIR)libadmb$(OSNAME)$(CXXVERSION)$(SHARED).a $(OBJSDIR)saflp-sparse-*.obj
+  endif
   ifndef SAFE_ONLY
     ifeq ($(CMDSHELL),cmd)
 	$(AR) -rs $(LIBSDIR)libadmbo$(OSNAME)$(CXXVERSION)$(SHARED).a $(OBJSDIR)optlp-linad99-*.obj

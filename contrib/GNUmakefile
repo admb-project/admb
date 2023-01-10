@@ -252,7 +252,7 @@ ifeq ($(CMDSHELL),cmd)
   else
 	if exist "src\$(CONTRIB_LIB)\libadmb-contrib$(OSNAME)$(CXXVERSION)$(SHARED).a" del "src\$(CONTRIB_LIB)\libadmb-contrib$(OSNAME)$(CXXVERSION)$(SHARED).a"
 	copy "src\$(CONTRIB_LIB)\libadmb$(OSNAME)$(CXXVERSION)$(SHARED).a" "src\$(CONTRIB_LIB)\libadmb-contrib$(OSNAME)$(CXXVERSION)$(SHARED).a"
-	$(AR) -rs "..\build\$(ADMB_VER)\lib\libadmb-contrib$(OSNAME)$(CXXVERSION)$(SHARED).a" "..\build\objects$(OSNAME)$(CXXVERSION)\saflp-contrib-*.obj"
+	$(AR) -rs "..\build\$(ADMB_VER)\lib\libadmb-contrib$(OSNAME)$(CXXVERSION)$(SHARED).a" "$(shell dir /B ..\build\objects$(OSNAME)$(CXXVERSION)\saflp-contrib-*.obj)"
     ifndef SAFE_ONLY
 	if exist  "src\$(CONTRIB_LIB)\libadmb-contribo$(OSNAME)$(CXXVERSION)$(SHARED).a" del "src\$(CONTRIB_LIB)\libadmb-contribo$(OSNAME)$(CXXVERSION)$(SHARED).a"
 	copy "src\$(CONTRIB_LIB)\libadmbo$(OSNAME)$(CXXVERSION)$(SHARED).a" "src\$(CONTRIB_LIB)\libadmb-contribo$(OSNAME)$(CXXVERSION)$(SHARED).a"

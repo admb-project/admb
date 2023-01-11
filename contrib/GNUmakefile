@@ -243,11 +243,11 @@ ifeq ($(CMDSHELL),cmd)
   ifeq ($(DEBUG),yes)
 	if exist "src\$(CONTRIB_LIB)\libadmb-contrib$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a" del "src\$(CONTRIB_LIB)\libadmb-contrib$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a"
 	copy "src\$(CONTRIB_LIB)\libadmb$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a" "src\$(CONTRIB_LIB)\libadmb-contrib$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a"
-	$(AR) -rs "src\$(CONTRIB_LIB)\libadmb-contrib$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a" "..\build\objects$(OSNAME)$(CXXVERSION)-debug\saflp-contrib-*.obj"
+	$(AR) -rs ..\build\$(ADMB_VER)\lib\libadmb-contrib$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a $(addprefix ..\build\objects$(OSNAME)$(CXXVERSION)-debug\,$(shell dir /B ..\build\objects$(OSNAME)$(CXXVERSION)-debug\saflp-contrib-*.obj))
     ifndef SAFE_ONLY
 	if exist  "src\$(CONTRIB_LIB)\libadmb-contribo$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a" del "src\$(CONTRIB_LIB)\libadmb-contribo$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a"
 	copy "src\$(CONTRIB_LIB)\libadmbo$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a" "src\$(CONTRIB_LIB)\libadmb-contribo$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a"
-	$(AR) -rs "src\$(CONTRIB_LIB)\libadmb-contribo$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a" "..\build\objects$(OSNAME)$(CXXVERSION)-debug\optlp-contrib-*.obj"
+	$(AR) -rs ..\build\$(ADMB_VER)\lib\libadmb-contribo$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a $(addprefix ..\build\objects$(OSNAME)$(CXXVERSION)-debug\,$(shell dir /B ..\build\objects$(OSNAME)$(CXXVERSION)-debug\optlp-contrib-*.obj))
     endif
   else
 	if exist "src\$(CONTRIB_LIB)\libadmb-contrib$(OSNAME)$(CXXVERSION)$(SHARED).a" del "src\$(CONTRIB_LIB)\libadmb-contrib$(OSNAME)$(CXXVERSION)$(SHARED).a"
@@ -256,7 +256,7 @@ ifeq ($(CMDSHELL),cmd)
     ifndef SAFE_ONLY
 	if exist  "src\$(CONTRIB_LIB)\libadmb-contribo$(OSNAME)$(CXXVERSION)$(SHARED).a" del "src\$(CONTRIB_LIB)\libadmb-contribo$(OSNAME)$(CXXVERSION)$(SHARED).a"
 	copy "src\$(CONTRIB_LIB)\libadmbo$(OSNAME)$(CXXVERSION)$(SHARED).a" "src\$(CONTRIB_LIB)\libadmb-contribo$(OSNAME)$(CXXVERSION)$(SHARED).a"
-	@rem $(AR) -rs ..\build\$(ADMB_VER)\lib\libadmb-contribo$(OSNAME)$(CXXVERSION)$(SHARED).a "..\build\objects$(OSNAME)$(CXXVERSION)\optlp-contrib-*.obj"
+	$(AR) -rs ..\build\$(ADMB_VER)\lib\libadmb-contribo$(OSNAME)$(CXXVERSION)$(SHARED).a $(addprefix ..\build\objects$(OSNAME)$(CXXVERSION)\,$(shell dir /B ..\build\objects$(OSNAME)$(CXXVERSION)\optlp-contrib-*.obj))
     endif
   endif
 else

@@ -521,6 +521,7 @@ ifeq ($(DEBUG),yes)
 	$(AR) -rs $(LIBSDIR)libadmbo$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a $(filter $(OBJSDIR)optlp-nh99-%.obj,$(OBJECTS))
 	$(AR) -rs $(LIBSDIR)libadmbo$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a $(filter $(OBJSDIR)optlp-tools99-%.obj,$(OBJECTS))
 	$(AR) -rs $(LIBSDIR)libadmbo$(OSNAME)$(CXXVERSION)$(SHARED)-debug.a $(filter $(OBJSDIR)optlp-sparse-%.obj,$(OBJECTS))
+  endif
 else
   ifeq ($(CMDSHELL),cmd)
 	if not exist ${DIST}\lib md ${DIST}\lib

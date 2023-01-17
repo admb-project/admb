@@ -26,7 +26,7 @@ Source: "..\..\set-admb-command-prompt.bat"; DestDir: "{app}\bin"
 Source: "..\..\..\CHANGES.md"; DestDir: "{app}"; DestName: "CHANGES.txt"
 Source: "..\..\..\LICENSE.txt"; DestDir: "{app}"
 Source: "..\..\..\README.md"; DestDir: "{app}"; DestName: "README.txt"
-Source: "..\..\..\VERSION"; DestDir: "{app}"; DestName: "Version.txt"
+Source: "..\..\..\VERSION.txt"; DestDir: "{app}"; DestName: "Version.txt"
 Source: "..\..\..\examples\*"; DestDir: "{app}\examples"; Flags: recursesubdirs
 Source: "..\..\..\utilities\*"; DestDir: "{app}\utilities"; Flags: recursesubdirs
 Source: "C:\rtools40\mingw64\*"; DestDir: "{app}\utilities\mingw64"; Flags: recursesubdirs

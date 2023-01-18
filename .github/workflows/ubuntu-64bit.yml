@@ -2,6 +2,10 @@ name: ubuntu-64bit
 
 on: [push]
 
+env:
+  CC=gcc-12
+  CXX=g++-12
+
 jobs:
   build:
 
@@ -16,9 +20,6 @@ jobs:
     - name: build
       run: |
         make
-        CC=gcc-11 CXX=g++-11 make
-        CC=gcc-10 CXX=g++-10 make
-        CC=gcc-9  CXX=g++-9  make
     - name: debug
       run: |
         make DEBUG=yes

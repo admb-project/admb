@@ -22,9 +22,9 @@ jobs:
         make
       run: |
         make
-        env: 
-          CC: gcc-11 
-          CXX: g++-11
+      env: 
+        CC: gcc-11 
+        CXX: g++-11
       run: |
         make
         env: 

@@ -20,6 +20,10 @@ jobs:
         nmake
         nmake shared
       shell: cmd
+    - name: build g++-11
+      run: |
+        utilities\\make
+      shell: cmd
     - name: Artifact
       uses: actions/upload-artifact@v1
       with:

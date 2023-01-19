@@ -2,39 +2,40 @@
 #DEBUG=yes
 
 dist:
-	$(MAKE) $(CXX)-dist DEBUG=$(DEBUG)
+	$(MAKE) $(CXX)$(VSCMD_VER)-dist DEBUG=$(DEBUG)
 	@echo ADMB build dist completed.
 	@echo Check README.txt for usage and installation information.
 all:
-	$(MAKE) $(CXX)-all DEBUG=$(DEBUG)
+	$(MAKE) $(CXX)$(VSCMD_VER)-all DEBUG=$(DEBUG)
 	@echo ADMB build all completed.
 	@echo Check README.txt for usage and installation information.
 core:
-	$(MAKE) $(CXX)-core DEBUG=$(DEBUG)
+	$(MAKE) $(CXX)$(VSCMD_VER)-core DEBUG=$(DEBUG)
 	@echo ADMB build core completed.
 debug:
-	$(MAKE) $(CXX)-all DEBUG=yes
+	$(MAKE) $(CXX)$(VSCMD_VER)-all DEBUG=yes
 	@echo ADMB build debug completed.
 contribs:
-	$(MAKE) $(CXX)-contribs DEBUG=$(DEBUG)
+	$(MAKE) $(CXX)$(VSCMD_VER)-contribs DEBUG=$(DEBUG)
 	@echo ADMB build contribs completed.
 test: verify
 gtests:
-	$(MAKE) $(CXX)-gtests DEBUG=$(DEBUG)
+	$(MAKE) $(CXX)$(VSCMD_VER)-gtests DEBUG=$(DEBUG)
 verify:
-	$(MAKE) $(CXX)-verify DEBUG=$(DEBUG)
-doc: $(CXX)-docs
-shared: $(CXX)-shared
-	$(MAKE) $(CXX)-shared DEBUG=$(DEBUG)
+	$(MAKE) $(CXX)$(VSCMD_VER)-verify DEBUG=$(DEBUG)
+doc: $(CXX)$(VSCMD_VER)-docs
+shared: $(CXX)$(VSCMD_VER)-shared
+	$(MAKE) $(CXX)$(VSCMD_VER)-shared DEBUG=$(DEBUG)
 	@echo ADMB build shared completed.
-install: $(CXX)-install
-check: $(CXX)-check
+install: $(CXX)$(VSCMD_VER)-install
+check: $(CXX)$(VSCMD_VER)-check
 	@echo "SHELL: $(SHELL)"
 	@echo "PATH: $(PATH)"
 	@echo "TERM: $(TERM)"
 	@echo "MAKE: $(MAKE)"
 	@echo "CXX: $(CXX)"
-clean: $(CXX)-clean
+clean: 
+	$(MAKE) $(CXX)$(VSCMD_VER)-clean
 coverage:
 	$(MAKE) $(CXX)-coverage DEBUG=$(DEBUG)
 
@@ -46,40 +47,40 @@ installer: zip
 zip: $(CXX)-zip
 
 #Microsoft Visual C++
-cl: cl-all
-cl-all:
-	nmake /nologo cl-dist
-	nmake /nologo cl-shared
+cl: cl$(VSCMD_VER)-all
+cl$(VSCMD_VER)-all:
+	nmake /nologo cl$(VSCMD_VER)-dist
+	nmake /nologo cl$(VSCMD_VER)-shared
 	pushd src& nmake /nologo copy
-cl-dist:
-	nmake /nologo cl-contribs
-cl-debug:
+cl$(VSCMD_VER)-dist:
+	nmake /nologo cl$(VSCMD_VER)-contribs
+cl$(VSCMD_VER)-debug:
 	pushd src& nmake /nologo DEBUG=!DEBUG! all
 	pushd contrib& nmake /nologo DEBUG=yes all
-cl-core:
+cl$(VSCMD_VER)-core:
 	pushd src& nmake /nologo all
-cl-contribs: cl-core
+cl$(VSCMD_VER)-contribs: cl$(VSCMD_VER)-core
 	pushd contrib& nmake /nologo all
-cl-docs:
+cl$(VSCMD_VER)-docs:
 	pushd docs& nmake /nologo all
-cl-gtests:
+cl$(VSCMD_VER)-gtests:
 	pushd tests & nmake /nologo test-gtests
-cl-verify:
+cl$(VSCMD_VER)-verify:
 	pushd tests& nmake /nologo verify
-cl-shared:
+cl$(VSCMD_VER)-shared:
 	pushd src& nmake /nologo shared
 	pushd contrib& nmake /nologo shared
-cl-install:
+cl$(VSCMD_VER)-install:
 	pushd src& nmake /nologo install
-cl-check:
+cl$(VSCMD_VER)-check:
 	pushd src& nmake /nologo check
-cl-clean:
+cl$(VSCMD_VER)-clean:
 	pushd src& nmake /nologo clean
 	pushd contrib& nmake /nologo clean
 	pushd scripts& nmake /nologo clean
 	pushd tests& nmake /nologo clean
 	pushd examples& nmake /nologo clean
-cl-zip:
+cl$(VSCMD_VER)-zip:
 	pushd src& nmake /nologo zip
 
 #GNU

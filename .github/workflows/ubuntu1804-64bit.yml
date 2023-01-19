@@ -2,10 +2,6 @@ name: ubuntu1804-64bit
 
 on: [push]
 
-env: 
-  CC: gcc-7 
-  CXX: g++-7
-
 jobs:
   build:
 
@@ -16,19 +12,20 @@ jobs:
     - name: flex
       run: sudo apt-get install flex
     - name: clean
-      run: make clean
+      run: |
+        CC=gcc-7 CXX=g++-7 make clean
     - name: build
       run: |
-        make
+        CC=gcc-7 CXX=g++-7 make
     - name: debug
       run: |
-        make DEBUG=yes
+        CC=gcc-7 CXX=g++-7 make DEBUG=yes
     - name: shared
       run: |
-        make shared
+        CC=gcc-7 CXX=g++-7 make shared
     - name: zip
       run: |
-        make zip
+        CC=gcc-7 CXX=g++-7 make zip
     - name: Artifact
       uses: actions/upload-artifact@v1
       with:

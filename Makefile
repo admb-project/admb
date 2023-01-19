@@ -83,83 +83,44 @@ cl-zip:
 	pushd src& nmake /nologo zip
 
 #GNU
-g++: g++-all
-g++-all:
-	$(MAKE) g++-dist
-	$(MAKE) g++-shared
-	$(MAKE) --directory=src CC=gcc CXX=g++ copy
-g++-dist:
-	$(MAKE) g++-core
-	$(MAKE) g++-contribs
-g++-debug:
-	$(MAKE) g++-all DEBUG=yes
-g++-core:
-	$(MAKE) --directory=src CC=gcc CXX=g++ all
-g++-contribs: g++-core
-	$(MAKE) --directory=contrib CC=gcc CXX=g++ all
-g++-docs:
-	$(MAKE) --directory=docs CC=gcc CXX=g++ all
-g++-gtests:
-	$(MAKE) --directory=tests CC=gcc CXX=g++ unit-gtests
-g++-coverage:
-	$(MAKE) --directory=src CC=gcc CXX=g++ SAFE_ONLY=yes dist
-	$(MAKE) --directory=tests CC=gcc CXX=g++ coverage
-g++-verify:
-	$(MAKE) --directory=tests CC=gcc CXX=g++ verify
-g++-shared:
-	$(MAKE) --directory=src CC=gcc CXX=g++ SHARED=-shared shared
-	$(MAKE) --directory=contrib CC=gcc CXX=g++ SHARED=-shared shared
-g++-install:
-	$(MAKE) --directory=src CC=gcc CXX=g++ install
-g++-check:
-	$(MAKE) --directory=src CC=gcc CXX=g++ check
-g++-clean:
-	$(MAKE) --directory=src CC=gcc CXX=g++ clean
-	$(MAKE) --directory=contrib CC=gcc CXX=g++ clean
-	$(MAKE) --directory=scripts CC=gcc CXX=g++ clean
-	$(MAKE) --directory=tests CC=gcc CXX=g++ clean
-	$(MAKE) --directory=examples CC=gcc CXX=g++ clean
-g++-zip:
-	$(MAKE) --directory=src CC=gcc CXX=g++ zip
-
-g++-12: g++-12-all
-g++-12-all:
-	$(MAKE) g++-12-dist
-	$(MAKE) g++-12-shared
-	$(MAKE) --directory=src CC=gcc-12 CXX=g++-12 copy
-g++-12-dist:
-	$(MAKE) g++-12-core
-	$(MAKE) g++-12-contribs
-g++-12-debug:
-	$(MAKE) g++-12-all DEBUG=yes
-g++-12-core:
-	$(MAKE) --directory=src CC=gcc-12 CXX=g++-12 all
-g++-12-contribs: g++-12-core
-	$(MAKE) --directory=contrib CC=gcc-12 CXX=g++-12 all
-g++-12-docs:
-	$(MAKE) --directory=docs CC=gcc-12 CXX=g++-12 all
-g++-12-gtests:
-	$(MAKE) --directory=tests CC=gcc-12 CXX=g++-12 unit-gtests
-g++-12-coverage:
-	$(MAKE) --directory=src CC=gcc-12 CXX=g++-12 SAFE_ONLY=yes dist
-	$(MAKE) --directory=tests CC=gcc-12 CXX=g++-12 coverage
-g++-12-verify:
-	$(MAKE) --directory=tests CC=gcc-12 CXX=g++-12 verify
-g++-12-shared:
-	$(MAKE) --directory=src CC=gcc-12 CXX=g++-12 SHARED=-shared shared
-	$(MAKE) --directory=contrib CC=gcc-12 CXX=g++-12 SHARED=-shared shared
-g++-12-install:
-	$(MAKE) --directory=src CC=gcc-12 CXX=g++-12 install
-g++-12-check:
-	$(MAKE) --directory=src CC=gcc-12 CXX=g++-12 check
-g++-12-clean:
-	$(MAKE) --directory=src CC=gcc-12 CXX=g++-12 clean
-	$(MAKE) --directory=contrib CC=gcc-12 CXX=g++-12 clean
-	$(MAKE) --directory=scripts CC=gcc-12 CXX=g++-12 clean
-	$(MAKE) --directory=tests CC=gcc-12 CXX=g++-12 clean
-	$(MAKE) --directory=examples CC=gcc-12 CXX=g++-12 clean
-g++-12-zip:
-	$(MAKE) --directory=src CC=gcc-12 CXX=g++-12 zip
+$(CXX): $(CXX)-all
+$(CXX)-all:
+	$(MAKE) $(CXX)-dist
+	$(MAKE) $(CXX)-shared
+	$(MAKE) --directory=src CC=$(CC) CXX=$(CXX) copy
+$(CXX)-dist:
+	$(MAKE) $(CXX)-core
+	$(MAKE) $(CXX)-contribs
+$(CXX)-debug:
+	$(MAKE) $(CXX)-all DEBUG=yes
+$(CXX)-core:
+	$(MAKE) --directory=src CC=$(CC) CXX=$(CXX) all
+$(CXX)-contribs: $(CXX)-core
+	$(MAKE) --directory=contrib CC=$(CC) CXX=$(CXX) all
+$(CXX)-docs:
+	$(MAKE) --directory=docs CC=$(CC) CXX=$(CXX) all
+$(CXX)-gtests:
+	$(MAKE) --directory=tests CC=$(CC) CXX=$(CXX) unit-gtests
+$(CXX)-coverage:
+	$(MAKE) --directory=src CC=$(CC) CXX=$(CXX) SAFE_ONLY=yes dist
+	$(MAKE) --directory=tests CC=$(CC) CXX=$(CXX) coverage
+$(CXX)-verify:
+	$(MAKE) --directory=tests CC=$(CC) CXX=$(CXX) verify
+$(CXX)-shared:
+	$(MAKE) --directory=src CC=$(CC) CXX=$(CXX) SHARED=-shared shared
+	$(MAKE) --directory=contrib CC=$(CC) CXX=$(CXX) SHARED=-shared shared
+$(CXX)-install:
+	$(MAKE) --directory=src CC=$(CC) CXX=$(CXX) install
+$(CXX)-check:
+	$(MAKE) --directory=src CC=$(CC) CXX=$(CXX) check
+$(CXX)-clean:
+	$(MAKE) --directory=src CC=$(CC) CXX=$(CXX) clean
+	$(MAKE) --directory=contrib CC=$(CC) CXX=$(CXX) clean
+	$(MAKE) --directory=scripts CC=$(CC) CXX=$(CXX) clean
+	$(MAKE) --directory=tests CC=$(CC) CXX=$(CXX) clean
+	$(MAKE) --directory=examples CC=$(CC) CXX=$(CXX) clean
+$(CXX)-zip:
+	$(MAKE) --directory=src CC=$(CC) CXX=$(CXX) zip
 
 #clang
 clang++: clang++-all

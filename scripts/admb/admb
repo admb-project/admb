@@ -165,7 +165,7 @@ if [[ "$UNAME_S" =~ "_NT" ]]; then
   if [ "$CXX" == "" ]; then
     CXX=g++
   fi
-  if [ "$CXX" == "clang++" ]; then
+  if [ "$CXX" =~ "clang++" ]; then
     if [[ "`$CXX -dumpmachine`" =~ "x86_64" ]]; then
       OS_NAME=-win64
     else
@@ -201,21 +201,9 @@ if [[ "$CXX" =~ "g++" ]]; then
     CXXVERSION="$OS_NAME-g++$DUMPVERSION"
   fi
 fi
-if [ "$CXX" == "clang++" ]; then
-  if [ "$UNAME_S" == "Darwin" ]; then
-    if [[ "`$CXX --version`" =~ "clang-11" ]]; then
-      CXXVERSION=$OS_NAME-clang11
-    else
-      if [[ "`$CXX --version`" =~ "clang-10" ]]; then
-        CXXVERSION=$OS_NAME-clang10
-      else
-        CXXVERSION=$OS_NAME-clang
-      fi
-    fi
-  else
-    DUMPVERSION="`clang++ -dumpversion | cut -f1 -d. `"
-    CXXVERSION="$OS_NAME-$CXX$DUMPVERSION"
-  fi
+if [[ "$CXX" =~ "clang++" ]]; then
+  DUMPVERSION="`$CXX -dumpversion | cut -f1 -d. `"
+  CXXVERSION="$OS_NAME-clang++$DUMPVERSION"
 fi
 if [ "$CXX" == "c++" ]; then
   if [ "$UNAME_S" == "Darwin" ]; then
@@ -278,9 +266,9 @@ fi
 if [ "`uname`" == "Darwin" ]; then
   CXXFLAGS="-std=c++17 $CXXFLAGS"
   LDFLAGS="-std=c++17 $LDFLAGS"
-elif [ "$CXX" == "clang++" ]; then
-  CXXFLAGS="-std=c++11 $CXXFLAGS"
-  LDFLAGS="-std=c++11 $LDFLAGS"
+elif [[ "$CXX" =~ "clang++" ]]; then
+  CXXFLAGS="-std=c++17 $CXXFLAGS"
+  LDFLAGS="-std=c++17 $LDFLAGS"
 elif [ "$CXX" == "icpc" ]; then
   ICPCMAJVER="`icpc -dumpversion | cut -f1 -d.`"
   if [ "$ICPCMAJVER" == "17" ]; then

@@ -35,7 +35,7 @@ ifeq ($(CMDSHELL),cmd)
       CXXVERSION=-g++$(basename $(basename $(shell g++ -dumpversion)))
     endif
   endif
-  ifeq ($(CXX),clang++)
+  ifeq ($(findstring clang++,$(CXX)),clang++)
     ifneq ($(findstring clang++.exe,$(shell where clang++.exe 2>&1 | findstr clang++.exe)),clang++.exe)
       $(warning "Warning: Unable to find clang++ compiler.")
     endif
@@ -100,7 +100,7 @@ else
         endif
       endif
     endif
-    ifeq ($(CXX),clang++)
+    ifeq ($(findstring clang++,$(CXX)),clang++)
       ifeq ($(findstring x86_64,$(shell clang++ -dumpmachine)),x86_64)
         OSNAME=-win64
       else
@@ -128,18 +128,8 @@ else
         CXXVERSION=-g++$(basename $(basename $(shell $(CXX) -dumpversion)))
       endif
     endif
-    ifeq ($(CXX),clang++)
-      ifeq ($(UNAME_S),Darwin)
-        ifeq (clang-10,$(findstring clang-10,$(shell $(CXX) --version)))
-          CXXVERSION=-clang10
-        else ifeq (clang-11,$(findstring clang-11,$(shell $(CXX) --version)))
-          CXXVERSION=-clang11
-        else
-          CXXVERSION=-clang
-        endif
-      else
-        CXXVERSION=-clang++$(basename $(basename $(shell $(CXX) -dumpversion)))
-      endif
+    ifeq ($(findstring clang++,$(CXX)),clang++)
+      CXXVERSION=-clang++$(basename $(basename $(shell $(CXX) -dumpversion)))
     endif
     ifeq ($(findstring c++,$(CXX)),c++)
       ifeq ($(UNAME_S),Darwin)
@@ -239,7 +229,7 @@ else
   ifeq ("$(UNAME_S)","Darwin")
     ADCXXFLAGS:= -std=c++17 $(ADCXXFLAGS)
   else
-    ifeq ($(CXX),clang++)
+    ifeq ($(findstring clang++,$(CXX)),clang++)
       ADCXXFLAGS:= -std=c++17 $(ADCXXFLAGS)
     else ifeq ($(CXX),icpc)
       ICPCMAJVER:=$(shell icpc -dumpversion | cut -f1 -d. )

@@ -1,10 +1,10 @@
-name: ubuntu-64bit
+name: ubuntu1804-64bit
 
 on: [push]
 
 env: 
-  CC: gcc-12 
-  CXX: g++-12
+  CC: gcc-7 
+  CXX: g++-7
 
 jobs:
   build:
@@ -20,21 +20,6 @@ jobs:
     - name: build
       run: |
         make
-      run: |
-        make
-        env: 
-          CC: gcc-11 
-          CXX: g++-11
-      run: |
-        make
-        env: 
-          CC: gcc-10 
-          CXX: g++-10
-      run: |
-        make
-        env: 
-          CC: gcc-9 
-          CXX: g++-9
     - name: debug
       run: |
         make DEBUG=yes
@@ -50,7 +35,7 @@ jobs:
         name: admb_ubuntu_zip
         path: build/admb.zip
     - name: tests 
-      run: make verify DEBUG=yes TESTS_REMOTE=no
+      run: CC=gcc-7 CXX=g++-7 make verify DEBUG=yes TESTS_REMOTE=no
     - name: Artifact
       uses: actions/upload-artifact@v1
       with:

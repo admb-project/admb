@@ -42,22 +42,21 @@ dvariable operator*(const dvar_vector& v1, const dvar_vector& v2)
 
   int min=v1.indexmin();
   int max=v1.indexmax();
-#ifdef OPT_LIB
+#ifndef OPT_LIB
   if (min != v2.indexmin() || max != v2.indexmax())
   {
-    cerr << "Incompatible bounds in prevariable operator*(const dvar_vector&, const dvar_vector&)\n";
+    cerr << "Incompatible bounds in "
+	 << "dvariable operator*(const dvar_vector&, const dvar_vector&)\n";
     ad_exit(1);
   }
 #endif
 
   double tmp{0};
-  double_and_int* pva1 = v1.va + min;
-  double_and_int* pva2 = v2.va + min;
+  double_and_int* pva1 = v1.va;
+  double_and_int* pva2 = v2.va;
   for (int i = min; i <= max; ++i)
   {
-    tmp += pva1->x * pva2->x;
-    ++pva1;
-    ++pva2;
+    tmp += pva1[i].x * pva2[i].x;
   }
 
   dvariable vtmp=nograd_assign(tmp);
@@ -103,19 +102,15 @@ void dvdv_dot(void)
   dvector dfv1(min, max);
   dvector dfv2(min, max);
 
-  double* pcv1 = cv1.get_v() + min;
-  double* pcv2 = cv2.get_v() + min;
-  double* pdfv1 = dfv1.get_v() + min;
-  double* pdfv2 = dfv2.get_v() + min;
+  double* pcv1 = cv1.get_v();
+  double* pcv2 = cv2.get_v();
+  double* pdfv1 = dfv1.get_v();
+  double* pdfv2 = dfv2.get_v();
   for (int i = min; i <= max; ++i)
   {
     //tmp+=cv1(i)*cv2(i);
-    *pdfv1 = dftmp * *pcv2;
-    *pdfv2 = dftmp * *pcv1;
-    ++pdfv1;
-    ++pdfv2;
-    ++pcv2;
-    ++pcv1;
+    pdfv1[i] = dftmp * pcv2[i];
+    pdfv2[i] = dftmp * pcv1[i];
   }
   dfv1.save_dvector_derivatives(v1pos);
   dfv2.save_dvector_derivatives(v2pos);

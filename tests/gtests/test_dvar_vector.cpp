@@ -270,6 +270,41 @@ TEST_F(test_dvar_vector, division_operator)
   ASSERT_DOUBLE_EQ(gradients(3), 2.0);
   ASSERT_DOUBLE_EQ(gradients(4), 2.0);
 }
+TEST_F(test_dvar_vector, multiplication_operator)
+{
+  ad_exit=&test_ad_exit;
+
+  gradient_structure gs;
+
+  independent_variables independents(1, 4);
+  independents(1) = -4.2;
+  independents(2) = 4.2;
+  independents(3) = 10.2;
+  independents(4) = -14.2;
+
+  dvar_vector a(independents);
+
+  dvar_vector b(1, 4);
+  b(1) = 2.0;
+  b(2) = 2.0;
+  b(3) = 2.0;
+  b(4) = 2.0;
+
+  dvariable results;
+  results = a * b;
+
+  double v = value(results);
+  ASSERT_DOUBLE_EQ(v, 2.0 * sum(independents));
+
+  dvector gradients(1, 4);
+
+  gradcalc(4, gradients);
+
+  ASSERT_DOUBLE_EQ(gradients(1), 2.0);
+  ASSERT_DOUBLE_EQ(gradients(2), 2.0);
+  ASSERT_DOUBLE_EQ(gradients(3), 2.0);
+  ASSERT_DOUBLE_EQ(gradients(4), 2.0);
+}
 TEST_F(test_dvar_vector, substract_operator)
 {
   ad_exit=&test_ad_exit;

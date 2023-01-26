@@ -17,13 +17,14 @@ void dvdv_sub(void);
  */
 dvar_vector operator-(const dvar_vector& v1, const dvar_vector& v2)
 {
+#ifndef OPT_LIB
   if (v1.indexmin()!=v2.indexmin()||v1.indexmax()!=v2.indexmax())
   {
     cerr << "Incompatible bounds in "
-    "prevariable operator-(const dvar_vector& v1,const dvar_vector& v2)"
-    << endl;
+	 << "dvar_vector operator-(const dvar_vector&,const dvar_vector&)\n";
     ad_exit(1);
   }
+#endif
   //dvector cv1=value(v1);
   //dvector cv2=value(v2);
   kkludge_object kkk;

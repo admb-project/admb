@@ -26,12 +26,11 @@ dvar_vector operator+(const dvar_vector& v1, const dvar_vector& v2)
 {
   int mmin=v1.indexmin();
   int mmax=v1.indexmax();
-#ifdef OPT_LIB
+#ifndef OPT_LIB
   if (mmin != v2.indexmin() || mmax != v2.indexmax())
   {
     cerr << "Incompatible bounds in "
-    "prevariable operator + (const dvar_vector& v1, const dvar_vector& v2)"
-    << endl;
+	 << "operator+(const dvar_vector&, const dvar_vector&).\n";
     ad_exit(1);
   }
 #endif
@@ -46,16 +45,13 @@ dvar_vector operator+(const dvar_vector& v1, const dvar_vector& v2)
   dp_vector_add(&(vtmp.elem_value(min)),&(v1.elem_value(min)),
     &(v2.elem_value(min)),n);
 #else
-  double_and_int* pvtmp = vtmp.va + mmin;
-  double_and_int* pv1 = v1.va + mmin;
-  double_and_int* pv2 = v2.va + mmin;
+  double_and_int* pvtmp = vtmp.va;
+  double_and_int* pv1 = v1.va;
+  double_and_int* pv2 = v2.va;
   for (int i = mmin; i <= mmax; ++i)
   {
     //vtmp.elem_value(i)=v1.elem_value(i)+v2.elem_value(i);
-    pvtmp->x = pv1->x + pv2->x;
-    ++pvtmp;
-    ++pv1;
-    ++pv2;
+    pvtmp[i].x = pv1[i].x + pv2[i].x;
   }
 #endif
 

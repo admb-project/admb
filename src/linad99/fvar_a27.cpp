@@ -22,12 +22,14 @@
  */
  dvar_vector& dvar_vector::operator=(const dvector& t)
  {
+#ifndef OPT_LIB
    if (indexmin() != t.indexmin() || indexmax() != t.indexmax())
    {
-     cerr << " Incompatible bounds in "
-     "dvar_vector& dvar_vector::operator = (const dvector& t)\n";
+     cerr << "Incompatible bounds in "
+	  << "dvar_vector& dvar_vector::operator=(const dvector&)\n";
      ad_exit(21);
    }
+#endif
 
    for ( int i=indexmin(); i<=indexmax(); i++)
    {

@@ -18,12 +18,14 @@ void dv_minuseq(void);
  */
  dvar_vector& dvar_vector::operator-=(const dvar_vector& v1)
  {
+#ifndef OPT_LIB
    if (indexmin() != v1.indexmin() || indexmax() != v1.indexmax())
    {
-     cerr << " Incompatible array bounds in "
-     "dvector& operator += (const dvar_vector&)\n";
+     cerr << "Incompatible array bounds in "
+	  << "dvar_vector& dvar_vector::operator-=(const dvar_vector&).\n";
      ad_exit(21);
    }
+#endif
 
    {
      for (int i=indexmin();i<=indexmax();i++)

@@ -154,17 +154,14 @@ dvector restore_dvar_vector_derivatives(const dvar_vector_position& tmp)
 
   // puts the derivative values from a dvar_vector's guts into a dvector
   dvector tempvec(min, max);
-  double_and_int* va = tmp.va + min;
-
-  double* ptmpvec = tempvec.get_v() + min;
+  double* ptmpvec = tempvec.get_v();
+  double_and_int* va = tmp.va;
   for (int i = min; i <= max; ++i)
   {
     //tempvec(i)=va[i].xvalue();
     //va[i].xvalue()=0.;
-    *ptmpvec = va->x;
-    va->x = 0.0;
-    ++va;
-    ++ptmpvec;
+    ptmpvec[i] = va[i].x;
+    va[i].x = 0.0;
   }
 
 //  _dp_vector_add
@@ -219,13 +216,10 @@ void dvector::save_dvector_derivatives(const dvar_vector_position& pos) const
   assert(min == indexmin() && max == indexmax());
 #endif
 
-  double_and_int* dest = pos.va + min;
-  double* source = v + min;
+  double_and_int* dest = pos.va;
   for (int i = min; i <= max; ++i)
   {
-    dest->x += *source;
-    ++source;
-    ++dest;
+    dest[i].x += v[i];
   }
 }
 

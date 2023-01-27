@@ -110,14 +110,7 @@ void DF_FILE::save_dvar_vector_value(const dvar_vector& v)
   //int num_rec;
   int min=v.indexmin();
   int max=v.indexmax();
-  const double_and_int* pvi = v.va + min;
-  for (int i=min;i<=max;++i)
-  {
-    //double tmp=value((*this)(i));
-    //gradient_structure::get_fp()->fwrite(&tmp,wsize);
-    fwrite(pvi->x);
-    ++pvi;
-  }
+  fwrite((double*)v.va + min, sizeof(double) * (max - min + 1));
 }
 
 /**
@@ -143,16 +136,10 @@ void ivector::save_ivector_value() const
 }
 void DF_FILE::save_ivector_value(const ivector& v)
 {
-  // int ierr=save_ivector_position();
-  constexpr size_t wsize=sizeof(int);
+  constexpr size_t sizeofint = sizeof(int);
   int min=v.indexmin();
   int max=v.indexmax();
-  const int* pvi = v.get_v() + min;
-  for (int i=min;i<=max;i++)
-  {
-    fwrite(pvi, wsize);
-    ++pvi;
-  }
+  fwrite(v.get_v() + min, sizeofint * (max - min + 1));
 }
 
 /**
@@ -195,12 +182,7 @@ ivector DF_FILE::restore_ivector_value(const ivector_position& tmp)
   int min = tmp.indexmin();
   int max = tmp.indexmax();
   ivector temp_vec(min, max);
-  int* ptemp_veci = temp_vec.get_v() + max;
-  for (int i = max; i >= min; --i)
-  {
-    fread(ptemp_veci, sizeofint);
-    --ptemp_veci;
-  }
+  fread(temp_vec.get_v() + min, sizeofint * (max - min + 1));
   return temp_vec;
   // Back up the stream again for the next function
 }
@@ -220,13 +202,7 @@ dvector DF_FILE::restore_dvar_vector_value(const dvar_vector_position& tmp)
   int min = tmp.indexmin();
   int max = tmp.indexmax();
   dvector temp_vec(min, max);
-  double* ptemp_veci = temp_vec.get_v() + max;
-  for (int i = max; i >= min; --i)
-  {
-    //gradient_structure::get_fp()->fread(&ttmp,sizeof(double));
-    fread(*ptemp_veci);
-    --ptemp_veci;
-  }
+  fread(temp_vec.get_v() + min, sizeof(double) * (max - min + 1));
   return temp_vec;
 }
 /**

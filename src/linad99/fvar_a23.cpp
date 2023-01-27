@@ -32,16 +32,12 @@ dvar_vector operator-(const dvar_vector& v1, const dvector& v2)
   //dvector cv2=value(v2);
   dvar_vector vtmp(min, max);
 
-  double_and_int* pvtmpi = vtmp.va + min;
-  double_and_int* pv1i = v1.va + min;
-  double* pv2i = v2.get_v() + min;
+  double_and_int* pvtmp = vtmp.va;
+  double_and_int* pv1 = v1.va;
+  double* pv2 = v2.get_v();
   for (int i = min; i <= max; ++i)
   {
-    pvtmpi->x = pv1i->x - *pv2i;
-
-    ++pvtmpi;
-    ++pv1i;
-    ++pv2i;
+    pvtmp[i].x = pv1[i].x - pv2[i];
   }
 
   //dvar_vector vtmp=nograd_assign(tmp);
@@ -75,15 +71,12 @@ void dvcv_sub(void)
   int min = dftmp.indexmin();
   int max = dftmp.indexmax();
   dvector dfv1(min, max);
-  double* pdfv1i = dfv1.get_v() + min;
-  double* pdftmpi = dftmp.get_v() + min;
+  double* pdfv1 = dfv1.get_v();
+  double* pdftmp = dftmp.get_v();
   for (int i = min; i <= max; ++i)
   {
     //vtmp.elem(i)=value(v1.elem(i))+v2.elem(i);
-    *pdfv1i = *pdftmpi;
-
-    ++pdfv1i;
-    ++pdftmpi;
+    pdfv1[i] = pdftmp[i];
   }
   dfv1.save_dvector_derivatives(v1pos);
   //ierr=fsetpos(gradient_structure::get_fp(),&filepos);

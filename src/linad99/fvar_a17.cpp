@@ -12,6 +12,7 @@
 #ifdef _MSC_VER
   #include <memory.h>
 #endif
+
 #ifdef DEBUG
   #include <cassert>
 #endif
@@ -30,7 +31,7 @@ dvar_vector operator+(const dvar_vector& v1, const dvar_vector& v2)
   if (mmin != v2.indexmin() || mmax != v2.indexmax())
   {
     cerr << "Incompatible bounds in "
-	 << "operator+(const dvar_vector&, const dvar_vector&).\n";
+	 << "dvar_vector operator+(const dvar_vector&, const dvar_vector&).\n";
     ad_exit(1);
   }
 #endif

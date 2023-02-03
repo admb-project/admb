@@ -1,11 +1,14 @@
 all:
 	../../admb pella_t_modified
-	./pella_t_modified
+	./pella_t_modified > out
+	../../admb pella_t_modified2
+	cp pella_t_modified.dat pella_t_modified2.dat
+	./pella_t_modified2 > out2
 clean:
 	@rm -vf admodel.cov
 	@rm -vf admodel.dep
 	@rm -vf admodel.hes
-	@rm -vf fmin.log
+	@rm -vf fmin.log out out2
 	@rm -vf pella_t_modified
 	@rm -vf pella_t_modified.b01
 	@rm -vf pella_t_modified.b02
@@ -22,3 +25,20 @@ clean:
 	@rm -vf pella_t_modified.p03
 	@rm -vf pella_t_modified.par
 	@rm -vf pella_t_modified.std
+	@rm -vf pella_t_modified2
+	@rm -vf pella_t_modified2.dat
+	@rm -vf pella_t_modified2.b01
+	@rm -vf pella_t_modified2.b02
+	@rm -vf pella_t_modified2.b03
+	@rm -vf pella_t_modified2.bar
+	@rm -vf pella_t_modified2.cor
+	@rm -vf pella_t_modified2.cpp
+	@rm -vf pella_t_modified2.eva
+	@rm -vf pella_t_modified2.htp
+	@rm -vf pella_t_modified2.log
+	@rm -vf pella_t_modified2.obj
+	@rm -vf pella_t_modified2.p01
+	@rm -vf pella_t_modified2.p02
+	@rm -vf pella_t_modified2.p03
+	@rm -vf pella_t_modified2.par
+	@rm -vf pella_t_modified2.std

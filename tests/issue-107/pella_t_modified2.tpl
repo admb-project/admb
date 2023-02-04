@@ -53,6 +53,7 @@ PRELIMINARY_CALCS_SECTION
   effort/=avg_effort;
   cout << " beta" << beta << endl;
 PROCEDURE_SECTION
+  cout << "phase: " << initial_params::current_phase << endl;
   // calculate the fishing mortality
   calculate_fishing_mortality();
   // calculate the biomass and predicted catch

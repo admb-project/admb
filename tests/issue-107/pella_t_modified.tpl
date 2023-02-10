@@ -45,9 +45,9 @@ PARAMETER_SECTION
   number c_tmp;
   objective_function_value ff;
 PRELIMINARY_CALCS_SECTION
-  // get the data out of the data matrix into 
-  obs_catch=column(data,2);  
-  cpue=column(data,3);  
+  // get the data out of the data matrix into
+  obs_catch=column(data,2);
+  cpue=column(data,3);
   // divide the catch by the cpue to get the effort
   effort=elem_div(obs_catch,cpue);
   // normalize the effort and save the average
@@ -77,12 +77,10 @@ PROCEDURE_SECTION
       <<" sum(effort_devs): "<<sum(effort_devs)<<endl;
 
   /*
-  if (count == 45)
+  if (count == 577)
   {
-    ad_exit(1);
-  }
-  if (initial_params::current_phase == 4)
-  {
+    cout << value(effort_devs) << endl;
+    cout << sum(value(effort_devs)) << endl;
     ad_exit(1);
   }
   */
@@ -159,7 +157,7 @@ FUNCTION calculate_the_objective_function
       log(norm2(log(obs_catch)-log(1.e-10+pred_catch))
 			      +0.1*norm2(effort_devs));
   }
-  else 
+  else
   {
     ff= .5*( size_count(obs_catch)+size_count(effort_devs)
 	     +size_count(k_devs) )*

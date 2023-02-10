@@ -4,7 +4,9 @@ all:
 	../../admb pella_t_modified2
 	cp pella_t_modified.dat pella_t_modified2.dat
 	-./pella_t_modified2 > out2
-	diff --side-by-side --width 140 out out2
+
+diff:
+	diff --side-by-side --width=200 -w out out2
 clean:
 	@rm -vf admodel.cov
 	@rm -vf admodel.dep

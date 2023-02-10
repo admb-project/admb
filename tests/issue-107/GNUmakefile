@@ -1,13 +1,18 @@
 all:
 	../../admb pella_t_modified
-	./pella_t_modified > out
+	-./pella_t_modified > out
 	../../admb pella_t_modified2
 	cp pella_t_modified.dat pella_t_modified2.dat
-	./pella_t_modified2 > out2
+	-./pella_t_modified2 > out2
+	diff --side-by-side --width 140 out out2
 clean:
 	@rm -vf admodel.cov
 	@rm -vf admodel.dep
 	@rm -vf admodel.hes
+	@rm -vf cmpdiff.tmp
+	@rm -vf gradfil1.tmp
+	@rm -vf gradfil2.tmp
+	@rm -vf varssave.tmp
 	@rm -vf fmin.log out out2
 	@rm -vf pella_t_modified
 	@rm -vf pella_t_modified.b01

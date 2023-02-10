@@ -14,6 +14,8 @@ DATA_SECTION
   !! mceval_counter = 0;
   int mcmc_counter;
   !! mcmc_counter = -2;
+  int count;
+  !! count = 0;
 
 INITIALIZATION_SECTION
   m 2.
@@ -53,7 +55,23 @@ PRELIMINARY_CALCS_SECTION
   effort/=avg_effort;
   cout << " beta" << beta << endl;
 PROCEDURE_SECTION
-  cout << "phase: " << initial_params::current_phase << endl;
+  /*
+  if (initial_params::current_phase >= 3)
+  {
+    cout << "A. effort_devs: " << value(effort_devs) << endl;
+  }
+  */
+  dvariable s = mean(effort_devs);
+  if (initial_params::current_phase >= 3)
+  {
+    cout << "B. effort_devs: " << value(effort_devs) << endl;
+  }
+  effort_devs -= s;
+  if (initial_params::current_phase >= 3)
+  {
+    cout << "C. effort_devs: " << value(effort_devs) << endl;
+  }
+
   // calculate the fishing mortality
   calculate_fishing_mortality();
   // calculate the biomass and predicted catch
@@ -68,8 +86,23 @@ PROCEDURE_SECTION
   if (mceval_phase()){
     cout << " MCeval: " << ++mceval_counter;
   }
-  cout<<" obj_fun: "<<ff<<" effort_devs(1): "<<effort_devs(1)
+  cout<< ++count
+      <<" phase: " << initial_params::current_phase
+      <<" mc_phase: " << initial_params::mc_phase
+      <<" obj_fun: "<<ff
+      <<" mean: " << mean(value(effort_devs))
       <<" sum(effort_devs): "<<sum(effort_devs)<<endl;
+  /*
+  if (count == 45)
+  {
+    ad_exit(1);
+  }
+
+  if (initial_params::current_phase == 4)
+  {
+    ad_exit(1);
+  }
+  */
 
 FUNCTION calculate_fishing_mortality
   // calculate the fishing mortality

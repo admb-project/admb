@@ -69,21 +69,29 @@ PROCEDURE_SECTION
   if (mceval_phase()){
     cout << " MCeval: " << ++mceval_counter;
   }
+  if (count == 555)
+    cout << endl;
   cout<< ++count
+      << std::setprecision(40)
       <<" phase: " << initial_params::current_phase
       <<" mc_phase: " << initial_params::mc_phase
       <<" obj_fun: "<<ff
       <<" mean: " << mean(value(effort_devs))
       <<" sum(effort_devs): "<<sum(effort_devs)<<endl;
 
-  /*
-  if (count == 577)
+  cout << "B: "  << value(effort_devs) << endl;
+  if (count == 556)
   {
-    cout << value(effort_devs) << endl;
-    cout << sum(value(effort_devs)) << endl;
+    cout <<" sum: " << sum(value(effort_devs)) << endl;
+    double result = 0;
+    for (int i = effort_devs.indexmin(); i <= effort_devs.indexmax(); ++i)
+    {
+      double v = value(effort_devs(i));
+      result += v;
+      cout << "i: " << i << std::setprecision(20) << " v: " << v <<" result: " << result << endl;
+    }
     ad_exit(1);
   }
-  */
 
 FUNCTION calculate_fishing_mortality
   // calculate the fishing mortality
@@ -169,4 +177,11 @@ FUNCTION calculate_the_objective_function
   if (initial_params::current_phase<3)
   {
     ff+=1000.*square(log(mean(f)/.4));
+  }
+BETWEEN_PHASES_SECTION
+  cout << "phase: " << initial_params::current_phase << endl;
+  if (initial_params::current_phase == 4)
+  {
+    cout << value(effort_devs) << endl;
+    //ad_exit(1);
   }

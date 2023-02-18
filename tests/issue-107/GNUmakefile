@@ -5,8 +5,23 @@ all:
 	cp pella_t_modified.dat pella_t_modified2.dat
 	-./pella_t_modified2 > out2
 
+nohess:
+	../../admb pella_t_modified
+	-./pella_t_modified -nohess > out
+	../../admb pella_t_modified2
+	cp pella_t_modified.dat pella_t_modified2.dat
+	-./pella_t_modified2 -nohess > out2
+
+hess_step:
+	../../admb pella_t_modified
+	-./pella_t_modified -hess_step > out
+	../../admb pella_t_modified2
+	cp pella_t_modified.dat pella_t_modified2.dat
+	-./pella_t_modified2 -hess_step > out2
+
+
 diff:
-	diff --side-by-side --width=200 -w out out2
+	diff --side-by-side --width=180 -w out out2
 clean:
 	@rm -vf admodel.cov
 	@rm -vf admodel.dep

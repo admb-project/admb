@@ -1,0 +1,135 @@
+diff --git a/src/linad99/setin.cpp b/src/linad99/setin.cpp
+index 21940f22..b9c07ba4 100644
+--- a/src/linad99/setin.cpp
++++ b/src/linad99/setin.cpp
+@@ -101,6 +101,7 @@ void set_value_inv(const dvector& x, const dvector& _v, const int& _ii,
+ void set_value_inv(const dvar_vector& x,const dvector& _v, const int& _ii,
+   const double fmin, const double fmax)
+ {
++	cout << __FILE__ << ':' << __LINE__ << endl;
+   int& ii=(int&) _ii;
+   dvector& v=(dvector&) _v;
+   int min=x.indexmin();
+@@ -109,6 +110,8 @@ void set_value_inv(const dvar_vector& x,const dvector& _v, const int& _ii,
+   {
+     v(ii++)=boundpin(x(i),fmin,fmax);
+   }
++  for (int i=min;i<=max;i++)
++	cout << "set_value_inv: " << value(x(i)) << endl;
+ }
+ 
+ /**
+diff --git a/src/nh99/mod_hess.cpp b/src/nh99/mod_hess.cpp
+index 4283df0e..9d6e9e6f 100644
+--- a/src/nh99/mod_hess.cpp
++++ b/src/nh99/mod_hess.cpp
+@@ -64,6 +64,12 @@ void function_minimizer::hess_routine_noparallel(void)
+   //if (adjm_ptr) set_labels_for_hess(nvar);
+   independent_variables x(1,nvar);
+   initial_params::xinit(x);        // get the initial values into the x vector
++  cout << "hess_routine: " << x << endl;
++  for (int i = x.indexmin(); i <= x.indexmax(); ++i)
++  {
++	  cout << "x(" << i << "): " << x(i) << endl; 
++  }
++  ad_exit(1);
+   double f = 0.0;
+   double delta=1.e-5;
+   dvector g1(1,nvar);
+diff --git a/src/nh99/model.cpp b/src/nh99/model.cpp
+index ed8cb5a7..f78e0d21 100644
+--- a/src/nh99/model.cpp
++++ b/src/nh99/model.cpp
+@@ -225,6 +225,7 @@ int initial_params::stddev_curvscale(const dvector& d, const dvector& x)
+ 
+   void initial_params::xinit(const dvector& x)
+   {
++		 cout << __FILE__ << ':' << __LINE__ << endl;
+     int ii=1;
+     for (int i=0;i<num_initial_params;i++)
+     {
+@@ -239,6 +240,7 @@ int initial_params::stddev_curvscale(const dvector& d, const dvector& x)
+ #  endif
+          if (withinbound(0,(varsptr[i])->phase_start,current_phase))
+          {
++		 cout << "xinit i : " << i << endl;
+            (varsptr[i])->set_value_inv(x,ii);
+            (varsptr[i])->set_active_flag();
+          }
+@@ -246,6 +248,7 @@ int initial_params::stddev_curvscale(const dvector& d, const dvector& x)
+         }
+ #  endif
+     }
++		 cout << __FILE__ << ':' << __LINE__ << endl;
+   }
+ 
+   void initial_params::set_active_only_random_effects(void)
+@@ -882,6 +885,8 @@ void param_init_bounded_vector::set_value(const dvar_vector& x,
+ 
+   void param_init_bounded_vector::set_value_inv(const dvector& x, const int& ii)
+   {
++	  cout << __FILE__ << ':' << __LINE__ << endl;
++	  cout << value(*this) << endl;
+     if (!(!(*this)))
+     {
+       if (initial_params::mc_phase)
+@@ -896,6 +901,7 @@ void param_init_bounded_vector::set_value(const dvar_vector& x,
+           ::set_value_inv(*this,x,ii,minb,maxb,scalefactor);
+       }
+     }
++	  cout << __FILE__ << ':' << __LINE__ << endl;
+   }
+ 
+ /**
+diff --git a/src/nh99/model5.cpp b/src/nh99/model5.cpp
+index 18a38a11..839e9221 100644
+--- a/src/nh99/model5.cpp
++++ b/src/nh99/model5.cpp
+@@ -19,7 +19,7 @@ void param_init_bounded_dev_vector::set_value(const dvar_vector& x,
+       ::set_value(*this,x,ii,minb,maxb,pen);
+     }
+     dvariable s=mean(*this);
+-    pen+=10000.0*s*s;
++    //pen+=10000.0*s*s;
+     if (!initial_params::mc_phase)
+     {
+       (*this)-=s;
+diff --git a/src/nh99/modspmin.cpp b/src/nh99/modspmin.cpp
+index c4c38285..92308e5d 100644
+--- a/src/nh99/modspmin.cpp
++++ b/src/nh99/modspmin.cpp
+@@ -223,7 +223,9 @@ extern std::chrono::time_point<std::chrono::system_clock> start_time;
+       {
+         if (!function_minimizer::have_constraints)
+         {
++		cout << __FILE__ << ':' << __LINE__ << endl;
+           minimize();
++		cout << __FILE__ << ':' << __LINE__ << endl;
+         }
+         else
+         {
+@@ -236,6 +238,7 @@ extern std::chrono::time_point<std::chrono::system_clock> start_time;
+       }
+       tracing_message(traceflag,"D1");
+ 
++		cout << __FILE__ << ':' << __LINE__ << endl;
+       //double ratio=100.*gradient_structure::max_last_offset/12000.0;
+       tracing_message(traceflag,"E1");
+       if (option_match(argc,argv,"-est") == -1)
+@@ -255,13 +258,16 @@ extern std::chrono::time_point<std::chrono::system_clock> start_time;
+             }
+           }
+ 
++		cout << __FILE__ << ':' << __LINE__ << endl;
+           on=option_match(argc,argv,"-nohess");
+           int on1=option_match(argc,argv,"-noest");
+           if (on==-1 && on1==-1)
+           {
+             if (option_match(argc,argv,"-sdonly")==-1)
+             {
++		cout << __FILE__ << ':' << __LINE__ << endl;
+               hess_routine();
++		cout << __FILE__ << ':' << __LINE__ << endl;
+             }
+             // set this flag so that variables only needed for their std devs
+             // will be calculated

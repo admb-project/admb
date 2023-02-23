@@ -80,7 +80,7 @@ PROCEDURE_SECTION
       <<" sum(effort_devs): "<<sum(effort_devs)<<endl;
 
   cout << "B: "  << value(effort_devs) << endl;
-  if (count == 556)
+  if (count == 555)
   {
     cout <<" sum: " << sum(value(effort_devs)) << endl;
     double result = 0;
@@ -179,9 +179,11 @@ FUNCTION calculate_the_objective_function
     ff+=1000.*square(log(mean(f)/.4));
   }
 BETWEEN_PHASES_SECTION
-  cout << "phase: " << initial_params::current_phase << endl;
+  cout << "between phase: " << initial_params::current_phase << endl;
   if (initial_params::current_phase == 4)
   {
     cout << value(effort_devs) << endl;
     //ad_exit(1);
   }
+REPORT_SECTION
+  cout << "Report: " << value(effort_devs) << endl;

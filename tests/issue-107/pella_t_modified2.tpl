@@ -59,7 +59,10 @@ PROCEDURE_SECTION
   {
     dvariable s = mean(effort_devs);
     //ff += 10000.0 * s * s;
-    effort_devs -= s; 
+    if (!initial_params::mc_phase)
+    {
+      effort_devs -= s;
+    }
   }
 
   // calculate the fishing mortality
@@ -87,7 +90,7 @@ PROCEDURE_SECTION
       <<" sum(effort_devs): "<<sum(effort_devs)<<endl;
 
   cout << "B: "  << value(effort_devs) << endl;
-  if (count == 556)
+  if (count == 555)
   {
     cout <<" sum: " << sum(value(effort_devs)) << endl;
     double result = 0;
@@ -186,11 +189,21 @@ FUNCTION calculate_the_objective_function
     ff+=1000.*square(log(mean(f)/.4));
   }
 BETWEEN_PHASES_SECTION
-  cout << "phase: " << initial_params::current_phase << endl;
+  cout << "between phase: " << initial_params::current_phase << endl;
   if (initial_params::current_phase == 4)
   {
-    double result = mean(value(effort_devs));
-    effort_devs -= result;
+    dvariable s = mean(effort_devs);
+    //ff += 10000.0 * s * s;
+    if (!initial_params::mc_phase)
+    {
+      effort_devs -= s;
+    }
+
     cout << value(effort_devs) << endl;
+
+    //double result = mean(value(effort_devs));
+    //effort_devs -= result;
     //ad_exit(1);
   }
+REPORT_SECTION
+  cout << "Report: " << value(effort_devs) << endl;

@@ -1,0 +1,96 @@
+diff --git a/src/nh99/model.cpp b/src/nh99/model.cpp
+index ed8cb5a7..513f9b99 100644
+--- a/src/nh99/model.cpp
++++ b/src/nh99/model.cpp
+@@ -864,8 +864,10 @@ void param_init_vector::allocate(
+ void param_init_bounded_vector::set_value(const dvar_vector& x,
+   const int& ii, const dvariable& pen)
+   {
++	  cout << __FILE__ << ':' << __LINE__ << endl;
+     if (!(!(*this)))
+     {
++    cout << "A: "  << value(*this) << endl;
+       if (initial_params::mc_phase)
+       {
+         set_value_mc(*this,x,ii,minb,maxb);
+@@ -877,13 +879,17 @@ void param_init_bounded_vector::set_value(const dvar_vector& x,
+         else
+           ::set_value(*this,x,ii,minb,maxb,pen,scalefactor);
+       }
++    cout << "B: "  << value(*this) << endl;
++    cout << "B25: "  << value(this->operator()(25)) << endl;
+     }
+   }
+ 
+   void param_init_bounded_vector::set_value_inv(const dvector& x, const int& ii)
+   {
++	  cout << __FILE__ << ':' << __LINE__ << endl;
+     if (!(!(*this)))
+     {
++	    cout << value(*this) << endl;
+       if (initial_params::mc_phase)
+       {
+         set_value_inv_mc(*this,x,ii,minb,maxb);
+@@ -895,6 +901,7 @@ void param_init_bounded_vector::set_value(const dvar_vector& x,
+         else
+           ::set_value_inv(*this,x,ii,minb,maxb,scalefactor);
+       }
++	    cout << value(*this) << endl;
+     }
+   }
+ 
+diff --git a/src/nh99/model5.cpp b/src/nh99/model5.cpp
+index 18a38a11..de9992ac 100644
+--- a/src/nh99/model5.cpp
++++ b/src/nh99/model5.cpp
+@@ -9,6 +9,8 @@
+ void param_init_bounded_dev_vector::set_value(const dvar_vector& x,
+   const int& ii, const dvariable& _pen)
+   {
++	  cout << __FILE__ << ':' << __LINE__ << endl;
++    cout << "A: "  << value(*this) << endl;
+     dvariable& pen= (dvariable&) _pen;
+     if (initial_params::mc_phase)
+     {
+@@ -18,10 +20,13 @@ void param_init_bounded_dev_vector::set_value(const dvar_vector& x,
+     {
+       ::set_value(*this,x,ii,minb,maxb,pen);
+     }
++    cout << "B: "  << value(*this) << endl;
+     dvariable s=mean(*this);
+-    pen+=10000.0*s*s;
++    //pen+=10000.0*s*s;
+     if (!initial_params::mc_phase)
+     {
+       (*this)-=s;
+     }
++    //cout << "C: "  << value(*this) << endl;
++    cout << "B25: "  << value(this->operator()(25)) << endl;
+   }
+diff --git a/src/nh99/xmodelm3.cpp b/src/nh99/xmodelm3.cpp
+index 2db14566..086cd517 100644
+--- a/src/nh99/xmodelm3.cpp
++++ b/src/nh99/xmodelm3.cpp
+@@ -526,10 +526,14 @@ void tracing_message(int traceflag,const char *s);
+         print_is_diagnostics(lapprox);
+       }
+       initial_params::save();
++      cout << __FILE__ << ':' << __LINE__ << endl;
+       report(g);
+       // in case the user changes some initial_params in the report section
+       // call reset again
++      cout << __FILE__ << ':' << __LINE__ << endl;
+       initial_params::reset(dvar_vector(x));
++      cout << __FILE__ << ':' << __LINE__ << endl;
++      report(g);
+       report_function_minimizer_stats();
+       if (quit_flag=='Q') break;
+       if (!quit_flag || quit_flag == 'N')
+@@ -544,6 +548,7 @@ void tracing_message(int traceflag,const char *s);
+         initial_params::max_number_phases;
+     }
+     tracing_message(traceflag,"N2");
++      cout << __FILE__ << ':' << __LINE__ << endl;
+   }
+   void function_minimizer::set_multinomial_weights(dvector& d)
+   {

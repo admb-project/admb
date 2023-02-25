@@ -69,8 +69,7 @@ PROCEDURE_SECTION
   if (mceval_phase()){
     cout << " MCeval: " << ++mceval_counter;
   }
-  if (count == 555)
-    cout << endl;
+
   cout<< ++count
       << std::setprecision(40)
       <<" phase: " << initial_params::current_phase
@@ -79,8 +78,7 @@ PROCEDURE_SECTION
       <<" mean: " << mean(value(effort_devs))
       <<" sum(effort_devs): "<<sum(effort_devs)<<endl;
 
-  cout << "B: "  << value(effort_devs) << endl;
-  if (count == 555)
+  if (count == 556)
   {
     cout <<" sum: " << sum(value(effort_devs)) << endl;
     double result = 0;

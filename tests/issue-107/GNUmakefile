@@ -21,7 +21,17 @@ hess_step:
 
 
 diff:
-	diff --side-by-side --width=180 -w out out2
+	sed 's/-0\.0000/0\.0000/g' pella_t_modified.cor > pella_t_modified.cor2
+	sed 's/-0\.0000/0\.0000/g' pella_t_modified2.cor > pella_t_modified2.cor2
+	-diff -w --side-by-side pella_t_modified.cor2 pella_t_modified2.cor2
+	-diff -w --side-by-side pella_t_modified.eva pella_t_modified2.eva
+	-diff -w --side-by-side pella_t_modified.log pella_t_modified2.log
+	-diff -w --side-by-side pella_t_modified.p01 pella_t_modified2.p01
+	-diff -w --side-by-side pella_t_modified.p02 pella_t_modified2.p02
+	-diff -w --side-by-side pella_t_modified.p03 pella_t_modified2.p03
+	-diff -w --side-by-side pella_t_modified.par pella_t_modified2.par
+	-diff -w --side-by-side pella_t_modified.std pella_t_modified2.std
+	-diff -w --side-by-side --width=180 -w out out2
 clean:
 	@rm -vf admodel.cov
 	@rm -vf admodel.dep
@@ -37,6 +47,7 @@ clean:
 	@rm -vf pella_t_modified.b03
 	@rm -vf pella_t_modified.bar
 	@rm -vf pella_t_modified.cor
+	@rm -vf pella_t_modified.cor2
 	@rm -vf pella_t_modified.cpp
 	@rm -vf pella_t_modified.eva
 	@rm -vf pella_t_modified.htp
@@ -54,6 +65,7 @@ clean:
 	@rm -vf pella_t_modified2.b03
 	@rm -vf pella_t_modified2.bar
 	@rm -vf pella_t_modified2.cor
+	@rm -vf pella_t_modified2.cor2
 	@rm -vf pella_t_modified2.cpp
 	@rm -vf pella_t_modified2.eva
 	@rm -vf pella_t_modified2.htp

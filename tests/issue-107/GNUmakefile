@@ -64,3 +64,11 @@ clean:
 	@rm -vf pella_t_modified2.p03
 	@rm -vf pella_t_modified2.par
 	@rm -vf pella_t_modified2.std
+	@rm -vf pella_t_modified.r01
+	@rm -vf pella_t_modified.r02
+	@rm -vf pella_t_modified.r03
+	@rm -vf pella_t_modified.rep
+	@rm -vf pella_t_modified2.r01
+	@rm -vf pella_t_modified2.r02
+	@rm -vf pella_t_modified2.r03
+	@rm -vf pella_t_modified2.rep

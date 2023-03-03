@@ -70,27 +70,6 @@ PROCEDURE_SECTION
     cout << " MCeval: " << ++mceval_counter;
   }
 
-  cout<< ++count
-      << std::setprecision(40)
-      <<" phase: " << initial_params::current_phase
-      <<" mc_phase: " << initial_params::mc_phase
-      <<" obj_fun: "<<ff
-      <<" mean: " << mean(value(effort_devs))
-      <<" sum(effort_devs): "<<sum(effort_devs)<<endl;
-
-  if (count == 556)
-  {
-    cout <<" sum: " << sum(value(effort_devs)) << endl;
-    double result = 0;
-    for (int i = effort_devs.indexmin(); i <= effort_devs.indexmax(); ++i)
-    {
-      double v = value(effort_devs(i));
-      result += v;
-      cout << "i: " << i << std::setprecision(20) << " v: " << v <<" result: " << result << endl;
-    }
-    ad_exit(1);
-  }
-
 FUNCTION calculate_fishing_mortality
   // calculate the fishing mortality
   f=q*effort;
@@ -176,12 +155,3 @@ FUNCTION calculate_the_objective_function
   {
     ff+=1000.*square(log(mean(f)/.4));
   }
-BETWEEN_PHASES_SECTION
-  cout << "between phase: " << initial_params::current_phase << endl;
-  if (initial_params::current_phase == 4)
-  {
-    cout << value(effort_devs) << endl;
-    //ad_exit(1);
-  }
-REPORT_SECTION
-  cout << "Report: " << value(effort_devs) << endl;

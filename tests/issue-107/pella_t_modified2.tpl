@@ -166,7 +166,7 @@ FUNCTION calculate_the_objective_function
     ff+=1000.*square(log(mean(f)/.4));
   }
 BETWEEN_PHASES_SECTION
-  if (initial_params::current_phase == 4)
+  if (initial_params::current_phase >= 3)
   {
     if (!initial_params::mc_phase)
     {

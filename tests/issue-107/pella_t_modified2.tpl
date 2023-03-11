@@ -60,7 +60,7 @@ PROCEDURE_SECTION
     if (!initial_params::mc_phase)
     {
       dvariable s = mean(effort_devs);
-      //ff += 10000.0 * s * s;
+      ff += 10000.0 * s * s;
       effort_devs -= s;
     }
   }
@@ -144,17 +144,17 @@ FUNCTION calculate_biomass_and_predicted_catch
 FUNCTION calculate_the_objective_function
   if (!active(effort_devs))
   {
-    ff=nobs/2.*log(norm2(log(obs_catch)-log(1.e-10+pred_catch)));
+    ff+=nobs/2.*log(norm2(log(obs_catch)-log(1.e-10+pred_catch)));
   }
   else if(!active(k_devs))
   {
-    ff= .5*(size_count(obs_catch)+size_count(effort_devs))*
+    ff+= .5*(size_count(obs_catch)+size_count(effort_devs))*
       log(norm2(log(obs_catch)-log(1.e-10+pred_catch))
 			      +0.1*norm2(effort_devs));
   }
   else
   {
-    ff= .5*( size_count(obs_catch)+size_count(effort_devs)
+    ff+= .5*( size_count(obs_catch)+size_count(effort_devs)
 	     +size_count(k_devs) )*
       log(norm2(log(obs_catch)-log(pred_catch))
 	   + 0.1*norm2(effort_devs)+10.*norm2(k_devs));

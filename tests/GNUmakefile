@@ -394,6 +394,7 @@ endif
 	$(MAKE) --directory=vectorize clean
 	$(MAKE) --directory=vonmises clean
 	$(MAKE) --directory=issue158 clean
+	$(MAKE) --directory=issue-107 clean
 
 dist-clean:
 ifeq ($(CMDSHELL),cmd)

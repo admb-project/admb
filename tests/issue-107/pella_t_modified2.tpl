@@ -55,12 +55,14 @@ PRELIMINARY_CALCS_SECTION
   effort/=avg_effort;
   cout << " beta" << beta << endl;
 PROCEDURE_SECTION
+
+  dvariable p{0.0};
   if (initial_params::current_phase >= 3)
   {
     if (!initial_params::mc_phase)
     {
       dvariable s = mean(effort_devs);
-      ff += 10000.0 * s * s;
+      p = 10000.0 * s * s;
       effort_devs -= s;
     }
   }
@@ -78,6 +80,14 @@ PROCEDURE_SECTION
   }
   if (mceval_phase()){
     cout << " MCeval: " << ++mceval_counter;
+  }
+
+  if (initial_params::current_phase >= 3)
+  {
+    if (!initial_params::mc_phase)
+    {
+      ff += p;
+    }
   }
 
 FUNCTION calculate_fishing_mortality

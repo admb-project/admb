@@ -19,7 +19,7 @@ void param_init_bounded_dev_vector::set_value(const dvar_vector& x,
       ::set_value(*this,x,ii,minb,maxb,pen);
     }
     dvariable s=mean(*this);
-    pen+=10000.0*s*s;
+    penalty=10000.0*s*s;
     if (!initial_params::mc_phase)
     {
       (*this)-=s;

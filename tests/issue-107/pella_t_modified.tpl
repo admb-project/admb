@@ -69,13 +69,6 @@ PROCEDURE_SECTION
   if (mceval_phase()){
     cout << " MCeval: " << ++mceval_counter;
   }
-  if (initial_params::current_phase >= 3)
-  {
-    if (!initial_params::mc_phase)
-    {
-      ff += effort_devs.penalty;
-    }
-  }
 
 FUNCTION calculate_fishing_mortality
   // calculate the fishing mortality

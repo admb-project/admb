@@ -951,12 +951,6 @@ public:
   virtual void pvm_unpack(void)=0;
 #endif
 
-  virtual dvariable get_penalty()
-  {
-    dvariable penalty{0.0};
-    return penalty;
-  }
-
   friend class function_minimizer;
 };
 
@@ -1148,12 +1142,6 @@ public:
   param_init_bounded_dev_vector& operator = (const dvector& m);
   param_init_bounded_dev_vector& operator = (const prevariable& m);
   param_init_bounded_dev_vector& operator = (const double& m);
-
-  dvariable penalty;
-  dvariable get_penalty()
-  {
-    return penalty;
-  }
 };
 
 /**

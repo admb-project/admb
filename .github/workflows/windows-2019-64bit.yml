@@ -8,7 +8,7 @@ jobs:
     runs-on: windows-2019
     
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@main
     - name: clean
       run: |
         pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd

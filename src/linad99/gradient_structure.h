@@ -116,8 +116,9 @@ public:
   static _THREAD grad_stack* GRAD_STACK1;
 
   static gradient_structure* get() { return _instance; }
-  static DF_FILE* get_fp() { return fp; }
-  static grad_stack* get_GRAD_STACK1() { return GRAD_STACK1; }
+
+  DF_FILE* get_fp() { return _fp; }
+  grad_stack* get_GRAD_STACK1() { return _GRAD_STACK1; }
 
   static gradient_structure* reset(gradient_structure*);
 

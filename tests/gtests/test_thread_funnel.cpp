@@ -148,4 +148,8 @@ TEST_F(test_thread_funnel, gradient_structure2x)
 {
   gradient_structure gs;
   gradient_structure gs2;
+
+  EXPECT_TRUE(gs.get() == gs2.get());
+  EXPECT_TRUE(gs.get_fp() != gs2.get_fp());
+  EXPECT_TRUE(gs.get_GRAD_STACK1() != gs2.get_GRAD_STACK1());
 }

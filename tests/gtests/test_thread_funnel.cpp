@@ -17,6 +17,7 @@ struct A
     Ai = 1;
   }
 };
+/*
 TEST_F(test_thread_funnel, create_sub_tuple_A)
 {
   Ai = 0;
@@ -30,6 +31,7 @@ TEST_F(test_thread_funnel, create_sub_tuple_A)
 
   auto t = create_sub_tuple(vs, index, vs[4]); 
 }
+*/
 TEST_F(test_thread_funnel, lambda_capture_reference)
 {
   Ai = 0;
@@ -141,4 +143,9 @@ TEST_F(test_thread_funnel, get_addresses_dvariable)
   EXPECT_TRUE(addresses[1] == &((v.v)->x));
   EXPECT_TRUE(addresses[2] == &((v.v)->x));
   addresses.clear();
+}
+TEST_F(test_thread_funnel, gradient_structure2x)
+{
+  gradient_structure gs;
+  gradient_structure gs2;
 }

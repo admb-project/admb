@@ -8,13 +8,13 @@
  * \file
  * Description not yet available.
  */
-#ifdef USE_THREAD
-  #include <mutex>
-#endif
 #ifndef _MSC_VER
   #include <unistd.h>
 #endif
 #include "fvar.hpp"
+#ifdef USE_THREAD
+  #include <mutex>
+#endif
 
 //#define THREAD_SAFE
 

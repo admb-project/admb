@@ -92,6 +92,7 @@ public:
   operator double*();
 };
 
+#define USE_THREAD
 #ifdef USE_THREAD
 #define _THREAD __thread
   #ifdef _MSC_VER
@@ -106,10 +107,10 @@ public:
  */
 class gradient_structure
 {
-public:
   DF_FILE* _fp;
   grad_stack* _GRAD_STACK1;
 
+public:
   static _THREAD DF_FILE* fp;
   static _THREAD gradient_structure* _instance;
   static _THREAD grad_stack* GRAD_STACK1;

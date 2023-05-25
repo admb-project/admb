@@ -921,6 +921,11 @@ void default_evaluation3ind(void);
 class grad_stack
 {
 public:
+
+#ifdef USE_THREAD
+  static unsigned int id;
+#endif
+
    grad_stack_entry *true_ptr_first;
    grad_stack_entry *ptr_first;
    grad_stack_entry *ptr_last;
@@ -969,7 +974,13 @@ public:
    void print();
 
   grad_stack(): grad_stack(gradient_structure::GRADSTACK_BUFFER_SIZE) {}
-  grad_stack(const size_t size): grad_stack(size, 0) {}
+  grad_stack(const size_t size): grad_stack(size, 
+#ifdef USE_THREAD
+    ++grad_stack::id
+#else
+    0
+#endif
+  ) {}
   grad_stack(const size_t size, const unsigned int id);
   grad_stack(const grad_stack&) = delete;
   ~grad_stack();

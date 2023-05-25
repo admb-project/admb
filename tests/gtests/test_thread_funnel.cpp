@@ -146,10 +146,45 @@ TEST_F(test_thread_funnel, get_addresses_dvariable)
 }
 TEST_F(test_thread_funnel, gradient_structure2x)
 {
-  gradient_structure gs;
-  gradient_structure gs2;
+  DF_FILE::id = 0;
+  grad_stack::id = 0;
 
-  EXPECT_TRUE(gs.get() == gs2.get());
-  EXPECT_TRUE(gs.get_fp() != gs2.get_fp());
-  EXPECT_TRUE(gs.get_GRAD_STACK1() != gs2.get_GRAD_STACK1());
+  gradient_structure gs;
+  EXPECT_TRUE(gradient_structure::get() == &gs);
+  EXPECT_TRUE(gradient_structure::fp == gs.get_fp());
+  EXPECT_TRUE(gradient_structure::GRAD_STACK1 == gs.get_GRAD_STACK1());
+  EXPECT_TRUE(DF_FILE::id == 1);
+  EXPECT_STREQ(gs.get_fp()->cmpdif_file_name, "cmpdiff1.tmp");
+  gs.get_fp()->fwrite(double(4.5));
+  EXPECT_TRUE(gs.get_fp()->offset == sizeof(double));
+  double v1, v2;
+  gs.get_GRAD_STACK1()->set_gradient_stack(default_evaluation0, &v1);
+  gs.get_GRAD_STACK1()->set_gradient_stack(default_evaluation0, &v2);
+  EXPECT_TRUE(gs.get_GRAD_STACK1()->total() == 2);
+  EXPECT_TRUE(grad_stack::id == 1);
+  EXPECT_STREQ(gs.get_GRAD_STACK1()->gradfile_name, "gradfil11.tmp");
+  EXPECT_STREQ(gs.get_GRAD_STACK1()->gradfile_name1, "gradfil11.tmp");
+  EXPECT_STREQ(gs.get_GRAD_STACK1()->gradfile_name2, "gradfil21.tmp");
+  EXPECT_STREQ(gs.get_GRAD_STACK1()->var_store_file_name, "varssave1.tmp");
+
+  gradient_structure gs2;
+  EXPECT_TRUE(gradient_structure::get() == &gs2);
+  EXPECT_TRUE(gradient_structure::fp == gs2.get_fp());
+  EXPECT_TRUE(gradient_structure::GRAD_STACK1 == gs2.get_GRAD_STACK1());
+  EXPECT_TRUE(DF_FILE::id == 2);
+  EXPECT_STREQ(gs2.get_fp()->cmpdif_file_name, "cmpdiff2.tmp");
+  gs2.get_fp()->fwrite(int(4));
+  EXPECT_TRUE(gs2.get_fp()->offset == sizeof(int));
+  EXPECT_TRUE(gs.get_fp()->offset == sizeof(double));
+  double v3, v4, v5;
+  gs2.get_GRAD_STACK1()->set_gradient_stack(default_evaluation0, &v3);
+  gs2.get_GRAD_STACK1()->set_gradient_stack(default_evaluation0, &v4);
+  gs2.get_GRAD_STACK1()->set_gradient_stack(default_evaluation0, &v5);
+  EXPECT_TRUE(gs2.get_GRAD_STACK1()->total() == 3);
+  EXPECT_TRUE(gs.get_GRAD_STACK1()->total() == 2);
+  EXPECT_TRUE(grad_stack::id == 2);
+  EXPECT_STREQ(gs2.get_GRAD_STACK1()->gradfile_name, "gradfil12.tmp");
+  EXPECT_STREQ(gs2.get_GRAD_STACK1()->gradfile_name1, "gradfil12.tmp");
+  EXPECT_STREQ(gs2.get_GRAD_STACK1()->gradfile_name2, "gradfil22.tmp");
+  EXPECT_STREQ(gs2.get_GRAD_STACK1()->var_store_file_name, "varssave2.tmp");
 }

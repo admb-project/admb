@@ -62,6 +62,10 @@ Copyright (c) 2008-2016 ADMB Foundation and
 
 char lastchar(char*);
 
+#ifdef USE_THREAD
+unsigned int DF_FILE::id = 0;
+#endif
+
 #if defined(__ADSGI__)
 /**
 Copies count bytes from the object pointed to by src to the
@@ -173,37 +177,40 @@ DF_FILE::DF_FILE(const size_t nbytes, const unsigned int id)
   if (path != NULL && strlen(path) <= 45)
 #if !defined (_WIN32)
   {
-    if (id > 0)
-      sprintf(&cmpdif_file_name[0],"%s/cmpdiff%u.tmp", path, id);
-    else
-      sprintf(&cmpdif_file_name[0],"%s/cmpdiff.tmp", path);
+#ifdef USE_THREAD
+    sprintf(&cmpdif_file_name[0],"%s/cmpdiff%u.tmp", path, id);
+#else
+    sprintf(&cmpdif_file_name[0],"%s/cmpdiff.tmp", path);
+#endif
 
   }
 #else
   {
     if (lastchar(path) != '\\')
     {
-      if (id > 0)
-        sprintf(&cmpdif_file_name[0],"%s\\cmpdiff%u.tmp", path, id);
-      else
-        sprintf(&cmpdif_file_name[0],"%s\\cmpdiff.tmp", path);
-
+#ifdef USE_THREAD
+      sprintf(&cmpdif_file_name[0],"%s\\cmpdiff%u.tmp", path, id);
+#else
+      sprintf(&cmpdif_file_name[0],"%s\\cmpdiff.tmp", path);
+#endif
     }
     else
     {
-      if (id > 0)
-        sprintf(&cmpdif_file_name[0],"%scmpdiff%u.tmp", path, id);
-      else
-        sprintf(&cmpdif_file_name[0],"%scmpdiff.tmp", path);
+#ifdef USE_THREAD
+      sprintf(&cmpdif_file_name[0],"%scmpdiff%u.tmp", path, id);
+#else
+      sprintf(&cmpdif_file_name[0],"%scmpdiff.tmp", path);
+#endif
     }
   }
 #endif
   else
   {
-    if (id > 0)
+#ifdef USE_THREAD
       sprintf(&cmpdif_file_name[0],"cmpdiff%u.tmp",id);
-    else
+#else
       sprintf(&cmpdif_file_name[0],"cmpdiff.tmp");
+#endif
   }
 #if defined (_MSC_VER) || defined (__WAT32__)
   file_ptr=open(cmpdif_file_name, O_RDWR | O_CREAT | O_TRUNC |

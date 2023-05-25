@@ -83,6 +83,7 @@
 
 char lastchar(char *);
 char ad_random_part[6]="tmp";
+unsigned int grad_stack::id = 0;
 
 void fill_ad_random_part(void)
 {
@@ -168,33 +169,37 @@ grad_stack::grad_stack(const size_t size, const unsigned int id)
   if (path != NULL && strlen(path) <= 45)
   {
 #if !defined (_WIN32)
-    if (id > 0)
-      sprintf(&gradfile_name1[0],"%s/gradfil1%u.tmp", path, id);
-    else
-      sprintf(&gradfile_name1[0],"%s/gradfil1.tmp", path);
+  #ifdef USE_THREAD
+    sprintf(&gradfile_name1[0],"%s/gradfil1%u.tmp", path, id);
+  #else
+    sprintf(&gradfile_name1[0],"%s/gradfil1.tmp", path);
+  #endif
 #else
     if (lastchar(path) != '\\')
     {
-      if (id > 0)
-        sprintf(&gradfile_name1[0], "%s\\gradfil1%u.tmp", path, id);
-      else
-        sprintf(&gradfile_name1[0], "%s\\gradfil1.tmp", path);
+  #ifdef USE_THREAD
+      sprintf(&gradfile_name1[0], "%s\\gradfil1%u.tmp", path, id);
+  #else
+      sprintf(&gradfile_name1[0], "%s\\gradfil1.tmp", path);
+  #endif
     }
     else
     {
-      if (id > 0)
-        sprintf(&gradfile_name1[0], "%sgradfil1%u.tmp", path, id);
-      else
-        sprintf(&gradfile_name1[0], "%sgradfil1.tmp", path);
+  #ifdef USE_THREAD
+      sprintf(&gradfile_name1[0], "%sgradfil1%u.tmp", path, id);
+  #else
+      sprintf(&gradfile_name1[0], "%sgradfil1.tmp", path);
+  #endif
     }
 #endif
   }
   else
   {
-    if (id > 0)
-      sprintf(&gradfile_name1[0], "gradfil1%u.tmp", id);
-    else
-      sprintf(&gradfile_name1[0], "gradfil1.tmp");
+#ifdef USE_THREAD
+    sprintf(&gradfile_name1[0], "gradfil1%u.tmp", id);
+#else
+    sprintf(&gradfile_name1[0], "gradfil1.tmp");
+#endif
   }
 
   path = getenv("ADTMP1"); // NULL if not defined
@@ -209,71 +214,56 @@ grad_stack::grad_stack(const size_t size, const unsigned int id)
 #if !defined (_WIN32)
     if (strlen(path) > 0)
     {
-      if (id > 0)
-      {
-        sprintf(&var_store_file_name[0],"%s/varssave%u.tmp",path, id);
-        sprintf(&gradfile_name2[0],"%s/gradfil2%u.tmp", path, id);
-      }
-      else
-      {
-        sprintf(&var_store_file_name[0],"%s/varssave.tmp",path);
-        sprintf(&gradfile_name2[0],"%s/gradfil2.tmp", path);
-      }
+  #ifdef USE_THREAD
+      sprintf(&var_store_file_name[0],"%s/varssave%u.tmp",path, id);
+      sprintf(&gradfile_name2[0],"%s/gradfil2%u.tmp", path, id);
+  #else
+      sprintf(&var_store_file_name[0],"%s/varssave.tmp",path);
+      sprintf(&gradfile_name2[0],"%s/gradfil2.tmp", path);
+  #endif
     }
     else
     {
-      if (id > 0)
-      {
+  #ifdef USE_THREAD
         sprintf(&var_store_file_name[0],"varssave%u.tmp", id);
         sprintf(&gradfile_name2[0],"gradfil2%u.tmp", id);
-      }
-      else
-      {
+  #else
         sprintf(&var_store_file_name[0],"varssave.tmp");
         sprintf(&gradfile_name2[0],"gradfil2.tmp");
-      }
+  #endif
     }
 #else
     if (lastchar(path)!='\\')
     {
-      if (id > 0)
-      {
+  #ifdef USE_THREAD
         sprintf(&gradfile_name2[0], "%s\\gradfil2%u.tmp", path, id);
         sprintf(&var_store_file_name[0], "%s\\varssave%u.tmp", path, id);
-      }
-      else
-      {
+  #else
         sprintf(&gradfile_name2[0], "%s\\gradfil2.tmp", path);
         sprintf(&var_store_file_name[0], "%s\\varssave.tmp", path);
-      }
+  #endif
     }
     else
     {
-      if (id > 0)
-      {
+  #ifdef USE_THREAD
         sprintf(&gradfile_name2[0], "%sgradfil2%u.tmp", path, id);
         sprintf(&var_store_file_name[0], "%svarssave%u.tmp", path, id);
-      }
-      else
-      {
+  #else
         sprintf(&gradfile_name2[0], "%sgradfil2.tmp", path);
         sprintf(&var_store_file_name[0], "%svarssave.tmp", path);
-      }
+  #endif
     }
 #endif
   }
   else
   {
-    if (id > 0)
-    {
+  #ifdef USE_THREAD
       sprintf(&gradfile_name2[0], "gradfil2%u.tmp", id);
       sprintf(&var_store_file_name[0], "varssave%u.tmp", id);
-    }
-    else
-    {
+  #else
       sprintf(&gradfile_name2[0], "gradfil2.tmp");
       sprintf(&var_store_file_name[0], "varssave.tmp");
-    }
+  #endif
   }
 
   create_gradfile();

@@ -285,12 +285,22 @@ by gradcalc.
 class DF_FILE
 {
 public:
+#ifdef USE_THREAD
+  static unsigned int id;
+#endif
+
   /// Default uses gradient_structure::CMPDIF_BUFFER_SIZE
   DF_FILE(): DF_FILE(gradient_structure::CMPDIF_BUFFER_SIZE) {}
   /// Do not allow copy contructor
   DF_FILE(const DF_FILE&) = delete;
   /// User defined size with default id
-  DF_FILE(const size_t nbytes): DF_FILE(nbytes, 0) {}
+  DF_FILE(const size_t nbytes): DF_FILE(nbytes,
+#ifdef USE_THREAD
+    ++DF_FILE::id
+#else
+    0
+#endif
+  ) {}
   DF_FILE(const size_t nbytes, const unsigned int id);
   ~DF_FILE();
 

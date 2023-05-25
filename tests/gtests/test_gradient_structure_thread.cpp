@@ -107,12 +107,16 @@ TEST_F(test_gradient_structure_thread, get)
 TEST_F(test_gradient_structure_thread, nested_fp)
 {
   gradient_structure top;
+#ifndef USE_THREAD
   ASSERT_TRUE(strcmp(gradient_structure::get()->fp->cmpdif_file_name, "cmpdiff.tmp") == 0);
+#endif
   ASSERT_TRUE(gradient_structure::get() == &top);
   {
     gradient_structure nested(10000L, 10);
     ASSERT_TRUE(gradient_structure::get() == &nested);
+#ifndef USE_THREAD
     ASSERT_TRUE(strcmp(gradient_structure::get()->fp->cmpdif_file_name, "cmpdiff10.tmp") == 0);
+#endif
   }
   ASSERT_TRUE(gradient_structure::get() == nullptr);
   gradient_structure::reset(&top);
@@ -121,19 +125,23 @@ TEST_F(test_gradient_structure_thread, nested_fp)
 TEST_F(test_gradient_structure_thread, nested_grad_stack)
 {
   gradient_structure top;
+#ifndef USE_THREAD
   ASSERT_TRUE(strcmp(gradient_structure::get()->GRAD_STACK1->gradfile_name, "gradfil1.tmp") == 0);
   ASSERT_TRUE(strcmp(gradient_structure::get()->GRAD_STACK1->gradfile_name1, "gradfil1.tmp") == 0);
   ASSERT_TRUE(strcmp(gradient_structure::get()->GRAD_STACK1->gradfile_name2, "gradfil2.tmp") == 0);
   ASSERT_TRUE(strcmp(gradient_structure::get()->GRAD_STACK1->var_store_file_name, "varssave.tmp") == 0);
+#endif
 
   ASSERT_TRUE(gradient_structure::get() == &top);
   {
     gradient_structure nested(10000L, 10);
     ASSERT_TRUE(gradient_structure::get() == &nested);
+#ifndef USE_THREAD
     ASSERT_TRUE(strcmp(gradient_structure::get()->GRAD_STACK1->gradfile_name, "gradfil110.tmp") == 0);
     ASSERT_TRUE(strcmp(gradient_structure::get()->GRAD_STACK1->gradfile_name1, "gradfil110.tmp") == 0);
     ASSERT_TRUE(strcmp(gradient_structure::get()->GRAD_STACK1->gradfile_name2, "gradfil210.tmp") == 0);
     ASSERT_TRUE(strcmp(gradient_structure::get()->GRAD_STACK1->var_store_file_name, "varssave10.tmp") == 0);
+#endif
   }
   ASSERT_TRUE(gradient_structure::get() == nullptr);
   gradient_structure::reset(&top);

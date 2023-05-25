@@ -138,7 +138,9 @@ TEST_F(test_simple_async, gradient_structure_only_DF_FILE)
   ASSERT_EQ(gradient_structure::fp->toffset, 0);
   ASSERT_TRUE(gradient_structure::fp->buff != NULL);
   ASSERT_EQ(sizeof(gradient_structure::fp->buff), sizeof(OFF_T));
+#ifndef USE_THREAD
   ASSERT_STREQ(gradient_structure::fp->cmpdif_file_name, "cmpdiff.tmp");
+#endif
   OFF_T pos = LSEEK(gradient_structure::fp->file_ptr, 0, SEEK_END);
   ASSERT_EQ(pos, 0);
 }

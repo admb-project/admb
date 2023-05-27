@@ -335,10 +335,7 @@ gradient_structure::gradient_structure(const long int _size, const unsigned int 
     memory_allocate_error("DEPVARS_INFO", (void *) DEPVARS_INFO);
   }
 
-  if (x > 0)
-    _fp = new DF_FILE(CMPDIF_BUFFER_SIZE, x);
-  else
-    _fp = new DF_FILE(CMPDIF_BUFFER_SIZE);
+  _fp = new DF_FILE(CMPDIF_BUFFER_SIZE);
 
   memory_allocate_error("_fp", (void*)_fp);
 
@@ -354,14 +351,12 @@ gradient_structure::gradient_structure(const long int _size, const unsigned int 
     memory_allocate_error("GRAD_LIST", (void *) GRAD_LIST);
   }
   {
-    ARR_LIST1 = new arr_list();
+    ARR_LIST1 = new arr_list(ARRAY_MEMBLOCK_SIZE);
     memory_allocate_error("ARR_LIST1", (void *) ARR_LIST1);
   }
 
-  if (x > 0)
-    _GRAD_STACK1 = new grad_stack(gradient_structure::GRADSTACK_BUFFER_SIZE, x);
-  else
-    _GRAD_STACK1 = new grad_stack();
+  _GRAD_STACK1 = new grad_stack();
+
   memory_allocate_error("_GRAD_STACK1", _GRAD_STACK1);
   hessian_ptr = (double*)_GRAD_STACK1->true_ptr_first;
   gradient_structure::GRAD_STACK1 = _GRAD_STACK1;

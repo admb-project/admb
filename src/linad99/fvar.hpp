@@ -2087,7 +2087,8 @@ class arr_list
   humungous_pointer ARRAY_MEMBLOCK_SAVE;
 
  public:
-   arr_list();
+   arr_list(): arr_list(gradient_structure::ARRAY_MEMBLOCK_SIZE) {}
+   arr_list(const unsigned long size);
    virtual ~arr_list()
    {
      ARRAY_MEMBLOCK_BASE.free();

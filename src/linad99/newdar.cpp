@@ -37,8 +37,8 @@ arr_link::arr_link()
   offset = 0;
 }
 
-/// Default Constructor
-arr_list::arr_list()
+/// Size Constructor
+arr_list::arr_list(const unsigned long size)
 {
   last = 0;
   free_last = 0;
@@ -46,7 +46,7 @@ arr_list::arr_list()
   max_last_offset = 0;
   number_arr_links = 0;
 
-  if ((ARRAY_MEMBLOCK_BASE = (void*)malloc(gradient_structure::ARRAY_MEMBLOCK_SIZE)) == 0)
+  if ((ARRAY_MEMBLOCK_BASE = (void*)malloc(size)) == 0)
   {
     cerr << "insufficient memory to allocate space for ARRAY_MEMBLOCKa\n";
     ad_exit(1);

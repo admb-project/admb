@@ -354,25 +354,9 @@ gradient_structure::gradient_structure(const long int _size, const unsigned int 
     memory_allocate_error("GRAD_LIST", (void *) GRAD_LIST);
   }
   {
-    ARR_LIST1 = new arr_list;
+    ARR_LIST1 = new arr_list();
     memory_allocate_error("ARR_LIST1", (void *) ARR_LIST1);
   }
-
-   void* temp_ptr = NULL;
-#ifdef __ZTC__
-   if ((temp_ptr = farmalloc(ARRAY_MEMBLOCK_SIZE)) == 0)
-#else
-   if ((temp_ptr = (void*)malloc(ARRAY_MEMBLOCK_SIZE)) == 0)
-#endif
-   {
-     cerr << "insufficient memory to allocate space for ARRAY_MEMBLOCKa\n";
-     ad_exit(1);
-   }
-
-   ARR_LIST1->ARRAY_MEMBLOCK_BASE = temp_ptr;
-
-   const size_t adjustment = (8 -((size_t)ARR_LIST1->ARRAY_MEMBLOCK_BASE.ptr) % 8) % 8;
-   ARR_LIST1->ARRAY_MEMBLOCK_BASE.adjust(adjustment);
 
   if (x > 0)
     _GRAD_STACK1 = new grad_stack(gradient_structure::GRADSTACK_BUFFER_SIZE, x);

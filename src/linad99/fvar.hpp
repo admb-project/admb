@@ -2087,14 +2087,7 @@ class arr_list
   humungous_pointer ARRAY_MEMBLOCK_SAVE;
 
  public:
-   arr_list()
-   {
-      last = 0;
-      free_last = 0;
-      last_offset = 0;
-      max_last_offset = 0;
-      number_arr_links = 0;
-   }
+   arr_list();
    virtual ~arr_list()
    {
      ARRAY_MEMBLOCK_BASE.free();

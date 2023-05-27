@@ -37,6 +37,25 @@ arr_link::arr_link()
   offset = 0;
 }
 
+/// Default Constructor
+arr_list::arr_list()
+{
+  last = 0;
+  free_last = 0;
+  last_offset = 0;
+  max_last_offset = 0;
+  number_arr_links = 0;
+
+  if ((ARRAY_MEMBLOCK_BASE = (void*)malloc(gradient_structure::ARRAY_MEMBLOCK_SIZE)) == 0)
+  {
+    cerr << "insufficient memory to allocate space for ARRAY_MEMBLOCKa\n";
+    ad_exit(1);
+  }
+
+  const size_t adjustment = (8 - ((size_t)ARRAY_MEMBLOCK_BASE.ptr) % 8) % 8;
+  ARRAY_MEMBLOCK_BASE.adjust(adjustment);
+}
+
 /**
  * Description not yet available.
  * \param

@@ -92,7 +92,6 @@ public:
   operator double*();
 };
 
-#define USE_THREAD
 #ifdef USE_THREAD
 #define _THREAD __thread
   #ifdef _MSC_VER

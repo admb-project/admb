@@ -300,6 +300,8 @@ gradient_structure::gradient_structure(const long int _size, const unsigned int 
   gsm.lock();
 #endif
   ++instances;
+  unsigned int DF_FILE_id = ++DF_FILE::id;
+  unsigned int grad_stack_id = ++grad_stack::id;
 #ifdef USE_THREAD
   gsm.unlock();
 #endif
@@ -335,7 +337,7 @@ gradient_structure::gradient_structure(const long int _size, const unsigned int 
     memory_allocate_error("DEPVARS_INFO", (void *) DEPVARS_INFO);
   }
 
-  _fp = new DF_FILE(CMPDIF_BUFFER_SIZE);
+  _fp = new DF_FILE(CMPDIF_BUFFER_SIZE, DF_FILE_id);
 
   memory_allocate_error("_fp", (void*)_fp);
 
@@ -355,7 +357,7 @@ gradient_structure::gradient_structure(const long int _size, const unsigned int 
     memory_allocate_error("ARR_LIST1", (void *) ARR_LIST1);
   }
 
-  _GRAD_STACK1 = new grad_stack();
+  _GRAD_STACK1 = new grad_stack(GRADSTACK_BUFFER_SIZE, grad_stack_id);
 
   memory_allocate_error("_GRAD_STACK1", _GRAD_STACK1);
   hessian_ptr = (double*)_GRAD_STACK1->true_ptr_first;
@@ -562,28 +564,20 @@ gradient_structure::~gradient_structure()
   gsm.unlock();
 #endif
 
-  if (DEPVARS_INFO==NULL)
+  if (DEPVARS_INFO!=NULL)
   {
-    null_ptr_err_message();
-    ad_exit(1);
+    delete DEPVARS_INFO;
+    DEPVARS_INFO=NULL;
   }
 
-  delete DEPVARS_INFO;
-  DEPVARS_INFO=NULL;
-
-  if (_fp == NULL)
+  if (_fp != NULL)
   {
-    cerr << "Trying to close stream referenced by a NULL pointer\n"
-            " in ~gradient_structure\n";
-    ad_exit(1);
+    delete _fp;
+    _fp = NULL;
   }
-
-  delete _fp;
-  _fp = NULL;
-
   gradient_structure::fp = nullptr;
 
-  _instance = nullptr;
+  gradient_structure::_instance = nullptr;
 
   cleanup_temporary_files();
 }

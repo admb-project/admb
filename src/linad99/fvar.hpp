@@ -112,7 +112,10 @@ Macro definitions.
   #include <tiny_ad.hpp>
 #endif
 
-#define USE_VECTOR_SHAPE_POOL
+#define USE_THREAD
+#ifndef USE_THREAD
+  #define USE_VECTOR_SHAPE_POOL
+#endif
 
 #if defined(USE_DDOUBLE)
 #   include <qd/qd.h>

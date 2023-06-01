@@ -2,8 +2,9 @@
 dev: run8j
 run8j: thread_funnel5.h
 	@cp ../../../examples/admb/forest/forest.dat .
-	CXXFLAGS=-I../../interface/forest ../../../admb -g forest.tpl thread_funnel5.cpp
+	CXXFLAGS=-I../../interface/forest ../../../admb forest.tpl thread_funnel5.cpp
 	time ./forest
+diff:
 
 	diff forest.par ~/admb-github/examples/admb/forest/forest.par
 	diff forest.std ~/admb-github/examples/admb/forest/forest.std

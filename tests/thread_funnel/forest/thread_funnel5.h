@@ -63,6 +63,8 @@ std::future<std::tuple<double, dvector, std::vector<double*>>> thread_funnel(F&&
     get_addresses(addresses, std::forward<Args>(args)...);
 
     gradient_structure::_instance = gs;
+    gradient_structure::fp = gs->get_fp();
+    gradient_structure::GRAD_STACK1 = gs->get_GRAD_STACK1();
 
     double v = 0;
     const size_t nvar = addresses.size();
@@ -105,6 +107,8 @@ void funnel(F&& func, Args&&... args)
   add_futures(std::move(f));
 
   gradient_structure::_instance = gs;
+  gradient_structure::fp = gs->get_fp();
+  gradient_structure::GRAD_STACK1 = gs->get_GRAD_STACK1();
 }
 void get_results(dvar_vector& results);
 #endif

@@ -77,10 +77,6 @@ void add_futures(std::future<std::tuple<double, dvector, std::vector<double*>>>&
 }
 gradient_structure* get_gradient()
 {
-  if (id == 0)
-  {
-    id = 1;
-  }
   gradient_structure* gs = gradients[id];
   ++id;
   if (id >= ngradients)

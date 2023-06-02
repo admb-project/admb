@@ -77,7 +77,7 @@ std::future<std::tuple<double, dvector, std::vector<double*>>> thread_funnel(F&&
       dvar_vector scoped_variables(scoped_independents);
 
       std::vector<dvariable> variables;
-      for (int i = 1; i <= nvar; ++i)
+      for (int i = nvar; i >= 1; --i)
       {
         variables.push_back(std::move(scoped_variables(i)));
       }

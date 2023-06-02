@@ -6,11 +6,11 @@ run8j: thread_funnel5.h
 	time ./forest
 diff:
 
-	diff forest.par ~/admb-github/examples/admb/forest/forest.par
-	diff forest.std ~/admb-github/examples/admb/forest/forest.std
-	diff forest.rep ~/admb-github/examples/admb/forest/forest.rep
-	diff forest.cor ~/admb-github/examples/admb/forest/forest.cor
-	diff forest.eva ~/admb-github/examples/admb/forest/forest.eva
+	diff forest.par ~/admb-main/examples/admb/forest/forest.par
+	diff forest.std ~/admb-main/examples/admb/forest/forest.std
+	diff forest.rep ~/admb-main/examples/admb/forest/forest.rep
+	diff forest.cor ~/admb-main/examples/admb/forest/forest.cor
+	diff forest.eva ~/admb-main/examples/admb/forest/forest.eva
 
 clean:
 	@rm -vf forest.dat

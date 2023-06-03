@@ -17,7 +17,7 @@ TEST_F(test_simple_async, gradcalc_empty)
 
   ad_exit=&test_ad_exit;
 
-  ASSERT_ANY_THROW({
+  ASSERT_NO_THROW({
     dvector empty;
     gradcalc(empty.size(), empty);
   });
@@ -34,7 +34,7 @@ TEST_F(test_simple_async, gradcalc_make_indvar_list_not_called)
   ad_exit=&test_ad_exit;
 
   dvector gradients(1, 2);
-  ASSERT_ANY_THROW({
+  ASSERT_NO_THROW({
     gradcalc(gradients.size(), gradients);
   });
 }

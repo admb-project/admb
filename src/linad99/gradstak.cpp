@@ -83,7 +83,10 @@
 
 char lastchar(char *);
 char ad_random_part[6]="tmp";
-unsigned int grad_stack::id = 0;
+
+#ifdef USE_THREAD
+unsigned int grad_stack::id = 1;
+#endif
 
 void fill_ad_random_part(void)
 {
@@ -98,6 +101,26 @@ void fill_ad_random_part(void)
     div*=10;
   }
 */
+}
+#ifdef USE_THREAD
+#include <mutex>
+std::mutex gsm2;
+#endif
+
+grad_stack::grad_stack(const size_t size):
+  grad_stack(size,
+#ifdef USE_THREAD
+    grad_stack::id
+#else
+    0
+#endif
+  )
+{
+#ifdef USE_THREAD
+  gsm2.lock();
+  ++grad_stack::id;
+  gsm2.unlock();
+#endif
 }
 /**
 Size constructor with filename id.

@@ -167,7 +167,11 @@ public:
    static void check_set_error(const char *variable_name);
 
  public:
-   static int instances;
+
+#ifdef USE_THREAD
+   static unsigned int id;
+#endif
+
    unsigned int x;
 
    // exception class
@@ -188,7 +192,7 @@ public:
    friend class dfsdmat;
 
    gradient_structure(): gradient_structure(100000L) {}
-   gradient_structure(const long int size): gradient_structure(size, 0) {}
+   gradient_structure(const long int size);
    gradient_structure(const long int size, const unsigned int id);
    gradient_structure(const gradient_structure&) = delete;
    gradient_structure(gradient_structure&&) = delete;
@@ -293,13 +297,7 @@ public:
   /// Do not allow copy contructor
   DF_FILE(const DF_FILE&) = delete;
   /// User defined size with default id
-  DF_FILE(const size_t nbytes): DF_FILE(nbytes,
-#ifdef USE_THREAD
-    ++DF_FILE::id
-#else
-    0
-#endif
-  ) {}
+  DF_FILE(const size_t nbytes);
   DF_FILE(const size_t nbytes, const unsigned int id);
   ~DF_FILE();
 

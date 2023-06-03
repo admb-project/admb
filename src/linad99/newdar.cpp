@@ -96,7 +96,7 @@ void arr_list::arr_free_add(arr_link* tmp)
 
 double_and_int* arr_list::arr_new(unsigned int sz)
 {
-  if (!gradient_structure::instances)
+  if (!gradient_structure::_instance)
   {
     cerr << "Error -- you are trying to create a dvar_vector object"
             " when there is " << endl << "no object of type"

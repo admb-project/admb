@@ -74,7 +74,9 @@ int gradient_structure::NUM_DEPENDENT_VARIABLES = 2000;
 #endif
 long int gradient_structure::USE_FOR_HESSIAN = 0;
 unsigned int gradient_structure::RETURN_ARRAYS_SIZE = 70;
-int gradient_structure::instances = 0;
+#ifdef USE_THREAD
+unsigned int gradient_structure::id = 1;
+#endif
 //int gradient_structure::RETURN_INDEX = 0;
 //dvariable * gradient_structure::FRETURN = NULL;
 #ifdef __BORLANDC__
@@ -274,6 +276,21 @@ void allocate_dvariable_space()
 std::mutex gsm;
 #endif
 
+gradient_structure::gradient_structure(const long int size):
+  gradient_structure(size,
+#ifdef USE_THREAD
+    gradient_structure::id
+#else
+    0
+#endif
+  )
+{
+#ifdef USE_THREAD
+  gsm.lock();
+  ++gradient_structure::id;
+  gsm.unlock();
+#endif
+}
 /**
 Constructor
 */
@@ -295,16 +312,6 @@ gradient_structure::gradient_structure(const long int _size, const unsigned int 
   PREVIOUS_TOTAL_BYTES = 0;
 
   save_var_file_flag = 0;
-
-#ifdef USE_THREAD
-  gsm.lock();
-#endif
-  ++instances;
-  unsigned int DF_FILE_id = ++DF_FILE::id;
-  unsigned int grad_stack_id = ++grad_stack::id;
-#ifdef USE_THREAD
-  gsm.unlock();
-#endif
 
   //Should be a multiple of sizeof(double_and_int)
   const long int remainder = _size % sizeof(double_and_int);
@@ -337,7 +344,7 @@ gradient_structure::gradient_structure(const long int _size, const unsigned int 
     memory_allocate_error("DEPVARS_INFO", (void *) DEPVARS_INFO);
   }
 
-  _fp = new DF_FILE(CMPDIF_BUFFER_SIZE, DF_FILE_id);
+  _fp = new DF_FILE(CMPDIF_BUFFER_SIZE);
 
   memory_allocate_error("_fp", (void*)_fp);
 
@@ -357,7 +364,7 @@ gradient_structure::gradient_structure(const long int _size, const unsigned int 
     memory_allocate_error("ARR_LIST1", (void *) ARR_LIST1);
   }
 
-  _GRAD_STACK1 = new grad_stack(GRADSTACK_BUFFER_SIZE, grad_stack_id);
+  _GRAD_STACK1 = new grad_stack(GRADSTACK_BUFFER_SIZE);
 
   memory_allocate_error("_GRAD_STACK1", _GRAD_STACK1);
   hessian_ptr = (double*)_GRAD_STACK1->true_ptr_first;
@@ -555,14 +562,6 @@ gradient_structure::~gradient_structure()
     delete GRAD_LIST;
     GRAD_LIST = NULL;
   }
-
-#ifdef USE_THREAD
-  gsm.lock();
-#endif
-  --instances;
-#ifdef USE_THREAD
-  gsm.unlock();
-#endif
 
   if (DEPVARS_INFO!=NULL)
   {

@@ -63,6 +63,8 @@ Copyright (c) 2008-2016 ADMB Foundation and
 char lastchar(char*);
 
 #ifdef USE_THREAD
+#include <mutex>
+std::mutex gsm3;
 unsigned int DF_FILE::id = 0;
 #endif
 
@@ -91,6 +93,22 @@ void byte_copy(void* dest, void* source, const size_t num_bytes)
   //memcpy((char*)dest, (char*)source, num_bytes);
 }
 #endif
+
+DF_FILE::DF_FILE(const size_t nbytes):
+  DF_FILE(nbytes,
+#ifdef USE_THREAD
+    DF_FILE::id
+#else
+    0
+#endif
+  )
+{
+#ifdef USE_THREAD
+  gsm3.lock();
+  ++DF_FILE::id;
+  gsm3.unlock();
+#endif
+}
 
 /**
 Constructor to allocate buffer and storage output file.

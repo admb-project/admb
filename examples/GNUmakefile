@@ -56,6 +56,7 @@ endif
 ifndef PROG
   ifneq ($(CMDSHELL),cmd)
     PROG=time
+    #PROG=valgrind --tool=callgrind
   endif
 endif
 

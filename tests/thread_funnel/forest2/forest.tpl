@@ -36,18 +36,55 @@ PROCEDURE_SECTION
   nu=mfexp(log_nu);
   sigma=mfexp(log_sigma);
 
+
+  gradient_structure* gs = gradient_structure::_instance;
+
   const int min = a.indexmin();
   const int max = a.indexmax();
   for (int i = min; i <= max; ++i)
   {
-    funnel([](const dvariable& tau, const dvariable& nu, const dvariable& sigma, const dvariable& beta, const double ai, const int nsteps)
+    double f_ai = a(i);
+    int f_nsteps = (int)nsteps;
+    auto a = std::async([&f_ai, &f_nsteps](
+      const dvariable& tau,
+      const dvariable& nu,
+      const dvariable& sigma,
+      const dvariable& beta)->std::tuple<double, dvector, std::vector<double*>>
     {
-      dvariable Integral;
-      Integral = ::adromb(-3.0, 3.0, nsteps, &h, tau, nu, sigma, beta, ai);
-      return Integral;
-    }, (const dvariable&)tau, (const dvariable&)nu, (const dvariable&)sigma, (const dvariable&)beta, (const double&)a(i), (const int&)nsteps);
+      std::vector<double*> f_addresses;
+      get_addresses(f_addresses, (const dvariable&)tau, (const dvariable&)nu, (const dvariable&)sigma, (const dvariable&)beta);
+      const size_t f_nvar = f_addresses.size();
+
+      gradient_structure* f_gs = get_gradient();
+      gradient_structure::_instance = f_gs;
+      gradient_structure::fp = f_gs->get_fp();
+      gradient_structure::GRAD_STACK1 = f_gs->get_GRAD_STACK1();
+
+      double v = 0;
+      const size_t nvar = f_addresses.size();
+      dvector g(1, nvar);
+      {
+        independent_variables f_independents(1, nvar);
+        set_independent_variables(f_independents, tau, nu, sigma, beta);
+
+        // Set gradient_structure::NVAR
+        dvar_vector f_variables(f_independents);
+
+        dvariable f(0);
+        f = ::adromb(-3.0, 3.0, f_nsteps, &h, f_variables(1), f_variables(2), f_variables(3), f_variables(4), f_ai);
+        v = value(f);
+
+        gradcalc(nvar, g);
+      }
+      return std::make_tuple(v, g, std::move(f_addresses));
+    }, (const dvariable&)tau, (const dvariable&)nu, (const dvariable&)sigma, (const dvariable)beta);
+    //add_futures(std::move(a));
   }
   get_results(S);
+
+  gradient_structure::_instance = gs;
+  gradient_structure::fp = gs->get_fp();
+  gradient_structure::GRAD_STACK1 = gs->get_GRAD_STACK1();
 
   f=0.0;
   for (int i=1;i<=k;i++)

@@ -97,7 +97,7 @@ void byte_copy(void* dest, void* source, const size_t num_bytes)
 DF_FILE::DF_FILE(const size_t nbytes):
   DF_FILE(nbytes,
 #ifdef USE_THREAD
-    DF_FILE::id
+    DF_FILE::id + 1
 #else
     0
 #endif

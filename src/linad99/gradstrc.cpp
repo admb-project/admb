@@ -279,7 +279,7 @@ std::mutex gsm;
 gradient_structure::gradient_structure(const long int size):
   gradient_structure(size,
 #ifdef USE_THREAD
-    gradient_structure::id
+    gradient_structure::id + 1
 #else
     0
 #endif

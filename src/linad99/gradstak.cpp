@@ -110,7 +110,7 @@ std::mutex gsm2;
 grad_stack::grad_stack(const size_t size):
   grad_stack(size,
 #ifdef USE_THREAD
-    grad_stack::id
+    grad_stack::id + 1
 #else
     0
 #endif

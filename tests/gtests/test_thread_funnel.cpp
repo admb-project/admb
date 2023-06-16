@@ -188,3 +188,92 @@ TEST_F(test_thread_funnel, gradient_structure2x)
   EXPECT_STREQ(gs2.get_GRAD_STACK1()->gradfile_name2, "gradfil22.tmp");
   EXPECT_STREQ(gs2.get_GRAD_STACK1()->var_store_file_name, "varssave2.tmp");
 }
+TEST_F(test_thread_funnel, nvarcalc)
+{
+  gradient_structure gs;
+
+  dvariable a;
+  dvariable b;
+  dvariable c;
+
+  EXPECT_EQ(3, nvarcalc(a, 0, 3, 4, b, -1, 0.0, 'a', c, "AAAA"));
+}
+TEST_F(test_thread_funnel, xinit)
+{
+  gradient_structure gs;
+
+  dvariable a;
+  a = 4.5;
+  dvariable b;
+  b = 1.2;
+  dvariable c;
+  c = -0.5;
+
+  int nvar = nvarcalc(a, 0, 3, 4, b, -1, 0.0, 'a', c, "AAAA");
+
+  independent_variables independents(1, nvar);
+  independents.initialize();
+
+  xinit(independents, a, 0, 3, 4, b, -1, 0.0, 'a', c, "AAAA");
+
+  EXPECT_DOUBLE_EQ(independents[1], 4.5);
+  EXPECT_DOUBLE_EQ(independents[2], 1.2);
+  EXPECT_DOUBLE_EQ(independents[3], -0.5);
+}
+TEST_F(test_thread_funnel, thread_xinit)
+{
+  auto a = std::async([]()
+  {
+  gradient_structure gs;
+
+  dvariable a;
+  a = 4.5;
+  dvariable b;
+  b = 1.2;
+  dvariable c;
+  c = -0.5;
+
+  int nvar = nvarcalc(a, 0, 3, 4, b, -1, 0.0, 'a', c, "AAAA");
+
+  independent_variables independents(1, nvar);
+  independents.initialize();
+
+  xinit(independents, a, 0, 3, 4, b, -1, 0.0, 'a', c, "AAAA");
+
+  EXPECT_DOUBLE_EQ(independents[1], 4.5);
+  EXPECT_DOUBLE_EQ(independents[2], 1.2);
+  EXPECT_DOUBLE_EQ(independents[3], -0.5);
+  });
+  a.wait();
+}
+TEST_F(test_thread_funnel, thread_xinit_10)
+{
+  unsigned int id = gradient_structure::id;
+  for (int i = 1; i <= 10; ++i)
+  {
+    auto a = std::async([&id, &i]()
+    {
+      gradient_structure gs;
+      EXPECT_EQ(id + i, gradient_structure::id);
+
+      dvariable a;
+      a = 4.5;
+      dvariable b;
+      b = 1.2;
+      dvariable c;
+      c = -0.5;
+
+      int nvar = nvarcalc(a, 0, 3, 4, b, -1, 0.0, 'a', c, "AAAA");
+
+      independent_variables independents(1, nvar);
+      independents.initialize();
+
+      xinit(independents, a, 0, 3, 4, b, -1, 0.0, 'a', c, "AAAA");
+
+      EXPECT_DOUBLE_EQ(independents[1], 4.5);
+      EXPECT_DOUBLE_EQ(independents[2], 1.2);
+      EXPECT_DOUBLE_EQ(independents[3], -0.5);
+    });
+    a.wait();
+  }
+}

@@ -6,6 +6,20 @@
 #include <future>
 #include <fvar.hpp>
 
+size_t nvarcalc(dvariable const& arg)
+{
+  return 1;
+}
+template<typename T>
+size_t nvarcalc(T arg)
+{
+  return 0;
+}
+template<typename ...Ts>
+size_t nvarcalc(Ts&&... args)
+{
+  return (nvarcalc(std::forward<Ts>(args)) + ...);
+}
 void add_address(std::vector<double*>& addresses, const dvariable& arg)
 {
   addresses.push_back(&((*arg.v).x));
@@ -35,6 +49,11 @@ int set_independent_variables(independent_variables& independents, Ts&&... args)
   (set_independent_variable(independents, index, args), ...);
 
   return index;
+}
+template<typename ...Ts>
+int xinit(independent_variables& independents, Ts&&... args)
+{
+  return set_independent_variables(independents, std::forward<Ts>(args)...);
 }
 std::tuple<const dvariable&> create_tuple_element(std::vector<dvariable>& variables, int& index, const dvariable& arg)
 {

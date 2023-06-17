@@ -1,3 +1,4 @@
+#include <chrono>
 #include <gtest/gtest.h>
 #include <fvar.hpp>
 #include "thread_funnel5.h"
@@ -251,6 +252,10 @@ TEST_F(test_thread_funnel, thread_xinit_10)
   unsigned int id = gradient_structure::id;
   for (int i = 1; i <= 10; ++i)
   {
+    //Capturing 'i' is bad because it changes when lambda function
+    //accesses instance.  Here it does not matter.  Since async 'a'
+    //will wait at the end of the loop, lambda will be executed 
+    //sequentially instead of in parallel. 
     auto a = std::async([&id, &i]()
     {
       gradient_structure gs;
@@ -276,4 +281,71 @@ TEST_F(test_thread_funnel, thread_xinit_10)
     });
     a.wait();
   }
+}
+TEST_F(test_thread_funnel, test_arr_list)
+{
+  gradient_structure gs;
+  gs.ARR_LIST1->arr_new(1);
+}
+TEST_F(test_thread_funnel, test_arr_list2)
+{
+  gradient_structure* gs = new gradient_structure();
+  gs->ARR_LIST1->arr_new(1);
+  delete gs;
+  gs = nullptr;
+}
+TEST_F(test_thread_funnel, pool)
+{
+  using namespace std::chrono_literals;
+
+  unsigned int id = gradient_structure::id;
+
+  gradient_structure** gradients = new gradient_structure*[10];
+  for (int i = 0; i < 10; ++i)
+  {
+    gradients[i] = new gradient_structure();
+  }
+  EXPECT_EQ(id + 10, gradient_structure::id);
+
+  std::vector<std::future<double>> futures;
+
+  for (int i = 0; i < 10; ++i)
+  {
+    // Use function parameter to copy memory for the thread 
+    auto f = std::async([&gradients](const int i)
+    {
+      gradient_structure* gs = gradients[i];
+      gradient_structure::_instance = gs;
+      gradient_structure::fp = gs->get_fp();
+      gradient_structure::GRAD_STACK1 = gs->get_GRAD_STACK1();
+
+      independent_variables independents(1, 1);
+
+      independents[1] = 0.5;
+
+      dvar_vector variables(independents);
+
+      dvariable result = i * variables[1];
+
+      dvector g(1, 1);
+
+      gradcalc(1, g);
+
+      std::this_thread::sleep_for((std::rand() % 5) * 1000ms);
+
+      return g(1);
+    }, i);
+    //f.wait();
+    futures.emplace_back(std::move(f));
+  }
+
+  int index = 0;
+  for (auto& f : futures)
+  {
+    ASSERT_EQ((int)f.get(), index);
+    ++index;
+  }
+
+  delete [] gradients;
+  gradients = nullptr;
 }

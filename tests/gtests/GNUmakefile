@@ -189,6 +189,7 @@ ERRORS=\
 
 GTESTS_DEV=\
  test_xpools.cpp\
+ test_interface.obj\
  test_thread_funnel.obj\
  thread_funnel5.obj\
  main.cpp
@@ -260,6 +261,13 @@ ifeq ($(CMDSHELL),cmd)
 	CXXFLAGS=-I$(GTEST_DIR)\\include ..\\..\\admb -c $(ADMB_OPTIONS) test_thread_funnel.cpp
 else
 	CXXFLAGS="-I$(GTEST_DIR)/include -I../thread_funnel/forest" ../../admb$(EXT) -c $(ADMB_OPTIONS) test_thread_funnel.cpp
+endif
+
+test_interface.obj: test_interface.cpp
+ifeq ($(CMDSHELL),cmd)
+	CXXFLAGS=-I$(GTEST_DIR)\\include ..\\..\\admb -c $(ADMB_OPTIONS) test_interface.cpp
+else
+	CXXFLAGS="-I$(GTEST_DIR)/include -I../thread_funnel/forest" ../../admb$(EXT) -c $(ADMB_OPTIONS) test_interface.cpp
 endif
 
 test_df1b2atan2.obj: test_df1b2atan2.cpp df1b2atan2.obj

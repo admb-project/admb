@@ -1,7 +1,7 @@
 #include <chrono>
 #include <gtest/gtest.h>
 #include <fvar.hpp>
-#include "thread_funnel5.h"
+#include <thread_funnel5.h>
 
 class test_thread_funnel: public ::testing::Test {};
 

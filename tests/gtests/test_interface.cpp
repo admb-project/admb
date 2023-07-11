@@ -286,33 +286,3 @@ TEST_F(test_interface, test_parameter)
 {
   test_parameter([]()->int { return 2; });
 }
-void minimize2(std::function<void(void)>&& func)
-{
-  char* argv[] = { "model" };
-  cout << __FILE__ << ':' << __LINE__ << endl;
-  minimizer m(1, argv);
-  cout << __FILE__ << ':' << __LINE__ << endl;
-
-  m.minimize(func);
-  cout << __FILE__ << ':' << __LINE__ << endl;
-}
-TEST_F(test_interface, minimize2_function)
-{
-  /*
-  minimize2([]()
-  {
-    dvector x("{ -1, 0, 1, 2, 3, 4, 5, 6, 7, 8 }");
-    dvector y("{ 1.4, 4.7, 5.1, 8.3, 9.0, 14.5, 14.0, 13.4, 19.2, 18.0 }");
-
-    param_init_number b0("b0");
-    param_init_number b1("b1");
-    objective_function_value f("f");
-
-    auto yhat = b0 + b1 * x;
-    f = regression(y, yhat);
-    cout << "b0: " << value(b0) << endl;
-    cout << "b1: " << value(b1) << endl;
-    cout << "f: " << value(f) << endl;
-  });
-  */
-}

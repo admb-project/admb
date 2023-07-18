@@ -94,11 +94,13 @@ public:
 
 #ifdef USE_THREAD
 #define _THREAD __thread
+#define _THREAD_LOCAL thread_local
   #ifdef _MSC_VER
     #define __thread __declspec(thread)
   #endif
 #else
 #define _THREAD
+#define _THREAD_LOCAL
 #endif
 /**
  * class for things related to the gradient structures, including dimension of

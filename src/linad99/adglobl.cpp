@@ -21,9 +21,11 @@ adpvm_manager* ad_comm::pvm_manager = NULL;
 #endif
 
  adstring ad_comm::subdir;
- cifstream * ad_comm::global_datafile=NULL;
- cifstream * ad_comm::global_parfile=NULL;
- ofstream *  ad_comm::global_logfile=NULL;
+
+_THREAD cifstream* ad_comm::global_datafile = nullptr;
+_THREAD cifstream* ad_comm::global_parfile = nullptr;
+_THREAD ofstream* ad_comm::global_logfile = nullptr;
+
  uistream *  ad_comm::global_bparfile=NULL;
  adstring ad_comm::adprogram_name;
  adstring ad_comm::working_directory_path;

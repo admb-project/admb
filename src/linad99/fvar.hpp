@@ -8856,9 +8856,11 @@ protected:
      const streampos & off = 0);
    static streampos change_pinfile_name(const adstring & s,
      const streampos & off = 0);
-   static cifstream *global_datafile;
-   static cifstream *global_parfile;
-   static ofstream *global_logfile;
+
+  static _THREAD cifstream* global_datafile;
+  static _THREAD cifstream* global_parfile;
+  static _THREAD ofstream* global_logfile;
+
    static uistream *global_bparfile;
    static adstring adprogram_name;
    static adstring working_directory_path;

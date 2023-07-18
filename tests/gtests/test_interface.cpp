@@ -4,6 +4,8 @@
 #include <future>
 #include <minimizer.h>
 
+using namespace std::chrono_literals;
+
 class test_interface: public ::testing::Test {};
 
 TEST_F(test_interface, minimize_thread_funnel)
@@ -12,7 +14,6 @@ TEST_F(test_interface, minimize_thread_funnel)
     char* argv[] = { "model" };
     minimizer m(1, argv);
   }
-  using namespace std::chrono_literals;
 
   unsigned int id = gradient_structure::id;
 
@@ -67,8 +68,6 @@ TEST_F(test_interface, minimize_thread_funnel)
 }
 TEST_F(test_interface, thread_funnel)
 {
-  using namespace std::chrono_literals;
-
   unsigned int id = gradient_structure::id;
 
   gradient_structure** gradients = new gradient_structure*[10];
@@ -127,8 +126,6 @@ double model(std::function<void()>&& f)
 }
 TEST_F(test_interface, thread_funnel_model_function)
 {
-  using namespace std::chrono_literals;
-
   unsigned int id = gradient_structure::id;
 
   gradient_structure** gradients = new gradient_structure*[10];
@@ -164,8 +161,6 @@ double model2(std::function<double(const int)>&& f, const int i)
 }
 TEST_F(test_interface, thread_funnel_model2_function)
 {
-  using namespace std::chrono_literals;
-
   unsigned int id = gradient_structure::id;
 
   gradient_structure** gradients = new gradient_structure*[10];
@@ -238,6 +233,9 @@ TEST_F(test_interface, interface)
   cout << "b0: " << value(b0) << endl;
   cout << "b1: " << value(b1) << endl;
   cout << "f: " << value(f) << endl;
+  ASSERT_DOUBLE_EQ(value(b0), 4.0781773858160282);
+  ASSERT_DOUBLE_EQ(value(b1), 1.9090909847477779);
+  ASSERT_DOUBLE_EQ(value(f), 3.4512604236456497);
 }
 TEST_F(test_interface, interface_duplicate)
 {
@@ -260,6 +258,9 @@ TEST_F(test_interface, interface_duplicate)
   cout << "b0: " << value(b0) << endl;
   cout << "b1: " << value(b1) << endl;
   cout << "f: " << value(f) << endl;
+  ASSERT_DOUBLE_EQ(value(b0), 4.0781773858160282);
+  ASSERT_DOUBLE_EQ(value(b1), 1.9090909847477779);
+  ASSERT_DOUBLE_EQ(value(f), 3.4512604236456497);
 }
 class my_initial_params: public initial_params
 {
@@ -332,6 +333,9 @@ void minimize()
   cout << "b0: " << value(b0) << endl;
   cout << "b1: " << value(b1) << endl;
   cout << "f: " << value(f) << endl;
+  ASSERT_DOUBLE_EQ(value(b0), 4.0781773858160282);
+  ASSERT_DOUBLE_EQ(value(b1), 1.9090909847477779);
+  ASSERT_DOUBLE_EQ(value(f), 3.4512604236456497);
 }
 TEST_F(test_interface, minimize_function)
 {
@@ -344,4 +348,85 @@ void test_parameter(std::function<int(void)>&& func)
 TEST_F(test_interface, test_parameter)
 {
   test_parameter([]()->int { return 2; });
+}
+TEST_F(test_interface, async_minimize_function)
+{
+  auto f = std::async(minimize);
+  f.wait();
+}
+void minimize2()
+{
+  //std::this_thread::sleep_for((std::rand() % 5) * 1000ms);
+  std::this_thread::sleep_for(2000ms);
+
+  char* argv[] = { "model", "-nohess" };
+  minimizer m(2, argv);
+
+  dvector x("{ -1, 0, 1, 2, 3, 4, 5, 6, 7, 8 }");
+  dvector y("{ 1.4, 4.7, 5.1, 8.3, 9.0, 14.5, 14.0, 13.4, 19.2, 18.0 }");
+
+  param_init_number b0("b0");
+  param_init_number b1("b1");
+  objective_function_value f("f");
+
+  //std::this_thread::sleep_for((std::rand() % 5) * 1000ms);
+  std::this_thread::sleep_for(2000ms);
+
+  m.minimize([&]()
+  {
+    auto yhat = b0 + b1 * x;
+    f = regression(y, yhat);
+  });
+
+  cout << "b0: " << value(b0) << endl;
+  cout << "b1: " << value(b1) << endl;
+  cout << "f: " << value(f) << endl;
+  ASSERT_DOUBLE_EQ(value(b0), 4.0781773858160282);
+  ASSERT_DOUBLE_EQ(value(b1), 1.9090909847477779);
+  ASSERT_DOUBLE_EQ(value(f), 3.4512604236456497);
+}
+TEST_F(test_interface, async_minimize2_function)
+{
+  auto f1 = std::async(minimize2);
+  f1.wait();
+  auto f2 = std::async(minimize2);
+  f2.wait();
+}
+TEST_F(test_interface, async_minimize2_functionb)
+{
+  auto f1 = std::async(minimize2);
+  auto f2 = std::async(minimize2);
+  f1.wait();
+  f2.wait();
+}
+TEST_F(test_interface, async_minimize2_function3a)
+{
+  auto f1 = std::async(minimize2);
+  f1.wait();
+  auto f2 = std::async(minimize2);
+  f2.wait();
+  auto f3 = std::async(minimize2);
+  f3.wait();
+}
+TEST_F(test_interface, async_minimize2_function3b)
+{
+  auto f1 = std::async(minimize2);
+  f1.wait();
+  auto f2 = std::async(minimize2);
+  auto f3 = std::async(minimize2);
+  f3.wait();
+  f2.wait();
+}
+TEST_F(test_interface, async_minimize2_function5)
+{
+  auto f1 = std::async(minimize2);
+  auto f2 = std::async(minimize2);
+  auto f3 = std::async(minimize2);
+  auto f4 = std::async(minimize2);
+  auto f5 = std::async(minimize2);
+  f1.wait();
+  f2.wait();
+  f3.wait();
+  f4.wait();
+  f5.wait();
 }

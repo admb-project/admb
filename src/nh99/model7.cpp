@@ -478,7 +478,8 @@ void ad_comm::allocate(void)
   }
 */
   adstring ts=adprogram_name + adstring(".log");
-  global_logfile= new ofstream( (char*)ts);
+
+  global_logfile = new ofstream((char*)ts);
 
   int biopt=-1;
   int aiopt=-1;
@@ -500,7 +501,7 @@ void ad_comm::allocate(void)
         tmpstring = adstring(argv[biopt+1]);
       }
     }
-    global_bparfile= new uistream(tmpstring);
+    global_bparfile = new uistream(tmpstring);
     if (global_bparfile)
     {
       if (!(*global_bparfile))
@@ -516,7 +517,7 @@ void ad_comm::allocate(void)
       }
     }
   }
-  tmpstring=adprogram_name + adstring(".pin");
+  tmpstring = adprogram_name + adstring(".pin");
   if (!global_parfile)
   {
     if (aiopt>-1)
@@ -543,7 +544,7 @@ void ad_comm::allocate(void)
           ad_exit(1);
         }
         delete global_parfile;
-        global_parfile=NULL;
+        global_parfile = nullptr;
       }
     }
   }
@@ -569,17 +570,17 @@ ad_comm::~ad_comm()
   if (global_datafile)
   {
     delete global_datafile;
-    global_datafile=NULL;
+    global_datafile = nullptr;
   }
   if (global_parfile)
   {
     delete global_parfile;
-    global_parfile=NULL;
+    global_parfile = nullptr;
   }
   if (global_logfile)
   {
     delete global_logfile;
-    global_logfile=NULL;
+    global_logfile = nullptr;
   }
 }
 

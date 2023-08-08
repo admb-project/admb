@@ -482,9 +482,17 @@ else
 	#cp ../scripts/admb/root-admb ../admb
   endif
 	mkdir -p ../build/tpl2rem
+  ifeq ($(CXX),g++)
+	$(MAKE) --directory=df1b2-separable CC=gcc DIST=../${DIST} CMDSHELL= bins
+  else
 	$(MAKE) --directory=df1b2-separable CC=$(CC) DIST=../${DIST} CMDSHELL= bins
+  endif
 	mkdir -p ../build/tpl2cpp
+  ifeq ($(CXX),g++)
+	$(MAKE) --directory=nh99 CC=gcc DIST=../${DIST} CMDSHELL= bins
+  else
 	$(MAKE) --directory=nh99 CC=$(CC) DIST=../${DIST} CMDSHELL= bins
+  endif
 endif
 
 libs: objects

@@ -13,9 +13,7 @@ ifeq ($(OS),Windows_NT)
   endif
 endif
 
-ifdef DEBUG
 ADMB_OPTIONS=-g
-endif
 
 ifeq ($(CMDSHELL),cmd)
 GTEST_DIR=googletest-read-only\\googletest
@@ -188,9 +186,6 @@ ERRORS=\
  main.cpp
 
 GTESTS_DEV=\
- test_xpools.cpp\
- test_thread_funnel.obj\
- thread_funnel5.obj\
  test_interface.obj\
  main.cpp
 

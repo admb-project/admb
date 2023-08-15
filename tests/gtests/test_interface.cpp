@@ -368,6 +368,7 @@ TEST_F(test_interface, async_minimize_function)
 */
 void minimize2()
 {
+  cout << std::this_thread::get_id() << endl;
   //std::this_thread::sleep_for((std::rand() % 5) * 1000ms);
   std::this_thread::sleep_for(2000ms);
 
@@ -378,17 +379,20 @@ void minimize2()
   dvector y("{ 1.4, 4.7, 5.1, 8.3, 9.0, 14.5, 14.0, 13.4, 19.2, 18.0 }");
 
   param_init_number b0("b0");
+  ASSERT_TRUE(&b0.get_v()->x == gradient_structure::get()->GRAD_LIST->get(1750));
   param_init_number b1("b1");
+  ASSERT_TRUE(&b1.get_v()->x == gradient_structure::get()->GRAD_LIST->get(1751));
   objective_function_value f("f");
 
   //std::this_thread::sleep_for((std::rand() % 5) * 1000ms);
   std::this_thread::sleep_for(2000ms);
 
+  //cout << std::this_thread::get_id() << ' ' << gradient_structure::GRAD_STACK1 << endl;
   m.minimize([&]()
   {
     auto yhat = b0 + b1 * x;
-    cout << value(yhat) << endl;
     f = regression(y, yhat);
+    //f += b0;
   });
   cout << "b0: " << value(b0) << endl;
   cout << "b1: " << value(b1) << endl;
@@ -402,6 +406,7 @@ TEST_F(test_interface, async_minimize2_function)
 {
   auto f1 = std::async(minimize2);
   f1.wait();
+  ASSERT_TRUE(gradient_structure::get() == nullptr);
   //auto f2 = std::async(minimize2);
   //f2.wait();
 }

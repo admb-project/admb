@@ -36,13 +36,13 @@ _THREAD ofstream* ad_comm::global_logfile = nullptr;
  int ad_comm::print_hess_and_exit_flag;
  int ad_comm::no_ln_det_choleski_flag=0;
  char ** ad_comm::argv=NULL;
- double objective_function_value::fun_without_pen=0;
+thread_local double objective_function_value::fun_without_pen = 0.0;
 
 int function_minimizer::output_flag = defaults::output;
 
-_THREAD DF_FILE* gradient_structure::fp = nullptr;
-_THREAD gradient_structure* gradient_structure::_instance = nullptr;
-_THREAD grad_stack* gradient_structure::GRAD_STACK1 = nullptr;
+thread_local DF_FILE* gradient_structure::fp = nullptr;
+thread_local gradient_structure* gradient_structure::_instance = nullptr;
+thread_local grad_stack* gradient_structure::GRAD_STACK1 = nullptr;
 
 std::ostream& get_output_stream()
 {

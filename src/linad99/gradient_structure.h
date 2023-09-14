@@ -138,7 +138,7 @@ public:
   void funnel_gradcalc();
 
 #if defined(NO_DERIVS)
-   static int no_derivatives;
+  static thread_local int no_derivatives;
 #endif
 
    static long int USE_FOR_HESSIAN;

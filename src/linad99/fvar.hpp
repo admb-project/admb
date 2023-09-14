@@ -8861,14 +8861,14 @@ protected:
   static _THREAD cifstream* global_parfile;
   static _THREAD ofstream* global_logfile;
 
-   static uistream *global_bparfile;
+  static thread_local uistream* global_bparfile;
    static adstring adprogram_name;
    static adstring working_directory_path;
    static char option_flags[];
-   static int argc;
+  static thread_local int argc;
    static unsigned int wd_flag;
    static unsigned char directory_prefix;
-   static char **argv;
+  static thread_local char** argv;
 };
 
 int option_match(int argc, char *argv[], const char *string);

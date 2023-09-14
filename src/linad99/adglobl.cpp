@@ -26,16 +26,16 @@ _THREAD cifstream* ad_comm::global_datafile = nullptr;
 _THREAD cifstream* ad_comm::global_parfile = nullptr;
 _THREAD ofstream* ad_comm::global_logfile = nullptr;
 
- uistream *  ad_comm::global_bparfile=NULL;
+thread_local uistream* ad_comm::global_bparfile = nullptr;
  adstring ad_comm::adprogram_name;
  adstring ad_comm::working_directory_path;
  char ad_comm::option_flags[10];
- int ad_comm::argc=0;
+thread_local int ad_comm::argc = 0;
  int ad_comm::no_pvm_flag=0;
  int ad_comm::no_atlas_flag=0;
  int ad_comm::print_hess_and_exit_flag;
  int ad_comm::no_ln_det_choleski_flag=0;
- char ** ad_comm::argv=NULL;
+thread_local char** ad_comm::argv = nullptr;
 thread_local double objective_function_value::fun_without_pen = 0.0;
 
 int function_minimizer::output_flag = defaults::output;

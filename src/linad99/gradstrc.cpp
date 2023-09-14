@@ -569,6 +569,10 @@ gradient_structure::~gradient_structure()
     DEPVARS_INFO=NULL;
   }
 
+
+  ad_comm::argc = 0;
+  ad_comm::argv = nullptr;
+
   if (_fp != NULL)
   {
     delete _fp;

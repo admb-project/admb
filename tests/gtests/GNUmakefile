@@ -13,7 +13,7 @@ ifeq ($(OS),Windows_NT)
   endif
 endif
 
-if DEBUG
+ifdef DEBUG
 ADMB_OPTIONS=-g
 endif
 

@@ -30,6 +30,10 @@ ifeq ($(CMDSHELL),cmd)
 	@if exist nf1b2list1 del /Q nf1b2list1 2>nul
 	@if exist nf1b2list12 del /Q nf1b2list12 2>nul
 	@if exist nf1b2list13 del /Q nf1b2list13 2>nul
+	@if exist cmpdiff.tmp del /Q cmpdiff.tmp 2>nul
+	@if exist gradfil1.tmp del /Q gradfil1.tmp 2>nul
+	@if exist gradfil2.tmp del /Q gradfil2.tmp 2>nul
+	@if exist varssave.tmp del /Q varssave.tmp 2>nul
 else
 	@rm -vf f1b2list13
 	@rm -vf outputs
@@ -39,4 +43,8 @@ else
 	@rm -vf nf1b2list1
 	@rm -vf nf1b2list12
 	@rm -vf nf1b2list13
+	@rm -vf cmpdiff.tmp
+	@rm -vf gradfil1.tmp
+	@rm -vf gradfil2.tmp
+	@rm -vf varssave.tmp
 endif

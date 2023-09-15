@@ -44,6 +44,7 @@ DIST=../build/$(ADMB_VER)
 endif
 
 all:
+	$(MAKE) examples
 	$(MAKE) tests-core
 	$(MAKE) tests-contrib
 ifeq ($(TESTS_REMOTE),yes)
@@ -52,7 +53,7 @@ endif
 	$(MAKE) outputs.txt
 	$(MAKE) unit-gtests
 
-verify: examples
+verify:
 	$(MAKE) all
 
 tests-remote:
@@ -414,24 +415,18 @@ outputs.txt:
 	@echo "# outputs\n" > $(OUTPUT_DIR)outputs.txt
 ifeq ($(CMDSHELL),cmd)
   ifndef SAFE_ONLY
+	echo "# examples diff\n" >> $(OUTPUT_DIR)outputs.txt;
 	fc outputs-examples-opt.txt outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt
-	type outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt
   endif
+	echo "# examples outputs\n" >> $(OUTPUT_DIR)outputs.txt;
+	type outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt
 else
-	@if [[ -f outputs-examples-saf.txt ]]; then \
-	  if [[ -f outputs-examples-opt.txt ]]; then \
-	    if [[ ! -z "`command -v diff`" ]]; then \
-	      echo "# examples diff\n" >> $(OUTPUT_DIR)outputs.txt; \
-	      diff -w outputs-examples-opt.txt outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt; \
-	    else \
-	      echo "Error: no 'diff' utility found." >> $(OUTPUT_DIR)outputs.txt; \
-	    fi; \
-	  fi; \
-	  echo "# examples outputs\n" >> $(OUTPUT_DIR)outputs.txt; \
-	  cat outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt; \
-	else \
-	  echo "Info: no examples outputs found." >> $(OUTPUT_DIR)outputs.txt; \
-	fi
+  ifndef SAFE_ONLY
+	echo "# examples diff\n" >> $(OUTPUT_DIR)outputs.txt;
+	diff -a -w outputs-examples-opt.txt outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt;
+  endif
+	echo "# examples outputs\n" >> $(OUTPUT_DIR)outputs.txt;
+	cat outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt;
 endif
 	@echo "# tests outputs\n" >> $(OUTPUT_DIR)outputs.txt
 	$(MAKE) get-outputs >> $(OUTPUT_DIR)outputs.txt

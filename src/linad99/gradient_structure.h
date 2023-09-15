@@ -112,9 +112,9 @@ class gradient_structure
   grad_stack* _GRAD_STACK1;
 
 public:
-  static _THREAD DF_FILE* fp;
-  static _THREAD gradient_structure* _instance;
-  static _THREAD grad_stack* GRAD_STACK1;
+  static thread_local DF_FILE* fp;
+  static thread_local gradient_structure* _instance;
+  static thread_local grad_stack* GRAD_STACK1;
 
   static gradient_structure* get() { return _instance; }
 
@@ -138,7 +138,7 @@ public:
   void funnel_gradcalc();
 
 #if defined(NO_DERIVS)
-   static int no_derivatives;
+  static thread_local int no_derivatives;
 #endif
 
    static long int USE_FOR_HESSIAN;

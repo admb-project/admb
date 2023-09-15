@@ -55,6 +55,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
 
   ad_comm::argc=_argc;
   ad_comm::argv=_argv;
+
 #ifdef DIAG_TIMER
   if (option_match(_argc,_argv,"-time")>-1)
   {
@@ -508,7 +509,7 @@ void ad_comm::allocate(void)
       {
         if (biopt>-1)
         {
-          cerr << "Error trying to open binary inoput par file "
+          cerr << "Error trying to open binary input par file "
                << tmpstring << endl;
           ad_exit(1);
         }

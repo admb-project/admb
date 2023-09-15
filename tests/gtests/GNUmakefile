@@ -189,9 +189,9 @@ ERRORS=\
 
 GTESTS_DEV=\
  test_xpools.cpp\
- test_thread_funnel.obj\
- thread_funnel5.obj\
- test_interface.obj\
+ test_thread_funnel.cpp\
+ thread_funnel5.cpp\
+ test_interface.cpp\
  main.cpp
 
 ifdef GTESTS_DEV

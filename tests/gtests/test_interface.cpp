@@ -8,7 +8,6 @@ using namespace std::chrono_literals;
 
 class test_interface: public ::testing::Test {};
 
-/*
 TEST_F(test_interface, minimize_thread_funnel)
 {
   {
@@ -67,8 +66,6 @@ TEST_F(test_interface, minimize_thread_funnel)
   delete [] gradients;
   gradients = nullptr;
 }
-*/
-/*
 TEST_F(test_interface, thread_funnel)
 {
   unsigned int id = gradient_structure::id;
@@ -122,8 +119,6 @@ TEST_F(test_interface, thread_funnel)
   delete [] gradients;
   gradients = nullptr;
 }
-*/
-/*
 double model(std::function<void()>&& f)
 {
   f();
@@ -164,8 +159,6 @@ double model2(std::function<double(const int)>&& f, const int i)
 {
   return f(i);
 }
-*/
-/*
 TEST_F(test_interface, thread_funnel_model2_function)
 {
   unsigned int id = gradient_structure::id;
@@ -219,8 +212,6 @@ TEST_F(test_interface, thread_funnel_model2_function)
   delete [] gradients;
   gradients = nullptr;
 }
-*/
-/*
 TEST_F(test_interface, interface)
 {
   char* argv[] = { "model" };
@@ -271,7 +262,6 @@ TEST_F(test_interface, interface_duplicate)
   ASSERT_DOUBLE_EQ(value(b1), 1.9090909847477779);
   ASSERT_DOUBLE_EQ(value(f), 3.4512604236456497);
 }
-*/
 class my_initial_params: public initial_params
 {
 public:
@@ -297,7 +287,6 @@ public:
   const char* label() { return nullptr; }
   void restore_value(const ifstream& ifs) {}
 };
-/*
 TEST_F(test_interface, minimium)
 {
   char* argv[] = { "model", "-nohess" };
@@ -321,8 +310,6 @@ TEST_F(test_interface, minimium)
   {
   });
 }
-*/
-/*
 void minimize()
 {
   char* argv[] = { "model" };
@@ -350,6 +337,7 @@ void minimize()
 }
 TEST_F(test_interface, minimize_function)
 {
+  initial_params::num_initial_params = 0;
   minimize();
 }
 void test_parameter(std::function<int(void)>&& func)
@@ -365,11 +353,11 @@ TEST_F(test_interface, async_minimize_function)
   auto f = std::async(minimize);
   f.wait();
 }
-*/
 void minimize2()
 {
+  cout << std::this_thread::get_id() << endl;
   //std::this_thread::sleep_for((std::rand() % 5) * 1000ms);
-  std::this_thread::sleep_for(2000ms);
+  //std::this_thread::sleep_for(2000ms);
 
   char* argv[] = { "model", "-nohess" };
   minimizer m(2, argv);
@@ -378,17 +366,20 @@ void minimize2()
   dvector y("{ 1.4, 4.7, 5.1, 8.3, 9.0, 14.5, 14.0, 13.4, 19.2, 18.0 }");
 
   param_init_number b0("b0");
+  ASSERT_TRUE(&b0.get_v()->x == gradient_structure::get()->GRAD_LIST->get(1750));
   param_init_number b1("b1");
+  ASSERT_TRUE(&b1.get_v()->x == gradient_structure::get()->GRAD_LIST->get(1751));
   objective_function_value f("f");
 
   //std::this_thread::sleep_for((std::rand() % 5) * 1000ms);
-  std::this_thread::sleep_for(2000ms);
+  //std::this_thread::sleep_for(2000ms);
 
+  //cout << std::this_thread::get_id() << ' ' << gradient_structure::GRAD_STACK1 << endl;
   m.minimize([&]()
   {
     auto yhat = b0 + b1 * x;
-    cout << value(yhat) << endl;
     f = regression(y, yhat);
+    //f += b0;
   });
   cout << "b0: " << value(b0) << endl;
   cout << "b1: " << value(b1) << endl;
@@ -402,8 +393,9 @@ TEST_F(test_interface, async_minimize2_function)
 {
   auto f1 = std::async(minimize2);
   f1.wait();
-  //auto f2 = std::async(minimize2);
-  //f2.wait();
+  ASSERT_TRUE(gradient_structure::get() == nullptr);
+  auto f2 = std::async(minimize2);
+  f2.wait();
 }
 TEST_F(test_interface, async_minimize2_functionb)
 {
@@ -412,7 +404,6 @@ TEST_F(test_interface, async_minimize2_functionb)
   f1.wait();
   f2.wait();
 }
-/*
 TEST_F(test_interface, async_minimize2_function3a)
 {
   auto f1 = std::async(minimize2);
@@ -444,4 +435,3 @@ TEST_F(test_interface, async_minimize2_function5)
   f4.wait();
   f5.wait();
 }
-*/

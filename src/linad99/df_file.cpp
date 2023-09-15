@@ -260,7 +260,7 @@ DF_FILE::~DF_FILE()
   delete [] buff;
   buff = nullptr;
 
-  int repfs = option_match(ad_comm::argc,ad_comm::argv,"-fsize");
+  int repfs = ad_comm::argv != nullptr ? option_match(ad_comm::argc,ad_comm::argv,"-fsize") : -1;
 
   if (ad_comm::global_logfile && repfs)
   {

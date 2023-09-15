@@ -6,8 +6,8 @@
  */
 #include <admodel.h>
 
-objective_function_value* objective_function_value::pobjfun = NULL;
-double objective_function_value::gmax = 0;
+thread_local objective_function_value* objective_function_value::pobjfun = NULL;
+thread_local double objective_function_value::gmax = 0;
 
 /**
 Default constructor

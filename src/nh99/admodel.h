@@ -2391,9 +2391,9 @@ public:
   class objective_function_value : public named_dvariable
   {
   public:
-    static objective_function_value * pobjfun;
-    static double fun_without_pen;
-    static double gmax;
+    static thread_local objective_function_value* pobjfun;
+    static thread_local double fun_without_pen;
+    static thread_local double gmax;
     objective_function_value();
     objective_function_value(const char* name): objective_function_value()
     {

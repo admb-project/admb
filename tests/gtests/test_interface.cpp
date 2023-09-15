@@ -310,7 +310,6 @@ TEST_F(test_interface, minimium)
   {
   });
 }
-/*
 void minimize()
 {
   char* argv[] = { "model" };
@@ -338,9 +337,9 @@ void minimize()
 }
 TEST_F(test_interface, minimize_function)
 {
+  initial_params::num_initial_params = 0;
   minimize();
 }
-*/
 void test_parameter(std::function<int(void)>&& func)
 {
   ASSERT_EQ(func(), 2);
@@ -349,13 +348,11 @@ TEST_F(test_interface, test_parameter)
 {
   test_parameter([]()->int { return 2; });
 }
-/*
 TEST_F(test_interface, async_minimize_function)
 {
   auto f = std::async(minimize);
   f.wait();
 }
-*/
 void minimize2()
 {
   cout << std::this_thread::get_id() << endl;

@@ -13,7 +13,9 @@ ifeq ($(OS),Windows_NT)
   endif
 endif
 
+if DEBUG
 ADMB_OPTIONS=-g
+endif
 
 ifeq ($(CMDSHELL),cmd)
 GTEST_DIR=googletest-read-only\\googletest

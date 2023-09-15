@@ -27,7 +27,7 @@ _THREAD cifstream* ad_comm::global_parfile = nullptr;
 _THREAD ofstream* ad_comm::global_logfile = nullptr;
 
 thread_local uistream* ad_comm::global_bparfile = nullptr;
- adstring ad_comm::adprogram_name;
+thread_local adstring ad_comm::adprogram_name;
  adstring ad_comm::working_directory_path;
  char ad_comm::option_flags[10];
 thread_local int ad_comm::argc = 0;

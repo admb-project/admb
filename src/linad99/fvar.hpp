@@ -8862,7 +8862,7 @@ protected:
   static _THREAD ofstream* global_logfile;
 
   static thread_local uistream* global_bparfile;
-   static adstring adprogram_name;
+  static thread_local adstring adprogram_name;
    static adstring working_directory_path;
    static char option_flags[];
   static thread_local int argc;

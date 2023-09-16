@@ -422,8 +422,10 @@ ifeq ($(CMDSHELL),cmd)
 	type outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt
 else
   ifndef SAFE_ONLY
+    ifneq ($(shell uname -s),Darwin)
 	echo "# examples diff\n" >> $(OUTPUT_DIR)outputs.txt;
-	diff -a -w outputs-examples-opt.txt outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt;
+	diff -a -w outputs-examples-opt.txt outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt
+    endif
   endif
 	echo "# examples outputs\n" >> $(OUTPUT_DIR)outputs.txt;
 	cat outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt;

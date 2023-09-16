@@ -15,5 +15,6 @@ else
 endif
 
 get-outputs: _get-outputs
+	@echo "TODO: $(TARGET)"
 
 clean: _clean

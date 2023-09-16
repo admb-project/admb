@@ -104,7 +104,7 @@ else
 endif
 
 get-outputs:
-	@echo "TODO: geolocation"
+	@echo "TODO: glmmadmb"
 
 total-clean: clean
 ifeq ($(CMDSHELL),cmd)

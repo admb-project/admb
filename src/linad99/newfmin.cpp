@@ -790,7 +790,6 @@ label30: /* Taking a step, updating x */
            disp_close();
          }
          #endif
-         return;
       }
       f=fy;
       gs=gys;

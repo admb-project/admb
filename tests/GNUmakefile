@@ -316,11 +316,11 @@ else
 	cp -Rvf ../examples $(DIST)
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) --directory=$(DIST)/examples all
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) --directory=$(DIST)/examples bhplfine
-	@$(MAKE) --no-print-directory DEBUG_OPTION=$(DEBUG_OPTION) --directory=$(DIST)/examples get-outputs > outputs-examples-saf.txt
+	$(MAKE) --no-print-directory DEBUG_OPTION=$(DEBUG_OPTION) --directory=$(DIST)/examples get-outputs > outputs-examples-saf.txt
   ifndef SAFE_ONLY
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C $(DIST)/examples all
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C $(DIST)/examples bhplfine
-	@$(MAKE) --no-print-directory DEBUG_OPTION=$(DEBUG_OPTION) --directory=$(DIST)/examples get-outputs > outputs-examples-opt.txt
+	$(MAKE) --no-print-directory DEBUG_OPTION=$(DEBUG_OPTION) --directory=$(DIST)/examples get-outputs > outputs-examples-opt.txt
   endif
 endif
 
@@ -422,10 +422,8 @@ ifeq ($(CMDSHELL),cmd)
 	type outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt
 else
   ifndef SAFE_ONLY
-    ifneq ($(shell uname -s),Darwin)
 	echo "# examples diff\n" >> $(OUTPUT_DIR)outputs.txt;
 	diff -a -w outputs-examples-opt.txt outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt
-    endif
   endif
 	echo "# examples outputs\n" >> $(OUTPUT_DIR)outputs.txt;
 	cat outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt;

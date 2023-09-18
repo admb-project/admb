@@ -104,6 +104,7 @@ else
 endif
 
 get-outputs:
+	@echo "TODO: glmmadmb"
 
 total-clean: clean
 ifeq ($(CMDSHELL),cmd)

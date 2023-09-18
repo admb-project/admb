@@ -52,6 +52,7 @@ else
 endif
 
 get-outputs:
+	@echo "TODO: geolocation"
 
 total-clean:
 ifeq ($(CMDSHELL),cmd)

@@ -49,6 +49,7 @@ else
 endif
 
 get-outputs:
+	@echo "TODO: priors"
 
 clean:
 ifeq ($(CMDSHELL),cmd)

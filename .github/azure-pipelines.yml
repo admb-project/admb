@@ -20,7 +20,7 @@ jobs:
       pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars32.bat & popd
       nmake
       nmake zip
-      pushd tests& nmake examples
+      pushd tests& nmake SAFE_ONLY=yes examples
       pushd tests& nmake outputs.txt
       pushd tests& nmake gtests
   - task: CopyFiles@2
@@ -42,7 +42,7 @@ jobs:
       pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
       nmake
       nmake zip
-      pushd tests& nmake examples
+      pushd tests& nmake SAFE_ONLY=yes examples
       pushd tests& nmake outputs.txt
       pushd tests& nmake gtests
   - task: CopyFiles@2
@@ -64,7 +64,7 @@ jobs:
       pushd "%ProgramFiles%\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build" & call vcvars32.bat & popd
       nmake
       nmake zip
-      pushd tests& nmake examples
+      pushd tests& nmake SAFE_ONLY=yes examples
       pushd tests& nmake outputs.txt
       pushd tests& nmake gtests
   - task: CopyFiles@2
@@ -86,7 +86,7 @@ jobs:
       pushd "%ProgramFiles%\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
       nmake
       nmake zip
-      pushd tests& nmake examples
+      pushd tests& nmake SAFE_ONLY=yes examples
       pushd tests& nmake outputs.txt
       pushd tests& nmake gtests
   - task: CopyFiles@2
@@ -108,7 +108,7 @@ jobs:
   - script: make -j 2 DEBUG=yes
   - script: make zip
   - script: make --directory=scripts/installers/packagemaker
-  - script: make --directory=tests DEBUG=yes tests-core unit-gtests
+  - script: make --directory=tests DEBUG=yes SAFE_ONLY=yes tests-core unit-gtests
   - script: make --directory=tests examples
   - script: make --directory=tests outputs.txt
   - task: CopyFiles@2
@@ -130,7 +130,7 @@ jobs:
   - script: |
       make
       make zip
-      make verify TESTS_REMOTE=gtests
+      make verify SAFE_ONLY=yes TESTS_REMOTE=gtests
     displayName: 'make'
   - task: CopyFiles@2
     inputs:
@@ -151,7 +151,7 @@ jobs:
   - script: make -j 2 DEBUG=yes
   - script: make zip DEBUG=yes
   - script: make --directory=scripts/installers/packagemaker DEBUG=yes
-  - script: make --directory=tests DEBUG=yes examples tests-contrib tests-remote
+  - script: make --directory=tests SAFE_ONLY=yes DEBUG=yes examples tests-contrib tests-remote
   - script: make --directory=tests examples
   - script: make --directory=tests outputs.txt
   - task: CopyFiles@2

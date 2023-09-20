@@ -109,6 +109,7 @@ jobs:
   - script: make zip
   - script: make --directory=scripts/installers/packagemaker
   - script: make --directory=tests DEBUG=yes SAFE_ONLY=yes tests-core unit-gtests
+  - script: make --directory=tests examples
   - script: make --directory=tests outputs.txt
   - task: CopyFiles@2
     inputs:
@@ -151,6 +152,7 @@ jobs:
   - script: make zip DEBUG=yes
   - script: make --directory=scripts/installers/packagemaker DEBUG=yes
   - script: make --directory=tests SAFE_ONLY=yes DEBUG=yes examples tests-contrib tests-remote
+  - script: make --directory=tests examples
   - script: make --directory=tests outputs.txt
   - task: CopyFiles@2
     inputs:
@@ -172,6 +174,7 @@ jobs:
       make DEBUG=yes
       make zip DEBUG=yes
       make --directory=tests DEBUG=yes tests-contrib tests-remote unit-gtests
+      make --directory=tests examples
       make --directory=tests outputs.txt
     displayName: 'make'
   - task: CopyFiles@2

@@ -8,13 +8,13 @@
  * \file
  * Description not yet available.
  */
-#ifdef USE_THREAD
-  #include <mutex>
-#endif
 #ifndef _MSC_VER
   #include <unistd.h>
 #endif
 #include "fvar.hpp"
+#ifdef USE_THREAD
+  #include <mutex>
+#endif
 
 //#define THREAD_SAFE
 
@@ -70,11 +70,13 @@ int gradient_structure::Hybrid_bounded_flag=0;
 unsigned int gradient_structure::NUM_RETURN_ARRAYS = 25;
 int gradient_structure::NUM_DEPENDENT_VARIABLES = 2000;
 #if (defined(NO_DERIVS))
-  int gradient_structure::no_derivatives = 0;
+thread_local int gradient_structure::no_derivatives = 0;
 #endif
 long int gradient_structure::USE_FOR_HESSIAN = 0;
 unsigned int gradient_structure::RETURN_ARRAYS_SIZE = 70;
-int gradient_structure::instances = 0;
+#ifdef USE_THREAD
+unsigned int gradient_structure::id = 1;
+#endif
 //int gradient_structure::RETURN_INDEX = 0;
 //dvariable * gradient_structure::FRETURN = NULL;
 #ifdef __BORLANDC__
@@ -274,6 +276,21 @@ void allocate_dvariable_space()
 std::mutex gsm;
 #endif
 
+gradient_structure::gradient_structure(const long int size):
+  gradient_structure(size,
+#ifdef USE_THREAD
+    gradient_structure::id + 1
+#else
+    0
+#endif
+  )
+{
+#ifdef USE_THREAD
+  gsm.lock();
+  ++gradient_structure::id;
+  gsm.unlock();
+#endif
+}
 /**
 Constructor
 */
@@ -295,14 +312,6 @@ gradient_structure::gradient_structure(const long int _size, const unsigned int 
   PREVIOUS_TOTAL_BYTES = 0;
 
   save_var_file_flag = 0;
-
-#ifdef USE_THREAD
-  gsm.lock();
-#endif
-  ++instances;
-#ifdef USE_THREAD
-  gsm.unlock();
-#endif
 
   //Should be a multiple of sizeof(double_and_int)
   const long int remainder = _size % sizeof(double_and_int);
@@ -335,10 +344,7 @@ gradient_structure::gradient_structure(const long int _size, const unsigned int 
     memory_allocate_error("DEPVARS_INFO", (void *) DEPVARS_INFO);
   }
 
-  if (x > 0)
-    _fp = new DF_FILE(CMPDIF_BUFFER_SIZE, x);
-  else
-    _fp = new DF_FILE(CMPDIF_BUFFER_SIZE);
+  _fp = new DF_FILE(CMPDIF_BUFFER_SIZE);
 
   memory_allocate_error("_fp", (void*)_fp);
 
@@ -354,30 +360,12 @@ gradient_structure::gradient_structure(const long int _size, const unsigned int 
     memory_allocate_error("GRAD_LIST", (void *) GRAD_LIST);
   }
   {
-    ARR_LIST1 = new arr_list;
+    ARR_LIST1 = new arr_list(ARRAY_MEMBLOCK_SIZE);
     memory_allocate_error("ARR_LIST1", (void *) ARR_LIST1);
   }
 
-   void* temp_ptr = NULL;
-#ifdef __ZTC__
-   if ((temp_ptr = farmalloc(ARRAY_MEMBLOCK_SIZE)) == 0)
-#else
-   if ((temp_ptr = (void*)malloc(ARRAY_MEMBLOCK_SIZE)) == 0)
-#endif
-   {
-     cerr << "insufficient memory to allocate space for ARRAY_MEMBLOCKa\n";
-     ad_exit(1);
-   }
+  _GRAD_STACK1 = new grad_stack(GRADSTACK_BUFFER_SIZE);
 
-   ARR_LIST1->ARRAY_MEMBLOCK_BASE = temp_ptr;
-
-   const size_t adjustment = (8 -((size_t)ARR_LIST1->ARRAY_MEMBLOCK_BASE.ptr) % 8) % 8;
-   ARR_LIST1->ARRAY_MEMBLOCK_BASE.adjust(adjustment);
-
-  if (x > 0)
-    _GRAD_STACK1 = new grad_stack(gradient_structure::GRADSTACK_BUFFER_SIZE, x);
-  else
-    _GRAD_STACK1 = new grad_stack();
   memory_allocate_error("_GRAD_STACK1", _GRAD_STACK1);
   hessian_ptr = (double*)_GRAD_STACK1->true_ptr_first;
   gradient_structure::GRAD_STACK1 = _GRAD_STACK1;
@@ -575,36 +563,24 @@ gradient_structure::~gradient_structure()
     GRAD_LIST = NULL;
   }
 
-#ifdef USE_THREAD
-  gsm.lock();
-#endif
-  --instances;
-#ifdef USE_THREAD
-  gsm.unlock();
-#endif
-
-  if (DEPVARS_INFO==NULL)
+  if (DEPVARS_INFO!=NULL)
   {
-    null_ptr_err_message();
-    ad_exit(1);
+    delete DEPVARS_INFO;
+    DEPVARS_INFO=NULL;
   }
 
-  delete DEPVARS_INFO;
-  DEPVARS_INFO=NULL;
 
-  if (_fp == NULL)
+  ad_comm::argc = 0;
+  ad_comm::argv = nullptr;
+
+  if (_fp != NULL)
   {
-    cerr << "Trying to close stream referenced by a NULL pointer\n"
-            " in ~gradient_structure\n";
-    ad_exit(1);
+    delete _fp;
+    _fp = NULL;
   }
-
-  delete _fp;
-  _fp = NULL;
-
   gradient_structure::fp = nullptr;
 
-  _instance = nullptr;
+  gradient_structure::_instance = nullptr;
 
   cleanup_temporary_files();
 }

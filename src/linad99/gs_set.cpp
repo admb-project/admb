@@ -20,7 +20,7 @@
  */
 void gradient_structure::check_set_error(const char* variable_name)
 {
-  if (instances > 0)
+  if (gradient_structure::_instance != nullptr)
   {
     cerr << "Error -- variable '" << variable_name <<"' must be set before\n"
             "declaration of gradient_structure object.\n";

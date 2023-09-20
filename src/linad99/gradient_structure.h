@@ -94,11 +94,13 @@ public:
 
 #ifdef USE_THREAD
 #define _THREAD __thread
+#define _THREAD_LOCAL thread_local
   #ifdef _MSC_VER
     #define __thread __declspec(thread)
   #endif
 #else
 #define _THREAD
+#define _THREAD_LOCAL
 #endif
 /**
  * class for things related to the gradient structures, including dimension of
@@ -106,17 +108,18 @@ public:
  */
 class gradient_structure
 {
-public:
   DF_FILE* _fp;
   grad_stack* _GRAD_STACK1;
 
-  static _THREAD DF_FILE* fp;
-  static _THREAD gradient_structure* _instance;
-  static _THREAD grad_stack* GRAD_STACK1;
+public:
+  static thread_local DF_FILE* fp;
+  static thread_local gradient_structure* _instance;
+  static thread_local grad_stack* GRAD_STACK1;
 
   static gradient_structure* get() { return _instance; }
-  static DF_FILE* get_fp() { return fp; }
-  static grad_stack* get_GRAD_STACK1() { return GRAD_STACK1; }
+
+  DF_FILE* get_fp() { return _fp; }
+  grad_stack* get_GRAD_STACK1() { return _GRAD_STACK1; }
 
   static gradient_structure* reset(gradient_structure*);
 
@@ -135,7 +138,7 @@ public:
   void funnel_gradcalc();
 
 #if defined(NO_DERIVS)
-   static int no_derivatives;
+  static thread_local int no_derivatives;
 #endif
 
    static long int USE_FOR_HESSIAN;
@@ -166,7 +169,11 @@ public:
    static void check_set_error(const char *variable_name);
 
  public:
-   static int instances;
+
+#ifdef USE_THREAD
+   static unsigned int id;
+#endif
+
    unsigned int x;
 
    // exception class
@@ -187,7 +194,7 @@ public:
    friend class dfsdmat;
 
    gradient_structure(): gradient_structure(100000L) {}
-   gradient_structure(const long int size): gradient_structure(size, 0) {}
+   gradient_structure(const long int size);
    gradient_structure(const long int size, const unsigned int id);
    gradient_structure(const gradient_structure&) = delete;
    gradient_structure(gradient_structure&&) = delete;
@@ -283,12 +290,16 @@ by gradcalc.
 class DF_FILE
 {
 public:
+#ifdef USE_THREAD
+  static unsigned int id;
+#endif
+
   /// Default uses gradient_structure::CMPDIF_BUFFER_SIZE
   DF_FILE(): DF_FILE(gradient_structure::CMPDIF_BUFFER_SIZE) {}
   /// Do not allow copy contructor
   DF_FILE(const DF_FILE&) = delete;
   /// User defined size with default id
-  DF_FILE(const size_t nbytes): DF_FILE(nbytes, 0) {}
+  DF_FILE(const size_t nbytes);
   DF_FILE(const size_t nbytes, const unsigned int id);
   ~DF_FILE();
 

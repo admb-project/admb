@@ -78,8 +78,8 @@ void funnel_gradcalc()
   gradient_structure* gs = gradient_structure::_instance;
   if (!gs)
   {
-    cerr << "Error: No instance of gradient data structure.\n";
-    ad_exit(1);
+    cerr << "Warning: No instance of gradient data structure.\n";
+    return;
   }
   gs->funnel_gradcalc();
 }
@@ -94,11 +94,6 @@ void gradient_structure::funnel_gradcalc()
 
   TOTAL_BYTES = 0;
   PREVIOUS_TOTAL_BYTES=0;
-
-  if(!gradient_structure::instances)
-  {
-    return;
-  }
 
   GRAD_STACK1->_GRADFILE_PTR = GRAD_STACK1->gradfile_handle();
 

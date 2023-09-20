@@ -6,20 +6,6 @@
 #include <future>
 #include <fvar.hpp>
 
-size_t nvarcalc(dvariable const& arg)
-{
-  return 1;
-}
-template<typename T>
-size_t nvarcalc(T arg)
-{
-  return 0;
-}
-template<typename ...Ts>
-size_t nvarcalc(Ts&&... args)
-{
-  return (nvarcalc(std::forward<Ts>(args)) + ...);
-}
 void add_address(std::vector<double*>& addresses, const dvariable& arg)
 {
   addresses.push_back(&((*arg.v).x));
@@ -50,11 +36,6 @@ int set_independent_variables(independent_variables& independents, Ts&&... args)
 
   return index;
 }
-template<typename ...Ts>
-int xinit(independent_variables& independents, Ts&&... args)
-{
-  return set_independent_variables(independents, std::forward<Ts>(args)...);
-}
 std::tuple<const dvariable&> create_tuple_element(std::vector<dvariable>& variables, int& index, const dvariable& arg)
 {
   return std::tie(variables[index++]);
@@ -73,11 +54,12 @@ std::tuple<const Args&...> create_tuple(std::vector<dvariable>& variables, Args&
 }
 gradient_structure* get_gradient();
 template<class F, class ...Args>
-std::future<std::tuple<double, dvector, std::vector<double*>>> thread_funnel(F&& func, Args&&... args)
+std::tuple<double, dvector, std::vector<double*>>
+thread_funnel(F&& func, Args&&... args)
 {
   gradient_structure* gs = get_gradient();
-  return std::async(std::launch::async, [gs, &func, &args...]()->std::tuple<double, dvector, std::vector<double*>>
-  {
+  //return std::async(std::launch::async, [gs, &func, &args...]()->std::tuple<double, dvector, std::vector<double*>>
+  //{
     std::vector<double*> addresses;
     get_addresses(addresses, std::forward<Args>(args)...);
 
@@ -112,18 +94,21 @@ std::future<std::tuple<double, dvector, std::vector<double*>>> thread_funnel(F&&
     }
 
     return std::make_tuple(v, g, std::move(addresses));
-  });
+  //});
 }
 void add_futures(std::future<std::tuple<double, dvector, std::vector<double*>>>&& f);
+void add_tuple(std::tuple<double, dvector, std::vector<double*>>&& t);
 
 template<class F, class ...Args>
 void funnel(F&& func, Args&&... args)
 {
   gradient_structure* gs = gradient_structure::get();
 
-  std::future<std::tuple<double, dvector, std::vector<double*>>> f =
+  //std::future<std::tuple<double, dvector, std::vector<double*>>> f =
+  std::tuple<double, dvector, std::vector<double*>> t =
     thread_funnel(func, std::forward<Args>(args)...);
-  add_futures(std::move(f));
+  //add_futures(std::move(f));
+  add_tuple(std::move(t));
 
   gradient_structure::_instance = gs;
   gradient_structure::fp = gs->get_fp();

@@ -57,13 +57,17 @@ void deallocate_gradients()
 int id = 1;
 std::vector<std::future<std::tuple<double, dvector, std::vector<double*>>>> futures;
 std::vector<std::tuple<double, dvector, std::vector<double*>>> tuples;
+void add_tuple(std::tuple<double, dvector, std::vector<double*>>&& t)
+{
+  tuples.push_back(std::move(t));
+}
 void add_tuples()
 {
   for (std::future<std::tuple<double, dvector, std::vector<double*>>>& f : futures)
   {
     f.wait();
 
-    tuples.push_back(std::move(f.get()));
+    add_tuple(std::move(f.get()));
   }
   futures.clear();
 }

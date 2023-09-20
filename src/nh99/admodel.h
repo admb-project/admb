@@ -833,9 +833,9 @@ public:
   double get_scalefactor();
   void set_scalefactor(const double);
   //Resizeable arrays
-  static int num_initial_params;
+  static thread_local int num_initial_params;
   static int max_num_initial_params;
-  static adlist_ptr varsptr;
+  static thread_local adlist_ptr varsptr;
   static int straight_through_flag;
   static int num_active_initial_params;
   static int max_number_phases;
@@ -2391,9 +2391,9 @@ public:
   class objective_function_value : public named_dvariable
   {
   public:
-    static objective_function_value * pobjfun;
-    static double fun_without_pen;
-    static double gmax;
+    static thread_local objective_function_value* pobjfun;
+    static thread_local double fun_without_pen;
+    static thread_local double gmax;
     objective_function_value();
     objective_function_value(const char* name): objective_function_value()
     {

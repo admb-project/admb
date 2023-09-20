@@ -18,7 +18,7 @@ TEST_F(test_autodif, gradcalc_no_independant_variables)
   const int nvar = 1;
   dvector g(1, nvar);
 
-  ASSERT_ANY_THROW(
+  ASSERT_NO_THROW(
     gradcalc(nvar, g);
   );
 }

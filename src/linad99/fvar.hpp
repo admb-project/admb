@@ -112,7 +112,10 @@ Macro definitions.
   #include <tiny_ad.hpp>
 #endif
 
-#define USE_VECTOR_SHAPE_POOL
+#define USE_THREAD
+#ifndef USE_THREAD
+  #define USE_VECTOR_SHAPE_POOL
+#endif
 
 #if defined(USE_DDOUBLE)
 #   include <qd/qd.h>
@@ -921,6 +924,11 @@ void default_evaluation3ind(void);
 class grad_stack
 {
 public:
+
+#ifdef USE_THREAD
+  static unsigned int id;
+#endif
+
    grad_stack_entry *true_ptr_first;
    grad_stack_entry *ptr_first;
    grad_stack_entry *ptr_last;
@@ -969,7 +977,7 @@ public:
    void print();
 
   grad_stack(): grad_stack(gradient_structure::GRADSTACK_BUFFER_SIZE) {}
-  grad_stack(const size_t size): grad_stack(size, 0) {}
+  grad_stack(const size_t size);
   grad_stack(const size_t size, const unsigned int id);
   grad_stack(const grad_stack&) = delete;
   ~grad_stack();
@@ -2076,14 +2084,8 @@ class arr_list
   humungous_pointer ARRAY_MEMBLOCK_SAVE;
 
  public:
-   arr_list()
-   {
-      last = 0;
-      free_last = 0;
-      last_offset = 0;
-      max_last_offset = 0;
-      number_arr_links = 0;
-   }
+   arr_list(): arr_list(gradient_structure::ARRAY_MEMBLOCK_SIZE) {}
+   arr_list(const unsigned long size);
    virtual ~arr_list()
    {
      ARRAY_MEMBLOCK_BASE.free();
@@ -8854,17 +8856,19 @@ protected:
      const streampos & off = 0);
    static streampos change_pinfile_name(const adstring & s,
      const streampos & off = 0);
-   static cifstream *global_datafile;
-   static cifstream *global_parfile;
-   static ofstream *global_logfile;
-   static uistream *global_bparfile;
-   static adstring adprogram_name;
+
+  static _THREAD cifstream* global_datafile;
+  static _THREAD cifstream* global_parfile;
+  static _THREAD ofstream* global_logfile;
+
+  static thread_local uistream* global_bparfile;
+  static thread_local adstring adprogram_name;
    static adstring working_directory_path;
    static char option_flags[];
-   static int argc;
+  static thread_local int argc;
    static unsigned int wd_flag;
    static unsigned char directory_prefix;
-   static char **argv;
+  static thread_local char** argv;
 };
 
 int option_match(int argc, char *argv[], const char *string);

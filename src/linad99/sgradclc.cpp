@@ -79,8 +79,9 @@ void gradcalc(int nvar, const dvector& g)
   gradient_structure* gs = gradient_structure::_instance;
   if (!gs)
   {
-    cerr << "Error: No instance of gradient data structure.\n";
-    ad_exit(1);
+    cerr << "Warning: No instance of gradient_structure.\n";
+    ((dvector&)g).initialize();
+    return;
   }
   gs->gradcalc(nvar, g);
 }
@@ -108,11 +109,6 @@ void gradient_structure::gradcalc(int nvar, const dvector& _g)
   dvector& g= (dvector&) _g;
   TOTAL_BYTES = 0;
   PREVIOUS_TOTAL_BYTES=0;
-  if(!gradient_structure::instances)
-  {
-    g.initialize();
-    return;
-  }
 
   if (g.size() < static_cast<unsigned int>(nvar))
   {

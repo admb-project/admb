@@ -138,9 +138,9 @@ TEST_F(test_gradcalc, nvarzero)
 
   //ASSERT_EQ(0, gradient_structure::NVAR);
 
-  ASSERT_NO_THROW({
+  ASSERT_THROW({
     gradcalc(1, g);
-  });
+  }, int);
 }
 TEST_F(test_gradcalc, simple)
 {

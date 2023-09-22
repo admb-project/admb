@@ -80,8 +80,9 @@ void gradcalc(int nvar, const dvector& g)
   if (!gs)
   {
     cerr << "Warning: No instance of gradient_structure.\n";
-    ((dvector&)g).initialize();
-    return;
+    //((dvector&)g).initialize();
+    //return;
+    ad_exit(1);
   }
   gs->gradcalc(nvar, g);
 }

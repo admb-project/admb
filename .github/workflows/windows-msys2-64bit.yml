@@ -28,9 +28,9 @@ jobs:
     - name: tests
       run: |
         set PATH=C:\PortableGit\bin;C:\msys64\usr\bin;C:\msys64\mingw64\bin;%PATH%
-        make examples SAFE_ONLY=yes
-        make gunit-tests SAFE_ONLY=yes
-        make outputs.txt SAFE_ONLY=yes
+        make --directory=tests examples SAFE_ONLY=yes
+        make --directory=tests gunit-tests SAFE_ONLY=yes
+        make --directory=tests outputs.txt SAFE_ONLY=yes
       shell: cmd
     - name: Artifact
       uses: actions/upload-artifact@v1

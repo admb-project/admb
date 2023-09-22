@@ -33,9 +33,9 @@ jobs:
         path: build/admb.zip
     - name: tests 
       run: |
-        make examples SAFE_ONLY=yes
-        make gunit-tests SAFE_ONLY=yes
-        make outputs.txt SAFE_ONLY=yes
+        make --directory=tests examples SAFE_ONLY=yes
+        make --directory=tests gunit-tests SAFE_ONLY=yes
+        make --directory=tests outputs.txt SAFE_ONLY=yes
     - name: Artifact
       uses: actions/upload-artifact@v1
       with:

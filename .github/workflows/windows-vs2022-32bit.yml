@@ -39,9 +39,9 @@ jobs:
     - name: tests
       run: |
         pushd "%ProgramFiles%\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build" & call vcvars32.bat & popd
-        nmake examples SAFE_ONLY=yes
-        nmake gunit-tests SAFE_ONLY=yes
-        nmake outputs.txt SAFE_ONLY=yes
+        cd tests && nmake examples SAFE_ONLY=yes
+        cd tests && nmake gunit-tests SAFE_ONLY=yes
+        cd tests && nmake outputs.txt SAFE_ONLY=yes
       shell: cmd
     - name: Artifact
       uses: actions/upload-artifact@v1

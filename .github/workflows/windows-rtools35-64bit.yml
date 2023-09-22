@@ -42,7 +42,9 @@ jobs:
         path: build\\admb
     - name: tests
       run: |
-        utilities\make verify SHELL= DEBUG=yes SAFE_ONLY=yes
+        utilities\make examples SAFE_ONLY=yes
+        utilities\make gunit-tests SAFE_ONLY=yes
+        utilities\make outputs.txt SAFE_ONLY=yes
       shell: cmd
     - name: Artifact
       uses: actions/upload-artifact@v1

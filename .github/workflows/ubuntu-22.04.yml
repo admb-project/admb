@@ -32,7 +32,10 @@ jobs:
         name: admb_ubuntu_zip
         path: build/admb.zip
     - name: tests 
-      run: make verify DEBUG=yes TESTS_REMOTE=no
+      run: |
+        make examples SAFE_ONLY=yes
+        make gunit-tests SAFE_ONLY=yes
+        make outputs.txt SAFE_ONLY=yes
     - name: Artifact
       uses: actions/upload-artifact@v1
       with:

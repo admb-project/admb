@@ -52,6 +52,9 @@ all:\
   test-vectorize\
   test-vonmises
 
+unit-gtests:
+	$(MAKE) test-gtests
+
 test-gtests:
 	pushd gtests& $(MAKE) /NOLOGO all & popd
 

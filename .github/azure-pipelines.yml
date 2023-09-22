@@ -43,8 +43,8 @@ jobs:
       nmake
       nmake zip
       pushd tests& nmake examples
-      pushd tests& nmake outputs.txt
       pushd tests& nmake gtests
+      pushd tests& nmake outputs.txt
   - task: CopyFiles@2
     inputs:
       contents: |
@@ -65,8 +65,8 @@ jobs:
       nmake
       nmake zip
       pushd tests& nmake examples
-      pushd tests& nmake outputs.txt
       pushd tests& nmake gtests
+      pushd tests& nmake outputs.txt
   - task: CopyFiles@2
     inputs:
       contents: |
@@ -87,8 +87,8 @@ jobs:
       nmake
       nmake zip
       pushd tests& nmake examples
-      pushd tests& nmake outputs.txt
       pushd tests& nmake gtests
+      pushd tests& nmake outputs.txt
   - task: CopyFiles@2
     inputs:
       contents: |
@@ -108,8 +108,8 @@ jobs:
   - script: make -j 2 DEBUG=yes
   - script: make zip
   - script: make --directory=scripts/installers/packagemaker
-  - script: make --directory=tests DEBUG=yes unit-gtests
   - script: make --directory=tests examples
+  - script: make --directory=tests unit-gtests
   - script: make --directory=tests outputs.txt
   - task: CopyFiles@2
     inputs:
@@ -130,7 +130,9 @@ jobs:
   - script: |
       make
       make zip
-      make verify TESTS_REMOTE=gtests
+      make --directory=tests examples
+      make --directory=tests unit-gtests
+      make --directory=tests outputs.txt
     displayName: 'make'
   - task: CopyFiles@2
     inputs:
@@ -151,8 +153,8 @@ jobs:
   - script: make -j 2 DEBUG=yes
   - script: make zip DEBUG=yes
   - script: make --directory=scripts/installers/packagemaker DEBUG=yes
-  - script: make --directory=tests DEBUG=yes unit-gtests
   - script: make --directory=tests examples
+  - script: make --directory=tests unit-gtests
   - script: make --directory=tests outputs.txt
   - task: CopyFiles@2
     inputs:
@@ -173,8 +175,8 @@ jobs:
   - script: |
       make DEBUG=yes
       make zip DEBUG=yes
-      make --directory=tests DEBUG=yes unit-gtests
       make --directory=tests examples
+      make --directory=tests unit-gtests
       make --directory=tests outputs.txt
     displayName: 'make'
   - task: CopyFiles@2

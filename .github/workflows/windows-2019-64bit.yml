@@ -43,9 +43,9 @@ jobs:
     - name: tests
       run: |
         pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
-        cd tests && nmake examples SAFE_ONLY=yes
-        cd tests && nmake gunit-tests SAFE_ONLY=yes
-        cd tests && nmake outputs.txt SAFE_ONLY=yes
+        cd tests && nmake examples
+        cd tests && nmake unit-gtests
+        cd tests && nmake outputs.txt
       shell: cmd
     - name: Artifact
       uses: actions/upload-artifact@v1

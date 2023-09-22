@@ -38,9 +38,9 @@ jobs:
         path: build/admb-macos.dmg
     - name: tests
       run: |
-        make --directory=tests examples SAFE_ONLY=yes
-        make --directory=tests gunit-tests SAFE_ONLY=yes
-        make --directory=tests outputs.txt SAFE_ONLY=yes
+        make --directory=tests examples
+        make --directory=tests unit-gtests
+        make --directory=tests outputs.txt
     - name: Artifact
       uses: actions/upload-artifact@v1
       with:

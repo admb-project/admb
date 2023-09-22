@@ -101,7 +101,8 @@ GTESTS_ALL=\
  test_math.cpp\
  main.cpp
 
-all: clean gtest-all
+all: clean
+	$(MAKE) gtest-all
 	$(MAKE) run
 
 googletest-read-only:

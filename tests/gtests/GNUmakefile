@@ -205,18 +205,19 @@ ifeq ($(SAFE_ONLY),yes)
 endif
 
 all: clean
+	$(MAKE) gtest-all
 	$(MAKE) run
 
 run:
-	$(MAKE) googletest-read-only
-	$(MAKE) finance
-	$(MAKE) scalefactor
-	$(MAKE) gtest-all
 ifeq ($(CMDSHELL),cmd)
 	gtest-all
 else
 	./gtest-all
 endif
+
+others:
+	$(MAKE) finance
+	$(MAKE) scalefactor
 
 finance: clean
 	$(MAKE) gtest-finance

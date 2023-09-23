@@ -39,9 +39,9 @@ jobs:
     - name: tests
       run: |
         pushd "%ProgramFiles%\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build" & call vcvars32.bat & popd
-        cd tests && nmake examples
-        cd tests && nmake unit-gtests
-        cd tests && nmake outputs.txt
+        pushd tests & nmake examples & popd
+        pushd tests & nmake unit-gtests & popd
+        pushd tests & nmake outputs.txt & popd
       shell: cmd
     - name: Artifact
       uses: actions/upload-artifact@v1
@@ -51,5 +51,5 @@ jobs:
     - name: analyze
       run: |
         pushd "%ProgramFiles%\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build" & call vcvars32.bat & popd
-        cd src & nmake CXXFLAGS=/analyze DEBUG=yes objects
+        pushd src & nmake CXXFLAGS=/analyze DEBUG=yes objects & popd
       shell: cmd

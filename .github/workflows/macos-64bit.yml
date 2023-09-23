@@ -49,7 +49,7 @@ jobs:
     - name: kalmanfilter
       run: |
         make --directory=tests/geolocation
-        cd tests/geolocation/kalmanfilter && tar cvzf trackit.tar.gz trackit
+        pushd tests/geolocation/kalmanfilter && tar cvzf trackit.tar.gz trackit && popd
     - name: Artifact
       uses: actions/upload-artifact@v1
       with:

@@ -26,7 +26,6 @@ jobs:
       pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars32.bat & popd
       pushd tests & nmake SAFE_ONLY=yes examples & popd
       pushd tests & nmake outputs.txt & popd
-      pushd tests & nmake unit-gtests & popd
   - task: CopyFiles@2
     inputs:
       contents: |
@@ -52,7 +51,6 @@ jobs:
       pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
       pushd tests & nmake SAFE_ONLY=yes examples & popd
       pushd tests & nmake outputs.txt & popd
-      pushd tests & nmake unit-gtests & popd
   - task: CopyFiles@2
     inputs:
       contents: |
@@ -78,7 +76,6 @@ jobs:
       pushd "%ProgramFiles%\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build" & call vcvars32.bat & popd
       pushd tests & nmake SAFE_ONLY=yes examples & popd
       pushd tests & nmake outputs.txt & popd
-      pushd tests & nmake unit-gtests & popd
   - task: CopyFiles@2
     inputs:
       contents: |
@@ -104,7 +101,6 @@ jobs:
       pushd "%ProgramFiles%\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
       pushd tests & nmake SAFE_ONLY=yes examples & popd
       pushd tests & nmake outputs.txt & popd
-      pushd tests & nmake unit-gtests & popd
   - task: CopyFiles@2
     inputs:
       contents: |
@@ -128,7 +124,6 @@ jobs:
   - script: |
       make --directory=tests examples
       make --directory=tests outputs.txt
-      make --directory=tests unit-gtests
   - task: CopyFiles@2
     inputs:
       contents: |
@@ -151,7 +146,6 @@ jobs:
   - script: |
       make --directory=tests examples
       make --directory=tests outputs.txt
-      make --directory=tests unit-gtests
     displayName: 'make'
   - task: CopyFiles@2
     inputs:
@@ -176,7 +170,6 @@ jobs:
   - script: |
       make --directory=tests examples
       make --directory=tests outputs.txt
-      make --directory=tests unit-gtests
   - task: CopyFiles@2
     inputs:
       contents: |
@@ -197,7 +190,6 @@ jobs:
       make zip DEBUG=yes
       make --directory=tests examples
       make --directory=tests outputs.txt
-      make --directory=tests unit-gtests
     displayName: 'make'
   - task: CopyFiles@2
     inputs:

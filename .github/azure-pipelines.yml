@@ -19,10 +19,12 @@ jobs:
   - script: |
       pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars32.bat & popd
       nmake
+  - script: |
       nmake zip
-      pushd tests& nmake SAFE_ONLY=yes examples
-      pushd tests& nmake outputs.txt
-      pushd tests& nmake gtests
+  - script: |
+      pushd tests & nmake SAFE_ONLY=yes examples & popd
+      pushd tests & nmake outputs.txt & popd
+      pushd tests & nmake unit-gtests & popd
   - task: CopyFiles@2
     inputs:
       contents: |
@@ -41,10 +43,12 @@ jobs:
   - script: |
       pushd "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
       nmake
+  - script: |
       nmake zip
-      pushd tests& nmake SAFE_ONLY=yes examples
-      pushd tests& nmake gtests
-      pushd tests& nmake outputs.txt
+  - script: |
+      pushd tests & nmake SAFE_ONLY=yes examples & popd
+      pushd tests & nmake outputs.txt & popd
+      pushd tests & nmake unit-gtests & popd
   - task: CopyFiles@2
     inputs:
       contents: |
@@ -63,10 +67,12 @@ jobs:
   - script: |
       pushd "%ProgramFiles%\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build" & call vcvars32.bat & popd
       nmake
+  - script: |
       nmake zip
-      pushd tests& nmake SAFE_ONLY=yes examples
-      pushd tests& nmake gtests
-      pushd tests& nmake outputs.txt
+  - script: |
+      pushd tests & nmake SAFE_ONLY=yes examples & popd
+      pushd tests & nmake outputs.txt & popd
+      pushd tests & nmake unit-gtests & popd
   - task: CopyFiles@2
     inputs:
       contents: |
@@ -85,10 +91,12 @@ jobs:
   - script: |
       pushd "%ProgramFiles%\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
       nmake
+  - script: |
       nmake zip
-      pushd tests& nmake SAFE_ONLY=yes examples
-      pushd tests& nmake gtests
-      pushd tests& nmake outputs.txt
+  - script: |
+      pushd tests & nmake SAFE_ONLY=yes examples & popd
+      pushd tests & nmake outputs.txt & popd
+      pushd tests & nmake unit-gtests & popd
   - task: CopyFiles@2
     inputs:
       contents: |
@@ -110,16 +118,13 @@ jobs:
   - script: |
       make zip
   - script: |
-      make --directory=scripts/installers/packagemaker
-  - script: |
       make --directory=tests examples
-      make --directory=tests unit-gtests
       make --directory=tests outputs.txt
+      make --directory=tests unit-gtests
   - task: CopyFiles@2
     inputs:
       contents: |
         admb.zip
-        build/admb-macos.dmg
         outputs.txt
       targetFolder: $(Build.ArtifactStagingDirectory)
   - task: PublishBuildArtifacts@1
@@ -137,8 +142,8 @@ jobs:
       make zip
   - script: |
       make --directory=tests examples
-      make --directory=tests unit-gtests
       make --directory=tests outputs.txt
+      make --directory=tests unit-gtests
     displayName: 'make'
   - task: CopyFiles@2
     inputs:
@@ -161,16 +166,13 @@ jobs:
   - script: |
       make zip DEBUG=yes
   - script: |
-      make --directory=scripts/installers/packagemaker DEBUG=yes
-  - script: |
       make --directory=tests examples
-      make --directory=tests unit-gtests
       make --directory=tests outputs.txt
+      make --directory=tests unit-gtests
   - task: CopyFiles@2
     inputs:
       contents: |
         admb.zip
-        build/admb-macos.dmg
         outputs.txt
       targetFolder: $(Build.ArtifactStagingDirectory)
   - task: PublishBuildArtifacts@1
@@ -186,8 +188,8 @@ jobs:
       make DEBUG=yes
       make zip DEBUG=yes
       make --directory=tests examples
-      make --directory=tests unit-gtests
       make --directory=tests outputs.txt
+      make --directory=tests unit-gtests
     displayName: 'make'
   - task: CopyFiles@2
     inputs:

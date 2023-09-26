@@ -459,7 +459,7 @@ get-outputs:
 	@$(MAKE) --no-print-directory --directory=dualaveraging get-outputs
 	@$(MAKE) --no-print-directory --directory=expm get-outputs
 	@$(MAKE) --no-print-directory --directory=f1b2vc5 get-outputs
-	-@$(MAKE) --no-print-directory --directory=geolocation get-outputs
+	@$(MAKE) --no-print-directory --directory=geolocation get-outputs
 	@$(MAKE) --no-print-directory --directory=glmmadmb get-outputs
 	@$(MAKE) --no-print-directory --directory=gradients_output get-outputs
 	@$(MAKE) --no-print-directory --directory=hess_step get-outputs

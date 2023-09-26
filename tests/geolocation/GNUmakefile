@@ -52,7 +52,17 @@ else
 endif
 
 get-outputs:
-	@echo "TODO: geolocation"
+ifeq ($(CMDSHELL),cmd)
+	@cd kalmanfilter\\testdir\\kfsst && ..\\..\\..\\..\\..\\scripts\\get-outputs.sh kfsst
+	@cd kalmanfilter\\testdir\\kftrack && ..\\..\\..\\..\\..\\scripts\\get-outputs.sh kftrack
+	@cd kalmanfilter\\testdir\\trackit && ..\\..\\..\\..\\..\\scripts\\get-outputs.sh ukf
+	@cd kalmanfilter\\testdir\\ukfsst && ..\\..\\..\\..\\..\\scripts\\get-outputs.sh ukfsst
+else
+	@cd kalmanfilter/testdir/kfsst && sh ../../../../../scripts/get-outputs.sh kfsst
+	@cd kalmanfilter/testdir/kftrack && sh ../../../../../scripts/get-outputs.sh kftrack
+	@cd kalmanfilter/testdir/trackit && sh ../../../../../scripts/get-outputs.sh ukf
+	@cd kalmanfilter/testdir/ukfsst && sh ../../../../../scripts/get-outputs.sh ukfsst
+endif
 
 total-clean:
 ifeq ($(CMDSHELL),cmd)

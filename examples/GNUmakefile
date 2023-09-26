@@ -380,7 +380,7 @@ binomial_w2:
 ifeq ($(CMDSHELL),cmd)
 	pushd admb-re\\weights && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ $(ADMB_RUN_ARGS) && popd
 else
-	cd admb-re/weights && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ $(ADMB_RUN_ARGS)
+	-cd admb-re/weights && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ $(ADMB_RUN_ARGS)
 endif
 
 autodif: bigmin hemholtz io_examp newt

@@ -47,14 +47,16 @@ all:
 	$(MAKE) examples
 	$(MAKE) tests-core
 	$(MAKE) tests-contrib
-ifeq ($(TESTS_REMOTE),yes)
-	$(MAKE) tests-remote
-endif
 	$(MAKE) outputs.txt
 	$(MAKE) unit-gtests
 
 verify:
 	$(MAKE) all
+
+full:
+	$(MAKE) tests-remote
+	$(MAKE) tpl-bessel
+	$(MAKE) tpl-dd2
 
 tests-remote:
 	$(MAKE) remote-core-tpls
@@ -82,7 +84,6 @@ core-tpls:\
   tpl-alternatives\
   tpl-altexample\
   tpl-atan2\
-  tpl-bessel\
   tpl-beta2\
   tpl-beta3\
   tpl-beta_deviate\
@@ -93,7 +94,6 @@ core-tpls:\
   tpl-cov_re\
   tpl-data_adstring_array\
   tpl-df33_tester\
-  tpl-dd2\
   tpl-dualaveraging\
   tpl-dtweedie\
   tpl-expm\
@@ -122,10 +122,10 @@ core-tpls:\
   tpl-tiny_ad_re\
   tpl-tinyfun\
   tpl-vectorize\
+  tpl-changepoint\
   tpl-vonmises
 
 remote-core-tpls:\
-  tpl-changepoint\
   tpl-geolocation\
   tpl-glmmadmb
 
@@ -432,13 +432,19 @@ endif
 	@echo "# tests outputs\n" >> $(OUTPUT_DIR)outputs.txt
 	@$(MAKE) --no-print-directory get-outputs >> $(OUTPUT_DIR)outputs.txt
 
+no-get-outputs:
+	@$(MAKE) --no-print-directory --directory=bessel get-outputs
+	@$(MAKE) --no-print-directory --directory=dd2 get-outputs
+	@$(MAKE) --no-print-directory --directory=qbeta get-outputs
+	@$(MAKE) --no-print-directory --directory=rgamma get-outputs
+	@$(MAKE) --no-print-directory --directory=globals get-outputs
+
 get-outputs:
 	@$(MAKE) --no-print-directory --directory=4darray get-outputs
 	@$(MAKE) --no-print-directory --directory=agemat get-outputs
 	@$(MAKE) --no-print-directory --directory=altexample get-outputs
 	@$(MAKE) --no-print-directory --directory=alternatives get-outputs
 	@$(MAKE) --no-print-directory --directory=adnuts get-outputs
-	@$(MAKE) --no-print-directory --directory=bessel get-outputs
 	@$(MAKE) --no-print-directory --directory=beta2 get-outputs
 	@$(MAKE) --no-print-directory --directory=beta3 get-outputs
 	@$(MAKE) --no-print-directory --directory=beta_deviate get-outputs
@@ -450,13 +456,11 @@ get-outputs:
 	@$(MAKE) --no-print-directory --directory=cov_re get-outputs
 	@$(MAKE) --no-print-directory --directory=ctl get-outputs
 	@$(MAKE) --no-print-directory --directory=data_adstring_array get-outputs
-	@$(MAKE) --no-print-directory --directory=dd2 get-outputs
 	@$(MAKE) --no-print-directory --directory=dualaveraging get-outputs
 	@$(MAKE) --no-print-directory --directory=expm get-outputs
 	@$(MAKE) --no-print-directory --directory=f1b2vc5 get-outputs
 	@$(MAKE) --no-print-directory --directory=geolocation get-outputs
 	@$(MAKE) --no-print-directory --directory=glmmadmb get-outputs
-	@$(MAKE) --no-print-directory --directory=globals get-outputs
 	@$(MAKE) --no-print-directory --directory=gradients_output get-outputs
 	@$(MAKE) --no-print-directory --directory=hess_step get-outputs
 	@$(MAKE) --no-print-directory --directory=high_iarray get-outputs
@@ -469,8 +473,6 @@ get-outputs:
 	@$(MAKE) --no-print-directory --directory=orange_mvn get-outputs
 	@$(MAKE) --no-print-directory --directory=poisp get-outputs
 	@$(MAKE) --no-print-directory --directory=priors get-outputs
-	@$(MAKE) --no-print-directory --directory=qbeta get-outputs
-	@$(MAKE) --no-print-directory --directory=rgamma get-outputs
 	@$(MAKE) --no-print-directory --directory=rsimple get-outputs
 	@$(MAKE) --no-print-directory --directory=simple_mcmc get-outputs
 	@$(MAKE) --no-print-directory --directory=svd get-outputs

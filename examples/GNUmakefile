@@ -70,6 +70,7 @@ ADMB_TPLS=\
  robreg\
  truncreg\
  simple\
+ bhplfine\
  vol
 
 ADMB_RE_TPLS=\
@@ -368,7 +369,7 @@ else
 	cd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) $(OPTIONS) $@ && $(PROG) ./$@ $(ADMB_RUN_ARGS)
 endif
 
-weights: binomial
+weights: binomial binomial_w2
 binomial:
 ifeq ($(CMDSHELL),cmd)
 	pushd admb-re\\weights && $(ADMB_HOME)\\admb $(OPTIONS) $@ && $(PROG) $@ $(ADMB_RUN_ARGS) && popd
@@ -2115,7 +2116,6 @@ ifeq ($(CMDSHELL),cmd)
 	@pushd admb-re\\kidney && $(SCRIPTS_DIR)get-outputs.bat kidney && popd
 	@pushd admb-re\\orange_cor && $(SCRIPTS_DIR)get-outputs.bat orange_cor && popd
 	@pushd admb-re\\glmmadmb && $(SCRIPTS_DIR)get-outputs.bat bvprobit && popd
-	@pushd admb-re\\glmmadmb && $(SCRIPTS_DIR)get-outputs.bat nbmm && popd
 	@pushd admb-re\\glmmadmb && $(SCRIPTS_DIR)get-outputs.bat glmmadmb && popd
 	@pushd admb-re\\lidar && $(SCRIPTS_DIR)get-outputs.bat lidar && popd
 	@pushd admb-re\\nbmm && $(SCRIPTS_DIR)get-outputs.bat nbmm && popd
@@ -2156,7 +2156,6 @@ else
 	@cd admb-re/kidney && sh $(SCRIPTS_DIR)get-outputs.sh kidney && cd ../..
 	@cd admb-re/orange_cor && sh $(SCRIPTS_DIR)get-outputs.sh orange_cor && cd ../..
 	@cd admb-re/glmmadmb && sh $(SCRIPTS_DIR)get-outputs.sh bvprobit && cd ../..
-	@cd admb-re/glmmadmb && sh $(SCRIPTS_DIR)get-outputs.sh nbmm && cd ../..
 	@cd admb-re/glmmadmb && sh $(SCRIPTS_DIR)get-outputs.sh glmmadmb && cd ../..
 	@cd admb-re/lidar && sh $(SCRIPTS_DIR)get-outputs.sh lidar && cd ../..
 	@cd admb-re/nbmm && sh $(SCRIPTS_DIR)get-outputs.sh nbmm && cd ../..

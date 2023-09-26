@@ -49,7 +49,13 @@ else
 endif
 
 get-outputs:
-	@echo "TODO: priors"
+ifeq ($(CMDSHELL),cmd)
+	@..\\..\\scripts\\get-outputs.bat $(TPL_TARGET)
+	@..\\..\\scripts\\get-outputs.bat $(TPL_TARGETRE)
+else
+	@sh ../../scripts/get-outputs.sh $(TPL_TARGET)
+	@sh ../../scripts/get-outputs.sh $(TPL_TARGETRE)
+endif
 
 clean:
 ifeq ($(CMDSHELL),cmd)

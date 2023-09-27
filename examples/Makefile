@@ -73,6 +73,10 @@ truncreg:
 	pushd admb\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
 	pushd admb\\$@ & $@ $(ADMB_RUN_ARGS)
 
+bhplfine:
+	pushd admb\\prof_like & $(ADMB_HOME)\\admb $(OPTIONS) $@
+	pushd admb\\prof_like & $@ $(ADMB_RUN_ARGS)
+
 vol: n2mvol
 n2mvol:
 	pushd admb\\vol & $(ADMB_HOME)\\admb $(OPTIONS) $@

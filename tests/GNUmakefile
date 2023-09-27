@@ -483,3 +483,6 @@ get-outputs:
 	@$(MAKE) --no-print-directory --directory=tinyfun get-outputs
 	@$(MAKE) --no-print-directory --directory=vectorize get-outputs
 	@$(MAKE) --no-print-directory --directory=vonmises get-outputs
+	@$(MAKE) --no-print-directory --directory=atan2 get-outputs
+	@$(MAKE) --no-print-directory --directory=df33_tester get-outputs
+	@$(MAKE) --no-print-directory --directory=lprof get-outputs

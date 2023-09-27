@@ -321,13 +321,19 @@ outputs.txt:
 	@echo tests outputs >> ..\\outputs.txt
 	$(MAKE) /NOLOGO get-outputs >> ..\\outputs.txt
 
+no-get-outputs:
+	@pushd bessel & $(MAKE) /NOLOGO get-outputs & popd
+	@pushd dd2 & $(MAKE) /NOLOGO get-outputs & popd
+	@pushd qbeta & $(MAKE) /NOLOGO get-outputs & popd
+	@pushd rgamma & $(MAKE) /NOLOGO get-outputs & popd
+	@pushd globals & $(MAKE) /NOLOGO get-outputs & popd
+
 get-outputs:
 	@pushd 4darray & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd agemat & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd altexample & $(MAKE) /NOLOGO get-outputs & popd
+	@pushd alternatives & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd adnuts & $(MAKE) /NOLOGO get-outputs & popd
-	@pushd atan2 & $(MAKE) /NOLOGO get-outputs & popd
-	@pushd bessel & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd beta2 & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd beta3 & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd beta_deviate & $(MAKE) /NOLOGO get-outputs & popd
@@ -339,24 +345,22 @@ get-outputs:
 	@pushd cov_re & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd ctl & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd data_adstring_array & $(MAKE) /NOLOGO get-outputs & popd
-	@pushd dd2 & $(MAKE) /NOLOGO get-outputs & popd
-	@pushd df33_tester & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd dualaveraging & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd expm & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd f1b2vc5 & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd geolocation & $(MAKE) /NOLOGO get-outputs & popd
+	@pushd glmmadmb & $(MAKE) /NOLOGO get-outputs & popd
+	@pushd gradients_output & $(MAKE) /NOLOGO get-outputs & popd
+	@pushd hess_step & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd high_iarray & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd hysimple & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd initializationfunction & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd init_bounded_number_matrix & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd issue108 & $(MAKE) /NOLOGO get-outputs & popd
-	@pushd lprof & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd mcmc-theta & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd orange_mvn & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd poisp & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd priors & $(MAKE) /NOLOGO get-outputs & popd
-	@pushd qbeta & $(MAKE) /NOLOGO get-outputs & popd
-	@pushd rgamma & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd rsimple & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd simple_mcmc & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd svd & $(MAKE) /NOLOGO get-outputs & popd
@@ -367,3 +371,6 @@ get-outputs:
 	@pushd tinyfun & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd vectorize & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd vonmises & $(MAKE) /NOLOGO get-outputs & popd
+	@pushd atan2 & $(MAKE) /NOLOGO get-outputs & popd
+	@pushd df33_tester & $(MAKE) /NOLOGO get-outputs & popd
+	@pushd lprof & $(MAKE) /NOLOGO get-outputs & popd

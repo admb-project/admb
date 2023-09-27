@@ -332,7 +332,7 @@ get-outputs:
 	@pushd 4darray & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd agemat & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd altexample & $(MAKE) /NOLOGO get-outputs & popd
-	@pushd alternatives & $(MAKE) /NOLOGO get-outputs & popd
+	@REM pushd alternatives & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd adnuts & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd beta2 & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd beta3 & $(MAKE) /NOLOGO get-outputs & popd
@@ -342,14 +342,14 @@ get-outputs:
 	@pushd betareg & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd changepoint & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd colfill & $(MAKE) /NOLOGO get-outputs & popd
-	@pushd cov_re & $(MAKE) /NOLOGO get-outputs & popd
+	@REM pushd cov_re & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd ctl & $(MAKE) /NOLOGO get-outputs & popd
-	@pushd data_adstring_array & $(MAKE) /NOLOGO get-outputs & popd
+	@REM pushd data_adstring_array & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd dualaveraging & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd expm & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd f1b2vc5 & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd geolocation & $(MAKE) /NOLOGO get-outputs & popd
-	@pushd glmmadmb & $(MAKE) /NOLOGO get-outputs & popd
+	@REM pushd glmmadmb & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd gradients_output & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd hess_step & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd high_iarray & $(MAKE) /NOLOGO get-outputs & popd

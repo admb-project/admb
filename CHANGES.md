@@ -11,6 +11,13 @@ Describe new features, changes and improvements for each release.
 * Continually streamline installation and build process
 * Continually improve and update documentation
 
+ADMB-13.2-dev
+-------------
+
+#### Changes and Improvements
+
+* Fixed set_multinomial_weights error in binomial_w2 example (See [Changes ce9f4c8](https://github.com/admb-project/admb/commit/ce9f4c8ed0d7b8891f88f8b192f6d14db03ca361)).
+
 ADMB-13.1
 ---------
 *Released December 23, 2022*  

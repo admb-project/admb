@@ -7,10 +7,9 @@ DESTDIR=..\\build\\$(ADMB_VER)
 all:\
   test-4darray\
   test-adnuts\
-  test-agemat\
+  tpl-alternatives\
   test-altexample\
   test-atan2\
-  test-bessel\
   test-beta2\
   test-beta3\
   test-beta_deviate\
@@ -20,29 +19,29 @@ all:\
   test-changepoint\
   test-colfill\
   test-cov_re\
-  test-ctl\
   test-data_adstring_array\
   test-df33_tester\
-  test-dd2\
   test-dualaveraging\
   test-dtweedie\
   test-expm\
   test-f1b2vc5\
-  test-geolocation\
+  cpp-globals\
   test-gradients_output\
+  test-hess_step\
   test-high_iarray\
   test-hysimple\
   test-initializationfunction\
   test-init_bounded_number_matrix\
   test-issue108\
+  test-issue158\
   test-lprof\
   test-mcmc-theta\
   test-orange_mvn\
   test-poisp\
-  test-priors\
   test-qbeta\
   test-rsimple\
   test-simple_mcmc\
+  tpl-strip_full_path\
   test-svd\
   test-testminmax\
   test-tiny\
@@ -51,6 +50,18 @@ all:\
   test-tinyfun\
   test-vectorize\
   test-vonmises
+
+full:\
+  test-ctl\
+  test-priors\
+  test-rgamma\
+  test-bessel\
+  test-dd2
+
+remotes:\
+  test-agemat\
+  test-geolocation\
+  test-glmmadmb
 
 unit-gtests:
 	$(MAKE) test-gtests
@@ -61,6 +72,15 @@ test-gtests:
 test-initializationfunction:
 	pushd initializationfunction & $(MAKE) /NOLOGO & popd
 
+tpl-strip_full_path:
+	pushd strip_full_path & $(MAKE) /NOLOGO & popd
+
+cpp-globals:
+	pushd globals & $(MAKE) /NOLOGO & popd
+
+test-rgamma:
+	pushd rgamma & $(MAKE) /NOLOGO & popd
+
 test-4darray:
 	pushd 4darray & $(MAKE) /NOLOGO & popd
 
@@ -69,6 +89,9 @@ test-adnuts:
 
 test-agemat:
 	pushd agemat & $(MAKE) /NOLOGO & popd
+
+tpl-alternatives:
+	pushd alternatives & $(MAKE) /NOLOGO & popd
 
 test-altexample:
 	pushd altexample & $(MAKE) /NOLOGO & popd
@@ -87,6 +110,9 @@ test-beta3:
 
 test-beta_regression:
 	pushd beta_regression & $(MAKE) /NOLOGO & popd
+
+test-hess_step:
+	pushd hess_step & $(MAKE) /NOLOGO & popd
 
 test-beta_deviate:
 	pushd beta_deviate& $(MAKE) /NOLOGO & popd
@@ -133,6 +159,9 @@ test-f1b2vc5 :
 test-geolocation:
 	pushd geolocation & $(MAKE) /NOLOGO & popd
 
+test-glmmadmb:
+	pushd glmmadmb & $(MAKE) /NOLOGO & popd
+
 test-gmrf:
 	pushd gmrf & $(MAKE) /NOLOGO & popd
 
@@ -150,6 +179,9 @@ test-init_bounded_number_matrix:
 
 test-issue108:
 	pushd issue108 & $(MAKE) /NOLOGO & popd
+
+test-issue158:
+	pushd issue158 & $(MAKE) /NOLOGO & popd
 
 test-lprof:
 	pushd lprof & $(MAKE) /NOLOGO & popd

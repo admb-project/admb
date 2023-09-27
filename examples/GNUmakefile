@@ -76,6 +76,7 @@ ADMB_TPLS=\
 ADMB_RE_TPLS=\
  bcb\
  biglog\
+ bvprobit\
  glmmadmb\
  caest\
  gamma\

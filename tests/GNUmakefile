@@ -90,6 +90,7 @@ core-tpls:\
   tpl-beta_regression\
   tpl-betai\
   tpl-betareg\
+  tpl-changepoint\
   tpl-colfill\
   tpl-cov_re\
   tpl-data_adstring_array\
@@ -122,7 +123,6 @@ core-tpls:\
   tpl-tiny_ad_re\
   tpl-tinyfun\
   tpl-vectorize\
-  tpl-changepoint\
   tpl-vonmises
 
 remote-core-tpls:\
@@ -158,7 +158,7 @@ tpl-4darray:
 	$(MAKE) --directory=4darray
 
 tpl-glmmadmb:
-	-$(MAKE) --directory=glmmadmb
+	$(MAKE) --directory=glmmadmb
 
 tpl-agemat:
 	$(MAKE) --directory=agemat

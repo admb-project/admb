@@ -24,6 +24,7 @@ pella_t \
 robreg \
 truncreg \
 simple \
+bhplfine \
 vol
 
 buscycle: ham4 ham5

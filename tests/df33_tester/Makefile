@@ -1,18 +1,22 @@
-TARGET=gamm1
-SRCS=gamm1.cpp
+SRCS=df33_tester.cpp
 OVERRIDE=all
 
 !include <..\test-rules.nmake>
 
-run: $(TARGET) testgamm
-	testgamm
+run: $(TARGET)
+ifeq ($(CMDSHELL),cmd)
 	$(TARGET)
-
-testgamm: testgamm.cpp
-	$(SCRIPT_DIR)admb.cmd testgamm.cpp
+else
+	./$(TARGET)
+endif
 
 get-outputs: _get-outputs
 
 clean: _clean
-	@if exist testgamm.exe del /Q testgamm.exe 2>nul
-	@if exist testgamm.obj del /Q testgamm.obj 2>nul
+ifeq ($(CMDSHELL),cmd)
+	@if exist df33_tester.exe del /Q df33_tester.exe 2>nul
+	@if exist df33_tester.obj del /Q df33_tester.obj 2>nul
+else
+	@rm -vf df33_tester
+	@rm -vf df33_tester.obj
+endif

@@ -53,11 +53,13 @@ endif
 
 get-outputs:
 ifeq ($(CMDSHELL),cmd)
+	@echo # tests geolocation
 	@cd kalmanfilter\\testdir\\kfsst && ..\\..\\..\\..\\..\\scripts\\get-outputs.sh kfsst
 	@cd kalmanfilter\\testdir\\kftrack && ..\\..\\..\\..\\..\\scripts\\get-outputs.sh kftrack
 	@cd kalmanfilter\\testdir\\trackit && ..\\..\\..\\..\\..\\scripts\\get-outputs.sh ukf
 	@cd kalmanfilter\\testdir\\ukfsst && ..\\..\\..\\..\\..\\scripts\\get-outputs.sh ukfsst
 else
+	@echo "# tests geolocation"
 	@if [ -d "kalmanfilter/testdir/kfsst" ]; then cd kalmanfilter/testdir/kfsst && sh ../../../../../scripts/get-outputs.sh kfsst; fi
 	@if [ -d "kalmanfilter/testdir/kftrack" ]; then cd kalmanfilter/testdir/kftrack && sh ../../../../../scripts/get-outputs.sh kftrack; fi
 	@if [ -d "kalmanfilter/testdir/ukf" ]; then cd kalmanfilter/testdir/ukf && sh ../../../../../scripts/get-outputs.sh ukf; fi

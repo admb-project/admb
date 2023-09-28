@@ -17,6 +17,11 @@ run: kalmanfilter
 	pushd kalmanfilter\\testdir\\ukfsst & ..\\..\\ukfsst\\ukfsst.exe & popd
 
 get-outputs:
+	@echo # tests geolocation
+	@cd kalmanfilter\\testdir\\kfsst && ..\\..\\..\\..\\..\\scripts\\get-outputs.sh kfsst
+	@cd kalmanfilter\\testdir\\kftrack && ..\\..\\..\\..\\..\\scripts\\get-outputs.sh kftrack
+	@cd kalmanfilter\\testdir\\trackit && ..\\..\\..\\..\\..\\scripts\\get-outputs.sh ukf
+	@cd kalmanfilter\\testdir\\ukfsst && ..\\..\\..\\..\\..\\scripts\\get-outputs.sh ukfsst
 
 total-clean:
 	@if exist kalmanfilter rmdir /s /q kalmanfilter

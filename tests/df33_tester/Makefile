@@ -1,3 +1,4 @@
+TARGET=df33_tester
 SRCS=df33_tester.cpp
 OVERRIDE=all
 

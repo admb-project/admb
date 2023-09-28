@@ -11,7 +11,7 @@ run: $(TARGET)
 ifeq ($(CMDSHELL),cmd)
 	$(TARGET) -imaxfn 0 -noinit > outputs
 else
-	./$(TARGET) -imaxfn 0 -noinit &> outputs
+	./$(TARGET) -imaxfn 0 -noinit > outputs
 endif
 
 get-outputs: _get-outputs

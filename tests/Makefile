@@ -318,7 +318,7 @@ outputs.txt:
 	@echo ^# examples outputs >> ..\\outputs.txt
 	@type outputs-examples-saf.txt >> ..\\outputs.txt
 !ENDIF
-	@echo tests outputs >> ..\\outputs.txt
+	@echo ^#tests outputs >> ..\\outputs.txt
 	$(MAKE) /NOLOGO get-outputs >> ..\\outputs.txt
 
 no-get-outputs:

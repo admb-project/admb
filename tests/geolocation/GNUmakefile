@@ -45,10 +45,10 @@ ifeq ($(CMDSHELL),cmd)
 	pushd kalmanfilter\\testdir\\trackit & ..\\..\\trackit\\inst\\admb\\ukf & popd
 	pushd kalmanfilter\\testdir\\ukfsst & ..\\..\\ukfsst\\ukfsst.exe & popd
 else
-	-cd kalmanfilter/testdir/kfsst; ../../kfsst/kfsst/source/kfsst
-	-cd kalmanfilter/testdir/kftrack; ../../kftrack/inst/admb/src/kftrack
-	-cd kalmanfilter/testdir/trackit; ../../trackit/inst/admb/ukf
-	-cd kalmanfilter/testdir/ukfsst; ../../ukfsst/ukfsst
+	cd kalmanfilter/testdir/kfsst; ../../kfsst/kfsst/source/kfsst
+	cd kalmanfilter/testdir/kftrack; ../../kftrack/inst/admb/src/kftrack
+	cd kalmanfilter/testdir/trackit; ../../trackit/inst/admb/ukf
+	cd kalmanfilter/testdir/ukfsst; ../../ukfsst/ukfsst
 endif
 
 get-outputs:
@@ -58,10 +58,10 @@ ifeq ($(CMDSHELL),cmd)
 	@cd kalmanfilter\\testdir\\trackit && ..\\..\\..\\..\\..\\scripts\\get-outputs.sh ukf
 	@cd kalmanfilter\\testdir\\ukfsst && ..\\..\\..\\..\\..\\scripts\\get-outputs.sh ukfsst
 else
-	if [ -d "kalmanfilter/testdir/kfsst" ]; then cd kalmanfilter/testdir/kfsst && sh ../../../../../scripts/get-outputs.sh kfsst; fi
-	if [ -d "kalmanfilter/testdir/kftrack" ]; then cd kalmanfilter/testdir/kftrack && sh ../../../../../scripts/get-outputs.sh kftrack; fi
-	if [ -d "kalmanfilter/testdir/ukf" ]; then cd kalmanfilter/testdir/ukf && sh ../../../../../scripts/get-outputs.sh ukf; fi
-	if [ -d "kalmanfilter/testdir/ukfsst" ]; then cd kalmanfilter/testdir/ukfsst && sh ../../../../../scripts/get-outputs.sh ukfsst; fi
+	@if [ -d "kalmanfilter/testdir/kfsst" ]; then cd kalmanfilter/testdir/kfsst && sh ../../../../../scripts/get-outputs.sh kfsst; fi
+	@if [ -d "kalmanfilter/testdir/kftrack" ]; then cd kalmanfilter/testdir/kftrack && sh ../../../../../scripts/get-outputs.sh kftrack; fi
+	@if [ -d "kalmanfilter/testdir/ukf" ]; then cd kalmanfilter/testdir/ukf && sh ../../../../../scripts/get-outputs.sh ukf; fi
+	@if [ -d "kalmanfilter/testdir/ukfsst" ]; then cd kalmanfilter/testdir/ukfsst && sh ../../../../../scripts/get-outputs.sh ukfsst; fi
 endif
 
 total-clean:

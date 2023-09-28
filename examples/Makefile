@@ -195,7 +195,7 @@ union:
 	pushd admb-re\\$@ & $(ADMB_HOME)\\admb $(OPTIONS) $@
 	pushd admb-re\\$@ & $@ $(ADMB_RUN_ARGS)
 
-weights: binomial
+weights: binomial binomial_w2
 binomial:
 	pushd admb-re\\weights & $(ADMB_HOME)\\admb $(OPTIONS) $@
 	pushd admb-re\\weights & $@ $(ADMB_RUN_ARGS)

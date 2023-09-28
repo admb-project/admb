@@ -8,6 +8,7 @@ run:
 	$(MAKE) /NOLOGO /Fcov_re_sep.nmak run
 
 get-outputs:
+	@echo ^# tests data_adstring_array cov_re_sep
 	$(MAKE) /NOLOGO /Fdata_adstring_array.nmak get-outputs
 	$(MAKE) /NOLOGO /Fcov_re_sep.nmak get-outputs
 

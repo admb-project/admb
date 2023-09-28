@@ -344,7 +344,7 @@ get-outputs:
 	@pushd colfill & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd cov_re & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd ctl & $(MAKE) /NOLOGO get-outputs & popd
-	@REM pushd data_adstring_array & $(MAKE) /NOLOGO get-outputs & popd
+	@pushd data_adstring_array & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd dualaveraging & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd expm & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd f1b2vc5 & $(MAKE) /NOLOGO get-outputs & popd

@@ -468,7 +468,6 @@ get-outputs:
 	@$(MAKE) --no-print-directory --directory=initializationfunction get-outputs
 	@$(MAKE) --no-print-directory --directory=init_bounded_number_matrix get-outputs
 	@$(MAKE) --no-print-directory --directory=issue108 get-outputs
-	@$(MAKE) --no-print-directory --directory=lprof get-outputs
 	@$(MAKE) --no-print-directory --directory=mcmc-theta get-outputs
 	@$(MAKE) --no-print-directory --directory=orange_mvn get-outputs
 	@$(MAKE) --no-print-directory --directory=poisp get-outputs

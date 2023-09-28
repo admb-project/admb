@@ -349,7 +349,7 @@ get-outputs:
 	@pushd expm & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd f1b2vc5 & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd geolocation & $(MAKE) /NOLOGO get-outputs & popd
-	@REM pushd glmmadmb & $(MAKE) /NOLOGO get-outputs & popd
+	@pushd glmmadmb & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd gradients_output & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd hess_step & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd high_iarray & $(MAKE) /NOLOGO get-outputs & popd

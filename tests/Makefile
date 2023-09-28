@@ -64,7 +64,7 @@ remotes:\
   test-glmmadmb
 
 unit-gtests:
-	$(MAKE) test-gtests
+	$(MAKE) /NOLOGO test-gtests
 
 test-gtests:
 	pushd gtests& $(MAKE) /NOLOGO all & popd

@@ -25,6 +25,7 @@ clean:
 	$(MAKE) --directory=RC05_quad clean
 	$(MAKE) --directory=RC01_svd clean
 get-outputs:
+	@echo "# tests alternatives"
 	@$(MAKE) --no-print-directory --directory=RC04_solve get-outputs
 	@$(MAKE) --no-print-directory --directory=RC04_det get-outputs
 	@$(MAKE) --no-print-directory --directory=RC04_inv get-outputs

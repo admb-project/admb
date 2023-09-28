@@ -342,7 +342,7 @@ get-outputs:
 	@pushd betareg & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd changepoint & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd colfill & $(MAKE) /NOLOGO get-outputs & popd
-	@REM pushd cov_re & $(MAKE) /NOLOGO get-outputs & popd
+	@pushd cov_re & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd ctl & $(MAKE) /NOLOGO get-outputs & popd
 	@REM pushd data_adstring_array & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd dualaveraging & $(MAKE) /NOLOGO get-outputs & popd

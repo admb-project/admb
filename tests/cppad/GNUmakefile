@@ -1,17 +1,17 @@
-all: cppad-trunk
+all: CppAD
+	cd CppAD && ./configure
 	$(MAKE) test
 	$(MAKE) test1
 	$(MAKE) run
 
-cppad-trunk:
-	svn checkout https://projects.coin-or.org/svn/CppAD/trunk $@
-	cd $@ && ./configure
+CppAD:
+	git clone https://github.com/coin-or/CppAD.git $@
 
 test: test.cpp
-	$(CXX) -Icppad-trunk -o $@  $^
+	$(CXX) -ICppAD/include -o $@ $^
 
 test1: test1.cpp
-	$(CXX) -Icppad-trunk -o $@  $^
+	$(CXX) -ICppAD/include -o $@ $^
 
 run:
 	./test

@@ -1,3 +1,3 @@
 TARGET=dsort
 
-!include <..\test-rules.nmake>
+!include <..\..\test-rules.nmake>

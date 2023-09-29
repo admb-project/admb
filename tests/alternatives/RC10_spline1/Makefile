@@ -1,7 +1,7 @@
 TARGET=spline1
 OVERRIDE=all
 
-!include <..\test-rules.nmake>
+!include <..\..\test-rules.nmake>
 
 run: $(TARGET)
 	$(TARGET)

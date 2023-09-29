@@ -1,7 +1,7 @@
 TARGET=inverse
 OVERRIDE=all
 
-!include <..\test-rules.nmake>
+!include <..\..\test-rules.nmake>
 
 run: $(TARGET)
 	$(TARGET) & type $(TARGET).par $(TARGET).rep > $(TARGET).temp & move $(TARGET).temp $(TARGET).par

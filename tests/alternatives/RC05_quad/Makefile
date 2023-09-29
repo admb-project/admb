@@ -1,7 +1,7 @@
 TARGET=quad
 OVERRIDE=all
 
-!include <..\test-rules.nmake>
+!include <..\..\test-rules.nmake>
 
 run: $(TARGET)
 	$(TARGET) -nohess

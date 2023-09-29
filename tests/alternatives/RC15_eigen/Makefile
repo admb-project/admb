@@ -1,3 +1,3 @@
 TARGET=eigen
 
-!include <..\test-rules.nmake>
+!include <..\..\test-rules.nmake>

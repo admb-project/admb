@@ -18,10 +18,10 @@ run: kalmanfilter
 
 get-outputs:
 	@echo # tests geolocation
-	@cd kalmanfilter\\testdir\\kfsst && ..\\..\\..\\..\\..\\scripts\\get-outputs.sh kfsst
-	@cd kalmanfilter\\testdir\\kftrack && ..\\..\\..\\..\\..\\scripts\\get-outputs.sh kftrack
-	@cd kalmanfilter\\testdir\\trackit && ..\\..\\..\\..\\..\\scripts\\get-outputs.sh ukf
-	@cd kalmanfilter\\testdir\\ukfsst && ..\\..\\..\\..\\..\\scripts\\get-outputs.sh ukfsst
+	@if exist kalmanfilter\\testdir\\kfsst ( cd kalmanfilter\\testdir\\kfsst && ..\\..\\..\\..\\..\\scripts\\get-outputs.sh kfsst )
+	@if exist kalmanfilter\\testdir\\kftrack ( cd kalmanfilter\\testdir\\kftrack && ..\\..\\..\\..\\..\\scripts\\get-outputs.sh kftrack )
+	@if exist kalmanfilter\\testdir\\trackit ( cd kalmanfilter\\testdir\\trackit && ..\\..\\..\\..\\..\\scripts\\get-outputs.sh ukf )
+	@if exist kalmanfilter\\testdir\\ukfsst ( cd kalmanfilter\\testdir\\ukfsst && ..\\..\\..\\..\\..\\scripts\\get-outputs.sh ukfsst )
 
 total-clean:
 	@if exist kalmanfilter rmdir /s /q kalmanfilter

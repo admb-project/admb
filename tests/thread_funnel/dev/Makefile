@@ -1,6 +1,7 @@
 all:
 	$(MAKE) run0
 	$(MAKE) run
+check:
 	$(MAKE) run8
 	$(MAKE) run8b
 	$(MAKE) run8c
@@ -14,68 +15,68 @@ all:
 	$(MAKE) run8j
 
 run0:
-	@cp ../../examples/admb/forest/forest.dat forest0.dat
-	../../admb forest0
-	time ./forest0 &> forest0.out
+	@cp ../../../examples/admb/forest/forest.dat forest0.dat
+	../../../admb forest0
+	time ./forest0 > forest0.out
 run:
-	@cp ../../examples/admb/forest/forest.dat .
-	../../admb forest
-	time ./forest &> forest.out
+	@cp ../../../examples/admb/forest/forest.dat .
+	../../../admb forest
+	time ./forest > forest.out
 
 run8:
-	@cp ../../examples/admb/forest/forest.dat forest8.dat
-	../../admb forest8
-	time ./forest8 &> forest8.out
+	@cp ../../../examples/admb/forest/forest.dat forest8.dat
+	../../../admb forest8
+	time ./forest8 > forest8.out
 
 run8b:
-	@cp ../../examples/admb/forest/forest.dat forest8b.dat
-	../../admb forest8b
-	time ./forest8b &> forest8b.out
+	@cp ../../../examples/admb/forest/forest.dat forest8b.dat
+	../../../admb forest8b
+	time ./forest8b > forest8b.out
 
 run8c:
-	@cp ../../examples/admb/forest/forest.dat forest8c.dat
-	../../admb forest8c
-	time ./forest8c &> forest8c.out
+	@cp ../../../examples/admb/forest/forest.dat forest8c.dat
+	../../../admb forest8c
+	time ./forest8c > forest8c.out
 
 run8d:
-	@cp ../../examples/admb/forest/forest.dat forest8d.dat
-	../../admb forest8d
-	time ./forest8d &> forest8d.out
+	@cp ../../../examples/admb/forest/forest.dat forest8d.dat
+	../../../admb forest8d
+	time ./forest8d > forest8d.out
 
 run8e:
-	@cp ../../examples/admb/forest/forest.dat forest8e.dat
-	../../admb forest8e
-	time ./forest8e &> forest8e.out
+	@cp ../../../examples/admb/forest/forest.dat forest8e.dat
+	../../../admb forest8e
+	time ./forest8e > forest8e.out
 
 run8f:
-	@cp ../../examples/admb/forest/forest.dat forest8f.dat
-	../../admb forest8f
-	time ./forest8f &> forest8f.out
+	@cp ../../../examples/admb/forest/forest.dat forest8f.dat
+	../../../admb forest8f
+	time ./forest8f > forest8f.out
 run8g:
-	@cp ../../examples/admb/forest/forest.dat forest8g.dat
-	../../admb forest8g thread-funnel.cpp
-	time ./forest8g &> forest8g.out
+	@cp ../../../examples/admb/forest/forest.dat forest8g.dat
+	../../../admb forest8g thread-funnel.cpp
+	time ./forest8g > forest8g.out
 
 run8h:
-	@cp ../../examples/admb/forest/forest.dat forest8h.dat
-	../../admb forest8h thread_funnel.cpp
-	time ./forest8h &> forest8h.out
+	@cp ../../../examples/admb/forest/forest.dat forest8h.dat
+	../../../admb forest8h thread_funnel.cpp
+	time ./forest8h > forest8h.out
 
 run8i:
-	@cp ../../examples/admb/forest/forest.dat forest8i.dat
-	../../admb forest8i thread_funnel3.cpp
-	time ./forest8i &> forest8i.out
+	@cp ../../../examples/admb/forest/forest.dat forest8i.dat
+	../../../admb forest8i thread_funnel3.cpp
+	time ./forest8i > forest8i.out
 
 run8i4: thread_funnel4.h
-	@cp ../../examples/admb/forest/forest.dat forest8i4.dat
-	../../admb forest8i4.tpl thread_funnel4.cpp
-	time ./forest8i4 &> forest8i4.out
+	@cp ../../../examples/admb/forest/forest.dat forest8i4.dat
+	../../../admb forest8i4.tpl thread_funnel4.cpp
+	time ./forest8i4 > forest8i4.out
 	cat forest8i4.out
 
 dev: run8j
 run8j: thread_funnel5.h
-	@cp ../../examples/admb/forest/forest.dat forest8j.dat
-	../../admb forest8j.tpl thread_funnel5.cpp
+	@cp ../../../examples/admb/forest/forest.dat forest8j.dat
+	../../../admb forest8j.tpl thread_funnel5.cpp
 	time ./forest8j &> forest8j.out
 	cat forest8j.out
 

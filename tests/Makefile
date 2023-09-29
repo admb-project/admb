@@ -319,7 +319,7 @@ outputs.txt:
 	@type outputs-examples-saf.txt >> ..\\outputs.txt
 !ENDIF
 	@echo ^# tests outputs >> ..\\outputs.txt
-	$(MAKE) /NOLOGO get-outputs >> ..\\outputs.txt
+	@$(MAKE) /NOLOGO get-outputs >> ..\\outputs.txt
 
 no-get-outputs:
 	@pushd bessel & $(MAKE) /NOLOGO get-outputs & popd
@@ -332,7 +332,7 @@ get-outputs:
 	@pushd 4darray & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd agemat & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd altexample & $(MAKE) /NOLOGO get-outputs & popd
-	@REM pushd alternatives & $(MAKE) /NOLOGO get-outputs & popd
+	@pushd alternatives & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd adnuts & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd beta2 & $(MAKE) /NOLOGO get-outputs & popd
 	@pushd beta3 & $(MAKE) /NOLOGO get-outputs & popd

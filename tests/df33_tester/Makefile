@@ -5,11 +5,7 @@ OVERRIDE=all
 !include <..\test-rules.nmake>
 
 run: $(TARGET)
-ifeq ($(CMDSHELL),cmd)
 	$(TARGET)
-else
-	./$(TARGET)
-endif
 
 get-outputs: _get-outputs
 

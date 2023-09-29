@@ -7,7 +7,8 @@ OVERRIDE=all
 run: $(TARGET)
 	$(TARGET)
 
-get-outputs: _get-outputs
+get-outputs:
+	@..\\..\\scripts\\get-outputs.bat $(TARGET)
 
 clean: _clean
 ifeq ($(CMDSHELL),cmd)

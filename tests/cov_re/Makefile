@@ -8,8 +8,8 @@ run:
 
 get-outputs:
 	@echo # tests cov_re cov_re_sep
-	@$(MAKE) /fcov_re.nmak get-outputs
-	@$(MAKE) /fcov_re_sep.nmak get-outputs
+	@$(MAKE) /NOLOGO /fcov_re.nmak get-outputs
+	@$(MAKE) /NOLOGO /fcov_re_sep.nmak get-outputs
 
 clean:
 	$(MAKE) /fcov_re.nmak clean

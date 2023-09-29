@@ -292,16 +292,16 @@ verify: examples
 	$(MAKE) /NOLOGO all
 	$(MAKE) /NOLOGO test-gtests
 !ENDIF
-	$(MAKE) /NOLOGO outputs.txt
+	@$(MAKE) /NOLOGO outputs.txt
 
 examples:
 	if not exist $(DESTDIR)\\examples md $(DESTDIR)\\examples
 	xcopy ..\\examples $(DESTDIR)\\examples /S /Y /D
 	pushd $(DESTDIR)\\examples && $(MAKE) /NOLOGO all
-	pushd $(DESTDIR)\\examples && $(MAKE) /NOLOGO get-outputs > ..\\..\\..\\tests\\outputs-examples-saf.txt
+	@pushd $(DESTDIR)\\examples && $(MAKE) /NOLOGO get-outputs > ..\\..\\..\\tests\\outputs-examples-saf.txt
 !IFNDEF SAFE_ONLY
 	pushd $(DESTDIR)\\examples && $(MAKE) /NOLOGO FAST_OPTION=-f all
-	pushd $(DESTDIR)\\examples && $(MAKE) /NOLOGO get-outputs > ..\\..\\..\\tests\\outputs-examples-opt.txt
+	@pushd $(DESTDIR)\\examples && $(MAKE) /NOLOGO get-outputs > ..\\..\\..\\tests\\outputs-examples-opt.txt
 !ENDIF
 
 copy:

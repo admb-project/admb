@@ -1,6 +1,9 @@
-all: catage.dat
+all:
 	CXXFLAGS=-I../include ../../../admb -c -o model_parameters.obj ../include/model_parameters.cpp
 	CXXFLAGS=-I../include ../../../admb catage.cpp model_parameters.obj
+	$(MAKE) run
+
+run: catage.dat
 	./catage
 
 catage.dat:

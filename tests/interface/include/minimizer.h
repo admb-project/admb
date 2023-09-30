@@ -1,4 +1,4 @@
-#include "model_parameters.cpp"
+#include "model_parameters.h"
 
 class minimizer: public model_parameters
 {

@@ -112,7 +112,7 @@ Macro definitions.
   #include <tiny_ad.hpp>
 #endif
 
-#define USE_THREAD
+//#define USE_THREAD
 #ifndef USE_THREAD
   #define USE_VECTOR_SHAPE_POOL
 #endif
@@ -8857,18 +8857,18 @@ protected:
    static streampos change_pinfile_name(const adstring & s,
      const streampos & off = 0);
 
-  static _THREAD cifstream* global_datafile;
-  static _THREAD cifstream* global_parfile;
-  static _THREAD ofstream* global_logfile;
+  static THREAD cifstream* global_datafile;
+  static THREAD cifstream* global_parfile;
+  static THREAD ofstream* global_logfile;
 
-  static thread_local uistream* global_bparfile;
-  static thread_local adstring adprogram_name;
+  static THREAD_LOCAL uistream* global_bparfile;
+  static THREAD_LOCAL adstring adprogram_name;
    static adstring working_directory_path;
    static char option_flags[];
-  static thread_local int argc;
+  static THREAD_LOCAL int argc;
    static unsigned int wd_flag;
    static unsigned char directory_prefix;
-  static thread_local char** argv;
+  static THREAD_LOCAL char** argv;
 };
 
 int option_match(int argc, char *argv[], const char *string);

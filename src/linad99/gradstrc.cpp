@@ -70,7 +70,7 @@ int gradient_structure::Hybrid_bounded_flag=0;
 unsigned int gradient_structure::NUM_RETURN_ARRAYS = 25;
 int gradient_structure::NUM_DEPENDENT_VARIABLES = 2000;
 #if (defined(NO_DERIVS))
-thread_local int gradient_structure::no_derivatives = 0;
+THREAD_LOCAL int gradient_structure::no_derivatives = 0;
 #endif
 long int gradient_structure::USE_FOR_HESSIAN = 0;
 unsigned int gradient_structure::RETURN_ARRAYS_SIZE = 70;

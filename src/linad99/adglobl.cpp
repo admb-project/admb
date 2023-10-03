@@ -22,27 +22,27 @@ adpvm_manager* ad_comm::pvm_manager = NULL;
 
  adstring ad_comm::subdir;
 
-_THREAD cifstream* ad_comm::global_datafile = nullptr;
-_THREAD cifstream* ad_comm::global_parfile = nullptr;
-_THREAD ofstream* ad_comm::global_logfile = nullptr;
+THREAD cifstream* ad_comm::global_datafile = nullptr;
+THREAD cifstream* ad_comm::global_parfile = nullptr;
+THREAD ofstream* ad_comm::global_logfile = nullptr;
 
-thread_local uistream* ad_comm::global_bparfile = nullptr;
-thread_local adstring ad_comm::adprogram_name;
+THREAD_LOCAL uistream* ad_comm::global_bparfile = nullptr;
+THREAD_LOCAL adstring ad_comm::adprogram_name;
  adstring ad_comm::working_directory_path;
  char ad_comm::option_flags[10];
-thread_local int ad_comm::argc = 0;
+THREAD_LOCAL int ad_comm::argc = 0;
  int ad_comm::no_pvm_flag=0;
  int ad_comm::no_atlas_flag=0;
  int ad_comm::print_hess_and_exit_flag;
  int ad_comm::no_ln_det_choleski_flag=0;
-thread_local char** ad_comm::argv = nullptr;
-thread_local double objective_function_value::fun_without_pen = 0.0;
+THREAD_LOCAL char** ad_comm::argv = nullptr;
+THREAD_LOCAL double objective_function_value::fun_without_pen = 0.0;
 
 int function_minimizer::output_flag = defaults::output;
 
-thread_local DF_FILE* gradient_structure::fp = nullptr;
-thread_local gradient_structure* gradient_structure::_instance = nullptr;
-thread_local grad_stack* gradient_structure::GRAD_STACK1 = nullptr;
+THREAD_LOCAL DF_FILE* gradient_structure::fp = nullptr;
+THREAD_LOCAL gradient_structure* gradient_structure::_instance = nullptr;
+THREAD_LOCAL grad_stack* gradient_structure::GRAD_STACK1 = nullptr;
 
 std::ostream& get_output_stream()
 {

@@ -93,14 +93,14 @@ public:
 };
 
 #ifdef USE_THREAD
-#define _THREAD __thread
-#define _THREAD_LOCAL thread_local
+#define THREAD __thread
+#define THREAD_LOCAL THREAD_LOCAL
   #ifdef _MSC_VER
     #define __thread __declspec(thread)
   #endif
 #else
-#define _THREAD
-#define _THREAD_LOCAL
+#define THREAD
+#define THREAD_LOCAL
 #endif
 /**
  * class for things related to the gradient structures, including dimension of
@@ -112,9 +112,9 @@ class gradient_structure
   grad_stack* _GRAD_STACK1;
 
 public:
-  static thread_local DF_FILE* fp;
-  static thread_local gradient_structure* _instance;
-  static thread_local grad_stack* GRAD_STACK1;
+  static THREAD_LOCAL DF_FILE* fp;
+  static THREAD_LOCAL gradient_structure* _instance;
+  static THREAD_LOCAL grad_stack* GRAD_STACK1;
 
   static gradient_structure* get() { return _instance; }
 
@@ -138,7 +138,7 @@ public:
   void funnel_gradcalc();
 
 #if defined(NO_DERIVS)
-  static thread_local int no_derivatives;
+  static THREAD_LOCAL int no_derivatives;
 #endif
 
    static long int USE_FOR_HESSIAN;

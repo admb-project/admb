@@ -14,9 +14,9 @@
 #endif
 #define ISZERO(d) ((d)==0.0)
 
-thread_local int initial_params::num_initial_params = 0;
+THREAD_LOCAL int initial_params::num_initial_params = 0;
 
-thread_local adlist_ptr initial_params::varsptr;
+THREAD_LOCAL adlist_ptr initial_params::varsptr;
 
  int initial_params::max_number_phases=1;
  int initial_params::current_phase=1;

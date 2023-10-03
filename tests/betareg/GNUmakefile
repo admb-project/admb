@@ -35,7 +35,6 @@ ifeq ($(CMDSHELL),cmd)
 	@if exist hesscheck type hesscheck
 	@if exist s1 type s1
 	@if exist s2 type s2
-	@if exist $(TARGET).b02 type $(TARGET).b02
 	@if exist $(TARGET).p02 type $(TARGET).p02
 else
 	@if [ -e a ]; then cat a; fi
@@ -45,7 +44,6 @@ else
 	@if [ -e hesscheck ]; then cat hesscheck; fi
 	@if [ -e s1 ]; then cat s1; fi
 	@if [ -e s2 ]; then cat s2; fi
-	@if [ -e $(TARGET).b02 ]; then cat $(TARGET).b02; fi
 	@if [ -e $(TARGET).p02 ]; then cat $(TARGET).p02; fi
 endif
 

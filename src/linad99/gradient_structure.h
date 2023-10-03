@@ -94,7 +94,7 @@ public:
 
 #ifdef USE_THREAD
 #define THREAD __thread
-#define THREAD_LOCAL THREAD_LOCAL
+#define THREAD_LOCAL thread_local
   #ifdef _MSC_VER
     #define __thread __declspec(thread)
   #endif

@@ -1,7 +1,3 @@
-ifndef TESTS_REMOTE
-  TESTS_REMOTE=no
-endif
-
 ifndef ADMB_VER
   ADMB_VER=admb
 endif

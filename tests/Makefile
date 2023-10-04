@@ -5,6 +5,12 @@ ADMB_VER=admb
 DESTDIR=..\\build\\$(ADMB_VER)
 
 all:\
+	$(MAKE) /NOLOGO examples
+	$(MAKE) /NOLOGO core
+	@$(MAKE) /NOLOGO outputs.txt
+	$(MAKE) /NOLOGO test-gtests
+
+core:\
   test-4darray\
   test-adnuts\
   tpl-alternatives\
@@ -286,14 +292,8 @@ clean:
 	pushd vectorize & $(MAKE) /NOLOGO clean & popd
 	pushd vonmises & $(MAKE) /NOLOGO clean & popd
 
-verify: examples
-!IF DEFINED(TESTS_REMOTE)
-	$(MAKE) /NOLOGO test-gtests
-!ELSE
+verify:
 	$(MAKE) /NOLOGO all
-	$(MAKE) /NOLOGO test-gtests
-!ENDIF
-	@$(MAKE) /NOLOGO outputs.txt
 
 examples:
 	if not exist $(DESTDIR)\\examples md $(DESTDIR)\\examples

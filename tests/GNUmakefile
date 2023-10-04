@@ -57,6 +57,7 @@ full:
 	$(MAKE) tests-remote
 	$(MAKE) tpl-bessel
 	$(MAKE) tpl-dd2
+	$(MAKE) all
 
 tests-remote:
 	$(MAKE) remote-core-tpls

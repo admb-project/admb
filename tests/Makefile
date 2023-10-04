@@ -57,6 +57,7 @@ full:\
   test-rgamma\
   test-bessel\
   test-dd2
+	$(MAKE) /NOLOGO all
 
 remotes:\
   test-agemat\

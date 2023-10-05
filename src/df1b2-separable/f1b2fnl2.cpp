@@ -81,7 +81,7 @@ void laplace_approximation_calculator::do_separable_stuff(void)
     switch(hesstype)
     {
     case 2:
-      ++separable_calls_counter;
+      if (!pmin->multinomial_weights) ++separable_calls_counter;
       if (saddlepointflag==2)
       {
         do_separable_stuff_x_u_block_diagonal(ff);

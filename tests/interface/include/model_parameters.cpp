@@ -48,6 +48,8 @@ model_parameters::model_parameters(int sz, int argc,char * argv[]) :
   }
 
   initializationfunction();
+
+  gradient_structure::set_YES_DERIVATIVES();
 }
 
 model_parameters::~model_parameters()

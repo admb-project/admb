@@ -1,11 +1,13 @@
-all: forest.dat
+all:
 	CXXFLAGS=-I../include ../../../admb -c -o model_parameters.obj ../include/model_parameters.cpp
 	CXXFLAGS=-I../include ../../../admb forest.cpp model_parameters.obj
+	$(MAKE) run
+
+run: forest.dat
 	./forest -output 1
 
 forest.dat:
 	cp ../../../examples/admb/forest/forest.dat .
-	cp ../../../examples/admb/forest/forest.tpl .
 
 clean:
 	@rm -vf admodel.cov

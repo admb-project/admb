@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@main
     - name: flex
       run: sudo apt-get install flex
     - name: clean
@@ -40,7 +40,10 @@ jobs:
         name: admb_ubuntu_zip
         path: build/admb.zip
     - name: tests 
-      run: make verify DEBUG=yes TESTS_REMOTE=no
+      run: |
+        make --directory=tests examples
+        make --directory=tests unit-gtests
+        make --directory=tests outputs.txt
     - name: Artifact
       uses: actions/upload-artifact@v1
       with:

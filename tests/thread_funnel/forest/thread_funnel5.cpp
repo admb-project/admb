@@ -18,8 +18,7 @@ void allocate_gradients()
 
   gradients = new gradient_structure*[ngradients];
 
-  gradients[0] = nullptr;
-  for (int i = 1; i < ngradients; ++i)
+  for (int i = 0; i < ngradients; ++i)
   {
     gradients[i] = new gradient_structure(10000, i);
   }
@@ -34,13 +33,11 @@ void allocate_gradients()
 void deallocate_gradients()
 {
   gradient_structure* gs = gradient_structure::get();
-  gradient_structure::_instance = nullptr;
 
   cout << "Total Funnel time: " << total_funnel_time << endl;
   auto start = std::chrono::high_resolution_clock::now();
 
-  gradients[0] = nullptr;
-  for (int i = 1; i < ngradients; ++i)
+  for (int i = 0; i < ngradients; ++i)
   {
     delete gradients[i];
     gradients[i] = nullptr;
@@ -48,12 +45,14 @@ void deallocate_gradients()
   delete [] gradients;
   gradients = nullptr;
 
+  gradient_structure::_instance = gs;
+  gradient_structure::fp = gs->get_fp();
+  gradient_structure::GRAD_STACK1 = gs->get_GRAD_STACK1();
+
   auto finish = std::chrono::high_resolution_clock::now();
   std::chrono::duration<double> elapsed = finish - start;
   deallocation_time = elapsed.count();
   std::cout << "Resource time: " << (deallocation_time + allocation_time)  <<  endl;
-
-  gradient_structure::_instance = gs;
 }
 int id = 1;
 std::vector<std::future<std::tuple<double, dvector, std::vector<double*>>>> futures;
@@ -78,10 +77,6 @@ void add_futures(std::future<std::tuple<double, dvector, std::vector<double*>>>&
 }
 gradient_structure* get_gradient()
 {
-  if (id == 0)
-  {
-    id = 1;
-  }
   gradient_structure* gs = gradients[id];
   ++id;
   if (id >= ngradients)

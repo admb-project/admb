@@ -18,9 +18,8 @@ TEST_F(test_autodif, gradcalc_no_independant_variables)
   const int nvar = 1;
   dvector g(1, nvar);
 
-  ASSERT_ANY_THROW(
-    gradcalc(nvar, g);
-  );
+  ASSERT_THROW(
+    gradcalc(nvar, g), int);
 }
 /*
   gradient_structure gs(1500);

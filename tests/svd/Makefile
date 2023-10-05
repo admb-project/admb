@@ -1,4 +1,4 @@
-TARGET=dd2
+TARGET=svd
 OVERRIDE=all
 
 !include <..\test-rules.nmake>

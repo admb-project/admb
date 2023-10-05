@@ -1,38 +1,41 @@
-name: ubuntu1804-64bit
+name: ubuntu-22.04
 
 on: [push]
 
 jobs:
   build:
 
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
     
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@main
     - name: flex
       run: sudo apt-get install flex
     - name: clean
       run: |
-        CC=gcc-7 CXX=g++-7 make clean
+        make clean
     - name: build
       run: |
-        CC=gcc-7 CXX=g++-7 make
+        make
     - name: debug
       run: |
-        CC=gcc-7 CXX=g++-7 make DEBUG=yes
+        make DEBUG=yes
     - name: shared
       run: |
-        CC=gcc-7 CXX=g++-7 make shared
+        make shared
     - name: zip
       run: |
-        CC=gcc-7 CXX=g++-7 make zip
+        make zip
     - name: Artifact
       uses: actions/upload-artifact@v1
       with:
         name: admb_ubuntu_zip
         path: build/admb.zip
     - name: tests 
-      run: CC=gcc-7 CXX=g++-7 make verify DEBUG=yes TESTS_REMOTE=no
+      run: |
+        make --directory=tests examples
+        make --directory=tests unit-gtests
+        make --directory=tests outputs.txt
     - name: Artifact
       uses: actions/upload-artifact@v1
       with:

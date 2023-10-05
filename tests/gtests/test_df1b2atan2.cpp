@@ -31,6 +31,8 @@ public:
     initial_params::varsptr.initialize();
   }
 };
+
+#ifndef _WIN32
 #if defined(DEBUG)
 TEST_F(test_df1b2atan2, should_fail_df1b2variable_null_constructor)
 #else
@@ -40,11 +42,13 @@ TEST_F(test_df1b2atan2, DISABLED_should_fail_df1b2variable_null_constructor)
   df1b2variable::noallocate = 0;
   ASSERT_DEATH({df1b2variable y;}, "Assertion");
 }
+#endif
 TEST_F(test_df1b2atan2, noallocate_df1b2variable_null_constructor)
 {
   df1b2variable::noallocate = 1;
   df1b2variable y;
 }
+#ifndef _WIN32
 #if defined(DEBUG)
 TEST_F(test_df1b2atan2, noallocate_df1b2variable_null_constructor_allocate)
 #else
@@ -55,6 +59,7 @@ TEST_F(test_df1b2atan2, DISABLED_noallocate_df1b2variable_null_constructor_alloc
   df1b2variable y;
   ASSERT_DEATH({ y.allocate(); }, "Assertion");
 }
+#endif
 TEST_F(test_df1b2atan2, adpool_default_constructor)
 {
   adpool pool;

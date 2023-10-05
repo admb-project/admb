@@ -44,6 +44,9 @@ run:
 	pushd admb_tests & zi_owls
 	glmmadmb.exe -maxfn 500 -maxph 5 -noinit -shess
 
+get-outputs:
+	@..\\..\\scripts\\get-outputs.bat glmmadmb 
+
 total-clean: clean
 	@if exist rforge-glmmadmb rmdir /s /q rforge-glmmadmb
 

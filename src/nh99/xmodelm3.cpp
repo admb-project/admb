@@ -547,7 +547,7 @@ void tracing_message(int traceflag,const char *s);
   }
   void function_minimizer::set_multinomial_weights(dvector& d)
   {
-    multinomial_weights=new dvector(d);
+    multinomial_weights = new dvector(d);
   }
 
 function_minimizer::function_minimizer(long int sz):
@@ -557,7 +557,7 @@ function_minimizer::function_minimizer(long int sz):
   ffbest(0)
   {
     lapprox=0;
-    multinomial_weights=0;
+    multinomial_weights = nullptr;
     //cout << lapprox << endl;
     maxfn  = 1000;
     iprint = 1;
@@ -635,7 +635,7 @@ function_minimizer::~function_minimizer()
   if (multinomial_weights)
   {
     delete multinomial_weights;
-    multinomial_weights = 0;
+    multinomial_weights = nullptr;
   }
   if (lapprox)
   {

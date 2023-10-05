@@ -17,6 +17,8 @@ $(TPL_TARGETRE): $(TPL_TARGETRE).tpl
 	..\\..\\admb.cmd $(TPL_TARGETRE)
 
 get-outputs:
+	@..\\..\\scripts\\get-outputs.bat $(TPL_TARGET)
+	@..\\..\\scripts\\get-outputs.bat $(TPL_TARGETRE)
 
 clean:
 	@if exist eigv.rpt del /Q eigv.rpt

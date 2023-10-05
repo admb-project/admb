@@ -101,8 +101,9 @@ GTESTS_ALL=\
  test_math.cpp\
  main.cpp
 
-all: clean gtest-all
-	$(MAKE) run
+all: clean
+	$(MAKE) /NOLOGO gtest-all
+	$(MAKE) /NOLOGO run
 
 googletest-read-only:
 	git clone --depth=1 --branch=release-1.11.0 https://github.com/google/googletest.git googletest-read-only

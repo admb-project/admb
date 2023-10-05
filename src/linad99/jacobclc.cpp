@@ -65,6 +65,11 @@
  */
 void jacobcalc(int nvar, const dmatrix& jac)
 {
+  if(!gradient_structure::_instance)
+  {
+    ((dmatrix&)jac).initialize();
+    return;
+  }
   gradient_structure::_instance->jacobcalc(nvar,jac);
 }
 
@@ -77,11 +82,6 @@ void gradient_structure::jacobcalc(int nvar, const dmatrix& _jac)
   ADUNCONST(dmatrix,jac)
 
   OFF_T lpos;
-  if(!instances)
-  {
-    jac.initialize();
-    return;
-  }
   if (jac.rowmin()!=1)
   {
     cerr << "Error in jacobcalc jacobian must have minimum valid"

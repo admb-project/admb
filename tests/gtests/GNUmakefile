@@ -188,9 +188,7 @@ ERRORS=\
  main.cpp
 
 GTESTS_DEV=\
- test_xpools.cpp\
- test_thread_funnel.obj\
- thread_funnel5.obj\
+ test_interface.obj\
  main.cpp
 
 ifdef GTESTS_DEV
@@ -207,18 +205,19 @@ ifeq ($(SAFE_ONLY),yes)
 endif
 
 all: clean
+	$(MAKE) gtest-all
 	$(MAKE) run
 
 run:
-	$(MAKE) googletest-read-only
-	$(MAKE) finance
-	$(MAKE) scalefactor
-	$(MAKE) gtest-all
 ifeq ($(CMDSHELL),cmd)
 	gtest-all
 else
 	./gtest-all
 endif
+
+others:
+	$(MAKE) finance
+	$(MAKE) scalefactor
 
 finance: clean
 	$(MAKE) gtest-finance
@@ -260,6 +259,13 @@ ifeq ($(CMDSHELL),cmd)
 	CXXFLAGS=-I$(GTEST_DIR)\\include ..\\..\\admb -c $(ADMB_OPTIONS) test_thread_funnel.cpp
 else
 	CXXFLAGS="-I$(GTEST_DIR)/include -I../thread_funnel/forest" ../../admb$(EXT) -c $(ADMB_OPTIONS) test_thread_funnel.cpp
+endif
+
+test_interface.obj: test_interface.cpp
+ifeq ($(CMDSHELL),cmd)
+	CXXFLAGS=-I$(GTEST_DIR)\\include ..\\..\\admb -c $(ADMB_OPTIONS) test_interface.cpp
+else
+	CXXFLAGS="-I$(GTEST_DIR)/include -I../thread_funnel/forest -I../interface/include" ../../admb$(EXT) -c $(ADMB_OPTIONS) test_interface.cpp
 endif
 
 test_df1b2atan2.obj: test_df1b2atan2.cpp df1b2atan2.obj
@@ -618,4 +624,13 @@ else
 	@rm -vf sparseness.info
 	@rm -vf dmatrix.txt
 	@rm -vf dvector.txt
+	@rm -vf varssave*.tmp
+	@rm -vf gradfil*.tmp
+	@rm -vf cmpdiff*.tmp
+	@rm -vf model.bar
+	@rm -vf model.cor
+	@rm -vf model.eva
+	@rm -vf model.log
+	@rm -vf model.par
+	@rm -vf model.std
 endif

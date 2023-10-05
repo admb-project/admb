@@ -1,7 +1,3 @@
-ifndef TESTS_REMOTE
-  TESTS_REMOTE=no
-endif
-
 ifndef ADMB_VER
   ADMB_VER=admb
 endif
@@ -44,15 +40,19 @@ DIST=../build/$(ADMB_VER)
 endif
 
 all:
+	$(MAKE) examples
 	$(MAKE) tests-core
 	$(MAKE) tests-contrib
-ifeq ($(TESTS_REMOTE),yes)
-	$(MAKE) tests-remote
-endif
 	$(MAKE) outputs.txt
 	$(MAKE) unit-gtests
 
-verify: examples
+verify:
+	$(MAKE) all
+
+full:
+	$(MAKE) tests-remote
+	$(MAKE) tpl-bessel
+	$(MAKE) tpl-dd2
 	$(MAKE) all
 
 tests-remote:
@@ -81,18 +81,17 @@ core-tpls:\
   tpl-alternatives\
   tpl-altexample\
   tpl-atan2\
-  tpl-bessel\
   tpl-beta2\
   tpl-beta3\
   tpl-beta_deviate\
   tpl-beta_regression\
   tpl-betai\
   tpl-betareg\
+  tpl-changepoint\
   tpl-colfill\
   tpl-cov_re\
   tpl-data_adstring_array\
   tpl-df33_tester\
-  tpl-dd2\
   tpl-dualaveraging\
   tpl-dtweedie\
   tpl-expm\
@@ -124,7 +123,6 @@ core-tpls:\
   tpl-vonmises
 
 remote-core-tpls:\
-  tpl-changepoint\
   tpl-geolocation\
   tpl-glmmadmb
 
@@ -157,7 +155,7 @@ tpl-4darray:
 	$(MAKE) --directory=4darray
 
 tpl-glmmadmb:
-	-$(MAKE) --directory=glmmadmb
+	$(MAKE) --directory=glmmadmb
 
 tpl-agemat:
 	$(MAKE) --directory=agemat
@@ -304,22 +302,22 @@ ifeq ($(CMDSHELL),cmd)
 	xcopy ..\\examples $(DIST)\examples /S /Y /D
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C $(DIST)\\examples all
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C $(DIST)\\examples bhplfine
-	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C $(DIST)\\examples get-outputs > outputs-examples-saf.txt
+	@$(MAKE) --no-print-directory DEBUG_OPTION=$(DEBUG_OPTION) -C $(DIST)\\examples get-outputs > outputs-examples-saf.txt
   ifndef SAFE_ONLY
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C $(DIST)\\examples all
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C $(DIST)\\examples bhplfine
-	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C $(DIST)\\examples get-outputs > outputs-examples-opt.txt
+	@$(MAKE) --no-print-directory DEBUG_OPTION=$(DEBUG_OPTION) -C $(DIST)\\examples get-outputs > outputs-examples-opt.txt
   endif
 else
 	if [ -d "$(DIST)/examples" ]; then rm -rvf $(DIST)/examples; fi
 	cp -Rvf ../examples $(DIST)
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) --directory=$(DIST)/examples all
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) --directory=$(DIST)/examples bhplfine
-	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) --directory=$(DIST)/examples get-outputs > outputs-examples-saf.txt
+	$(MAKE) --no-print-directory DEBUG_OPTION=$(DEBUG_OPTION) --directory=$(DIST)/examples get-outputs > outputs-examples-saf.txt
   ifndef SAFE_ONLY
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C $(DIST)/examples all
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C $(DIST)/examples bhplfine
-	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) --directory=$(DIST)/examples get-outputs > outputs-examples-opt.txt
+	$(MAKE) --no-print-directory DEBUG_OPTION=$(DEBUG_OPTION) --directory=$(DIST)/examples get-outputs > outputs-examples-opt.txt
   endif
 endif
 
@@ -415,74 +413,72 @@ outputs.txt:
 	@echo "# outputs\n" > $(OUTPUT_DIR)outputs.txt
 ifeq ($(CMDSHELL),cmd)
   ifndef SAFE_ONLY
+	echo "# examples diff\n" >> $(OUTPUT_DIR)outputs.txt;
 	fc outputs-examples-opt.txt outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt
-	type outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt
   endif
+	echo "# examples outputs\n" >> $(OUTPUT_DIR)outputs.txt;
+	type outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt
 else
-	@if [[ -f outputs-examples-saf.txt ]]; then \
-	  if [[ -f outputs-examples-opt.txt ]]; then \
-	    if [[ ! -z "`command -v diff`" ]]; then \
-	      echo "# examples diff\n" >> $(OUTPUT_DIR)outputs.txt; \
-	      diff -w outputs-examples-opt.txt outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt; \
-	    else \
-	      echo "Error: no 'diff' utility found." >> $(OUTPUT_DIR)outputs.txt; \
-	    fi; \
-	  fi; \
-	  echo "# examples outputs\n" >> $(OUTPUT_DIR)outputs.txt; \
-	  cat outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt; \
-	else \
-	  echo "Info: no examples outputs found." >> $(OUTPUT_DIR)outputs.txt; \
-	fi
+  ifndef SAFE_ONLY
+	echo "# examples diff\n" >> $(OUTPUT_DIR)outputs.txt;
+	-diff -a -w outputs-examples-opt.txt outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt
+  endif
+	echo "# examples outputs\n" >> $(OUTPUT_DIR)outputs.txt;
+	cat outputs-examples-saf.txt >> $(OUTPUT_DIR)outputs.txt;
 endif
 	@echo "# tests outputs\n" >> $(OUTPUT_DIR)outputs.txt
-	$(MAKE) get-outputs >> $(OUTPUT_DIR)outputs.txt
+	@$(MAKE) --no-print-directory get-outputs >> $(OUTPUT_DIR)outputs.txt
+
+no-get-outputs:
+	@$(MAKE) --no-print-directory --directory=bessel get-outputs
+	@$(MAKE) --no-print-directory --directory=dd2 get-outputs
+	@$(MAKE) --no-print-directory --directory=qbeta get-outputs
+	@$(MAKE) --no-print-directory --directory=rgamma get-outputs
+	@$(MAKE) --no-print-directory --directory=globals get-outputs
 
 get-outputs:
-	$(MAKE) --directory=4darray get-outputs
-	$(MAKE) --directory=agemat get-outputs
-	$(MAKE) --directory=altexample get-outputs
-	$(MAKE) --directory=alternatives get-outputs
-	$(MAKE) --directory=adnuts get-outputs
-	$(MAKE) --directory=bessel get-outputs
-	$(MAKE) --directory=beta2 get-outputs
-	$(MAKE) --directory=beta3 get-outputs
-	$(MAKE) --directory=beta_deviate get-outputs
-	$(MAKE) --directory=beta_regression get-outputs
-	$(MAKE) --directory=betai get-outputs
-	$(MAKE) --directory=betareg get-outputs
-	$(MAKE) --directory=changepoint get-outputs
-	$(MAKE) --directory=colfill get-outputs
-	$(MAKE) --directory=cov_re get-outputs
-	$(MAKE) --directory=ctl get-outputs
-	$(MAKE) --directory=data_adstring_array get-outputs
-	$(MAKE) --directory=dd2 get-outputs
-	$(MAKE) --directory=dualaveraging get-outputs
-	$(MAKE) --directory=expm get-outputs
-	$(MAKE) --directory=f1b2vc5 get-outputs
-	$(MAKE) --directory=geolocation get-outputs
-	$(MAKE) --directory=glmmadmb get-outputs
-	$(MAKE) --directory=globals get-outputs
-	$(MAKE) --directory=gradients_output get-outputs
-	$(MAKE) --directory=hess_step get-outputs
-	$(MAKE) --directory=high_iarray get-outputs
-	$(MAKE) --directory=hysimple get-outputs
-	$(MAKE) --directory=initializationfunction get-outputs
-	$(MAKE) --directory=init_bounded_number_matrix get-outputs
-	$(MAKE) --directory=issue108 get-outputs
-	$(MAKE) --directory=lprof get-outputs
-	$(MAKE) --directory=mcmc-theta get-outputs
-	$(MAKE) --directory=orange_mvn get-outputs
-	$(MAKE) --directory=poisp get-outputs
-	$(MAKE) --directory=priors get-outputs
-	$(MAKE) --directory=qbeta get-outputs
-	$(MAKE) --directory=rgamma get-outputs
-	$(MAKE) --directory=rsimple get-outputs
-	$(MAKE) --directory=simple_mcmc get-outputs
-	$(MAKE) --directory=svd get-outputs
-	$(MAKE) --directory=testminmax get-outputs
-	$(MAKE) --directory=tiny get-outputs
-	$(MAKE) --directory=tiny_ad_fe get-outputs
-	$(MAKE) --directory=tiny_ad_re get-outputs
-	$(MAKE) --directory=tinyfun get-outputs
-	$(MAKE) --directory=vectorize get-outputs
-	$(MAKE) --directory=vonmises get-outputs
+	@$(MAKE) --no-print-directory --directory=4darray get-outputs
+	@$(MAKE) --no-print-directory --directory=agemat get-outputs
+	@$(MAKE) --no-print-directory --directory=altexample get-outputs
+	@$(MAKE) --no-print-directory --directory=alternatives get-outputs
+	@$(MAKE) --no-print-directory --directory=adnuts get-outputs
+	@$(MAKE) --no-print-directory --directory=beta2 get-outputs
+	@$(MAKE) --no-print-directory --directory=beta3 get-outputs
+	@$(MAKE) --no-print-directory --directory=beta_deviate get-outputs
+	@$(MAKE) --no-print-directory --directory=beta_regression get-outputs
+	@$(MAKE) --no-print-directory --directory=betai get-outputs
+	@$(MAKE) --no-print-directory --directory=betareg get-outputs
+	@$(MAKE) --no-print-directory --directory=changepoint get-outputs
+	@$(MAKE) --no-print-directory --directory=colfill get-outputs
+	@$(MAKE) --no-print-directory --directory=cov_re get-outputs
+	@$(MAKE) --no-print-directory --directory=ctl get-outputs
+	@$(MAKE) --no-print-directory --directory=data_adstring_array get-outputs
+	@$(MAKE) --no-print-directory --directory=dualaveraging get-outputs
+	@$(MAKE) --no-print-directory --directory=expm get-outputs
+	@$(MAKE) --no-print-directory --directory=f1b2vc5 get-outputs
+	@$(MAKE) --no-print-directory --directory=geolocation get-outputs
+	@$(MAKE) --no-print-directory --directory=glmmadmb get-outputs
+	@$(MAKE) --no-print-directory --directory=gradients_output get-outputs
+	@$(MAKE) --no-print-directory --directory=hess_step get-outputs
+	@$(MAKE) --no-print-directory --directory=high_iarray get-outputs
+	@$(MAKE) --no-print-directory --directory=hysimple get-outputs
+	@$(MAKE) --no-print-directory --directory=initializationfunction get-outputs
+	@$(MAKE) --no-print-directory --directory=init_bounded_number_matrix get-outputs
+	@$(MAKE) --no-print-directory --directory=issue108 get-outputs
+	@$(MAKE) --no-print-directory --directory=mcmc-theta get-outputs
+	@$(MAKE) --no-print-directory --directory=orange_mvn get-outputs
+	@$(MAKE) --no-print-directory --directory=poisp get-outputs
+	@$(MAKE) --no-print-directory --directory=priors get-outputs
+	@$(MAKE) --no-print-directory --directory=rsimple get-outputs
+	@$(MAKE) --no-print-directory --directory=simple_mcmc get-outputs
+	@$(MAKE) --no-print-directory --directory=svd get-outputs
+	@$(MAKE) --no-print-directory --directory=testminmax get-outputs
+	@$(MAKE) --no-print-directory --directory=tiny get-outputs
+	@$(MAKE) --no-print-directory --directory=tiny_ad_fe get-outputs
+	@$(MAKE) --no-print-directory --directory=tiny_ad_re get-outputs
+	@$(MAKE) --no-print-directory --directory=tinyfun get-outputs
+	@$(MAKE) --no-print-directory --directory=vectorize get-outputs
+	@$(MAKE) --no-print-directory --directory=vonmises get-outputs
+	@$(MAKE) --no-print-directory --directory=atan2 get-outputs
+	@$(MAKE) --no-print-directory --directory=df33_tester get-outputs
+	@$(MAKE) --no-print-directory --directory=lprof get-outputs

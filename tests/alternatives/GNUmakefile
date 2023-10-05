@@ -25,15 +25,16 @@ clean:
 	$(MAKE) --directory=RC05_quad clean
 	$(MAKE) --directory=RC01_svd clean
 get-outputs:
-	$(MAKE) --directory=RC04_solve get-outputs
-	$(MAKE) --directory=RC04_det get-outputs
-	$(MAKE) --directory=RC04_inv get-outputs
-	$(MAKE) --directory=RC10_spline1 get-outputs
-	$(MAKE) --directory=RC10_spline2 get-outputs
-	$(MAKE) --directory=RC13_dsort get-outputs
-	$(MAKE) --directory=RC15_eigen get-outputs
-	$(MAKE) --directory=RC26_dflndet get-outputs
-	$(MAKE) --directory=RC27_dfsolve1 get-outputs
-	$(MAKE) --directory=RC27_dfsolve2 get-outputs
-	$(MAKE) --directory=RC05_quad get-outputs
-	$(MAKE) --directory=RC01_svd get-outputs
+	@echo "# tests alternatives"
+	@$(MAKE) --no-print-directory --directory=RC04_solve get-outputs
+	@$(MAKE) --no-print-directory --directory=RC04_det get-outputs
+	@$(MAKE) --no-print-directory --directory=RC04_inv get-outputs
+	@$(MAKE) --no-print-directory --directory=RC10_spline1 get-outputs
+	@$(MAKE) --no-print-directory --directory=RC10_spline2 get-outputs
+	@$(MAKE) --no-print-directory --directory=RC13_dsort get-outputs
+	@$(MAKE) --no-print-directory --directory=RC15_eigen get-outputs
+	@$(MAKE) --no-print-directory --directory=RC26_dflndet get-outputs
+	@$(MAKE) --no-print-directory --directory=RC27_dfsolve1 get-outputs
+	@$(MAKE) --no-print-directory --directory=RC27_dfsolve2 get-outputs
+	@$(MAKE) --no-print-directory --directory=RC05_quad get-outputs
+	@$(MAKE) --no-print-directory --directory=RC01_svd get-outputs

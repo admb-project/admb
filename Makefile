@@ -44,7 +44,7 @@ help:
 
 installer: zip
 
-zip: $(CXX)-zip
+zip: $(CXX)$(VSCMD_VER)-zip
 
 #Microsoft Visual C++
 cl: cl$(VSCMD_VER)-all

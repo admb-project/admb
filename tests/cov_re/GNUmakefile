@@ -1,22 +1,16 @@
-TARGET=cov_re
-OVERRIDE=all
+all:
+	$(MAKE) --file=cov_re.mak all
+	$(MAKE) --file=cov_re_sep.mak all
 
-ifeq ($(OS),Windows_NT)
-include ..\test-rules.mak
-else
-include ../test-rules.mak
-endif
-
-run: $(TARGET)
-ifeq ($(CMDSHELL),cmd)
-	cov_re
-else
-	./cov_re
-endif
+run:
+	$(MAKE) --file=cov_re.mak run
 	$(MAKE) --file=cov_re_sep.mak run
 
-get-outputs: _get-outputs
-	$(MAKE) --file=cov_re_sep.mak get-outputs
+get-outputs:
+	@echo "# tests cov_re cov_re_sep"
+	@$(MAKE) --no-print-directory --file=cov_re.mak get-outputs
+	@$(MAKE) --no-print-directory --file=cov_re_sep.mak get-outputs
 
-clean: _clean
+clean:
+	$(MAKE) --file=cov_re.mak clean
 	$(MAKE) --file=cov_re_sep.mak clean

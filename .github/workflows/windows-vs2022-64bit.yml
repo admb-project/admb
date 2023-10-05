@@ -8,7 +8,7 @@ jobs:
     runs-on: windows-latest
     
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@main
     - name: clean
       run: |
         pushd "%ProgramFiles%\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
@@ -43,7 +43,9 @@ jobs:
     - name: tests
       run: |
         pushd "%ProgramFiles%\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
-        nmake verify DEBUG=yes SAFE_ONLY=yes
+        pushd tests & nmake examples & popd
+        pushd tests & nmake unit-gtests & popd
+        pushd tests & nmake outputs.txt & popd
       shell: cmd
     - name: Artifact
       uses: actions/upload-artifact@v1
@@ -53,5 +55,5 @@ jobs:
     - name: analyze
       run: |
         pushd "%ProgramFiles%\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
-        cd src & nmake CXXFLAGS=/analyze DEBUG=yes objects
+        pushd src & nmake CXXFLAGS=/analyze DEBUG=yes objects & popd
       shell: cmd

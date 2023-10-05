@@ -104,6 +104,11 @@ else
 endif
 
 get-outputs:
+ifeq ($(CMDSHELL),cmd)
+	@..\\..\\scripts\\get-outputs.bat glmmadmb 
+else
+	@sh ../../scripts/get-outputs.sh glmmadmb
+endif
 
 total-clean: clean
 ifeq ($(CMDSHELL),cmd)

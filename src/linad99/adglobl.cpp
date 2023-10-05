@@ -21,26 +21,28 @@ adpvm_manager* ad_comm::pvm_manager = NULL;
 #endif
 
  adstring ad_comm::subdir;
- cifstream * ad_comm::global_datafile=NULL;
- cifstream * ad_comm::global_parfile=NULL;
- ofstream *  ad_comm::global_logfile=NULL;
- uistream *  ad_comm::global_bparfile=NULL;
- adstring ad_comm::adprogram_name;
+
+THREAD cifstream* ad_comm::global_datafile = nullptr;
+THREAD cifstream* ad_comm::global_parfile = nullptr;
+THREAD ofstream* ad_comm::global_logfile = nullptr;
+
+THREAD_LOCAL uistream* ad_comm::global_bparfile = nullptr;
+THREAD_LOCAL adstring ad_comm::adprogram_name;
  adstring ad_comm::working_directory_path;
  char ad_comm::option_flags[10];
- int ad_comm::argc=0;
+THREAD_LOCAL int ad_comm::argc = 0;
  int ad_comm::no_pvm_flag=0;
  int ad_comm::no_atlas_flag=0;
  int ad_comm::print_hess_and_exit_flag;
  int ad_comm::no_ln_det_choleski_flag=0;
- char ** ad_comm::argv=NULL;
- double objective_function_value::fun_without_pen=0;
+THREAD_LOCAL char** ad_comm::argv = nullptr;
+THREAD_LOCAL double objective_function_value::fun_without_pen = 0.0;
 
 int function_minimizer::output_flag = defaults::output;
 
-_THREAD DF_FILE* gradient_structure::fp = nullptr;
-_THREAD gradient_structure* gradient_structure::_instance = nullptr;
-_THREAD grad_stack* gradient_structure::GRAD_STACK1 = nullptr;
+THREAD_LOCAL DF_FILE* gradient_structure::fp = nullptr;
+THREAD_LOCAL gradient_structure* gradient_structure::_instance = nullptr;
+THREAD_LOCAL grad_stack* gradient_structure::GRAD_STACK1 = nullptr;
 
 std::ostream& get_output_stream()
 {

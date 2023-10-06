@@ -1,0 +1,14 @@
+FROM mcr.microsoft.com/windows:ltsc2019
+COPY msys2-x86_64.exe .
+RUN .\msys2-x86_64.exe install --confirm-command --root c:/msys64
+
+ENV PATH=%PATH%;C:\\msys64\\usr\\bin;C:\\msys64\\bin;c:\\msys64\\mingw64\\bin;c:\\Windows\\system32;c:\\admb-main\\
+
+RUN cd c:\msys64 && pacman -Syuu --noconfirm
+RUN cd c:\msys64 && pacman -Syuu --noconfirm
+RUN cd c:\msys64 && pacman -Syuu --noconfirm mingw-w64-x86_64-toolchain flex make git
+
+RUN cd c:\ && git clone https://github.com/admb-project/admb.git admb-main
+RUN cd c:\\admb-main && make
+
+ENTRYPOINT [ "C:\\admb-main\\admb.cmd" ]

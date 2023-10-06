@@ -1,0 +1,18 @@
+FROM gcc:latest
+
+RUN apt-get update
+RUN apt-get upgrade --yes
+RUN apt-get install build-essential --yes
+RUN apt-get install make --yes
+RUN apt-get install flex --yes
+RUN apt-get install git --yes
+
+RUN cd /usr/local/src && git clone https://github.com/admb-project/admb.git
+RUN make --directory /usr/local/src/admb -j 8
+RUN make --directory /usr/local/src/admb install
+RUN useradd -m --shell /bin/bash --home-dir /workdir admb
+
+USER admb
+WORKDIR /workdir
+
+ENTRYPOINT ["admb"]

@@ -36,10 +36,10 @@ all: $(clean)
 	$(MAKE) $(BASE)
 
 msys2: msys2-x86_64.exe
-	docker build --file Dockerfile-msys2 -t admb:$(VERSION) .
+	docker build --file Dockerfile-msys2 -t $(IMAGE):$(VERSION) .
 
 winlibs: admb-main.zip winlibs.zip
-	docker build --file Dockerfile-winlibs -t admb:$(VERSION) .
+	docker build --file Dockerfile-winlibs -t $(IMAGE):$(VERSION) .
 
 msys2-x86_64.exe:
 	powershell Invoke-WebRequest -Uri https://github.com/msys2/msys2-installer/releases/download/2023-07-18/msys2-x86_64-20230718.exe -OutFile msys2-x86_64.exe
@@ -51,7 +51,7 @@ winlibs.zip:
 	powershell Invoke-WebRequest -Uri https://github.com/brechtsanders/winlibs_mingw/releases/download/13.2.0mcf-16.0.6-11.0.1-ucrt-r2/winlibs-x86_64-mcf-seh-gcc-13.2.0-mingw-w64ucrt-11.0.1-r2.zip -OutFile winlibs.zip
 
 run: $(MODEL_NAME)
-	docker run --rm --volume $(MOUNT_DIR):c:\\$(MODEL_NAME) --workdir c:\\$(MODEL_NAME) admb:$(VERSION) $(MODEL_NAME)$(MODEL_EXT)
+	docker run --rm --volume $(MOUNT_DIR):c:\\$(MODEL_NAME) --workdir c:\\$(MODEL_NAME) $(IMAGE):$(VERSION) $(MODEL_NAME)$(MODEL_EXT)
 ifeq ($(ISCMDSHELL),yes)
 	cd $(MODEL_NAME) && $(MODEL_NAME)
 else
@@ -59,7 +59,7 @@ else
 endif
 
 console: $(MODEL_NAME)
-	docker run -it --entrypoint cmd --rm --volume $(MOUNT_DIR):C:\\$(MODEL_NAME) --workdir C:\\$(MODEL_NAME) admb:$(VERSION)
+	docker run -it --entrypoint cmd --rm --volume $(MOUNT_DIR):C:\\$(MODEL_NAME) --workdir C:\\$(MODEL_NAME) $(IMAGE):$(VERSION)
 
 $(MODEL_NAME):
 ifeq ($(ISCMDSHELL),yes)

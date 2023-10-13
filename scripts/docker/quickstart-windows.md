@@ -23,7 +23,7 @@ The Windows operating system of host computer is needed to use the ADMB Docker c
 Downloads
 ---------
 
-* Using the Docker Desktop, pull the [ADMB container](https://hub.docker.com/r/johnoel/admb/).
+* Using the Docker Desktop, pull the [ADMB container](https://hub.docker.com/r/johnoel/admb/) or use the command below in them command prompt.
 
        C:\> docker pull johnoel/admb:windows
 

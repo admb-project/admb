@@ -17,6 +17,15 @@ Please read the quickstart for the host computer.
 
 * [Quickstart for Windows](quickstart-windows.md)
 
+Upload
+------
+
+To upload images, use the commands below.
+
+    $ docker login
+    $ docker tag admb:linux johnoel/admb:linux
+    $ docker push
+
 Help
 ----
 

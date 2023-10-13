@@ -16,14 +16,16 @@ Below is the list of tools that are preinstalled with the container.
 Requirements
 ------------
 
-The operating system of host computer running ADMB Docker container for Linux must be either Linux, MacOS or Windows.
+To use ADMB Docker container for Linux, the operating system of host computer must be either Linux, MacOS or Windows.
+
+* Download and install the [Docker Desktop](https://www.docker.com/products/docker-desktop/) for Linux or the MacOS.
 
 Downloads
 ---------
 
-* Download and install the [Docker Desktop](https://www.docker.com/products/docker-desktop/) for Linux or the MacOS.
+* Using the Docker Desktop, download the [ADMB container](https://hub.docker.com/r/johnoel/admb/).
 
-* Using the Docker Desktop, download [ADMB container]("Provide link").
+       ~$ docker pull johnoel/admb:linux
 
 Usage
 -----

@@ -23,7 +23,7 @@ To use ADMB Docker container for Linux, the operating system of host computer mu
 Downloads
 ---------
 
-* Using the Docker Desktop, download the [ADMB container](https://hub.docker.com/r/johnoel/admb/) or use the command below from the terminal.
+* Using the Docker Desktop, download the [ADMB Docker Image](https://hub.docker.com/r/johnoel/admb/) or use the command below from the terminal.
 
        ~$ docker pull johnoel/admb:linux
 

@@ -1,12 +1,12 @@
-QuickStart - Using ADMB Docker Container for Unix
-=================================================
+QuickStart - Using ADMB Docker Image for Unix
+=============================================
 
 Details container, requirements and procedures to download and use the ADMB Docker container for running and building ADMB models.
 
-Container
----------
+Image
+-----
 
-The ADMB Docker container uses the *Debian 12.1 (Bookwork)* as the operating system.
+The ADMB Docker image uses the *Debian 12.1 (Bookwork)* as the operating system.
 
 Below is the list of tools that are preinstalled with the container.
 

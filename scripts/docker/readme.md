@@ -13,9 +13,9 @@ Containers
 
 Please read the quickstart for the host computer.
 
-* [Quickstart for Unix](quickstart-unix.html)
+* [Quickstart for Unix](quickstart-unix.md)
 
-* [Quickstart for Windows](quickstart-windows.html)
+* [Quickstart for Windows](quickstart-windows.md)
 
 Help
 ----

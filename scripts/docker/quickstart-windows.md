@@ -16,14 +16,14 @@ Below is the list of tools that are preinstalled with the container.
 Requirements
 ------------
 
-The Windows operating system of host computer is needed to use the ADMB Docker container for Windows.
+The Windows operating system is needed for the host computer to use the ADMB Docker container for Windows.
 
 * Download and install the [Docker Desktop](https://www.docker.com/products/docker-desktop/) for Windows.
 
 Downloads
 ---------
 
-* Using the Docker Desktop, pull the [ADMB container](https://hub.docker.com/r/johnoel/admb/) or use the command below in them command prompt.
+* Using the Docker Desktop, pull the [ADMB Docker Image](https://hub.docker.com/r/johnoel/admb/) or use the command below in them command prompt.
 
        C:\> docker pull johnoel/admb:windows
 

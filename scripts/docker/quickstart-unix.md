@@ -18,7 +18,7 @@ Requirements
 
 To use ADMB Docker container for Linux, the operating system of host computer must be either Linux, MacOS or Windows.
 
-* Download and install the [Docker Desktop](https://www.docker.com/products/docker-desktop/) for Linux or the MacOS.
+* Download and install the [Docker Desktop](https://www.docker.com/products/docker-desktop/).
 
 Downloads
 ---------

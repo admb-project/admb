@@ -36,7 +36,7 @@ Usage
 
 2. Build simple.tpl into an executable using the ADMB Docker container.
 
-        ~/simple$ docker run -rm --volume ~/simple:/simple --workdir /simple admb simple.tpl
+        ~/simple$ docker run -rm --volume ~/simple:/simple --workdir /simple johnoel/admb:linux simple.tpl
 
     **Options**
 

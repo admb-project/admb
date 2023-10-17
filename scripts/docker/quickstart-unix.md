@@ -46,7 +46,7 @@ Usage
 
     * **--workdir** changes the container current directory to **/simple**. 
 
-    * **admb** is the container name and **simple.tpl** is the file to build.
+    * **johnoel/admb:linx** is the container name and **simple.tpl** is the file to build.
 
 3. Run **simple** locally.
 
@@ -73,7 +73,7 @@ The procedure below shows how to use the container's interactive command line sh
 
     * **--workdir** changes the container current directory to the work directory **/simple**. 
 
-    * **admb:latest** is the container name.
+    * **johnoel/admb:linux** is the container name.
 
 2. Build and run simple model in the container's interactive shell.
     

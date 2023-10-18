@@ -75,11 +75,11 @@ The procedure below shows how to use the container's interactive command line sh
 
    For Windows host,
    
-       docker run -it --entrypoint /bin/bash -rm --volume %CD%:/simple --workdir /simple johnoel/admb:linux
+       docker run -it --entrypoint /bin/bash --rm --volume %CD%:/simple --workdir /simple johnoel/admb:linux
 
    For Unix host,
    
-       docker run -it --entrypoint /bin/bash -rm --volume $PWD:/simple --workdir /simple johnoel/admb:linux
+       docker run -it --entrypoint /bin/bash --rm --volume $PWD:/simple --workdir /simple johnoel/admb:linux
 
     **Options**
 

@@ -75,7 +75,7 @@ Console
 
 The procedure below shows how to use the container's interactive command line shell to build and run models.
 
-1. Use docker to open container's interactive shell.
+1. Use docker to open interactive shell.
 
    For Windows host,
    
@@ -97,9 +97,9 @@ The procedure below shows how to use the container's interactive command line sh
 
     * **--workdir** changes the container current directory to the work directory **/simple**. 
 
-    * **johnoel/admb:linux** is the container name.
+    * **johnoel/admb:linux** is the image name.
 
-3. Build and run simple model in the container's interactive shell.
+3. Build and run simple model in the interactive shell.
     
       2.1 Build simple.tpl.
 

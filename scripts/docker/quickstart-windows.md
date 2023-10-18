@@ -19,24 +19,25 @@ Requirements
 The Windows operating system is needed on the host computer to use the ADMB Docker Image for Windows.
 
 * Download and install the [Docker Desktop](https://www.docker.com/products/docker-desktop/) for Windows.
+* Set the default type to Windows Containers [read documentation](https://learn.microsoft.com/en-us/virtualization/windowscontainers/quick-start/set-up-environment?tabs=dockerce#install-the-container-runtime).
 
 Downloads
 ---------
 
 * Using the Docker Desktop, pull the [ADMB Docker Image](https://hub.docker.com/r/johnoel/admb/) or use the command below in them command prompt.
 
-       C:\> docker pull johnoel/admb:windows
+       docker pull johnoel/admb:windows
 
 Usage
 -----
 
 1. Open Command Prompt and change to the model local directory.
 
-        C:\> cd C:\simple
+        cd C:\simple
 
 2. Build simple.tpl into an executable using the ADMB Docker Image.
 
-        C:\simple> docker run --rm --volume C:\simple:C:\simple --workdir C:\simple johnoel/admb:windows simple.tpl
+        docker run --rm --volume %CD%:C:\simple --workdir C:\simple johnoel/admb:windows simple.tpl
 
     **Options**
 
@@ -50,7 +51,7 @@ Usage
 
 3. Run **simple.exe** locally.
 
-        C:\simple> simple.exe
+        simple.exe
 
 Console
 -------
@@ -59,7 +60,7 @@ The procedure below shows how to use the interactive command line shell to build
 
 1. Use docker to open container's interactive shell.
 
-        C:\simple> docker run -it --entrypoint cmd --rm --volume C:\simple:C:\simple --workdir C:\simple admb:latest
+        docker run -it --entrypoint cmd --rm --volume %CD%:C:\simple --workdir C:\simple admb:latest
 
     **Options**
 
@@ -79,15 +80,15 @@ The procedure below shows how to use the interactive command line shell to build
     
       2.1 Build simple.tpl.
 
-        C:\simple> admb simple.tpl
+        admb simple.tpl
 
       2.2 Run simple executable.
 
-        C:\simple> simple.exe
+        simple.exe
 
       2.3 Exit container shell.
 
-        C:\simple> exit
+        exit
 
 Help
 ----

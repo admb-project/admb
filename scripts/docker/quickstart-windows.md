@@ -40,13 +40,13 @@ Usage
 
     **Options**
 
-    * **-rm** automatically removes temporary files for a docker run.
+    * **--rm** automatically removes temporary files for a docker run.
 
     * **--volume C:\simple:C:\simple** mounts the local directory **C:\simple** onto the container filesystem at **C:\simple**.
 
     * **--workdir /simple** changes the container current directory to **/simple**. 
 
-    * **johnoel/admb:windows** is the container name and **simple.tpl** is the file to build.
+    * **johnoel/admb:windows** is the ADMB Docker Image name and **simple.tpl** is the file to build.
 
 3. Run **simple.exe** locally.
 
@@ -67,13 +67,13 @@ The procedure below shows how to use the container's interactive command line sh
 
     * **--entrypoint** uses **cmd** for the shell.
 
-    * **-rm** automatically removes temporary files for a docker run.
+    * **--rm** automatically removes temporary files for a docker run.
 
     * **--volume** mounts the local directory **C:\simple** onto the container using the same directory **C:\simple**.
 
     * **--workdir** changes the container current directory to the work directory **C:\simple**. 
 
-    * **johnoel/admb:windows** is the container name.
+    * **johnoel/admb:windows** is the ADMB Docker image name.
 
 2. Build and run simple model in the container's interactive shell.
     

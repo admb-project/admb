@@ -56,13 +56,17 @@ Usage
 
     * **johnoel/admb:linx** is the container name and **simple.tpl** is the file to build.
 
-4. Run **simple** locally.
+4. Run **simple**.
 
    For Windows host,
 
-        simple.exe
+        docker run --rm --volume %CD%:/simple --workdir /simple --entrypoint ./simple johnoel/admb:linux
+        
+   For MacOS host,
 
-   For Unix host,
+        docker run --rm --volume $PWD:/simple --workdir /simple --entrypoint ./simple johnoel/admb:linux
+
+   For Linux host, executable could be run locally.
    
         ./simple
 

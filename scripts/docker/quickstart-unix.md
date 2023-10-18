@@ -40,7 +40,7 @@ Usage
 
     **Options**
 
-    * **-rm** automatically removes temporary files for a docker run.
+    * **--rm** automatically removes temporary files for a docker run.
 
     * **--volume** mounts the local directory **~/simple** onto the container filesystem at **/simple**.
 
@@ -67,7 +67,7 @@ The procedure below shows how to use the container's interactive command line sh
 
     * **--entrypoint** uses **/bin/bash** for the shell.
 
-    * **-rm** automatically removes temporary files for a docker run.
+    * **--rm** automatically removes temporary files for a docker run.
 
     * **--volume** mounts the local directory **~/simple** onto the container using the same directory **/simple**.
 

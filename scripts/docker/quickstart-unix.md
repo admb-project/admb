@@ -99,15 +99,15 @@ The procedure below shows how to use the container's interactive command line sh
     
       2.1 Build simple.tpl.
 
-        admb:/simple$ admb simple.tpl
+        admb simple.tpl
 
       2.2 Run simple executable.
 
-        admb:/simple$ ./simple
+        ./simple
 
       2.3 Exit container shell.
 
-        admb:/simple$ exit
+        exit
 
 Help
 ----

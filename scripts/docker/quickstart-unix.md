@@ -96,20 +96,19 @@ Docker run options
 
 Below details the options for **docker run**:
 
-    **Options**
+**Options**
 
-    * **-it** opens an interactive shell.
+* **-it** opens an interactive shell.
 
-    * **--entrypoint** uses **/bin/bash** for the shell.
+* **--entrypoint** uses **/bin/bash** for the shell.
 
-    * **--rm** automatically removes temporary files from a docker run.
+* **--rm** automatically removes temporary files from a docker run.
 
-    * **--volume** mounts the current local directory **$PWD** onto the container filesystem at **/simple**.
+* **--volume** mounts the current local directory **$PWD** onto the container filesystem at **/simple**.
 
-    * **--workdir** changes the container current directory to **/simple**. 
+* **--workdir** changes the container current directory to **/simple**. 
 
-    * **johnoel/admb:linx** is the container name and **simple.tpl** is the file to build.
-
+* **johnoel/admb:linx** is the container name and **simple.tpl** is the file to build.
 
 Help
 ----

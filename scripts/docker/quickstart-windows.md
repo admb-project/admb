@@ -72,15 +72,15 @@ Docker run options
 
 Below details the options for **docker run**:
 
-    **Options**
+**Options**
 
-    * **--rm** automatically removes temporary files from a docker run.
+* **--rm** automatically removes temporary files from a docker run.
 
-    * **--volume %CD%:C:\simple** mounts the current local directory **%CD%** onto the container filesystem at **C:\simple**.
+* **--volume %CD%:C:\simple** mounts the current local directory **%CD%** onto the container filesystem at **C:\simple**.
 
-    * **--workdir C:\simple** changes the container current directory to **C:\simple**. 
+* **--workdir C:\simple** changes the container current directory to **C:\simple**. 
 
-    * **johnoel/admb:windows** is the ADMB Docker Image name and **simple.tpl** is the file to build.
+* **johnoel/admb:windows** is the ADMB Docker Image name and **simple.tpl** is the file to build.
 
 Help
 ----

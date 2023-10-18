@@ -60,7 +60,7 @@ The procedure below shows how to use the interactive command line shell to build
 
 1. Use docker to open container's interactive shell.
 
-        docker run -it --entrypoint cmd --rm --volume %CD%:C:\simple --workdir C:\simple admb:latest
+        docker run -it --entrypoint cmd --rm --volume %CD%:C:\simple --workdir C:\simple johnoel/admb:windows
 
     **Options**
 
@@ -70,7 +70,7 @@ The procedure below shows how to use the interactive command line shell to build
 
     * **--rm** automatically removes temporary files for a docker run.
 
-    * **--volume** mounts the local directory **C:\simple** onto the container using the same directory **C:\simple**.
+    * **--volume** mounts the local directory **%CD%** onto the container using the  directory **C:\simple**.
 
     * **--workdir** changes the container current directory to the work directory **C:\simple**. 
 

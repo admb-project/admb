@@ -53,7 +53,7 @@ The procedure below shows how to use the interactive command line shell to build
 
         docker run -it --entrypoint cmd --rm --volume %CD%:C:\simple --workdir C:\simple johnoel/admb:windows
 
-2. Build and run simple model in the container's interactive shell.
+2. Build and run simple model within the container's interactive shell.
     
       Build simple.tpl.
 
@@ -74,13 +74,17 @@ Below details the options for **docker run**:
 
 **Options**
 
+* **-it** opens an interactive shell.
+
+* **--entrypoint** resets the default program to run.
+
 * **--rm** automatically removes temporary files from a docker run.
 
 * **--volume %CD%:C:\simple** mounts the current local directory **%CD%** onto the container filesystem at **C:\simple**.
 
 * **--workdir C:\simple** changes the container current directory to **C:\simple**. 
 
-* **johnoel/admb:windows** is the ADMB Docker Image name and **simple.tpl** is the file to build.
+* **johnoel/admb:windows** is the name of the Docker Image and **simple.tpl** is the file to build.
 
 Help
 ----

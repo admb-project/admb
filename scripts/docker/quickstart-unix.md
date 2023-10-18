@@ -1,36 +1,38 @@
-QuickStart - Using ADMB Docker Image for Unix
-=============================================
+QuickStart - Using ADMB Docker Linux Image
+==========================================
 
-Details requirements and procedures to download and use the ADMB Docker container for running and building ADMB models.
+Details prerequisites and procedures to use the ADMB Docker Linux image for building and running ADMB models.
 
-Image
------
+ADMB Docker Linux Image
+-----------------------
 
-The ADMB Docker image uses the *Debian 12.1 (Bookwork)* as the operating system.
+The ADMB Docker image uses the *Debian 12.1 (Bookwork)* as the base operating system.
 
 Below is the list of tools that are preinstalled.
 
 * Compiler - GNU GCC version 13.2 
 * ADMB - latest version
 
-Requirements
-------------
+Prerequisites
+-------------
 
 To use ADMB Docker Image for Linux, the operating system of host computer must be either Linux, MacOS or Windows.
 
 * Download and install the [Docker Desktop](https://www.docker.com/products/docker-desktop/).
 
+For MacOS or Window computers, click the Docker Desktop to run the Docker services on the local host computer.
+
 Downloads
 ---------
 
-* Using the Docker Desktop, download the [ADMB Docker Image](https://hub.docker.com/r/johnoel/admb/) or use the command below from the terminal.
+Using the Docker Desktop, download the [ADMB Docker Image](https://hub.docker.com/r/johnoel/admb/) or use the command below from the terminal.
 
        docker pull johnoel/admb:linux
 
 Usage
 -----
 
-1. Open a Terminal and change to the model local directory.
+1. Open a Terminal (or Command Prompt for Windows) and change to the model local directory.
 
         cd simple
 
@@ -44,19 +46,9 @@ Usage
 
         docker run --rm --volume $PWD:/simple --workdir /simple johnoel/admb:linux simple.tpl
 
-   Note: A warning will be displayed for running AMD64 image on the Apple processor, but it will build and run model. 
+   _*Note*: A warning will be displayed for running AMD64 image on the Apple processor, but it will build and run model._
 
-    **Options**
-
-    * **--rm** automatically removes temporary files for a docker run.
-
-    * **--volume** mounts the local directory **~/simple** onto the container filesystem at **/simple**.
-
-    * **--workdir** changes the container current directory to **/simple**. 
-
-    * **johnoel/admb:linx** is the container name and **simple.tpl** is the file to build.
-
-4. Run **simple**.
+4. Run **simple** executable.
 
    For Windows host,
 
@@ -85,33 +77,39 @@ The procedure below shows how to use the interactive command line shell to build
    
        docker run -it --entrypoint /bin/bash --rm --volume $PWD:/simple --workdir /simple johnoel/admb:linux
 
+3. Build and run simple model in the interactive shell.
+    
+      Build simple.tpl.
+
+        admb simple.tpl
+
+      Run simple executable.
+
+        ./simple
+
+      Exit container shell.
+
+        exit
+
+Docker run options
+------------------
+
+Below details the options for **docker run**:
+
     **Options**
 
     * **-it** opens an interactive shell.
 
     * **--entrypoint** uses **/bin/bash** for the shell.
 
-    * **--rm** automatically removes temporary files for a docker run.
+    * **--rm** automatically removes temporary files from a docker run.
 
-    * **--volume** mounts the local directory **~/simple** onto the container using the same directory **/simple**.
+    * **--volume** mounts the current local directory **$PWD** onto the container filesystem at **/simple**.
 
-    * **--workdir** changes the container current directory to the work directory **/simple**. 
+    * **--workdir** changes the container current directory to **/simple**. 
 
-    * **johnoel/admb:linux** is the image name.
+    * **johnoel/admb:linx** is the container name and **simple.tpl** is the file to build.
 
-3. Build and run simple model in the interactive shell.
-    
-      2.1 Build simple.tpl.
-
-        admb simple.tpl
-
-      2.2 Run simple executable.
-
-        ./simple
-
-      2.3 Exit container shell.
-
-        exit
 
 Help
 ----

@@ -1,31 +1,31 @@
-QuickStart - Using ADMB Docker Image for Windows
-================================================
+QuickStart - Using ADMB Docker Windows Image
+============================================
 
-Details requirements and procedures to download and use the ADMB Docker Image for running and building ADMB models.
+Details prerequisites and procedures to use the ADMB Docker Windows image for building and running ADMB models.
 
-Image
------
+ADMB Docker Windows Image
+-------------------------
 
-The ADMB Docker image uses the *Windows 10 LTSC 2019* as the operating system.
+The ADMB Docker Windows image uses the *Windows 10 LTSC 2019* as the base operating system.
 
 Below is the list of tools that are preinstalled.
 
 * Winlibs - GNU GCC version 13.2 
 * ADMB - latest version
 
-Requirements
-------------
+Prerequisites
+-------------
 
-The Windows operating system is needed on the host computer to use the ADMB Docker Image for Windows.
+The Windows operating system is needed on the host computer to use the ADMB Docker Windows Image.
 
 * Download and install the [Docker Desktop](https://www.docker.com/products/docker-desktop/) for Windows.
-* Double click the the Docker Desktop to run.
-* Set the default type to Windows Containers (read [documentation](https://learn.microsoft.com/en-us/virtualization/windowscontainers/quick-start/set-up-environment?tabs=dockerce#install-the-container-runtime)).
+
+Double click the the Docker Desktop to run services.  Set the Docker default type to Windows Containers (read [documentation](https://learn.microsoft.com/en-us/virtualization/windowscontainers/quick-start/set-up-environment?tabs=dockerce#install-the-container-runtime)).
 
 Downloads
 ---------
 
-* Using the Docker Desktop, pull the [ADMB Docker Image](https://hub.docker.com/r/johnoel/admb/) or use the command below in them command prompt.
+* Using the Docker Desktop, pull the [ADMB Docker Image](https://hub.docker.com/r/johnoel/admb/) or use the command below in the command prompt to download ADMB Docker Windows image.
 
        docker pull johnoel/admb:windows
 
@@ -40,16 +40,6 @@ Usage
 
         docker run --rm --volume %CD%:C:\simple --workdir C:\simple johnoel/admb:windows simple.tpl
 
-    **Options**
-
-    * **--rm** automatically removes temporary files for a docker run.
-
-    * **--volume C:\simple:C:\simple** mounts the local directory **C:\simple** onto the container filesystem at **C:\simple**.
-
-    * **--workdir /simple** changes the container current directory to **/simple**. 
-
-    * **johnoel/admb:windows** is the ADMB Docker Image name and **simple.tpl** is the file to build.
-
 3. Run **simple.exe** locally.
 
         simple.exe
@@ -63,33 +53,34 @@ The procedure below shows how to use the interactive command line shell to build
 
         docker run -it --entrypoint cmd --rm --volume %CD%:C:\simple --workdir C:\simple johnoel/admb:windows
 
-    **Options**
-
-    * **-it** opens the interactive shell.
-
-    * **--entrypoint** uses **cmd** for the shell.
-
-    * **--rm** automatically removes temporary files for a docker run.
-
-    * **--volume** mounts the local directory **%CD%** onto the container using the  directory **C:\simple**.
-
-    * **--workdir** changes the container current directory to the work directory **C:\simple**. 
-
-    * **johnoel/admb:windows** is the ADMB Docker image name.
-
 2. Build and run simple model in the container's interactive shell.
     
-      2.1 Build simple.tpl.
+      Build simple.tpl.
 
         admb simple.tpl
 
-      2.2 Run simple executable.
+      Run simple executable.
 
         simple.exe
 
-      2.3 Exit container shell.
+      Exit container shell.
 
         exit
+
+Docker run options
+------------------
+
+Below details the options for **docker run**:
+
+    **Options**
+
+    * **--rm** automatically removes temporary files from a docker run.
+
+    * **--volume %CD%:C:\simple** mounts the current local directory **%CD%** onto the container filesystem at **C:\simple**.
+
+    * **--workdir C:\simple** changes the container current directory to **C:\simple**. 
+
+    * **johnoel/admb:windows** is the ADMB Docker Image name and **simple.tpl** is the file to build.
 
 Help
 ----

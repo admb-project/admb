@@ -20,7 +20,7 @@ The Windows operating system is needed on the host computer to use the ADMB Dock
 
 * Download and install the [Docker Desktop](https://www.docker.com/products/docker-desktop/) for Windows.
 
-Double click the the Docker Desktop to run services.  Set the Docker default type to Windows Containers (read [documentation](https://learn.microsoft.com/en-us/virtualization/windowscontainers/quick-start/set-up-environment?tabs=dockerce#install-the-container-runtime)).
+After the installing Docker Desktop, double click the the Docker Desktop to run services, then set the Docker type to Windows Containers (read [documentation](https://learn.microsoft.com/en-us/virtualization/windowscontainers/quick-start/set-up-environment?tabs=dockerce#install-the-container-runtime)).
 
 Downloads
 ---------
@@ -36,7 +36,7 @@ Usage
 
         cd C:\simple
 
-2. Build simple.tpl into an executable using the ADMB Docker Image.
+2. Build simple.tpl into an executable using the ADMB Docker Image and the mounted current local directory.
 
         docker run --rm --volume %CD%:C:\simple --workdir C:\simple johnoel/admb:windows simple.tpl
 
@@ -49,7 +49,7 @@ Console
 
 The procedure below shows how to use the interactive command line shell to build and run models.
 
-1. Use docker to open container's interactive shell.
+1. Use docker to open container's interactive shell and mount current local directory to the container.
 
         docker run -it --entrypoint cmd --rm --volume %CD%:C:\simple --workdir C:\simple johnoel/admb:windows
 

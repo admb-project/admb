@@ -20,7 +20,7 @@ To use ADMB Docker Image for Linux, the operating system of host computer must b
 
 * Download and install the [Docker Desktop](https://www.docker.com/products/docker-desktop/).
 
-For MacOS or Window computers, click the Docker Desktop to run the Docker services on the local host computer.
+For MacOS or Windows computers, click the Docker Desktop to run the Docker services on the local host computer.
 
 Downloads
 ---------
@@ -36,7 +36,7 @@ Usage
 
         cd simple
 
-2. Build simple.tpl into an executable using the ADMB Docker Image.
+2. Build simple.tpl into an executable using the ADMB Docker Image and the mounted current local directory.
 
    For Windows host,
    
@@ -67,7 +67,7 @@ Console
 
 The procedure below shows how to use the interactive command line shell to build and run models.
 
-1. Use docker to open container's interactive shell.
+1. Use docker to open container's interactive shell and mount current local directory to the container.
 
    For Windows host,
    

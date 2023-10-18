@@ -25,7 +25,7 @@ Downloads
 
 * Using the Docker Desktop, download the [ADMB Docker Image](https://hub.docker.com/r/johnoel/admb/) or use the command below from the terminal.
 
-       ~$ docker pull johnoel/admb:linux
+       docker pull johnoel/admb:linux
 
 Usage
 -----

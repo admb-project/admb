@@ -1,14 +1,14 @@
 QuickStart - Using ADMB Docker Image for Windows
 ================================================
 
-Details container, requirements and procedures to download and use the ADMB Docker container for running and building ADMB models.
+Details requirements and procedures to download and use the ADMB Docker Image for running and building ADMB models.
 
 Image
 -----
 
 The ADMB Docker image uses the *Windows 10 LTSC 2019* as the operating system.
 
-Below is the list of tools that are preinstalled with the container.
+Below is the list of tools that are preinstalled.
 
 * Winlibs - GNU GCC version 13.2 
 * ADMB - latest version
@@ -34,7 +34,7 @@ Usage
 
         C:\> cd C:\simple
 
-2. Build simple.tpl into an executable using the ADMB Docker container.
+2. Build simple.tpl into an executable using the ADMB Docker Image.
 
         C:\simple> docker run --rm --volume C:\simple:C:\simple --workdir C:\simple johnoel/admb:windows simple.tpl
 
@@ -55,7 +55,7 @@ Usage
 Console
 -------
 
-The procedure below shows how to use the container's interactive command line shell to build and run models.
+The procedure below shows how to use the interactive command line shell to build and run models.
 
 1. Use docker to open container's interactive shell.
 

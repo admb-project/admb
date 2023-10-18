@@ -1,14 +1,14 @@
 QuickStart - Using ADMB Docker Image for Unix
 =============================================
 
-Details container, requirements and procedures to download and use the ADMB Docker container for running and building ADMB models.
+Details requirements and procedures to download and use the ADMB Docker container for running and building ADMB models.
 
 Image
 -----
 
 The ADMB Docker image uses the *Debian 12.1 (Bookwork)* as the operating system.
 
-Below is the list of tools that are preinstalled with the container.
+Below is the list of tools that are preinstalled.
 
 * Compiler - GNU GCC version 13.2 
 * ADMB - latest version
@@ -16,7 +16,7 @@ Below is the list of tools that are preinstalled with the container.
 Requirements
 ------------
 
-To use ADMB Docker container for Linux, the operating system of host computer must be either Linux, MacOS or Windows.
+To use ADMB Docker Image for Linux, the operating system of host computer must be either Linux, MacOS or Windows.
 
 * Download and install the [Docker Desktop](https://www.docker.com/products/docker-desktop/).
 
@@ -34,7 +34,7 @@ Usage
 
         cd simple
 
-2. Build simple.tpl into an executable using the ADMB Docker container.
+2. Build simple.tpl into an executable using the ADMB Docker Image.
 
    For Windows host,
    
@@ -73,9 +73,9 @@ Usage
 Console
 -------
 
-The procedure below shows how to use the container's interactive command line shell to build and run models.
+The procedure below shows how to use the interactive command line shell to build and run models.
 
-1. Use docker to open interactive shell.
+1. Use docker to open container's interactive shell.
 
    For Windows host,
    

@@ -32,13 +32,19 @@ Usage
 
 1. Open a Terminal and change to the model local directory.
 
-        ~$ cd simple
+        cd simple
 
 2. Build simple.tpl into an executable using the ADMB Docker container.
 
+   For Windows host,
+   
         docker run --rm --volume %CD%:/simple --workdir /simple johnoel/admb:linux simple.tpl
 
-        docker run --rm --volume %CD%:/simple --workdir /simple johnoel/admb:linux simple.tpl
+   For Unix host,
+
+        docker run --rm --volume $PWD:/simple --workdir /simple johnoel/admb:linux simple.tpl
+
+   Note: A warning will be displayed for running AMD64 image on the Apple processor, but it will build and run model. 
 
     **Options**
 
@@ -50,9 +56,15 @@ Usage
 
     * **johnoel/admb:linx** is the container name and **simple.tpl** is the file to build.
 
-3. Run **simple** locally.
+4. Run **simple** locally.
 
-        ~/simple$ ./simple
+   For Windows host,
+
+        simple.exe
+
+   For Unix host,
+   
+        ./simple
 
 Console
 -------
@@ -61,7 +73,13 @@ The procedure below shows how to use the container's interactive command line sh
 
 1. Use docker to open container's interactive shell.
 
-        ~/simple$ docker run -it --entrypoint /bin/bash -rm --volume ~/simple:/simple --workdir /simple admb:latest
+   For Windows host,
+   
+       docker run -it --entrypoint /bin/bash -rm --volume %CD%:/simple --workdir /simple johnoel/admb:linux
+
+   For Unix host,
+   
+       docker run -it --entrypoint /bin/bash -rm --volume $PWD:/simple --workdir /simple johnoel/admb:linux
 
     **Options**
 
@@ -77,7 +95,7 @@ The procedure below shows how to use the container's interactive command line sh
 
     * **johnoel/admb:linux** is the container name.
 
-2. Build and run simple model in the container's interactive shell.
+3. Build and run simple model in the container's interactive shell.
     
       2.1 Build simple.tpl.
 

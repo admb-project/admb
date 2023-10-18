@@ -19,6 +19,7 @@ Requirements
 The Windows operating system is needed on the host computer to use the ADMB Docker Image for Windows.
 
 * Download and install the [Docker Desktop](https://www.docker.com/products/docker-desktop/) for Windows.
+* Double click the the Docker Desktop to run.
 * Set the default type to Windows Containers (read [documentation](https://learn.microsoft.com/en-us/virtualization/windowscontainers/quick-start/set-up-environment?tabs=dockerce#install-the-container-runtime)).
 
 Downloads

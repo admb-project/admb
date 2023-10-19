@@ -56,7 +56,7 @@ Usage
 
         docker run --rm --volume %CD%:/simple --workdir /simple --entrypoint ./simple johnoel/admb:linux
         
-   For MacOS host,
+   For Unix host,
 
         docker run --rm --volume $PWD:/simple --workdir /simple --entrypoint ./simple johnoel/admb:linux
 

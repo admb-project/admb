@@ -1,7 +1,7 @@
 QuickStart - Using ADMB Docker Linux Image
 ==========================================
 
-Details prerequisites and procedures to use the ADMB Docker Linux image for building and running ADMB models.
+Details prerequisites and procedures to use the ADMB Docker Linux image for building and running ADMB models with the simple example.
 
 ADMB Docker Linux Image
 -----------------------
@@ -36,7 +36,7 @@ Usage
 
         cd simple
 
-2. Build simple.tpl into an executable using the ADMB Docker Image and the mounted current local directory.
+2. Builds simple.tpl into a Linux executable using the ADMB Docker Linux Image and the mounted current local directory.
 
    For Windows host,
    
@@ -48,7 +48,9 @@ Usage
 
    _*Note*: A warning will be displayed for running AMD64 image on the Apple processor, but it will build and run model._
 
-4. Run **simple** executable.
+4. Run **simple** Linux executable.
+
+   The Linux executable is incompatible for MacOS and Windows platforms, but the Docker Linux Image can be used to run the program.  See the Docker commands below.
 
    For Windows host,
 
@@ -65,7 +67,7 @@ Usage
 Console
 -------
 
-The procedure below shows how to use the interactive command line shell to build and run models.
+The procedure below shows how to use the container's interactive command line shell to build and run models.
 
 1. Use docker to open container's interactive shell and mount current local directory to the container.
 

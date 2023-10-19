@@ -1,7 +1,7 @@
 QuickStart - Using ADMB Docker Windows Image
 ============================================
 
-Details prerequisites and procedures to use the ADMB Docker Windows image for building and running ADMB models.
+Details prerequisites and procedures to use the ADMB Docker Windows image for building and running ADMB models with the simple example.
 
 ADMB Docker Windows Image
 -------------------------
@@ -36,13 +36,21 @@ Usage
 
         cd C:\simple
 
-2. Build simple.tpl into an executable using the ADMB Docker Image and the mounted current local directory.
+2. Build simple.tpl into an Windows executable using the ADMB Docker Image and the mounted current local directory.
 
         docker run --rm --volume %CD%:C:\simple --workdir C:\simple johnoel/admb:windows simple.tpl
 
-3. Run **simple.exe** locally.
+3. Run **simple.exe** Windows executable.
 
+   There are two options, run the executable on the local Windows host or use the container to run program.
+
+   Run local directory,
+   
         simple.exe
+
+   Or, use container to run executable.  The output files will be written to the directory on local directory.
+
+       docker run --rm --volume %CD%:C:\simple --workdir C:\simple --entrypoint simple.exe johnoel/admb:windows   
 
 Console
 -------
@@ -80,9 +88,9 @@ Below details the options for **docker run**:
 
 * **--rm** automatically removes temporary files from a docker run.
 
-* **--volume %CD%:C:\simple** mounts the current local directory **%CD%** onto the container filesystem at **C:\simple**.
+* **--volume** mounts the current local directory **%CD%** onto the container filesystem at **:C:\simple**.
 
-* **--workdir C:\simple** changes the container current directory to **C:\simple**. 
+* **--workdir** changes the container current directory to **C:\simple**. 
 
 * **johnoel/admb:windows** is the name of the Docker Image and **simple.tpl** is the file to build.
 

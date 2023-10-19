@@ -1,7 +1,7 @@
 QuickStart - Using ADMB Docker Windows Image
 ============================================
 
-Details prerequisites and procedures to use the ADMB Docker Windows image for building and running ADMB models with the simple example.
+Details prerequisites and procedures to use the ADMB Docker Windows image for building and running ADMB models with the [simple example](https://github.com/admb-project/admb/tree/main/examples/admb/simple)
 
 ADMB Docker Windows Image
 -------------------------

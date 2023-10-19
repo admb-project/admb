@@ -106,7 +106,7 @@ Below details the options for **docker run**:
 
 * **--rm** automatically removes temporary files from a docker run.
 
-* **--volume** mounts the current local directory **$PWD** onto the container filesystem at **/simple**.
+* **--volume** mounts the current local directory **$PWD** onto the container filesystem at **:/simple**.
 
 * **--workdir** changes the container current directory to **/simple**. 
 

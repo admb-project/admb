@@ -358,7 +358,7 @@ do
     echo -e \*\*\* Parse: $model.tpl
     CMD="tpl2cpp $debug $dll $model || tpl2rem $debug $dll $model"
     echo -e $CMD\\n
-    eval $CMD &> admb.log
+    eval $CMD
   fi
 
   if [ ! -f $model.cpp -o ! -f $model.htp ]; then

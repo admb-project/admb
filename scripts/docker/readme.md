@@ -24,7 +24,7 @@ To upload images, use the commands below.
 
     $ docker login
     $ docker tag admb:linux johnoel/admb:linux
-    $ docker push
+    $ docker push johnoel/admb:linux
 
 Help
 ----

@@ -1,4 +1,5 @@
-FROM mcr.microsoft.com/windows:ltsc2019
+FROM mcr.microsoft.com/windows/servercore:ltsc2022
+
 COPY msys2-x86_64.exe .
 RUN .\msys2-x86_64.exe install --confirm-command --root c:/msys64
 

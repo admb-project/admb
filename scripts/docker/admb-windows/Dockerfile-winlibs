@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/windows:ltsc2019
+FROM mcr.microsoft.com/windows/servercore:ltsc2022
 
 COPY admb-main.zip .
 RUN powershell Expand-Archive C:\\admb-main.zip -Destination C:\\

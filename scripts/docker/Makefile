@@ -3,6 +3,7 @@
 ifeq ($(OS),Windows_NT)
   ifndef TERM
     ISCMDSHELL=yes
+    TARGET=windows
   endif
 endif
 

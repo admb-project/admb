@@ -71,5 +71,5 @@ clean:
 ifeq ($(ISCMDSHELL),yes)
 	if exist $(MODEL_NAME) rmdir /S /Q $(MODEL_NAME)
 else
-	rm -rvf $(MODEL_NAME)
+	@rm -rvf $(MODEL_NAME)
 endif

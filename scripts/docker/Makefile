@@ -68,9 +68,9 @@ ifeq ($(ISCMDSHELL),yes)
 	if exist quickstart-unix.html del quickstart-unix.html
 	if exist quickstart-windows.html del quickstart-windows.html
 else
-	rm -vf readme.html
-	rm -vf quickstart-unix.html
-	rm -vf quickstart-windows.html
+	@rm -vf readme.html
+	@rm -vf quickstart-unix.html
+	@rm -vf quickstart-windows.html
 endif
 
 clean-docker:

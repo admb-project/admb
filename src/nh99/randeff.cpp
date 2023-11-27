@@ -153,21 +153,21 @@ L20:
     {
       if (!itn)
       {
-        ad_printf("\nInitial statistics: ");
+        printf("\nInitial statistics: ");
       }
       else
       {
-        ad_printf("\nIntermediate statistics: ");
+        printf("\nIntermediate statistics: ");
       }
 
-      ad_printf("%d variables; iteration %ld; function evaluation %ld\n",
+      printf("%d variables; iteration %ld; function evaluation %ld\n",
         nvar, itn, ifn);
 
       if (!itn)
       {
         double xf=value(f);
         double xg=max(value(g));
-        ad_printf(
+        printf(
             "Function value %12.4le; maximum gradient component mag %12.4le\n",
             xf, xg);
       }
@@ -175,7 +175,7 @@ L20:
       {
         double xf=value(fbest);
         double xg=max(value(gbest));
-        ad_printf(
+        printf(
             "Function value %12.4le; maximum gradient component mag %12.4le\n",
             xf, xg);
       }
@@ -219,10 +219,10 @@ L50:
   {
     double xf=value(f);
     double xg=max(value(g));
-    ad_printf("\nfinal statistics: ");
-    ad_printf("%d variables; iteration %ld; function evaluation %ld\n",
+    printf("\nfinal statistics: ");
+    printf("%d variables; iteration %ld; function evaluation %ld\n",
         nvar, itn, ifn);
-    ad_printf(
+    printf(
         "Function value %12.4le; maximum gradient component mag %12.4le\n",
         xf, xg);
     fmmdisp(value(x),value(g), nvar, 0,noprintx);

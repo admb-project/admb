@@ -228,9 +228,9 @@ label20:
 label7003:
       if (iprint!=0)
       {
-        ad_printf("%d variables; iteration %ld; function evaluation %ld\n",
+        printf("%d variables; iteration %ld; function evaluation %ld\n",
               n, itn, ifn);
-        ad_printf("Function value %12.4le; maximum gradient component mag %12.4le\n",
+        printf("Function value %12.4le; maximum gradient component mag %12.4le\n",
             f, gmax);
       }
 /*label7002:*/
@@ -365,7 +365,7 @@ label30:
       {
          if (iprint>0)
          {
-           ad_printf("  ic > imax  in fminim is answer attained ?\n" );
+           printf("  ic > imax  in fminim is answer attained ?\n" );
            fmmdisp(x, g, n, this->scroll_flag,noprintx);
          }
          ihflag=1;
@@ -475,13 +475,13 @@ label92:
       if (iprint>0)
       {
         if (ihang == 1)
-          ad_printf("Function minimizer not making progress ... is minimum attained?\n");
+          printf("Function minimizer not making progress ... is minimum attained?\n");
       }
       if(iexit == 2)
       {
         if (iprint>0)
         {
-          ad_printf("*** grad transpose times delta x greater >= 0\n"
+          printf("*** grad transpose times delta x greater >= 0\n"
            " --- convergence critera may be too strict\n");
           ireturn=-1;
         }
@@ -493,21 +493,21 @@ label92:
       {
         if (iprint>0)
         {
-          ad_printf("Maximum number of function evaluations exceeded");
+          printf("Maximum number of function evaluations exceeded");
         }
       }
       if (iprint>0)
       {
         if (quit_flag == 'Q' && use_control_c)
-          ad_printf("User initiated interrupt");
+          printf("User initiated interrupt");
       }
       if(iprint == 0) goto label777;
-      ad_printf(" - final statistics:\n");
-      ad_printf("%d variables; iteration %ld; function evaluation %ld\n",
+      printf(" - final statistics:\n");
+      printf("%d variables; iteration %ld; function evaluation %ld\n",
           n, itn, ifn);
-      ad_printf("Function value %12.4le; maximum gradient component mag %12.4le\n",
+      printf("Function value %12.4le; maximum gradient component mag %12.4le\n",
         f, gmax);
-      ad_printf("Exit code = %ld;  converg criter %12.4le\n",iexit,crit);
+      printf("Exit code = %ld;  converg criter %12.4le\n",iexit,crit);
 
       fmmdisp(x, g, n, this->scroll_flag,noprintx);
 label777:
@@ -528,7 +528,7 @@ label7000:
 #     if defined (_MSC_VER)  && !defined (__WAT32__)
         if (!scroll_flag) clrscr();
 #endif
-        ad_printf("Initial statistics: ");
+        printf("Initial statistics: ");
       }
       goto label7003;
 label7010:
@@ -537,14 +537,14 @@ label7010:
 #     if defined (_MSC_VER)  && !defined (__WAT32__)
      if (!scroll_flag)  clrscr();
 #endif
-     ad_printf("Intermediate statistics: ");
+     printf("Intermediate statistics: ");
    }
    llog=0;
    goto label7003;
 label7020:
    if (iprint>0)
    {
-     ad_printf("*** hessian not positive definite\n");
+     printf("*** hessian not positive definite\n");
    }
          #ifdef __ZTC__
          if (ireturn <= 0)

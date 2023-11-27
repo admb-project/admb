@@ -167,13 +167,13 @@ void gradient_structure::make_indvar_list(const dvar_vector& t)
   unsigned int size = (unsigned int)(max - min + 1);
   if (size > gradient_structure::MAX_NVAR_OFFSET)
   {
-    ad_printf("Current maximum number of independent variables is %d\n",
+    printf("Current maximum number of independent variables is %d\n",
       gradient_structure::MAX_NVAR_OFFSET);
-    ad_printf("  You need to increase the global variable "
+    printf("  You need to increase the global variable "
       "MAX_NVAR_OFFSET to %d\n", size);
-    ad_printf("  This can be done by putting the line\n"
+    printf("  This can be done by putting the line\n"
       "    gradient_structure::set_MAX_NVAR_OFFSET(%d);\n", size);
-    ad_printf("  before the declaration of the gradient_structure object.\n"
+    printf("  before the declaration of the gradient_structure object.\n"
       " or the command line option -mno %d\n", size);
     /*
     cerr << "Current maximum number of independent variables is "

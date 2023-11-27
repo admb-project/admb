@@ -155,26 +155,26 @@ L20:
     {
       if (!itn)
       {
-        ad_printf("\nInitial statistics: ");
+        printf("\nInitial statistics: ");
       }
       else
       {
-        ad_printf("\nIntermediate statistics: ");
+        printf("\nIntermediate statistics: ");
       }
 
-      ad_printf(
+      printf(
         "%d variables; iteration %ld; function evaluation %ld\n",
         nvar, itn, ifn);
 
       if (!itn)
       {
-        ad_printf(
+        printf(
           "Function value %12.4le; maximum gradient component mag %12.4le\n",
           f, max(fabs(g)));
       }
       else
       {
-        ad_printf(
+        printf(
             "Function value %12.4le; maximum gradient component mag %12.4le\n",
             fbest, max(gbest)
           );
@@ -212,12 +212,12 @@ L20:
 L50:
   if (iprint>0)
   {
-    ad_printf("\nfinal statistics: ");
+    printf("\nfinal statistics: ");
 
-    ad_printf(
+    printf(
       "%d variables; iteration %ld; function evaluation %ld\n",
       nvar, itn, ifn);
-    ad_printf(
+    printf(
       "Function value %12.4le; maximum gradient component mag %12.4le\n",
       f, max(g));
     fmmdisp(x, g, nvar, 0,noprintx);
@@ -311,26 +311,26 @@ L20:
     {
       if (!itn)
       {
-        ad_printf("\nInitial statistics: ");
+        printf("\nInitial statistics: ");
       }
       else
       {
-        ad_printf("\nIntermediate statistics: ");
+        printf("\nIntermediate statistics: ");
       }
 
-      ad_printf(
+      printf(
         "%d variables; iteration %ld; function evaluation %ld\n",
         nvar, itn, ifn);
 
       if (!itn)
       {
-        ad_printf(
+        printf(
           "Function value %12.4le; maximum gradient component mag %12.4le\n",
           f, max(g));
       }
       else
       {
-        ad_printf(
+        printf(
           "Function value %12.4le; maximum gradient component mag %12.4le\n",
           fbest, max(gbest));
       }
@@ -366,10 +366,10 @@ L20:
 L50:
   if (iprint>0)
   {
-    ad_printf("\nfinal statistics: ");
-    ad_printf("%d variables; iteration %ld; function evaluation %ld\n",
+    printf("\nfinal statistics: ");
+    printf("%d variables; iteration %ld; function evaluation %ld\n",
         nvar, itn, ifn);
-    ad_printf(
+    printf(
         "Function value %12.4le; maximum gradient component mag %12.4le\n",
         f, max(g));
     fmmdisp(x, g, nvar, 0,noprintx);

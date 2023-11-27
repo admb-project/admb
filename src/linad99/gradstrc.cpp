@@ -54,8 +54,8 @@ extern "C"{
 
   void spdll_exit(int ierr)
   {
-    ad_printf(" Exception -- error code %d\n",ierr);
-    ad_printf(" Pause");
+    printf(" Exception -- error code %d\n",ierr);
+    printf(" Pause");
     //adwait(4.0);
 #if defined(USE_EXCEPTIONS)
     throw spdll_exception(ierr);

@@ -687,7 +687,7 @@ int get_option_number(const char * option_name,const char * error_message,
   {
     if (!nopt)
     {
-      ad_printf("%s\n",error_message);
+      printf("%s\n",error_message);
       //  cerr << error_message << endl;
       on1=-1;
     }
@@ -712,7 +712,7 @@ int get_option_number(const char * option_name,const char * error_message,
   {
     if (!nopt)
     {
-      ad_printf("%s\n",error_message);
+      printf("%s\n",error_message);
       //  cerr << error_message << endl;
       on1=-1;
     }

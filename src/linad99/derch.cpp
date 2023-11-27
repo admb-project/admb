@@ -222,7 +222,7 @@ void derch(const double& _f, const independent_variables & _x,
                   << "  " <<  setw(12) <<  perr
                   << endl;
         }
-        ad_printf("  %12.5e  %12.5e  %12.5e  %12.5e ; %5d \n",
+        printf("  %12.5e  %12.5e  %12.5e  %12.5e ; %5d \n",
                 x(i), f, g(i), g2, i);
         fflush(stdout);
       }

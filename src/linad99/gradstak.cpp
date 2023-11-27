@@ -471,7 +471,7 @@ void grad_stack::create_gradfile()
 
   if (_GRADFILE_PTR1 == -1)
   {
-    ad_printf("Error opening temporary gradient file"
+    printf("Error opening temporary gradient file"
      " %s\n",gradfile_name1);
     ad_exit(1);
   }

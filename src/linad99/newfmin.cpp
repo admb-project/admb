@@ -68,7 +68,7 @@ BOOL CtrlHandler(DWORD fdwCtrlType)
     if (ctlc_flag) ad_exit(1);
 
     ctlc_flag = 1;
-    ad_printf("\npress q to quit or c to invoke derivative checker: ");
+    printf("\npress q to quit or c to invoke derivative checker: ");
     return true;
   }
   return false;
@@ -78,7 +78,7 @@ extern "C" void onintr(int k)
 {
   signal(SIGINT, exit_handler);
   ctlc_flag = 1;
-  ad_printf("\npress q to quit or c to invoke derivative checker"
+  printf("\npress q to quit or c to invoke derivative checker"
                  " or s to stop optimizing: ");
 }
 #endif
@@ -522,7 +522,7 @@ label7003: /* Printing table header */
         adstring maxparname = get_maxparname(maxpar);
         if (itn % iprint == 0)
         {
-          ad_printf("phase=%2d | nvar=%3d | iter=%3d | nll=%.2e | mag=%.2e | par[%3d]=%s\n",
+          printf("phase=%2d | nvar=%3d | iter=%3d | nll=%.2e | mag=%.2e | par[%3d]=%s\n",
             initial_params::current_phase, n, itn,  double(f), fabs(double(gmax)), maxpar, (char*)maxparname);
         }
       }
@@ -826,7 +826,7 @@ label40: /* new step is not acceptable, stepping back and
          ialph=1;
         if (ialph)
         {
-          ad_printf("\nFunction minimizer: Step size"
+          printf("\nFunction minimizer: Step size"
             "  too small -- ialph=1");
         }
          return;
@@ -953,7 +953,7 @@ if(iexit == 2)
   {
     if (iprint>0)
     {
-      ad_printf("*** grad transpose times delta x greater >= 0\n"
+      printf("*** grad transpose times delta x greater >= 0\n"
                 " --- convergence critera may be too strict\n");
       ireturn=-1;
     }
@@ -976,7 +976,7 @@ if (scroll_flag == 0) clrscr();
 if (iprint>0)
   {
     if (quit_flag == 'Q')
-      ad_printf("User initiated interrupt");
+      printf("User initiated interrupt");
   }
 // if last iteration of phase print to screen regardless of
 // iprint. Note that for RE models it is sometimes set iprint=0
@@ -993,7 +993,7 @@ if (iprint>0)
      int maxpar = get_maxpar(g);
      adstring maxparname = get_maxparname(maxpar);
      if(iprint>0)
-       ad_printf("phase=%2d | nvar=%3d | iter=%3d | nll=%.2e | mag=%.2e | par[%3d]=%s\n",
+       printf("phase=%2d | nvar=%3d | iter=%3d | nll=%.2e | mag=%.2e | par[%3d]=%s\n",
          initial_params::current_phase, n, itn,  double(f), fabs(double(gmax)), maxpar, (char*)maxparname);
 
      // only print global stuff if in last phase
@@ -1003,7 +1003,7 @@ if (iprint>0)
             << get_elapsed_time(start_time, std::chrono::system_clock::now())
             << " with final statistics:\n" ;
        cout.flush();
-       ad_printf("  nll=%f | mag=%.5e | par[%3d]=%s\n\n", double(f), fabs(double(gmax)), maxpar, (char*)maxparname);
+       printf("  nll=%f | mag=%.5e | par[%3d]=%s\n\n", double(f), fabs(double(gmax)), maxpar, (char*)maxparname);
 
        if (initial_params::num_initial_params && function_minimizer::output_flag==1){
          check_for_params_on_bounds(std::cout);
@@ -1038,7 +1038,7 @@ if(iprint == 0) goto label777;
 label777: /* Printing final Hessian approximation */
          if (ireturn <= 0)
          #ifdef DIAG
-           ad_printf("Final values of h in fmin:\n");
+           printf("Final values of h in fmin:\n");
            //cout << h << "\n";
          #endif
          #ifdef __ZTC__
@@ -1069,7 +1069,7 @@ label7010:/* Printing Intermediate statistics */
 label7020:/* Exis because Hessian is not positive definite */
   if (iprint > 0)
   {
-    ad_printf("*** hessian not positive definite\n");
+    printf("*** hessian not positive definite\n");
   }
 #ifdef __ZTC__
   if (ireturn <= 0)

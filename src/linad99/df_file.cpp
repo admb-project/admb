@@ -196,9 +196,9 @@ DF_FILE::DF_FILE(const size_t nbytes, const unsigned int id)
 #if !defined (_WIN32)
   {
 #ifdef USE_THREAD
-    sprintf(&cmpdif_file_name[0],"%s/cmpdiff%u.tmp", path, id);
+    snprintf(&cmpdif_file_name[0],81,"%s/cmpdiff%u.tmp", path, id);
 #else
-    sprintf(&cmpdif_file_name[0],"%s/cmpdiff.tmp", path);
+    snprintf(&cmpdif_file_name[0],81,"%s/cmpdiff.tmp", path);
 #endif
 
   }
@@ -207,17 +207,17 @@ DF_FILE::DF_FILE(const size_t nbytes, const unsigned int id)
     if (lastchar(path) != '\\')
     {
 #ifdef USE_THREAD
-      sprintf(&cmpdif_file_name[0],"%s\\cmpdiff%u.tmp", path, id);
+      snprintf(&cmpdif_file_name[0],81,"%s\\cmpdiff%u.tmp", path, id);
 #else
-      sprintf(&cmpdif_file_name[0],"%s\\cmpdiff.tmp", path);
+      snprintf(&cmpdif_file_name[0],81,"%s\\cmpdiff.tmp", path);
 #endif
     }
     else
     {
 #ifdef USE_THREAD
-      sprintf(&cmpdif_file_name[0],"%scmpdiff%u.tmp", path, id);
+      snprintf(&cmpdif_file_name[0],81,"%scmpdiff%u.tmp", path, id);
 #else
-      sprintf(&cmpdif_file_name[0],"%scmpdiff.tmp", path);
+      snprintf(&cmpdif_file_name[0],81,"%scmpdiff.tmp", path);
 #endif
     }
   }
@@ -225,9 +225,9 @@ DF_FILE::DF_FILE(const size_t nbytes, const unsigned int id)
   else
   {
 #ifdef USE_THREAD
-      sprintf(&cmpdif_file_name[0],"cmpdiff%u.tmp",id);
+      snprintf(&cmpdif_file_name[0],81,"cmpdiff%u.tmp",id);
 #else
-      sprintf(&cmpdif_file_name[0],"cmpdiff.tmp");
+      snprintf(&cmpdif_file_name[0],81,"cmpdiff.tmp");
 #endif
   }
 #if defined (_MSC_VER) || defined (__WAT32__)

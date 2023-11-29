@@ -50,7 +50,7 @@ adstring str(double x, int minwidth, int decplaces)
 
      //tmp = new adstring(1,w-1);
      //sprintf(tmp->s,"%*.*e",w,d,x);
-     sprintf(buffer,"%*.*e",w,d,x);
+     snprintf(buffer, 50, "%*.*e",w,d,x);
    }
    else // decplaces specified
    {
@@ -68,7 +68,7 @@ adstring str(double x, int minwidth, int decplaces)
        w++;
      //tmp = new adstring(1,w-1);
 
-     sprintf(buffer,"%*.*f",w,d,x);
+     snprintf(buffer, 50, "%*.*f",w,d,x);
 /*
      if (d>=0)
      {

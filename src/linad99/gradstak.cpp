@@ -193,25 +193,25 @@ grad_stack::grad_stack(const size_t size, const unsigned int id)
   {
 #if !defined (_WIN32)
   #ifdef USE_THREAD
-    sprintf(&gradfile_name1[0],"%s/gradfil1%u.tmp", path, id);
+    snprintf(&gradfile_name1[0], 61,"%s/gradfil1%u.tmp", path, id);
   #else
-    sprintf(&gradfile_name1[0],"%s/gradfil1.tmp", path);
+    snprintf(&gradfile_name1[0], 61,"%s/gradfil1.tmp", path);
   #endif
 #else
     if (lastchar(path) != '\\')
     {
   #ifdef USE_THREAD
-      sprintf(&gradfile_name1[0], "%s\\gradfil1%u.tmp", path, id);
+      snprintf(&gradfile_name1[0], 61, "%s\\gradfil1%u.tmp", path, id);
   #else
-      sprintf(&gradfile_name1[0], "%s\\gradfil1.tmp", path);
+      snprintf(&gradfile_name1[0], 61, "%s\\gradfil1.tmp", path);
   #endif
     }
     else
     {
   #ifdef USE_THREAD
-      sprintf(&gradfile_name1[0], "%sgradfil1%u.tmp", path, id);
+      snprintf(&gradfile_name1[0], 61, "%sgradfil1%u.tmp", path, id);
   #else
-      sprintf(&gradfile_name1[0], "%sgradfil1.tmp", path);
+      snprintf(&gradfile_name1[0], 61, "%sgradfil1.tmp", path);
   #endif
     }
 #endif
@@ -219,9 +219,9 @@ grad_stack::grad_stack(const size_t size, const unsigned int id)
   else
   {
 #ifdef USE_THREAD
-    sprintf(&gradfile_name1[0], "gradfil1%u.tmp", id);
+    snprintf(&gradfile_name1[0], 61, "gradfil1%u.tmp", id);
 #else
-    sprintf(&gradfile_name1[0], "gradfil1.tmp");
+    snprintf(&gradfile_name1[0], 61, "gradfil1.tmp");
 #endif
   }
 
@@ -238,42 +238,42 @@ grad_stack::grad_stack(const size_t size, const unsigned int id)
     if (strlen(path) > 0)
     {
   #ifdef USE_THREAD
-      sprintf(&var_store_file_name[0],"%s/varssave%u.tmp",path, id);
-      sprintf(&gradfile_name2[0],"%s/gradfil2%u.tmp", path, id);
+      snprintf(&var_store_file_name[0], 61, "%s/varssave%u.tmp",path, id);
+      snprintf(&gradfile_name2[0], 61, "%s/gradfil2%u.tmp", path, id);
   #else
-      sprintf(&var_store_file_name[0],"%s/varssave.tmp",path);
-      sprintf(&gradfile_name2[0],"%s/gradfil2.tmp", path);
+      snprintf(&var_store_file_name[0], 61, "%s/varssave.tmp",path);
+      snprintf(&gradfile_name2[0], 61, "%s/gradfil2.tmp", path);
   #endif
     }
     else
     {
   #ifdef USE_THREAD
-        sprintf(&var_store_file_name[0],"varssave%u.tmp", id);
-        sprintf(&gradfile_name2[0],"gradfil2%u.tmp", id);
+        snprintf(&var_store_file_name[0], 61, "varssave%u.tmp", id);
+        snprintf(&gradfile_name2[0], 61, "gradfil2%u.tmp", id);
   #else
-        sprintf(&var_store_file_name[0],"varssave.tmp");
-        sprintf(&gradfile_name2[0],"gradfil2.tmp");
+        snprintf(&var_store_file_name[0], 61, "varssave.tmp");
+        snprintf(&gradfile_name2[0], 61, "gradfil2.tmp");
   #endif
     }
 #else
     if (lastchar(path)!='\\')
     {
   #ifdef USE_THREAD
-        sprintf(&gradfile_name2[0], "%s\\gradfil2%u.tmp", path, id);
-        sprintf(&var_store_file_name[0], "%s\\varssave%u.tmp", path, id);
+        snprintf(&gradfile_name2[0], 61, "%s\\gradfil2%u.tmp", path, id);
+        snprintf(&var_store_file_name[0], 61, "%s\\varssave%u.tmp", path, id);
   #else
-        sprintf(&gradfile_name2[0], "%s\\gradfil2.tmp", path);
-        sprintf(&var_store_file_name[0], "%s\\varssave.tmp", path);
+        snprintf(&gradfile_name2[0], 61, "%s\\gradfil2.tmp", path);
+        snprintf(&var_store_file_name[0], 61, "%s\\varssave.tmp", path);
   #endif
     }
     else
     {
   #ifdef USE_THREAD
-        sprintf(&gradfile_name2[0], "%sgradfil2%u.tmp", path, id);
-        sprintf(&var_store_file_name[0], "%svarssave%u.tmp", path, id);
+        snprintf(&gradfile_name2[0], 61, "%sgradfil2%u.tmp", path, id);
+        snprintf(&var_store_file_name[0], 61, "%svarssave%u.tmp", path, id);
   #else
-        sprintf(&gradfile_name2[0], "%sgradfil2.tmp", path);
-        sprintf(&var_store_file_name[0], "%svarssave.tmp", path);
+        snprintf(&gradfile_name2[0], 61, "%sgradfil2.tmp", path);
+        snprintf(&var_store_file_name[0], 61, "%svarssave.tmp", path);
   #endif
     }
 #endif
@@ -281,11 +281,11 @@ grad_stack::grad_stack(const size_t size, const unsigned int id)
   else
   {
   #ifdef USE_THREAD
-      sprintf(&gradfile_name2[0], "gradfil2%u.tmp", id);
-      sprintf(&var_store_file_name[0], "varssave%u.tmp", id);
+      snprintf(&gradfile_name2[0], 61, "gradfil2%u.tmp", id);
+      snprintf(&var_store_file_name[0], 61, "varssave%u.tmp", id);
   #else
-      sprintf(&gradfile_name2[0], "gradfil2.tmp");
-      sprintf(&var_store_file_name[0], "varssave.tmp");
+      snprintf(&gradfile_name2[0], 61, "gradfil2.tmp");
+      snprintf(&var_store_file_name[0], 61, "varssave.tmp");
   #endif
   }
 

@@ -67,7 +67,7 @@ dmatrix inv(const dmatrix& m1)
   ivector indx(min, max);
   //int indx[30];
 
-  double d;
+  double d = 0.0;
   ludcmp(a,indx,d);
 
   dmatrix y(min, max, min, max);

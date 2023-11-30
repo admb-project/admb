@@ -149,7 +149,7 @@ dmatrix trans(const dvector& x)
     {
       likeprof_save(ip)=likeprof_params::likeprofptr[ip]->get_value();
     }
-    double final_weight;
+    double final_weight = 0.0;
     for (ip=0;ip<likeprof_params::num_likeprof_params;ip++)
     {
       int sno=likeprof_params::likeprofptr[ip]->get_stepnumber();

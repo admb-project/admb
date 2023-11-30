@@ -927,7 +927,6 @@ void laplace_approximation_calculator::
   }
 
   {
-    int* plfe_indexj = lfe_index.get_v() + 1;
     for (int j=1;j<=xs;j++)
     {
       int lfe_indexj = lfe_index(j);
@@ -935,8 +934,6 @@ void laplace_approximation_calculator::
       int j1 = *(plistlfe_indexj + 1);//list(lfe_index(j),1);
       int j2 = *(plistlfe_indexj + 2);//list(lfe_index(j),2);
       xadjoint(j1)+=ff.u_dot[j2-1];
-
-      ++plfe_indexj;
     }
   }
 

@@ -169,7 +169,7 @@ void dfcholeski_decomp_positive(void)
     L.initialize();
 #endif
 
-  double fpen;
+  double fpen = 0.0;
   int i,j,k;
   ptmp(1)=posfun(M(1,1),eps,fpen);
   L(1,1)=sqrt(ptmp(1));
@@ -194,7 +194,7 @@ void dfcholeski_decomp_positive(void)
     {
       tmp(i)-=L(i,k)*L(i,k);
     }
-    double pen;
+    double pen = 0.0;
     ptmp(i)=posfun(tmp(i),eps,pen);
     L(i,i)=sqrt(ptmp(i));
   }

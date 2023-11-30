@@ -176,8 +176,10 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
     //int nslots=3600;
     int initial_nsim=4800;
     int ncor=0;
+#if defined(USE_BAYES_FACTORS)
     double bfsum=0;
     int ibfcount=0;
+#endif
     double llbest;
     double lbmax;
 
@@ -789,9 +791,9 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
         double lbf=llbest-llc;
         if (lbf>lbmax) lbmax=lbf;
         //of_bf << lbf << endl;
+#if defined(USE_BAYES_FACTORS)
         bfsum+=exp(lbf);
         ibfcount+=1;
-#if defined(USE_BAYES_FACTORS)
         lkvector(ibfcount)=llc;
         //current_bf=1.0/(bfsum/double(ibfcount))*exp(llbest);
         lcurrent_bf=-1.*log(bfsum/double(ibfcount))+llbest;

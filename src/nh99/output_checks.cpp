@@ -250,7 +250,7 @@ adstring_array get_param_names() {
     for (int i = 0; i < initial_params::num_initial_params; ++i) {
       initial_params* varptr = initial_params::varsptr[i];
       if (withinbound(0,varptr->phase_start,initial_params::current_phase)) {
-	int jmax = varptr->size_count();
+	int jmax = static_cast<int>(varptr->size_count());
 	for (int j = 1; j <= jmax; ++j) {
 	  kk++;
 	  par_names[kk] = varptr->label();
@@ -306,7 +306,7 @@ void check_for_params_on_bounds(ostream& os){
 	if (has_bounds(varptr))
         {
 	  if (debug) os<<"----"<<par_name_base<<" is active, bounded, and will be checked."<<endl;
-	  int jmax = varptr->size_count();
+	  unsigned int jmax = varptr->size_count();
 	  if (debug) os<<"   jmax = "<<jmax<<endl;
 	  if (dynamic_cast<param_init_bounded_number*>(varptr) != nullptr){
 	    if (debug) os<<"   "<<par_name_base<<" is a param_init_bounded_number."<<endl;

@@ -65,7 +65,7 @@ dvector bounded_multivariate_normal(int nvar, const dvector& a1,
   int expflag;
   double y;
   int in=0;
-  int ie=0;
+  //int ie=0;
 
   double* pai = a.get_v() + 1;
   double* pbi = b.get_v() + 1;
@@ -103,7 +103,7 @@ dvector bounded_multivariate_normal(int nvar, const dvector& a1,
     else
     {
       y = inv_cumd_cauchy(u*(upper-lower)+lower);
-      ++ie;
+      //++ie;
       wght += log_density_cauchy(y);
     }
     //ty(i)=y;

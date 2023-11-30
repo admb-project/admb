@@ -149,8 +149,7 @@ void df1b2_gradcalc1(void)
   int ncount=f1b2gradlist->ncount;
   //ADrfptr rf2;
   int xcount=0;
-  int tmpcount;
-  int tcount=f1b2gradlist->ncount;
+  //int tcount=f1b2gradlist->ncount;
 
   //int check_pool_flag3=0;
   switch (df1b2variable::passnumber)
@@ -177,11 +176,11 @@ void df1b2_gradcalc1(void)
       f1b2gradlist->list3.set_reverse();
       f1b2gradlist->list3.restore_end();
     }
-    tmpcount=ncount;
+    //int tmpcount=ncount;
     do
     {
-      tmpcount--;
      /*
+      tmpcount--;
       if (!(tmpcount %100))
       {
         cout << "B " << tmpcount << endl;
@@ -212,7 +211,7 @@ void df1b2_gradcalc1(void)
       mydercheckercounter--;
 #endif
         xcount++;
-          tcount--;
+          //tcount--;
        if (xcount > 99999999) cout << xcount << endl;
        //if (tcount == 6599 )
         //  cout << tcount << endl;

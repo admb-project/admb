@@ -201,14 +201,14 @@ double calculate_importance_sample_block_diagonal_option_antithetical
    dmatrix weights(1,nsc,1,nsamp);
    for (is=1;is<=nsamp;is++)
    {
-     int offset=0;
+     //int offset=0;
      for (int ic=1;ic<=nsc;ic++)
      {
        int lus=lrea(ic);
        // assumes that all spearable calls have the same number of
        // random effects
        dvector e= (*pmin->lapprox->antiepsilon)(is);
-       offset+=lus;
+       //offset+=lus;
        if (pmin->lapprox->use_outliers==0)
        {
          weights(ic,is)=0.5*norm2(e);

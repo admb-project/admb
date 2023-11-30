@@ -160,7 +160,7 @@ void ludcmp(const df1b2matrix& M,int kludge)
 
   ivector indx(mmin,mmax);
   ivector indx2(mmin,mmax);
-  double d;
+  double d = 0.0;
   dmatrix MC=value(M);
   ludcmp(MC,indx,d);
 
@@ -309,7 +309,7 @@ df1b2variable ln_det(const df1b2matrix& M,int & sgn)
   dmatrix CM=value(M);
   double cld=ln_det(CM,ssgn);
   ivector indx(1,mmax);
-  double dd;
+  double dd = 0.0;
   ludcmp(CM,indx,dd);
   ivector reindex=getreindex(indx);
   df1b2matrix RM=reorder(M,indx);
@@ -374,7 +374,7 @@ df1b2vector solve(df1b2matrix& M,df1b2vector& v)
   }
   dmatrix CM=value(M);
   ivector indx(1,mmax);
-  double dd;
+  double dd = 0.0;
   ludcmp(CM,indx,dd);
   df1b2matrix RM=reorder(M,indx);
   df1b2vector rb=reorder(v,indx);
@@ -394,7 +394,7 @@ df1b2vector solve(df1b2matrix& M,df1b2vector& v,const df1b2variable& _ln_det)
   }
   dmatrix CM=value(M);
   ivector indx(1,mmax);
-  double dd;
+  double dd = 0.0;
   ludcmp(CM,indx,dd);
   df1b2matrix RM=reorder(M,indx);
   df1b2vector rb=reorder(v,indx);
@@ -417,7 +417,7 @@ df1b2vector solve(df1b2matrix& M,df1b2vector& v,const df1b2variable& _ln_det,
   }
   dmatrix CM=value(M);
   ivector indx(1,mmax);
-  double dd;
+  double dd = 0.0;
   ludcmp(CM,indx,dd);
   df1b2matrix RM=reorder(M,indx);
   df1b2vector rb=reorder(v,indx);

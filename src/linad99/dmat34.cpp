@@ -31,8 +31,8 @@ void dmdv_solve(void);
 /** Solve a linear system using LU decomposition. */
 dvector csolve(const dmatrix& aa,const dvector& z)
 {
-  double ln_unsigned_det;
-  double sign;
+  double ln_unsigned_det = 0.0;
+  double sign = 0.0;
   dvector sol=solve(aa,z,ln_unsigned_det,sign);
   return sol;
 }
@@ -45,8 +45,8 @@ dvector csolve(const dmatrix& aa,const dvector& z)
 */
 dvector solve(const dmatrix& aa,const dvector& z)
 {
-  double ln_unsigned_det;
-  double sign;
+  double ln_unsigned_det = 0.0;
+  double sign = 0.0;
   dvector sol=solve(aa,z,ln_unsigned_det,sign);
   return sol;
 }

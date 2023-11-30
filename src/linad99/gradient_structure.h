@@ -194,8 +194,8 @@ public:
    friend class dfsdmat;
 
    gradient_structure(): gradient_structure(100000L) {}
-   gradient_structure(const long int size);
-   gradient_structure(const long int size, const unsigned int id);
+   gradient_structure(const unsigned long int size);
+   gradient_structure(const unsigned long int size, const unsigned int id);
    gradient_structure(const gradient_structure&) = delete;
    gradient_structure(gradient_structure&&) = delete;
    virtual ~gradient_structure();

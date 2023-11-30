@@ -214,11 +214,13 @@ void df_ln_det_choleski(void)
     }
     L(i,i)=sqrt(tmp(i));
   }
+/*
   double log_det1=0.0;
   for (int i=1;i<=n;i++)
   {
     log_det1+=log(L(i,i));
   }
+*/
   //double log_det=2.0*log_det1;
 
  //*******************************************************************8

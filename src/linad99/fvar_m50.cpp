@@ -162,7 +162,7 @@ void dfcholeski_decomp_banded_positive(void)
     {
       tmp(i)-=L(i,k)*L(i,k);
     }
-    double pen;
+    double pen = 0.0;
     ptmp(i)=posfun(tmp(i),eps,pen);
     L(i,i)=sqrt(ptmp(i));
   }

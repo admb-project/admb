@@ -102,13 +102,11 @@ ivector operator-(const ivector& a, const ivector& b)
   assert(min == b.indexmin() && max == b.indexmax()); 
 #endif
   ivector results(min, max);
-  int* presultsi = results.get_v() + min;
   int* pai = a.get_v() + min;
   int* pbi = b.get_v() + min;
   for (int i = min; i <= max; ++i)
   {
     results(i) = *pai - *pbi;
-    ++presultsi;
     ++pai;
     ++pbi;
   }

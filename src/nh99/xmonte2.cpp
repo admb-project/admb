@@ -27,7 +27,7 @@ void bounded_multivariate_normal_mcmc(int nvar, const dvector& a1,
   wght=0;
   int expflag;
   int in=0;
-  int ie=0;
+  //int ie=0;
   double* pyi = y.get_v() + 1;
   double* pai = a.get_v() + 1;
   double* pbi = b.get_v() + 1;
@@ -61,7 +61,7 @@ void bounded_multivariate_normal_mcmc(int nvar, const dvector& a1,
     }
     else
     {
-      ++ie;
+      //++ie;
       wght += log_density_cauchy(*pyi);
     }
 

@@ -320,14 +320,10 @@ void dvar3_array::allocate(int sl, int sh, int nrl, int nrh,
   }
   t -= slicemin();
   dvar_matrix* pti = t + sl;
-  const int* pncli = ncl.get_v() + sl;
-  const int* pnchi = nch.get_v() + sl;
   for (int i = sl; i <= sh; ++i)
   {
     pti->allocate(nrl, nrh, ncl(i), nch(i));
     ++pti;
-    ++pncli;
-    ++pnchi;
   }
 }
 /**

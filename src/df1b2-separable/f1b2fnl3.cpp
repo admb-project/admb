@@ -188,14 +188,12 @@ void laplace_approximation_calculator::
   }
 
   dvector local_xadjoint(1,xs);  // First order derivative of ff wrt x
-  double* plocal_xadjointj = local_xadjoint.get_v() + 1;
   int* plfe_indexj = lfe_index.get_v() + 1;
   for (int j=1;j<=xs;j++)
   {
     int j2=list(*plfe_indexj, 2);
     local_xadjoint(j)=ff.u_dot[j2-1];  // u_dot is the result of forward AD
 
-    ++plocal_xadjointj;
     ++plfe_indexj;
   }
 

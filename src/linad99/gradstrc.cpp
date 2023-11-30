@@ -276,7 +276,7 @@ void allocate_dvariable_space()
 std::mutex gsm;
 #endif
 
-gradient_structure::gradient_structure(const long int size):
+gradient_structure::gradient_structure(const unsigned long int size):
   gradient_structure(size,
 #ifdef USE_THREAD
     gradient_structure::id + 1
@@ -294,7 +294,7 @@ gradient_structure::gradient_structure(const long int size):
 /**
 Constructor
 */
-gradient_structure::gradient_structure(const long int _size, const unsigned int id):
+gradient_structure::gradient_structure(const unsigned long int _size, const unsigned int id):
   NVAR(0),
   x(id),
   hessian_ptr(NULL),
@@ -314,7 +314,7 @@ gradient_structure::gradient_structure(const long int _size, const unsigned int 
   save_var_file_flag = 0;
 
   //Should be a multiple of sizeof(double_and_int)
-  const long int remainder = _size % sizeof(double_and_int);
+  const unsigned long int remainder = _size % sizeof(double_and_int);
   gradient_structure::ARRAY_MEMBLOCK_SIZE =
     static_cast<unsigned long int>(_size - remainder);
 

@@ -522,7 +522,7 @@ label7003: /* Printing table header */
         adstring maxparname = get_maxparname(maxpar);
         if (itn % iprint == 0)
         {
-          printf("phase=%2d | nvar=%3d | iter=%3d | nll=%.2e | mag=%.2e | par[%3d]=%s\n",
+          printf("phase=%2d | nvar=%3d | iter=%3ld | nll=%.2e | mag=%.2e | par[%3d]=%s\n",
             initial_params::current_phase, n, itn,  double(f), fabs(double(gmax)), maxpar, (char*)maxparname);
         }
       }
@@ -993,7 +993,7 @@ if (iprint>0)
      int maxpar = get_maxpar(g);
      adstring maxparname = get_maxparname(maxpar);
      if(iprint>0)
-       printf("phase=%2d | nvar=%3d | iter=%3d | nll=%.2e | mag=%.2e | par[%3d]=%s\n",
+       printf("phase=%2d | nvar=%3d | iter=%3ld | nll=%.2e | mag=%.2e | par[%3d]=%s\n",
          initial_params::current_phase, n, itn,  double(f), fabs(double(gmax)), maxpar, (char*)maxparname);
 
      // only print global stuff if in last phase

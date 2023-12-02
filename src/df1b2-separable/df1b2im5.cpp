@@ -204,7 +204,7 @@ double calculate_importance_sample_block_diagonal_option_antithetical
      //int offset=0;
      for (int ic=1;ic<=nsc;ic++)
      {
-       int lus=lrea(ic);
+       //int lus=lrea(ic);
        // assumes that all spearable calls have the same number of
        // random effects
        dvector e= (*pmin->lapprox->antiepsilon)(is);

@@ -160,7 +160,7 @@ L20:
         printf("\nIntermediate statistics: ");
       }
 
-      printf("%d variables; iteration %ld; function evaluation %ld\n",
+      printf("%d variables; iteration %d; function evaluation %d\n",
         nvar, itn, ifn);
 
       if (!itn)
@@ -220,7 +220,7 @@ L50:
     double xf=value(f);
     double xg=max(value(g));
     printf("\nfinal statistics: ");
-    printf("%d variables; iteration %ld; function evaluation %ld\n",
+    printf("%d variables; iteration %d; function evaluation %d\n",
         nvar, itn, ifn);
     printf(
         "Function value %12.4le; maximum gradient component mag %12.4le\n",

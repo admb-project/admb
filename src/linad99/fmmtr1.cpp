@@ -228,7 +228,7 @@ label20:
 label7003:
       if (iprint!=0)
       {
-        printf("%d variables; iteration %ld; function evaluation %ld\n",
+        printf("%d variables; iteration %d; function evaluation %ld\n",
               n, itn, ifn);
         printf("Function value %12.4le; maximum gradient component mag %12.4le\n",
             f, gmax);
@@ -503,7 +503,7 @@ label92:
       }
       if(iprint == 0) goto label777;
       printf(" - final statistics:\n");
-      printf("%d variables; iteration %ld; function evaluation %ld\n",
+      printf("%d variables; iteration %d; function evaluation %ld\n",
           n, itn, ifn);
       printf("Function value %12.4le; maximum gradient component mag %12.4le\n",
         f, gmax);

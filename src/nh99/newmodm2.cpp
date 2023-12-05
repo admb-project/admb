@@ -191,6 +191,9 @@ void function_minimizer::get_particular_grad(int iprof,int nvar,
       }
     userfunction();
     vf=likeprof_params::likeprofptr[iprof]->variable();
+#if (__cplusplus >= 201703L)
+    [[maybe_unused]]
+#endif
     double f = value(vf);
     gradcalc(nvar, g);
 

@@ -119,9 +119,8 @@ void gradient_structure::gradcalc(int nvar, const dvector& _g)
 
   GRAD_STACK1->_GRADFILE_PTR = GRAD_STACK1->gradfile_handle();
 
-  int& _GRADFILE_PTR = GRAD_STACK1->_GRADFILE_PTR;
-
 #ifdef GRAD_DIAG
+  int& _GRADFILE_PTR = GRAD_STACK1->_GRADFILE_PTR;
   LSEEK(_GRADFILE_PTR,0L,SEEK_CUR);
 #endif
 

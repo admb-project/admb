@@ -22,6 +22,9 @@ dmatrix function_minimizer::dep_hess_routine(const dvariable& dep)
   dvector tscale(1,nvar);   // need to get scale from somewhere
   initial_params::stddev_scale(scale,x);
   //check=initial_params::stddev_curvscale(curv,x);
+#if (__cplusplus >= 201703L)
+  [[maybe_unused]]
+#endif
   double f = 0.0;
   double delta=1.e-7;
   dvector g1(1,nvar);

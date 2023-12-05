@@ -251,6 +251,9 @@ dvector laplace_approximation_calculator::get_gradient_lme
 
   objective_function_value::fun_without_pen=value(vf);
   vf+=pen;
+#if (__cplusplus >= 201703L)
+  [[maybe_unused]]
+#endif
   double f = value(vf);
   gradcalc(usize, g);
   return g;
@@ -278,6 +281,9 @@ dvector laplace_approximation_calculator::get_gradient_lme
 
   objective_function_value::fun_without_pen=value(vf);
   vf+=pen;
+#if (__cplusplus >= 201703L)
+  [[maybe_unused]]
+#endif
   double f = value(vf);
   gradcalc(usize, g);
   return g;

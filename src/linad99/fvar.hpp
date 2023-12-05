@@ -8021,7 +8021,8 @@ class banded_symmetric_dmatrix
 
    void shift(int);
 
-   banded_symmetric_dmatrix & operator =(const banded_symmetric_dmatrix &);
+   banded_symmetric_dmatrix(const banded_symmetric_dmatrix&) = default;
+   banded_symmetric_dmatrix& operator=(const banded_symmetric_dmatrix&);
    banded_symmetric_dmatrix(int _min, int _max, int _bw);
 
    banded_symmetric_dmatrix(const dvar_matrix_position & mpos);

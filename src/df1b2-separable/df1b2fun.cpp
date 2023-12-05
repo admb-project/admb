@@ -157,6 +157,9 @@ void df1b2_gradcalc1(void)
   case 1:
     f1b2gradlist->list.save_end();
     f1b2gradlist->nlist.save_end();
+#if (__cplusplus >= 201703L)
+    [[fallthrough]];
+#endif
   case 3:
 #if defined(__DERCHECK__)
     //  derchecker->counter=f1b2gradlist->ncount;

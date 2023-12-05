@@ -77,6 +77,8 @@ struct tiny_vec {
     return ans;
   }
   #endif
+
+  tiny_vec<Type, n>& operator= (const tiny_vec<Type, n>& other) = default;
 };
 
 template<class Type, int n>

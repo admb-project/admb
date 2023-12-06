@@ -27,7 +27,7 @@ struct tiny_vec {
   int size() const { return n; }
   Type operator[] (size_t i) const { return data[i]; }
   Type &operator[] (size_t i) { return data[i]; }
-  void setZero() {for(int i=0; i<n; i++) (*this)[i] = 0;}
+  void setZero() {for(unsigned int i=0; i<n; i++) (*this)[i] = 0;}
   tiny_vec_ref<Type> segment(size_t start, size_t length) {
     tiny_vec_ref<Type> ans(&(data[start]), length);
     return ans;
@@ -58,11 +58,11 @@ struct tiny_vec {
   VUNARY_OPERATOR(-)
 #define COMPOUND_ASSIGNMENT_OPERATOR(OP)		\
   tiny_vec& operator OP (const Type &other) {		\
-    for(int i=0; i<n; i++) (*this).data[i] OP other;	\
+    for(unsigned int i=0; i<n; i++) (*this).data[i] OP other;	\
     return *this;					\
   }							\
   tiny_vec& operator OP (const tiny_vec &other) {	\
-    for(int i=0; i<n; i++) (*this).data[i] OP other[i];	\
+    for(unsigned int i=0; i<n; i++) (*this).data[i] OP other[i];	\
     return *this;					\
   }
   COMPOUND_ASSIGNMENT_OPERATOR(+=)

@@ -271,7 +271,7 @@ namespace tiny_ad {
     variable() { /* Do not zero-initialize */ }
     variable(Base x) : Base(x) {}
     variable(double x) : Base(x) {}
-    variable(double x, int id) : Base(x) {
+    variable(double x, unsigned int id) : Base(x) {
       setid(id);
     }
     template<class Constant>
@@ -279,18 +279,18 @@ namespace tiny_ad {
       Base::value = x; Base::deriv.setZero();
     }
     template<class Constant>
-    variable(Constant x, int id) {
+    variable(Constant x, unsigned int id) {
       Base::value = x; Base::deriv.setZero();
       setid(id);
     }
-    void setid(int i0, int count = 0){
+    void setid(unsigned int i0, int count = 0){
       this->value.setid(i0, count);
       this->deriv[i0].setid(i0, count + 1);
     }
     TINY_VECTOR(Double, result_size) getDeriv(){
       TINY_VECTOR(Double, result_size) ans;
-      int stride = result_size / nvar;
-      for(int i=0; i<nvar; i++)
+      unsigned int stride = result_size / nvar;
+      for(unsigned int i=0; i<nvar; i++)
 	ans.segment(i * stride, stride) = this->deriv[i].getDeriv();
       return ans;
     }
@@ -315,7 +315,7 @@ namespace tiny_ad {
       Base::value = x; Base::deriv.setZero();
       setid(id);
     }
-    void setid(int i0, int count = 0){
+    void setid(unsigned int i0, int count = 0){
       if(count == 0)
 	this->deriv[i0] = 1.0;
       if(count == 1)

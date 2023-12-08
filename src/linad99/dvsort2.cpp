@@ -57,10 +57,10 @@ dvector sort(const dvector& v, int NSTACK)
       i=l;
       j=ir;
       fx=(fx*FA+FC) % FM;
-      iq=l+((ir-l+1)*fx)/FM;
+      iq=l+((ir-l+1)*static_cast<int>(fx))/FM;
       if (iq<=0)
       {
-        iq=l+((ir-l+1.0)*fx)/FM;
+        iq=l+((ir-l+1)*static_cast<int>(fx))/FM;
       } 
       a=arr[iq];
       arr[iq]=arr[l];
@@ -176,10 +176,10 @@ dvector sort(const dvector& _v, const ivector& _index, int NSTACK)
       i=l;
       j=ir;
       fx=(fx*FA+FC) % FM;
-      iq=l+((ir-l+1)*fx)/FM;
+      iq=l+((ir-l+1)*static_cast<int>(fx))/FM;
       if (iq<0)
       {
-        iq=l+((ir-l+1.0)*fx)/FM;
+        iq=l+((ir-l+1)*static_cast<int>(fx))/FM;
       }
       a=arr[iq];
       iii=index[iq];

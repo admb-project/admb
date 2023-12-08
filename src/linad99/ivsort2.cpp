@@ -57,7 +57,7 @@ ivector sort(const ivector& v, int NSTACK)
       i=l;
       j=ir;
       fx=(fx*FA+FC) % FM;
-      iq=l+((ir-l+1)*fx)/FM;
+      iq=l+((ir-l+1)*static_cast<int>(fx))/FM;
       a=arr[iq];
       arr[iq]=arr[l];
       for (;;)
@@ -172,7 +172,7 @@ ivector sort(const ivector& _v, const ivector& _index, int NSTACK)
       i=l;
       j=ir;
       fx=(fx*FA+FC) % FM;
-      iq=l+((ir-l+1)*fx)/FM;
+      iq=l+((ir-l+1)*static_cast<int>(fx))/FM;
       a=arr[iq];
       iii=index[iq];
       arr[iq]=arr[l];

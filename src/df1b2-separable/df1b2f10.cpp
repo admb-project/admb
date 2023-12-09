@@ -134,10 +134,11 @@ void test_smartlist::rewind(void)
     lseek(fp,0L,SEEK_SET);
     // get the record size
     unsigned int nbytes = 0;
-#ifdef OPT_LIB
-    ::read(fp,&nbytes,sizeof(unsigned int));
-#else
+#if (__cplusplus >= 201703L)
+    [[maybe_unused]]
+#endif
     ssize_t ret = ::read(fp,&nbytes,sizeof(unsigned int));
+#ifndef OPT_LIB
     assert(ret != -1);
 #endif
     if (nbytes > bufsize)
@@ -147,11 +148,9 @@ void test_smartlist::rewind(void)
         << " buffer size is " << bufsize << " record size is supposedly "
         << nbytes << endl;
     }
-#ifdef OPT_LIB
-    ::read(fp,buffer,nbytes);
-#else
     // now read the record into the buffer
     ret = ::read(fp,buffer,nbytes);
+#ifndef OPT_LIB
     assert(ret != -1);
 #endif
 
@@ -250,12 +249,13 @@ void test_smartlist::write_buffer(void)
     written_flag=1;
     // get the current file position
     off_t pos=lseek(fp,0L,SEEK_CUR);
+#if (__cplusplus >= 201703L)
+    [[maybe_unused]]
+#endif
+    ssize_t ret = ::write(fp,&nbytes,sizeof(int));
 
     // write the size of the next record into the file
-#if defined(OPT_LIB) && !defined(_MSC_VER)
-    ::write(fp,&nbytes,sizeof(int));
-#else
-    ssize_t ret = ::write(fp,&nbytes,sizeof(int));
+#if !defined(OPT_LIB)
     assert(ret != -1);
 #endif
 
@@ -271,10 +271,8 @@ void test_smartlist::write_buffer(void)
 
     // now write the previous file position into the file so we can back up
     // when we want to.
-#if defined(OPT_LIB) && !defined(_MSC_VER)
-    ::write(fp,&pos,sizeof(off_t));
-#else
     ret = ::write(fp,&pos,sizeof(off_t));
+#if !defined(OPT_LIB)
     assert(ret != -1);
 #endif
 
@@ -303,10 +301,11 @@ void test_smartlist::read_buffer(void)
       // offset of the begining of the record is at the end
       // of the record
       lseek(fp,-pos,SEEK_CUR);
-#ifdef OPT_LIB
-      ::read(fp, &pos, sizeof(off_t));
-#else
+#if (__cplusplus >= 201703L)
+    [[maybe_unused]]
+#endif
       ssize_t ret = read(fp,&pos,sizeof(off_t));
+#ifndef OPT_LIB
       assert(ret != -1);
 #endif
       // back up to the beginning of the record (plus record size)
@@ -315,10 +314,11 @@ void test_smartlist::read_buffer(void)
     }
     // get the record size
     unsigned int nbytes = 0;
-#ifdef OPT_LIB
-    ::read(fp,&nbytes,sizeof(unsigned int));
-#else
+#if (__cplusplus >= 201703L)
+    [[maybe_unused]]
+#endif
     ssize_t result = ::read(fp,&nbytes,sizeof(unsigned int));
+#ifndef OPT_LIB
     assert(result != -1);
 #endif
     if (nbytes <= 0 || nbytes > bufsize)
@@ -342,10 +342,11 @@ void test_smartlist::read_buffer(void)
     if (direction ==-1) // we are going backwards
     {
       // backup the file pointer again
-#ifdef OPT_LIB
-      lseek(fp,pos,SEEK_SET);
-#else
+#if (__cplusplus >= 201703L)
+    [[maybe_unused]]
+#endif
       off_t ret = lseek(fp,pos,SEEK_SET);
+#ifndef OPT_LIB
       assert(ret >= 0);
 #endif
       // *(off_t*)(bptr)=lseek(fp,pos,SEEK_SET);

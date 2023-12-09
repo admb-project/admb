@@ -264,11 +264,13 @@ void gradient_structure::save_arrays()
   {
      humungous_pointer src = ARR_LIST1->ARRAY_MEMBLOCK_BASE;
      LSEEK(GRAD_STACK1->_VARSSAV_PTR,0L,SEEK_SET);
+
 #if defined(DOS386)
-  #ifdef OPT_LIB
-     write(GRAD_STACK1->_VARSSAV_PTR, (char*)src, bytes_needed);
-  #else
+  #if (__cplusplus >= 201703L)
+     [[maybe_unused]]
+  #endif
      ssize_t ret = write(GRAD_STACK1->_VARSSAV_PTR, (char*)src, bytes_needed);
+  #ifndef OPT_LIB
      assert(ret != -1);
   #endif
 #else
@@ -322,11 +324,13 @@ void gradient_structure::restore_arrays()
   {
     humungous_pointer dest = ARR_LIST1->ARRAY_MEMBLOCK_BASE;
     LSEEK(GRAD_STACK1->_VARSSAV_PTR,0L,SEEK_SET);
+
 #if defined(DOS386)
-  #if defined(OPT_LIB) && !defined(_MSC_VER)
-    read(GRAD_STACK1->_VARSSAV_PTR, (char*)dest,bytes_needed);
-  #else
+  #if (__cplusplus >= 201703L)
+    [[maybe_unused]]
+  #endif
     ssize_t ret = read(GRAD_STACK1->_VARSSAV_PTR, (char*)dest,bytes_needed);
+  #if !defined(OPT_LIB)
     assert(ret != -1);
   #endif
 #else

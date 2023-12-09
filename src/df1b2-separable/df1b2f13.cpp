@@ -247,10 +247,11 @@ void fixed_smartlist::write_buffer_one_less(void)
     off_t pos=lseek(fp,0L,SEEK_CUR);
 
     // write the size of the next record into the file
-#if defined(OPT_LIB) && !defined(_MSC_VER)
-    ::write(fp, &nbytes, sizeof(unsigned int));
-#else
+#if (__cplusplus >= 201703L)
+    [[maybe_unused]]
+#endif
     ssize_t ret = ::write(fp, &nbytes, sizeof(unsigned int));
+#if !defined(OPT_LIB)
     assert(ret != -1);
 #endif
 
@@ -269,10 +270,8 @@ void fixed_smartlist::write_buffer_one_less(void)
 
     // now write the previous file position into the file so we can back up
     // when we want to.
-#if defined(OPT_LIB) && !defined(_MSC_VER)
-    ::write(fp,&pos,sizeof(off_t));
-#else
     ret = ::write(fp,&pos,sizeof(off_t));
+#if !defined(OPT_LIB)
     assert(ret != -1);
 #endif
 

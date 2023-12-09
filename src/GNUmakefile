@@ -199,7 +199,7 @@ else
 endif
 
 ifneq ($(CXX),CC)
-ADCXXFLAGS:= $(ADCXXFLAGS) -Wall -Wextra -Wconversion -Wno-free-nonheap-object
+ADCXXFLAGS:= $(ADCXXFLAGS) -Wall -Wextra -Wconversion
 endif
 
 ifeq ($(CMDSHELL),cmd)
@@ -313,13 +313,6 @@ CXXFLAGS_OPT_LIB:=$(subst -Wextra,-Wextra,$(CXXFLAGS_OPT_LIB))
 endif
 ifeq ($(CXX),g++)
 CXXFLAGS_OPT_LIB:=$(subst -Wextra,-Wextra,$(CXXFLAGS_OPT_LIB))
-endif
-ifneq ($(CXX),CC)
-  ifneq ($(CXX),openCC)
-    ifneq ($(CXX),icpc)
-CXXFLAGS_OPT_LIB:=$(subst -Wno-,-Wno-unused-result -Wno-,$(CXXFLAGS_OPT_LIB))
-    endif
-  endif
 endif
 
 include df1b2-separable/objects.lst

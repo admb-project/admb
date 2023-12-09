@@ -328,12 +328,14 @@ void dfsdmat::save()
   LSEEK(tmp_file,0L,SEEK_SET);
   unsigned int _n = (unsigned int)size();
   unsigned int nn = (_n*(_n+1))/2;
-#ifdef OPT_LIB
-  write(tmp_file,&_n,sizeof(int));
-#else
+#if (__cplusplus >= 201703L)
+    [[maybe_unused]]
+#endif
   ssize_t ret = write(tmp_file,&_n,sizeof(int));
+#ifndef OPT_LIB
   assert(ret != -1);
 #endif
+
 #ifdef __MINGW64__
   size_t size = nn * sizeof(double);
   assert(size <= UINT_MAX);
@@ -368,10 +370,12 @@ void dfsdmat::restore()
 {
   int _n=0;
   LSEEK(tmp_file,0L,SEEK_SET);
-#if defined(OPT_LIB) && !defined(_MSC_VER)
-  read(tmp_file,&_n,sizeof(int));
-#else
+
+#if (__cplusplus >= 201703L)
+  [[maybe_unused]]
+#endif
   ssize_t ret = read(tmp_file,&_n,sizeof(int));
+#if !defined(OPT_LIB)
   assert(ret != -1);
   assert(_n > 0);
 #endif

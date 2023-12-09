@@ -641,7 +641,7 @@ df1b2matrix::df1b2matrix(void)
  * Description not yet available.
  * \param
  */
-void df1b2matrix::allocate(int nrl,int nrh,int ncl,int nch,const char * s)
+void df1b2matrix::allocate(int nrl,int nrh,int ncl,int nch, __attribute__((unused)) const char * s)
 {
   allocate(nrl,nrh,ncl,nch);
 }
@@ -651,7 +651,7 @@ void df1b2matrix::allocate(int nrl,int nrh,int ncl,int nch,const char * s)
  * \param
  */
 void df1b2matrix::allocate(int nrl,int nrh,const index_type& ncl,
-  const index_type& nch,const char * s)
+  const index_type& nch, __attribute__((unused)) const char * s)
 {
   allocate(nrl,nrh,ncl,nch);
 }

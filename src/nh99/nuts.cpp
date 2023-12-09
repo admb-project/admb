@@ -48,8 +48,8 @@ void read_hessian_matrix_and_scale1(int nvar, const dmatrix& _SS, double s, int 
              by R package adnuts for diagnostics.
 **/
 
-void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,double dscale,
-					   int restart_flag) {
+void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0,__attribute__((unused)) double dscale,
+					   __attribute__((unused)) int restart_flag) {
   if (nmcmc<=0) {
     cerr << endl << "Error: Negative iterations for MCMC not meaningful" << endl;
     ad_exit(1);

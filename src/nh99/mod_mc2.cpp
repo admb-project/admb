@@ -8,7 +8,7 @@
 
 double better_rand(long int&);
 
-double function_minimizer::get_monte_carlo_value(int nvar,
+double function_minimizer::get_monte_carlo_value(__attribute__((unused)) int nvar,
   const independent_variables& x)
 {
   //initial_params::xinit(x);
@@ -30,11 +30,11 @@ double function_minimizer::get_monte_carlo_value(int nvar,
 }
 
 #if !defined(USE_ADPVM)
-double function_minimizer::pvm_master_get_monte_carlo_value(int nvar,
-  const dvector& x){return 0.0;}
+double function_minimizer::pvm_master_get_monte_carlo_value(__attribute__((unused)) int nvar,
+  __attribute__((unused)) const dvector& x){return 0.0;}
 #else
-double function_minimizer::pvm_master_get_monte_carlo_value(int nvar,
-  const dvector& x)
+double function_minimizer::pvm_master_get_monte_carlo_value(__attribute__((unused)) int nvar,
+  __attribute__((unused)) const dvector& x)
 {
   double f=0.0;
   {
@@ -54,9 +54,9 @@ double function_minimizer::pvm_master_get_monte_carlo_value(int nvar,
 #endif
 
 #if !defined(USE_ADPVM)
-void function_minimizer::pvm_slave_get_monte_carlo_value(int nvar){}
+void function_minimizer::pvm_slave_get_monte_carlo_value(__attribute__((unused)) int nvar){}
 #else
-void function_minimizer::pvm_slave_get_monte_carlo_value(int nvar)
+void function_minimizer::pvm_slave_get_monte_carlo_value(__attribute__((unused)) int nvar)
 {
   double f=0.0;
   {

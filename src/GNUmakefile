@@ -199,7 +199,7 @@ else
 endif
 
 ifneq ($(CXX),CC)
-ADCXXFLAGS:= $(ADCXXFLAGS) -Wall -Wextra -Wconversion -Wno-unused-parameter
+ADCXXFLAGS:= $(ADCXXFLAGS) -Wall -Wextra -Wconversion -Wno-free-nonheap-object
 endif
 
 ifeq ($(CMDSHELL),cmd)

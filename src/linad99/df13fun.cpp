@@ -439,7 +439,7 @@ df1_three_variable& df1_three_variable::operator-=(double _v)
  * \param
  */
 void set_derivatives(df1_three_variable& z,const df1_three_variable& x,
-  double u, double zp)
+  __attribute__((unused)) double u, double zp)
 {
     //*z.get_u() = u;
     *z.get_u_x() = zp* *x.get_u_x();

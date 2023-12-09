@@ -23,7 +23,7 @@
 double calculate_importance_sample_block_diagonal_option_antithetical
   (const dvector& x,const dvector& u0,const dmatrix& Hess,
   const dvector& _xadjoint,const dvector& _uadjoint,
-  const dmatrix& _Hessadjoint,function_minimizer * pmin)
+  __attribute__((unused)) const dmatrix& _Hessadjoint,function_minimizer * pmin)
 {
   ADUNCONST(dvector,xadjoint)
   ADUNCONST(dvector,uadjoint)

@@ -160,7 +160,7 @@ Write all values of g into output stream _ofs.
 */
 void initial_params::save_all(
   const ofstream& _ofs,
-  int precision,
+  __attribute__((unused)) int precision,
   const dvector& g)
 {
   ADUNCONST(ofstream,ofs)

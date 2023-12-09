@@ -81,7 +81,7 @@ void ad_update_mcmchist_report(dmatrix& mcmc_values,ivector& number_offsets,
  * \param
  */
 void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
-  int restart_flag)
+  __attribute__((unused)) int restart_flag)
 {
   robust_hybrid_flag=0;
   uostream * pofs_psave=NULL;

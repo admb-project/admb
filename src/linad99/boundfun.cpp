@@ -207,7 +207,7 @@ Derivatative code for \ref double nd2fboundp( double x, double fmin,
 \param fpen Unchanged on return.
 \return Derivative of scaled variable
 */
-double ndfboundp( double x, double fmin, double fmax,const double& fpen)
+double ndfboundp( double x, double fmin, double fmax, __attribute__((unused)) const double& fpen)
 {
   if (gradient_structure::Hybrid_bounded_flag==0)
   {

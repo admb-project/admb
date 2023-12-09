@@ -622,8 +622,8 @@ label555:
 double do_interpolate(const double& _fret, const double& _left_bracket,
   double& left_bracket_value, const dvector& _left_bracket_gradient,
   double& right_bracket, const double& _right_bracket_value,
-  dvector& right_bracket_gradient, const dvector& theta, const dvector& d,
-  const int& _J, long int& ifn, const double& crit1,
+  dvector& right_bracket_gradient, __attribute__((unused)) const dvector& theta, const dvector& d,
+  const int& _J, __attribute__((unused)) long int& ifn, const double& crit1,
   int& int_flag, const double& _rho_1, const double& Psi_2, const dvector& g1)
 {
   double& fret = (double&)_fret;
@@ -796,8 +796,8 @@ label200:
 void do_extrapolate(const double& _left_bracket,
   const double& _left_bracket_value, dvector& left_bracket_gradient,
   const double& _right_bracket, double& right_bracket_value,
-  const dvector& _right_bracket_gradient, const dvector& theta,
-  dvector& d, const int& _J, const double& rho_0, long int& ifn,
+  const dvector& _right_bracket_gradient, __attribute__((unused)) const dvector& theta,
+  dvector& d, const int& _J, const double& rho_0, __attribute__((unused)) long int& ifn,
   const int& _ifnex, int& ext_flag, const double& _rho_1, const double& rf,
   const dvector& g1)
 {
@@ -844,8 +844,8 @@ label2000:
  * Description not yet available.
  * \param
  */
-void bracket_report(const dvector& theta, const double& left_bracket,
-                    double& right_bracket, const dvector& d)
+void bracket_report(__attribute__((unused)) const dvector& theta, __attribute__((unused)) const double& left_bracket,
+                    __attribute__((unused)) double& right_bracket, const dvector& d)
 {
   dvector g(1,d.size());
   dvector u(1,d.size());

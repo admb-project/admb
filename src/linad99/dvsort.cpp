@@ -37,7 +37,7 @@ void double_qsort2(double *arr, int *arr2, unsigned n)
  *
  * \n\n Adopted from the GNU C Library. http://www.corpit.ru/mjt/qsort.html
  */
-dvector sort(const dvector& v, int NSTACK)
+dvector sort(const dvector& v, __attribute__((unused)) int NSTACK)
 {
   int lb = v.indexmin();
   unsigned int size = v.size();
@@ -76,7 +76,7 @@ dvector sort(const dvector& v, int NSTACK)
  *
  * \n\n Adopted from the GNU C Library. http://www.corpit.ru/mjt/qsort.html
  */
-dvector sort(const dvector& v, const ivector& _index, int NSTACK)
+dvector sort(const dvector& v, const ivector& _index, __attribute__((unused)) int NSTACK)
 {
   ivector& index = (ivector&) _index;
   if (v.size() != index.size())

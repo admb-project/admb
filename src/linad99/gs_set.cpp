@@ -54,7 +54,7 @@ void gradient_structure::set_NUM_RETURN_ARRAYS(unsigned int i)
  * the autodif variable type container class objects
  * \param i value in bytes
  */
-void gradient_structure::set_ARRAY_MEMBLOCK_SIZE(unsigned long i)
+void gradient_structure::set_ARRAY_MEMBLOCK_SIZE(__attribute__((unused)) unsigned long i)
 {
   cerr << " This is not the way to set the ARRAY_MEMBLOCK_SIZE -- sorry\n"
     " You set it by declaring the number of bytes you want in the\n";

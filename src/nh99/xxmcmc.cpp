@@ -920,7 +920,7 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
  * \return Nothing.
  */
 void write_empirical_covariance_matrix(int ncor, const dvector& s_mean,
-  const dmatrix& s_covar,adstring& prog_name)
+  const dmatrix& s_covar, __attribute__((unused)) adstring& prog_name)
 {
   uostream ofs((char*)(ad_comm::adprogram_name + adstring(".ecm")));
   dvector tmp=s_mean/ncor;
@@ -963,8 +963,8 @@ void write_empirical_covariance_matrix(int ncor, const dvector& s_mean,
  * \param adstring& prog_name
  * \return Nothing, but S has been assigned to the contents of the file.
  */
-void read_empirical_covariance_matrix(int nvar, const dmatrix& S,
-  const adstring& prog_name)
+void read_empirical_covariance_matrix(__attribute__((unused)) int nvar, const dmatrix& S,
+  __attribute__((unused)) const adstring& prog_name)
 {
   adstring infile_name=ad_comm::adprogram_name + adstring(".ecm");
   uistream ifs((char*)(infile_name));
@@ -1180,9 +1180,9 @@ int maxnz(const dvector& x)
   return m;
 }
 
-void add_hist_values(const dvector& s, const dvector& m, const dmatrix& _hist,
+void add_hist_values(__attribute__((unused)) const dvector& s, const dvector& m, const dmatrix& _hist,
   dvector& mcmc_values, double llc, const dvector& h, int nslots,
-  double total_spread,int probflag)
+  __attribute__((unused)) double total_spread,int probflag)
 {
   dmatrix& hist= (dmatrix&) _hist;
   int nsdvars=stddev_params::num_stddev_calc();

@@ -117,7 +117,7 @@ double old_inv_cumd_beta_stable(double a,double b,double y,double eps)
 }
 
 
-double inv_cumd_beta_stable(double a,double b,double y,double eps)
+double inv_cumd_beta_stable(double a,double b,double y,__attribute__((unused)) double eps)
 {
   //double eps1=1.0-eps;
 

@@ -7,7 +7,7 @@
 #include <admodel.h>
 
   void param_init_d3array::sd_vscale(const dvar_vector& _d,
-    const dvar_vector& x,const int& _ii)
+    __attribute__((unused)) const dvar_vector& x,const int& _ii)
   {
     if (allocated(*this))
     {

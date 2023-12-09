@@ -88,7 +88,7 @@ std::string get_elapsed_time(
   cout << " done! (" << runtime  << u << ")" <<  endl;
 */
 
-  return std::move(ss.str());
+  return ss.str();
 }
 
 void print_elapsed_time(

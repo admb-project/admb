@@ -142,7 +142,7 @@ void funnel_init_df1b2matrix::set_index(imatrix& y,int& ii)
  * \param
  */
 void funnel_init_df1b2matrix::set_value(const init_df1b2vector& _x,
-  const int& _ii,const df1b2variable& _pen)
+  const int& _ii, __attribute__((unused)) const df1b2variable& _pen)
 {
   ADUNCONST(int,ii)
   ADUNCONST(init_df1b2vector,x)

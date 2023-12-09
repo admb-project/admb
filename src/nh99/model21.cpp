@@ -15,8 +15,8 @@ void param_init_d3array::set_simulation_bounds(const dmatrix& symbds,
 }
 */
 
-void param_init_d3array::get_jacobian(const dvector& y, const dvector& ndev,
-  const int& ii)
+void param_init_d3array::get_jacobian(__attribute__((unused)) const dvector& y, __attribute__((unused)) const dvector& ndev,
+  __attribute__((unused)) const int& ii)
 {
  cerr << " Error -- "
    " void param_init_number::add_value(const dvector& ndev, const int& ii)"
@@ -59,7 +59,7 @@ void param_init_d3array::bsave_value(uostream& uos)
 }
 
 void param_init_d3array::set_value(const dvar_vector& x,
-  const int& ii, const dvariable& pen)
+  const int& ii, __attribute__((unused)) const dvariable& pen)
   {
     ::set_value(*this,x,ii);
   }
@@ -181,7 +181,7 @@ void param_init_d3array::allocate( int smin, int smax, int rmin, int rmax,
   }
 }
 
-void param_init_d3array::curv_scale(const dvector& _v, const dvector& x,
+void param_init_d3array::curv_scale(const dvector& _v, __attribute__((unused)) const dvector& x,
   const int& _ii)
   {
     int& ii=(int&) _ii;
@@ -204,7 +204,7 @@ void param_init_d3array::curv_scale(const dvector& _v, const dvector& x,
     }
   }
 
-void param_init_d3array::hess_scale(const dvector& _v, const dvector& x,
+void param_init_d3array::hess_scale(const dvector& _v, __attribute__((unused)) const dvector& x,
   const int& _ii)
   {
     int& ii=(int&) _ii;
@@ -227,7 +227,7 @@ void param_init_d3array::hess_scale(const dvector& _v, const dvector& x,
     }
   }
 
-void param_init_d3array::sd_scale(const dvector& _v, const dvector& x,
+void param_init_d3array::sd_scale(const dvector& _v, __attribute__((unused)) const dvector& x,
   const int& _ii)
   {
     int& ii=(int&) _ii;

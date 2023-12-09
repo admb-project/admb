@@ -25,7 +25,7 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
  * \param
  */
 dvector laplace_approximation_calculator::get_uhat_quasi_newton_qd
-  (const dvector& x,function_minimizer * pfmin)
+  (__attribute__((unused)) const dvector& x, __attribute__((unused)) function_minimizer * pfmin)
 {
   dvector g(1,usize);
   independent_variables u(1,usize);

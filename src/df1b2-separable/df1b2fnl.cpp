@@ -359,7 +359,7 @@ funnel_init_df1b2variable::funnel_init_df1b2variable
  * Description not yet available.
  * \param
  */
-void funnel_init_df1b2variable::allocate(const df1b2variable& x)
+void funnel_init_df1b2variable::allocate(__attribute__((unused)) const df1b2variable& x)
 {
   cerr << "Haven't defined htis yet" << endl;
   ad_exit(1);
@@ -851,7 +851,7 @@ void funnel_init_df1b2vector::set_index(imatrix& y,int& ii)
  * \param
  */
 void funnel_init_df1b2vector::set_value(const init_df1b2vector& _x,
-  const int& _ii,const df1b2variable& _pen)
+  const int& _ii, __attribute__((unused)) const df1b2variable& _pen)
 {
   ADUNCONST(int,ii)
   ADUNCONST(init_df1b2vector,x)
@@ -942,7 +942,7 @@ void funnel_init_bounded_df1b2vector::set_index(imatrix& y,int& ii)
  * \param
  */
 void funnel_init_bounded_df1b2vector::set_value(const init_df1b2vector& _x,
-  const int& _ii,const df1b2variable& _pen)
+  const int& _ii, __attribute__((unused)) const df1b2variable& _pen)
 {
   ADUNCONST(int,ii)
   ADUNCONST(init_df1b2vector,x)

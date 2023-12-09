@@ -574,7 +574,7 @@ double ADdiff_fun(double x,double y)
  * Description not yet available.
  * \param
  */
-double ADzero_fun(double x,double y)
+double ADzero_fun(__attribute__((unused)) double x, __attribute__((unused)) double y)
 {
   return 0.0;
 }
@@ -583,7 +583,7 @@ double ADzero_fun(double x,double y)
  * Description not yet available.
  * \param
  */
-double ADzero_fun(double x)
+double ADzero_fun(__attribute__((unused)) double x)
 {
   return 0.0;
 }
@@ -592,7 +592,7 @@ double ADzero_fun(double x)
  * Description not yet available.
  * \param
  */
-double AD1_fun(double x)
+double AD1_fun(__attribute__((unused)) double x)
 {
   return 1.0;
 }
@@ -601,7 +601,7 @@ double AD1_fun(double x)
  * Description not yet available.
  * \param
  */
-double AD1_fun(double x,double y)
+double AD1_fun(__attribute__((unused)) double x, __attribute__((unused)) double y)
 {
   return 1.0;
 }
@@ -610,7 +610,7 @@ double AD1_fun(double x,double y)
  * Description not yet available.
  * \param
  */
-double ADm1_fun(double x,double y)
+double ADm1_fun(__attribute__((unused)) double x, __attribute__((unused)) double y)
 {
   return -1.0;
 }
@@ -628,7 +628,7 @@ double AD_id(double x)
  * Description not yet available.
  * \param
  */
-double ADfirst_arg(double x,double y)
+double ADfirst_arg(double x, __attribute__((unused)) double y)
 {
   return x;
 }
@@ -637,7 +637,7 @@ double ADfirst_arg(double x,double y)
  * Description not yet available.
  * \param
  */
-double ADsecond_arg_plus1(double x,double y)
+double ADsecond_arg_plus1(__attribute__((unused)) double x, double y)
 {
   return y+1;
 }
@@ -646,7 +646,7 @@ double ADsecond_arg_plus1(double x,double y)
  * Description not yet available.
  * \param
  */
-double ADsecond_arg(double x,double y)
+double ADsecond_arg(__attribute__((unused)) double x, double y)
 {
   return y;
 }
@@ -655,7 +655,7 @@ double ADsecond_arg(double x,double y)
  * Description not yet available.
  * \param
  */
-double AD_div_1(double x,double y)
+double AD_div_1(__attribute__((unused)) double x, double y)
 {
   return 1.0/y;
 }
@@ -682,7 +682,7 @@ double AD_div_22(double x,double y)
  * Description not yet available.
  * \param
  */
-double AD_div_122(double x,double y)
+double AD_div_122(__attribute__((unused)) double x, double y)
 {
   return 2.0/(y*y*y);
 }
@@ -691,7 +691,7 @@ double AD_div_122(double x,double y)
  * Description not yet available.
  * \param
  */
-double AD_div_12(double x,double y)
+double AD_div_12(__attribute__((unused)) double x, double y)
 {
   return -1.0/(y*y);
 }
@@ -700,7 +700,7 @@ double AD_div_12(double x,double y)
  * Description not yet available.
  * \param
  */
-double AD_div_11(double x,double y)
+double AD_div_11(__attribute__((unused)) double x, __attribute__((unused)) double y)
 {
   return 0.0;
 }
@@ -709,7 +709,7 @@ double AD_div_11(double x,double y)
  * Description not yet available.
  * \param
  */
-double AD_div_111(double x,double y)
+double AD_div_111(__attribute__((unused)) double x, __attribute__((unused)) double y)
 {
   return 0.0;
 }
@@ -718,7 +718,7 @@ double AD_div_111(double x,double y)
  * Description not yet available.
  * \param
  */
-double AD_div_112(double x,double y)
+double AD_div_112(__attribute__((unused)) double x, __attribute__((unused)) double y)
 {
   return 0.0;
 }
@@ -815,7 +815,7 @@ double ADsix_id_fun(double x)
  * Description not yet available.
  * \param
  */
-double ADsix_fun(double x)
+double ADsix_fun(__attribute__((unused)) double x)
 {
   return 6.0;
 }
@@ -824,7 +824,7 @@ double ADsix_fun(double x)
  * Description not yet available.
  * \param
  */
-double ADtwo_fun(double x)
+double ADtwo_fun(__attribute__((unused)) double x)
 {
   return 2.0;
 }

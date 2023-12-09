@@ -200,8 +200,8 @@ dvector safe_choleski_solver::solve
 \todo Needs testing
 */
 void laplace_approximation_calculator::
-  do_newton_raphson_state_space(function_minimizer * pfmin,double f_from_1,
-  int& no_converge_flag)
+  do_newton_raphson_state_space(function_minimizer * pfmin, __attribute__((unused)) double f_from_1,
+  __attribute__((unused)) int& no_converge_flag)
 {
   std::ostream& output_stream = get_output_stream();
 

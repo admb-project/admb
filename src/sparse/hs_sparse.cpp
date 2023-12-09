@@ -21,9 +21,9 @@
 #define USE_ADJOINT_CODE
 void report_derivatives(const dvar_vector& x);
 
-static void xxx(int i){;}
-static void xxx(ivector& i){;}
-static void xxxv(ivector& x)
+static void xxx(__attribute__((unused)) int i){;}
+static void xxx(__attribute__((unused)) ivector& i){;}
+static void xxxv(__attribute__((unused)) ivector& x)
 {
   int mmin=x.indexmin();
   int mmax=x.indexmax();
@@ -84,7 +84,7 @@ int cholnew(XCONST hs_smatrix &A, XCONST hs_symbolic &S, hs_smatrix &L);
 }
 
 // Find C = A'
- void cs_transpose (XCONST hs_smatrix &_A, int values, hs_smatrix &C)
+ void cs_transpose (XCONST hs_smatrix &_A, __attribute__((unused)) int values, hs_smatrix &C)
 {
     ADUNCONST(hs_smatrix,A)
     int p, q, j;
@@ -116,7 +116,7 @@ int cholnew(XCONST hs_smatrix &A, XCONST hs_symbolic &S, hs_smatrix &L);
     return;
 }
 
- void cs_transpose (XCONST dvar_hs_smatrix &_A, int values, dvar_hs_smatrix &C)
+ void cs_transpose (XCONST dvar_hs_smatrix &_A, __attribute__((unused)) int values, dvar_hs_smatrix &C)
 {
     ADUNCONST(dvar_hs_smatrix,A)
     int p, q, j;
@@ -1270,8 +1270,8 @@ int tmpxchol1(XCONST hs_smatrix &A, XCONST hs_symbolic& T, hs_smatrix &L,
 }
 
 // keep off-diagonal entries; drop diagonal entries
- int cs_diag(int i, int j, double aij, void *other) { return (i != j) ; }
-int cs_diag(int i, int j, const prevariable& aij, void *other)
+ int cs_diag(int i, int j, __attribute__((unused)) double aij, __attribute__((unused)) void *other) { return (i != j) ; }
+int cs_diag(int i, int j, __attribute__((unused)) const prevariable& aij, __attribute__((unused)) void *other)
   { return (i != j) ; }
 
 /* drop entries for which fkeep(A(i,j)) is false; return nz if OK, else -1 */

@@ -128,7 +128,7 @@ Size constructor with filename id.
 \param size array size of grad_stack_entry
 \param id filename id
 */
-grad_stack::grad_stack(const size_t size, const unsigned int id)
+grad_stack::grad_stack(const size_t size, __attribute__((unused)) const unsigned int id)
 {
   true_length = size;
   length = true_length;

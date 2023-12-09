@@ -13,7 +13,7 @@ double myran1(long int&);
 
 void bounded_multivariate_normal_mcmc(int nvar, const dvector& a1,
   const dvector& b1, dmatrix& ch, const double& _wght, const dvector& y,
-  const random_number_generator& rng)
+  __attribute__((unused)) const random_number_generator& rng)
 {
   double & wght=(double &) _wght;
   //cout << y << endl;
@@ -86,7 +86,7 @@ void bounded_multivariate_normal_mcmc(int nvar, const dvector& a1,
 
 void probing_bounded_multivariate_normal_mcmc(int nvar, const dvector& a1,
   const dvector& b1, dmatrix& ch, const double& _wght, const dvector& y,
-  double pprobe, const random_number_generator& rng)
+  double pprobe, __attribute__((unused)) const random_number_generator& rng)
 {
   double & wght=(double &) _wght;
   //cout << y << endl;
@@ -137,7 +137,7 @@ void probing_bounded_multivariate_normal_mcmc(int nvar, const dvector& a1,
 
 void bounded_multivariate_uniform_mcmc(int nvar, const dvector& a1,
   const dvector& b1, dmatrix& ch, const double& _wght, const dvector& y,
-  const random_number_generator& rng)
+  __attribute__((unused)) const random_number_generator& rng)
 {
   double& wght=(double&) _wght;
   dvector a(1,nvar);

@@ -87,7 +87,7 @@ static double  nr_generic(double y,pinit_f p_get_initial_x,
  * Description not yet available.
  * \param
  */
-double inv_cumd_normal_mixture(double yy,double a)
+double inv_cumd_normal_mixture(double yy, __attribute__((unused)) double a)
 {
   double  x=nr_generic(yy,cumd_normal_mixture_initx,cumd_normal_mixture,
     df_cumd_normal_mixture);

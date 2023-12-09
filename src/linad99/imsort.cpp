@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-imatrix sort(const imatrix& m, int col, int NSTACK)
+imatrix sort(const imatrix& m, int col, __attribute__((unused)) int NSTACK)
 {
   ivector ind(m.rowmin(),m.rowmax());
   ivector ind1(m.rowmin(),m.rowmax());

@@ -17,7 +17,7 @@ extern "C" {
  * Description not yet available.
  * \param
  */
-void exit_handler(int k)
+void exit_handler(__attribute__((unused)) int k)
 {
   exit(1);
 }

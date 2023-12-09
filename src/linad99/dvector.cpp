@@ -353,7 +353,7 @@ dvector::dvector(unsigned int sz, double* x)
  (usually read from stack)
  \param kk Kludge to avoid ambiguous function references
  */
-dvector::dvector(const dvar_vector_position& dvp, const kkludge_object& kk)
+dvector::dvector(const dvar_vector_position& dvp, __attribute__((unused)) const kkludge_object& kk)
  {
    allocate(dvp.indexmin(),dvp.indexmax());
  }
@@ -666,7 +666,7 @@ dvector operator*(const double x, const dvector& t1)
    circumstances.
    \param msg Pointer to character array.
    */
-   void myheapcheck(char * msg){}
+   void myheapcheck(__attribute__((unused)) char * msg){}
 
 /*
 #endif

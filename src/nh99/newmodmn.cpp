@@ -63,8 +63,8 @@ void report_onesided_confidence_limits(const ofstream& _ofs3,int numsig_levels,
   void function_minimizer::normalize_posterior_distribution(double udet,
     const dvector& siglevel, const ofstream& _ofs2,int num_pp,
     const dvector& _all_values, const dmatrix& actual_value,double global_min,
-    int offset, const dmatrix& lprof, const dmatrix& ldet, const dmatrix& xdist,
-    const dmatrix& penalties)
+    int offset, const dmatrix& lprof, __attribute__((unused)) const dmatrix& ldet, const dmatrix& xdist,
+    __attribute__((unused)) const dmatrix& penalties)
   /*
   void function_minimizer::normalize_posterior_distribution(double udet,
     dvector& siglevel, const ofstream& ofs2,int num_pp, const dvector& all_values,

@@ -203,7 +203,7 @@ void gradient_structure::make_indvar_list(const dvar_vector& t)
  * Description not yet available.
  * \param
  */
-void copy_status(const ostream& _s, const dvar_vector& v)
+void copy_status(const ostream& _s, __attribute__((unused)) const dvar_vector& v)
    {
      ostream& s= (ostream&) _s;
      s << " copy_flag ";

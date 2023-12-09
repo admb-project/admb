@@ -116,7 +116,7 @@ Constructor to allocate buffer and storage output file.
 \param nbytes size of buffer
 \param id added to filename if greater than default zero.
 */
-DF_FILE::DF_FILE(const size_t nbytes, const unsigned int id)
+DF_FILE::DF_FILE(const size_t nbytes, __attribute__((unused)) const unsigned int id)
 {
 #if defined(_MSC_VER) || defined(__MINGW64__)
   auto max = std::numeric_limits<unsigned int>::max() - sizeof(OFF_T);

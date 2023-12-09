@@ -198,7 +198,7 @@ double SIGN(const double x, double y)
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 11
 */
-void get_eigen(const dvector& _d, const dvector& _e, const dmatrix& _z)
+void get_eigen(const dvector& _d, const dvector& _e, __attribute__((unused)) const dmatrix& _z)
 {
   dvector& d = (dvector&) _d;
   dvector& e = (dvector&) _e;

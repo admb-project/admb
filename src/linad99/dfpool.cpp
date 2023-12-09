@@ -69,7 +69,7 @@ ts_vector_shape_pool::ts_vector_shape_pool(int n) : tsdfpool(n)
  * Description not yet available.
  * \param
  */
-void* vector_shape::operator new(size_t n)
+void* vector_shape::operator new(__attribute__((unused)) size_t n)
 {
 #if defined(DEBUG)
   if (xpool && xpool->size != n)
@@ -97,7 +97,7 @@ void vector_shape::operator delete(void* ptr, size_t)
  * Description not yet available.
  * \param
  */
-void* arr_link::operator new(size_t n)
+void* arr_link::operator new(__attribute__((unused)) size_t n)
 {
 #if defined(DEBUG)
   if (xpool && xpool->size != n)
@@ -125,7 +125,7 @@ void arr_link::operator delete(void* ptr, size_t)
  * Description not yet available.
  * \param
  */
-void* vector_shapex::operator new(size_t n)
+void* vector_shapex::operator new(__attribute__((unused)) size_t n)
 {
 #if defined(DEBUG)
   if (xpool && xpool->size != n)

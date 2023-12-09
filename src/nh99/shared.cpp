@@ -20,15 +20,15 @@
     return 0;
   }
 
-  void initial_params::shared_set_value(const dvar_vector& x,
-    const int& ii,const dvariable& pen)
+  void initial_params::shared_set_value(__attribute__((unused)) const dvar_vector& x,
+    __attribute__((unused)) const int& ii, __attribute__((unused)) const dvariable& pen)
   {
     cerr << " Error -- shared_scaled_set_value_inv not defined for this class"
          << endl;
     ad_exit(1);
   }
 
-  void initial_params::shared_set_value_inv(const dvector& x,const int& ii)
+  void initial_params::shared_set_value_inv(__attribute__((unused)) const dvector& x, __attribute__((unused)) const int& ii)
   {
     cerr << " Error -- shared_scaled_set_value_inv not defined for this class"
          << endl;
@@ -97,7 +97,7 @@
   }
 
   void param_init_matrix::shared_set_value(const dvar_vector& _x,
-    const int& _ii,const dvariable& pen)
+    const int& _ii, __attribute__((unused)) const dvariable& pen)
   {
     ADUNCONST(int,ii)
     ADUNCONST(dvar_vector,x)
@@ -123,7 +123,7 @@
   }
 
   void param_init_vector::shared_set_value(const dvar_vector& _x,
-    const int& _ii,const dvariable& pen)
+    const int& _ii, __attribute__((unused)) const dvariable& pen)
   {
     ADUNCONST(int,ii)
     ADUNCONST(dvar_vector,x)
@@ -170,8 +170,8 @@
     ii+=share_flags->get_maxshare();
   }
 
-  void initial_params::setshare(const index_type& sf,
-    const index_type& af)
+  void initial_params::setshare(__attribute__((unused)) const index_type& sf,
+    __attribute__((unused)) const index_type& af)
   {
     cerr << " setshare not yet defined for this class " << endl;
     ad_exit(1);

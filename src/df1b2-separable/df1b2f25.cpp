@@ -38,7 +38,7 @@
  * Description not yet available.
  * \param
  */
-void df1b2_init_number::sd_scale(const dvector& _d,const dvector& x,
+void df1b2_init_number::sd_scale(const dvector& _d, __attribute__((unused)) const dvector& x,
   const int& _ii)
   {
     int& ii=(int&) _ii;
@@ -82,7 +82,7 @@ void df1b2_init_bounded_number::sd_scale(const dvector& _d,const dvector& x,
  * Description not yet available.
  * \param
  */
-void df1b2_init_vector::sd_scale(const dvector& _v,const dvector& x,
+void df1b2_init_vector::sd_scale(const dvector& _v, __attribute__((unused)) const dvector& x,
   const int& _ii)
   {
     if (allocated())
@@ -104,7 +104,7 @@ void df1b2_init_vector::sd_scale(const dvector& _v,const dvector& x,
  * Description not yet available.
  * \param
  */
-void df1b2_init_matrix::sd_scale(const dvector& _v,const dvector& x,
+void df1b2_init_matrix::sd_scale(const dvector& _v, __attribute__((unused)) const dvector& x,
   const int& _ii)
   {
     if (allocated())

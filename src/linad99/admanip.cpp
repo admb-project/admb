@@ -45,7 +45,7 @@ preshowpoint setshowpoint(void)
  * Description not yet available.
  * \param
  */
-ostream& operator<<(const ostream& _s, preshowpoint p)
+ostream& operator<<(const ostream& _s, __attribute__((unused)) preshowpoint p)
 {
   ostream& s=(ostream&)(_s);
   s.setf(ios::showpoint);
@@ -66,7 +66,7 @@ prefixed setfixed(void)
  * Description not yet available.
  * \param
  */
-ostream& operator<<(const ostream& _s, prefixed p)
+ostream& operator<<(const ostream& _s, __attribute__((unused)) prefixed p)
 {
   ostream& s=(ostream&)(_s);
   s.setf(ios::fixed,ios::floatfield);
@@ -87,7 +87,7 @@ prescientific setscientific(void)
  * Description not yet available.
  * \param
  */
-ostream& operator<<(const ostream& _s, prescientific p)
+ostream& operator<<(const ostream& _s, __attribute__((unused)) prescientific p)
 {
   ostream& s=(ostream&)(_s);
   s.setf(ios::scientific,ios::floatfield);

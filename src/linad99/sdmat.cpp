@@ -32,7 +32,7 @@ sdmatrix::sdmatrix()
  * Description not yet available.
  * \param
  */
-void sdmatrix::allocate(int irh)
+void sdmatrix::allocate(__attribute__((unused)) int irh)
 {
    int nrl = 1;
    //unsigned nrh = irh;

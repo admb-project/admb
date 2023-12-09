@@ -73,7 +73,7 @@ df1b23array::df1b23array(void)
  * \param
  */
 void df1b23array::allocate(int nrl,int nrh,int ncl,int nch,
-  int nxl,int nxh,const char * s)
+  int nxl,int nxh, __attribute__((unused)) const char * s)
 {
   allocate(nrl,nrh,ncl,nch,nxl,nxh);
 }
@@ -98,7 +98,7 @@ void df1b23array::allocate(int nrl,int nrh,const index_type& ncl,
 void df1b23array::allocate(int nrl,int nrh,
   const index_type& ncl, const index_type& nch,
   const index_type& nxl, const index_type& nxh,
-  const char * s)
+  __attribute__((unused)) const char * s)
 {
   allocate(nrl,nrh,ncl,nch,nxl,nxh);
 }
@@ -222,7 +222,7 @@ void df1b23array::allocate(
   const int nrl, const int nrh,
   const ivector& ncl, const ivector& nch,
   const int nxl, const int nxh,
-  const char* s)
+  __attribute__((unused)) const char* s)
 {
   index_min=nrl;
   index_max=nrh;

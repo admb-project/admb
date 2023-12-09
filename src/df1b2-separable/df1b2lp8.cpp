@@ -357,7 +357,7 @@ double fcomp1(dvector x,dvector d,int samplesize,int n,dvector & g,
  * Description not yet available.
  * \param
  */
-void laplace_approximation_calculator::check_hessian_type(const dvector& _x,
+void laplace_approximation_calculator::check_hessian_type(__attribute__((unused)) const dvector& _x,
   function_minimizer * pfmin)
 {
   pfmin->pre_user_function();

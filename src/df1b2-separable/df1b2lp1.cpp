@@ -853,7 +853,7 @@ void laplace_approximation_calculator::get_newton_raphson_info
  * Description not yet available.
  * \param
  */
-void laplace_approximation_calculator::set_u_dot(int ip)
+void laplace_approximation_calculator::set_u_dot(__attribute__((unused)) int ip)
 {
   int mmin=y.indexmin();
   int mmax=y.indexmax();

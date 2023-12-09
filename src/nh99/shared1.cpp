@@ -57,7 +57,7 @@
   }
 
   void param_init_d3array::shared_set_value(const dvar_vector& _x,
-    const int& _ii,const dvariable& pen)
+    const int& _ii, __attribute__((unused)) const dvariable& pen)
   {
     ADUNCONST(int,ii)
     ADUNCONST(dvar_vector,x)

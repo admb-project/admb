@@ -17,7 +17,7 @@ void read_empirical_covariance_matrix(int nvar, const dmatrix& S, const adstring
 void read_hessian_matrix_and_scale1(int nvar, const dmatrix& _SS, double s, int mcmc2_flag);
 
 void function_minimizer::shmc_mcmc_routine(int nmcmc,int iseed0,double dscale,
-					  int restart_flag) {
+					  __attribute__((unused)) int restart_flag) {
   cerr << endl << endl << "Option -hmc is deprecated, please use option -nuts" << endl << endl;
   if (nmcmc<=0)
     {

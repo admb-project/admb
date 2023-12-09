@@ -31,7 +31,7 @@ typedef fmm* pfmm;
  * \param
  */
 dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
-  (const dvector& x,function_minimizer * pfmin)
+  (__attribute__((unused)) const dvector& x,function_minimizer * pfmin)
 {
   if (separable_function_difference)
   {

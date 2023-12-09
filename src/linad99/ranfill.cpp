@@ -113,8 +113,8 @@ double auto_rand(long int& idum, int reset)
       ix1=(IA1*ix1+IC1);
               ix1=ix1 % M1;
 
-      long int iu = (long int)(ix2 * RM2);
-      r[j]=(ix1+iu)*RM1;
+      long int iu = ix2 / M2;
+      r[j]=static_cast<float>(ix1+iu)*RM1;
     }
     idum =6;
   }
@@ -128,8 +128,8 @@ double auto_rand(long int& idum, int reset)
   long j = 1 + ((107*ix3)/M3);
   if (j > 107 || j < 1) cerr << " Error in random number generator\n";
   double temp = r[j];
-  r[j]=ix2*RM2;
-  r[j]=(ix1+r[j]);
+  r[j]=static_cast<float>(ix2)*RM2;
+  r[j]=static_cast<float>(ix1)+r[j];
   r[j]=r[j]*RM1;
   return temp;
 }

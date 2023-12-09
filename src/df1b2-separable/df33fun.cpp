@@ -487,7 +487,7 @@ df3_three_variable& df3_three_variable::operator+=(double value)
  * \param
  */
 void set_derivatives(df3_three_variable& z,const df3_three_variable& x,
-  double u, double zp,double zp2,double zp3)
+  __attribute__((unused)) double u, double zp,double zp2,double zp3)
 {
     //*z.get_u() = u;
 

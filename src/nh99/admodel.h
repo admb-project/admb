@@ -1912,7 +1912,8 @@ private:
   ivector param_size;
 protected:
   void report_function_minimizer_stats(void){;}
-  virtual void report(__attribute__((unused)) const dvector& gradients){;};
+  //virtual void report(__attribute__((unused)) const dvector& gradients){;};
+  virtual void report([[maybe_unused]] const dvector& gradients){;};
   static dvector convergence_criteria;
   static dvector maximum_function_evaluations;
   static int sd_flag;

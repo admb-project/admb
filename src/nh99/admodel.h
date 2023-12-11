@@ -1912,7 +1912,6 @@ private:
   ivector param_size;
 protected:
   void report_function_minimizer_stats(void){;}
-  //virtual void report(__attribute__((unused)) const dvector& gradients){;};
   virtual void report([[maybe_unused]] const dvector& gradients){;};
   static dvector convergence_criteria;
   static dvector maximum_function_evaluations;
@@ -2499,8 +2498,8 @@ public:
   virtual void save_value(ofstream& ofs);
   virtual void bsave_value(uostream& uos);
   virtual void save_value(const ofstream& ofs, int prec);
-  virtual void save_value(__attribute__((unused)) const ofstream& ofs, __attribute__((unused)) int prec, __attribute__((unused)) const dvector&, __attribute__((unused)) int& offset){}
-  virtual void restore_value(__attribute__((unused)) const ifstream& ifs);
+  virtual void save_value([[maybe_unused]] const ofstream& ofs, [[maybe_unused]] int prec, [[maybe_unused]]const dvector&, [[maybe_unused]] int& offset){}
+  virtual void restore_value([[maybe_unused]] const ifstream& ifs);
   void report_value(void);
   //virtual void read_value(void);
   virtual const char * label(void);

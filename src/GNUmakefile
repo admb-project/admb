@@ -561,6 +561,24 @@ else
 	$(CXX) -c $(subst -I,-DADMB_VERSION=$(ADMB_VERSION) -I,$(CXXFLAGS_SAF_LIB)) -o $@ $<
 endif
 
+$(OBJSDIR)optlp-linad99-dfsdmat.obj:linad99\dfsdmat.cpp
+	$(CXX) -c $(CXXFLAGS_OPT_LIB) -Wno-free-nonheap-object -o $@ $<
+
+$(OBJSDIR)saflp-linad99-dfsdmat.obj:linad99\dfsdmat.cpp
+	$(CXX) -c $(CXXFLAGS_SAF_LIB) -Wno-free-nonheap-object -o $@ $<
+
+$(OBJSDIR)optlp-tools99-string.obj:tools99\string.cpp
+	$(CXX) -c $(CXXFLAGS_OPT_LIB) -Wno-free-nonheap-object -o $@ $<
+
+$(OBJSDIR)saflp-tools99-string.obj:tools99\string.cpp
+	$(CXX) -c $(CXXFLAGS_SAF_LIB) -Wno-free-nonheap-object -o $@ $<
+
+$(OBJSDIR)optlp-tools99-string1.obj:tools99\string1.cpp
+	$(CXX) -c $(CXXFLAGS_OPT_LIB) -Wno-free-nonheap-object -o $@ $<
+
+$(OBJSDIR)saflp-tools99-string1.obj:tools99\string1.cpp
+	$(CXX) -c $(CXXFLAGS_SAF_LIB) -Wno-free-nonheap-object -o $@ $<
+
 $(OBJSDIR)optlp-sparse-hs_sparse.obj: sparse\hs_sparse.cpp
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
 
@@ -603,6 +621,24 @@ ifeq ($(ADMB_VERSION),)
 else
 	$(CXX) -c $(subst -I,-DADMB_VERSION=$(ADMB_VERSION) -I,$(CXXFLAGS_SAF_LIB)) -o $@ $<
 endif
+
+$(OBJSDIR)optlp-linad99-dfsdmat.obj:linad99/dfsdmat.cpp
+	$(CXX) -c $(CXXFLAGS_OPT_LIB) -Wno-free-nonheap-object -o $@ $<
+
+$(OBJSDIR)saflp-linad99-dfsdmat.obj:linad99/dfsdmat.cpp
+	$(CXX) -c $(CXXFLAGS_SAF_LIB) -Wno-free-nonheap-object -o $@ $<
+
+$(OBJSDIR)optlp-tools99-string.obj:tools99/string.cpp
+	$(CXX) -c $(CXXFLAGS_OPT_LIB) -Wno-free-nonheap-object -o $@ $<
+
+$(OBJSDIR)saflp-tools99-string.obj:tools99/string.cpp
+	$(CXX) -c $(CXXFLAGS_SAF_LIB) -Wno-free-nonheap-object -o $@ $<
+
+$(OBJSDIR)optlp-tools99-string1.obj:tools99/string1.cpp
+	$(CXX) -c $(CXXFLAGS_OPT_LIB) -Wno-free-nonheap-object -o $@ $<
+
+$(OBJSDIR)saflp-tools99-string1.obj:tools99/string1.cpp
+	$(CXX) -c $(CXXFLAGS_SAF_LIB) -Wno-free-nonheap-object -o $@ $<
 
 $(OBJSDIR)optlp-sparse-hs_sparse.obj: sparse/hs_sparse.cpp
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<

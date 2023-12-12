@@ -38,7 +38,7 @@ void ad_read_pass2_sumc(void);
  * Description not yet available.
  * \param
  */
- int df1b2_gradlist::write_pass1_sum(__attribute__((unused)) double x,const df1b2variable * _py,
+ int df1b2_gradlist::write_pass1_sum([[maybe_unused]] double x,const df1b2variable * _py,
    df1b2variable * pz)
  {
    ADUNCONST(df1b2variable*,py)

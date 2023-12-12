@@ -24,7 +24,7 @@ class dvar_hs_smatrix;
  */
 double calculate_importance_sample_shess(const dvector& x,const dvector& u0,
   const dmatrix& Hess,const dvector& _xadjoint,const dvector& _uadjoint,
-  __attribute__((unused)) const dmatrix& _Hessadjoint,function_minimizer * pmin)
+  [[maybe_unused]] const dmatrix& _Hessadjoint,function_minimizer * pmin)
 {
   ADUNCONST(dvector,xadjoint)
   ADUNCONST(dvector,uadjoint)

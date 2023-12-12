@@ -496,7 +496,7 @@ quadratic_prior::~quadratic_prior()
  * Description not yet available.
  * \param
  */
-  void quadratic_prior::allocate( const dvar_vector & _u, __attribute__((unused)) const char * s)
+  void quadratic_prior::allocate( const dvar_vector & _u, [[maybe_unused]] const char * s)
   {
     allocate(_u);
   }
@@ -521,7 +521,7 @@ quadratic_prior::~quadratic_prior()
  * \param
  */
   void quadratic_prior::allocate(const dvar_matrix & _M,
-    const dvar_vector & _u, __attribute__((unused)) const char * s)
+    const dvar_vector & _u, [[maybe_unused]] const char * s)
   {
     allocate(_M,_u);
   }

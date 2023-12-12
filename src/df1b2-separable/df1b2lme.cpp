@@ -125,7 +125,7 @@ void laplace_approximation_calculator::get_hessian_components_banded_lme
  * \param
  */
 dvar_matrix laplace_approximation_calculator::get_hessian_from_components_lme
-  (__attribute__((unused)) function_minimizer * pfmin)
+  ([[maybe_unused]] function_minimizer * pfmin)
 {
   int mmin=variance_components_vector->indexmin();
   int mmax=variance_components_vector->indexmax();

@@ -152,7 +152,7 @@ df1b2matrix_pair::df1b2matrix_pair(const df1b2matrix& _a,
   const df1b2matrix& _b) : a(_a), b(_b)
 {}
 
-void ludcmp(const df1b2matrix& M, __attribute__((unused)) int kludge)
+void ludcmp(const df1b2matrix& M, [[maybe_unused]] int kludge)
 {
   // do lu decomp once to get ordering
   int mmin=M.indexmin();
@@ -296,7 +296,7 @@ df1b2matrix_pair ludcmp(const df1b2matrix& a)
 dmatrix reorder(const dmatrix& CM,ivector & indx);
 ivector getreindex(ivector & indx);
 
-df1b2variable ln_det(const df1b2matrix& M, __attribute__((unused)) int & sgn)
+df1b2variable ln_det(const df1b2matrix& M, [[maybe_unused]] int & sgn)
 {
   int mmin=M.indexmin();
   int mmax=M.indexmax();
@@ -405,7 +405,7 @@ df1b2vector solve(df1b2matrix& M,df1b2vector& v,const df1b2variable& _ln_det)
 }
 
 df1b2vector solve(df1b2matrix& M,df1b2vector& v,const df1b2variable& _ln_det,
-  __attribute__((unused)) const int& sgn)
+  [[maybe_unused]] const int& sgn)
 {
   df1b2variable& ln_det = (df1b2variable&) _ln_det;
   int mmin=M.indexmin();

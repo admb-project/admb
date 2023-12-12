@@ -155,7 +155,7 @@ df3_two_variable cumd_gamma(const df3_two_variable& x,
   }
 }
 df3_two_variable cumd_exponential(const df3_two_variable& x,
-  __attribute__((unused)) const df3_two_variable& a)
+  [[maybe_unused]] const df3_two_variable& a)
 {
   df3_two_variable tmp;
   if (value(x)<=0)

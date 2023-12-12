@@ -127,12 +127,12 @@ df1b2quadratic_prior::~df1b2quadratic_prior(void)
 }
 
 void df1b2quadratic_prior::allocate(const df1b2_init_vector& _u,
-  __attribute__((unused)) const char* s)
+  [[maybe_unused]] const char* s)
   {
     allocate(_u);
   }
   void df1b2quadratic_prior::allocate(const df1b2matrix & _M,
-    const df1b2_init_vector & _u, __attribute__((unused)) const char * s)
+    const df1b2_init_vector & _u, [[maybe_unused]] const char * s)
   {
     allocate(_M,_u);
   }
@@ -316,11 +316,11 @@ void constant_df1b2quadratic_re_penalty::set_old_style_flag(void)
 {
   old_style_flag=2;
 }
-void constant_df1b2quadratic_re_penalty::operator = (__attribute__((unused)) const dmatrix & M)
+void constant_df1b2quadratic_re_penalty::operator = ([[maybe_unused]] const dmatrix & M)
 {
   //df1b2quadratic_prior::operator = (M);
 }
-void df1b2quadratic_prior::operator = (__attribute__((unused)) const dmatrix & M)
+void df1b2quadratic_prior::operator = ([[maybe_unused]] const dmatrix & M)
 {
   quadratic_prior::in_qp_calculations=0;
   num_active_parameters=funnel_init_var::num_vars;

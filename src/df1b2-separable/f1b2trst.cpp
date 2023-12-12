@@ -17,7 +17,7 @@
  * Description not yet available.
  * \param
  */
-void function_minimizer::trust_region_update(int nvar, __attribute__((unused)) int _crit,
+void function_minimizer::trust_region_update(int nvar, [[maybe_unused]] int _crit,
   independent_variables& x,const dvector& _g,const double& _f)
 {
   double & f= (double&)_f;

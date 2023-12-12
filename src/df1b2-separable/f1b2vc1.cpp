@@ -636,7 +636,7 @@ void df1b2vector::allocate(void)
  * Description not yet available.
  * \param
  */
-void df1b2vector::allocate(int lb,int ub, __attribute__((unused)) const char * s)
+void df1b2vector::allocate(int lb,int ub, [[maybe_unused]] const char * s)
 {
   allocate(lb,ub);
 }
@@ -830,7 +830,7 @@ df1b2vector::df1b2vector(const predf1b2vector& pdv)
  * Description not yet available.
  * \param
  */
- void ADMB_getcallindex(__attribute__((unused)) const df1b2variable& x)
+ void ADMB_getcallindex([[maybe_unused]] const df1b2variable& x)
  {
    cout << "HERE" << endl;
  }
@@ -839,7 +839,7 @@ df1b2vector::df1b2vector(const predf1b2vector& pdv)
  * Description not yet available.
  * \param
  */
- void ADMB_getcallindex(__attribute__((unused)) const df1b2vector& x)
+ void ADMB_getcallindex([[maybe_unused]] const df1b2vector& x)
  {
    cout << "HERE" << endl;
  }
@@ -848,7 +848,7 @@ df1b2vector::df1b2vector(const predf1b2vector& pdv)
  * Description not yet available.
  * \param
  */
- void ADMB_getcallindex(__attribute__((unused)) const df1b2matrix& x)
+ void ADMB_getcallindex([[maybe_unused]] const df1b2matrix& x)
  {
    cout << "HERE" << endl;
  }

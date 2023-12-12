@@ -25,7 +25,7 @@ df1b2vector solve(const df1b2matrix& aa,const df1b2vector& z,
   const df1b2variable & ln_unsigned_det,double& sign);
 
 df1b2vector solve(const df1b2matrix& aa,const df1b2vector& z,
-  const df1b2variable& ld, __attribute__((unused)) df1b2variable& sign)
+  const df1b2variable& ld, [[maybe_unused]] df1b2variable& sign)
 {
   double sgn = 0;
   return solve(aa,z,ld,sgn);

@@ -39,7 +39,7 @@ adtimer* ad_comm::ptm1 = nullptr;
  * \param
  */
 void laplace_approximation_calculator::
-  check_derivatives(__attribute__((unused)) const dvector& _x, __attribute__((unused)) function_minimizer* pfmin, __attribute__((unused)) double f)
+  check_derivatives([[maybe_unused]] const dvector& _x, [[maybe_unused]] function_minimizer* pfmin, [[maybe_unused]] double f)
 {
 #ifdef DIAG
   cerr << "need to define this" << endl;

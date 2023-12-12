@@ -23,7 +23,7 @@ void df1b2_init_vector::allocate(int mmin,int mmax,const adstring&s)
  * Description not yet available.
  * \param
  */
-void df1b2_init_vector::allocate(int mmin,int mmax,int ps, __attribute__((unused)) const adstring&s)
+void df1b2_init_vector::allocate(int mmin,int mmax,int ps, [[maybe_unused]] const adstring&s)
 {
   set_phase_start(ps);
   df1b2vector::allocate(mmin,mmax);
@@ -109,7 +109,7 @@ int initial_df1b2params::set_index(void)
  * \param
  */
 void df1b2_init_vector::set_value(const init_df1b2vector& _x,
-  const int& _ii, __attribute__((unused)) const df1b2variable& pen)
+  const int& _ii, [[maybe_unused]] const df1b2variable& pen)
 {
   ADUNCONST(init_df1b2vector,x)
   ADUNCONST(int,ii)
@@ -220,7 +220,7 @@ void df1b2_init_matrix::set_index(int aflag,const int& _ii)
  * \param
  */
 void df1b2_init_matrix::set_value(const init_df1b2vector& _x,
-  const int& _ii, __attribute__((unused)) const df1b2variable& pen)
+  const int& _ii, [[maybe_unused]] const df1b2variable& pen)
 {
   ADUNCONST(init_df1b2vector,x)
   ADUNCONST(int,ii)
@@ -245,7 +245,7 @@ void df1b2_init_matrix::set_value(const init_df1b2vector& _x,
  * \param
  */
 void df1b2_init_number::set_value(const init_df1b2vector& _x,const int& _ii,
-    __attribute__((unused)) const df1b2variable& pen)
+  [[maybe_unused]] const df1b2variable& pen)
 {
   ADUNCONST(init_df1b2vector,x)
   ADUNCONST(int,ii)
@@ -259,7 +259,7 @@ void df1b2_init_number::set_value(const init_df1b2vector& _x,const int& _ii,
  * Description not yet available.
  * \param
  */
-void df1b2_init_number::allocate(__attribute__((unused)) const adstring& s)
+void df1b2_init_number::allocate([[maybe_unused]] const adstring& s)
 {
   if (!df1b2variable::noallocate)
   {
@@ -272,7 +272,7 @@ void df1b2_init_number::allocate(__attribute__((unused)) const adstring& s)
  * Description not yet available.
  * \param
  */
-void df1b2_init_number::allocate(int _n, __attribute__((unused)) const adstring& s)
+void df1b2_init_number::allocate(int _n, [[maybe_unused]] const adstring& s)
 {
   df1b2variable::allocate();
   set_phase_start(_n);
@@ -282,7 +282,7 @@ void df1b2_init_number::allocate(int _n, __attribute__((unused)) const adstring&
  * Description not yet available.
  * \param
  */
-void df1b2variable::allocate(__attribute__((unused)) const char *s)
+void df1b2variable::allocate([[maybe_unused]] const char *s)
 {
   df1b2variable::allocate();
 }
@@ -707,7 +707,7 @@ void df1b2_init_bounded_vector::allocate(int mmin,int mmax,
  * \param
  */
 void df1b2_init_bounded_vector::allocate(int mmin,int mmax,
-  double _minb,double _maxb, __attribute__((unused)) const char* s)
+  double _minb,double _maxb, [[maybe_unused]] const char* s)
 {
   allocate(mmin,mmax,_minb,_maxb);
 }
@@ -717,7 +717,7 @@ void df1b2_init_bounded_vector::allocate(int mmin,int mmax,
  * \param
  */
 void df1b2_init_bounded_vector::allocate(int mmin,int mmax,
-  double _minb,double _maxb,int n, __attribute__((unused)) const char * s)
+  double _minb,double _maxb,int n, [[maybe_unused]] const char * s)
 {
   allocate(mmin,mmax,_minb,_maxb);
   set_phase_start(n);

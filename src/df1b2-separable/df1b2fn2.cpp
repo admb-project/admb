@@ -804,7 +804,7 @@ double d3F(P_USER_FUNCTION pu,const init_df1b2vector& _x,int i,int j,int k,
  * Description not yet available.
  * \param
  */
-dmatrix check_second_derivatives(__attribute__((unused)) const init_df1b2vector& x)
+dmatrix check_second_derivatives([[maybe_unused]] const init_df1b2vector& x)
 {
   f1b2gradlist->set_no_derivatives();
 #ifdef OPT_LIB
@@ -831,7 +831,7 @@ dmatrix check_second_derivatives(__attribute__((unused)) const init_df1b2vector&
  * Description not yet available.
  * \param
  */
-d3_array check_third_derivatives(__attribute__((unused)) const init_df1b2vector& x)
+d3_array check_third_derivatives([[maybe_unused]] const init_df1b2vector& x)
 {
   f1b2gradlist->set_no_derivatives();
 #ifdef OPT_LIB
@@ -932,7 +932,7 @@ void re_objective_function_value::allocate(void)
  * Description not yet available.
  * \param
  */
-void re_objective_function_value::allocate(__attribute__((unused)) const char * s)
+void re_objective_function_value::allocate([[maybe_unused]] const char * s)
 {
   pobjfun=this;
   df1b2variable::allocate();

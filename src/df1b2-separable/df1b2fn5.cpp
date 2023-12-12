@@ -103,7 +103,7 @@ df1b2variable::df1b2variable(void)
  * Description not yet available.
  * \param
  */
-df1b2variable::df1b2variable(__attribute__((unused)) const newadkludge* z)
+df1b2variable::df1b2variable([[maybe_unused]] const newadkludge* z)
 {
   ptr=0;
   ncopies=0;
@@ -154,7 +154,7 @@ void df1b2variable::allocate(void)
  * Description not yet available.
  * \param
  */
-df1b2variable::df1b2variable(__attribute__((unused)) adkludge1 * adkludgexxx)
+df1b2variable::df1b2variable([[maybe_unused]] adkludge1 * adkludgexxx)
 {
   // vectors are all 1,...,nvar
   ptr = (double*) pool->alloc();

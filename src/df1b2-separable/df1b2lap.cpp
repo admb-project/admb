@@ -60,7 +60,7 @@ dvar_vector *
  * \param
  */
 dvector laplace_approximation_calculator::get_uhat_quasi_newton
-  (__attribute__((unused)) const dvector& x,function_minimizer * pfmin)
+  ([[maybe_unused]] const dvector& x,function_minimizer * pfmin)
 {
   std::ostream& output_stream = get_output_stream();
   //int on,nopt;
@@ -215,7 +215,7 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton
  * \param
  */
 dvector laplace_approximation_calculator::get_uhat_lm_newton
-  (__attribute__((unused)) const dvector& x,function_minimizer * pfmin)
+  ([[maybe_unused]] const dvector& x,function_minimizer * pfmin)
 {
   double f=0.0;
   //dvector g(1,usize);
@@ -324,8 +324,8 @@ laplace_approximation_calculator::laplace_approximation_calculator
 (
   int _xsize,
   int _usize,
-  __attribute__((unused)) int _minder,
-  __attribute__((unused)) int _maxder,
+  [[maybe_unused]] int _minder,
+  [[maybe_unused]] int _maxder,
   function_minimizer* _pmin
 ):
   init_switch(1),
@@ -1387,7 +1387,7 @@ void random_effects_userfunction(double f,const dvector& x, const dvector& g);
  * Description not yet available.
  * \param
  */
-void get_second_ders(__attribute__((unused)) int xs, __attribute__((unused)) int us,const init_df1b2vector _y,dmatrix& Hess,
+void get_second_ders([[maybe_unused]] int xs, [[maybe_unused]] int us,const init_df1b2vector _y,dmatrix& Hess,
   dmatrix& Dux, df1b2_gradlist * f1b2gradlist,function_minimizer * pfmin,
   laplace_approximation_calculator * lpc)
 {
@@ -1922,7 +1922,7 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
  * \param
  */
 void get_newton_raphson_info(int xs,int us,const init_df1b2vector _y,
-  dmatrix& Hess, dvector& grad, __attribute__((unused)) df1b2_gradlist * f1b2gradlist,
+  dmatrix& Hess, dvector& grad, [[maybe_unused]] df1b2_gradlist * f1b2gradlist,
   function_minimizer * pfmin)
 {
   // Note that xs is the number of active non random effects
@@ -1965,7 +1965,7 @@ void get_newton_raphson_info(int xs,int us,const init_df1b2vector _y,
 /**
 Does Nothing.
 */
-void laplace_approximation_calculator::check_for_need_to_reallocate(__attribute__((unused)) int ip)
+void laplace_approximation_calculator::check_for_need_to_reallocate([[maybe_unused]] int ip)
 {
 }
   //void laplace_approximation_calculator::get_newton_raphson_info
@@ -2811,7 +2811,7 @@ void nested_calls_indices::allocate(const nested_calls_shape& _nsc)
  * \param
  */
 dvector laplace_approximation_calculator::get_uhat_lm_newton2
-  (__attribute__((unused)) const dvector& x,function_minimizer * pfmin)
+  ([[maybe_unused]] const dvector& x,function_minimizer * pfmin)
 {
   std::ostream& output_stream = get_output_stream();
 

@@ -210,7 +210,7 @@
     Press, Teukolsky, Vetterling, Flannery, chapter 2
 */
   df3_three_variable betai(const df3_three_variable& a,
-    const df3_three_variable& b,const  df3_three_variable& x, __attribute__((unused)) int maxit)
+    const df3_three_variable& b,const  df3_three_variable& x, [[maybe_unused]] int maxit)
   {
     df3_three_variable bt;
 
@@ -226,7 +226,7 @@
   }
 
   df3_three_variable betai(const df3_three_variable& a,
-    const df3_three_variable& b, double x, __attribute__((unused)) int maxit)
+    const df3_three_variable& b, double x, [[maybe_unused]] int maxit)
   {
     df3_three_variable bt;
 

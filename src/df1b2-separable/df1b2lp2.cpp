@@ -22,7 +22,7 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
   const dmatrix& Hess,const dvector& _xadjoint,const dvector& _uadjoint,
   const dmatrix& _Hessadjoint,function_minimizer * pmin);
 
-static void xxx(__attribute__((unused)) ivector re_list, __attribute__((unused)) ivector fe_list){}
+static void xxx([[maybe_unused]] ivector re_list, [[maybe_unused]] ivector fe_list){}
 
 /**
  * Description not yet available.

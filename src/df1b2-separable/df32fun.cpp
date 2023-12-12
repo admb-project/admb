@@ -449,7 +449,7 @@ int operator >(const df3_two_variable & x, const df3_two_variable & n)
  * Description not yet available.
  * \param
  */
-void set_derivatives( df3_two_variable& z,const df3_two_variable& x, __attribute__((unused)) double u,
+void set_derivatives( df3_two_variable& z,const df3_two_variable& x, [[maybe_unused]] double u,
   double zp,double zp2,double zp3)
 {
     //*z.get_u() = u;

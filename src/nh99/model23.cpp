@@ -15,31 +15,31 @@ int adkdelta(int i,int j)
   return i == j ? 1 : 0;
 }
 
-void param_init_number::dev_correction(__attribute__((unused)) const dmatrix& H, const int& _ii)
+void param_init_number::dev_correction([[maybe_unused]] const dmatrix& H, const int& _ii)
 {
   int& ii=(int&) _ii;
   ii++;
 }
 
-void param_init_matrix::dev_correction(__attribute__((unused)) const dmatrix& H, const int& _ii)
+void param_init_matrix::dev_correction([[maybe_unused]] const dmatrix& H, const int& _ii)
 {
   int& ii=(int&) _ii;
   ii+=size_count();
 }
 
-void param_init_d3array::dev_correction(__attribute__((unused)) const dmatrix& H, const int& _ii)
+void param_init_d3array::dev_correction([[maybe_unused]] const dmatrix& H, const int& _ii)
 {
   int& ii=(int&) _ii;
   ii+=size_count();
 }
 
-void param_init_vector::dev_correction(__attribute__((unused)) const dmatrix& H, const int& _ii)
+void param_init_vector::dev_correction([[maybe_unused]] const dmatrix& H, const int& _ii)
 {
   int& ii=(int&) _ii;
   ii+=size_count();
 }
 
-void param_init_bounded_vector::dev_correction(__attribute__((unused)) const dmatrix& H, const int& _ii)
+void param_init_bounded_vector::dev_correction([[maybe_unused]] const dmatrix& H, const int& _ii)
 {
   int& ii=(int&) _ii;
   ii+=size_count();

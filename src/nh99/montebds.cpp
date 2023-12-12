@@ -130,8 +130,8 @@ void param_init_bounded_matrix::set_simulation_bounds(const dmatrix& _symbds,
     }
   }
 
-void param_init_number::add_value(__attribute__((unused)) const dvector& y, const dvector& ndev,
-  const int& _ii, __attribute__((unused)) const double& s, const dvector& diag)
+void param_init_number::add_value([[maybe_unused]] const dvector& y, const dvector& ndev,
+  const int& _ii, [[maybe_unused]] const double& s, const dvector& diag)
   {
     int& ii=(int&) _ii;
     (*this)+=diag(ii)*ndev(ii);
@@ -200,15 +200,15 @@ double new_value_mc(const double& _jac,double x,double min,double max,
 }
 
 void param_init_bounded_number::add_value(const dvector& _y,
-  const dvector& ndev, const int& _ii, __attribute__((unused)) const double& s, const dvector& diag)
+  const dvector& ndev, const int& _ii, [[maybe_unused]] const double& s, const dvector& diag)
   {
     int& ii=(int&) _ii;
     *this = new_value_mc(_y(ii),value(*this),minb,maxb,ndev(ii),diag(ii));
     ii++;
   }
 
-void param_init_vector::add_value(__attribute__((unused)) const dvector& y, const dvector& ndev,
-  const int& _ii, __attribute__((unused)) const double& s, const dvector& diag)
+void param_init_vector::add_value([[maybe_unused]] const dvector& y, const dvector& ndev,
+  const int& _ii, [[maybe_unused]] const double& s, const dvector& diag)
   {
     int& ii=(int&) _ii;
     int mmin=indexmin();
@@ -221,7 +221,7 @@ void param_init_vector::add_value(__attribute__((unused)) const dvector& y, cons
   }
 
 void param_init_bounded_vector::add_value(const dvector& y,
-  const dvector& ndev, const int& _ii, __attribute__((unused)) const double& s, const dvector& diag)
+  const dvector& ndev, const int& _ii, [[maybe_unused]] const double& s, const dvector& diag)
   {
     int& ii=(int&) _ii;
     int mmin=indexmin();
@@ -256,8 +256,8 @@ void param_init_bounded_vector::add_value(const dvector& y,
   }
 */
 
-void param_init_matrix::add_value(__attribute__((unused)) const dvector& y, const dvector& ndev,
-  const int& _ii, __attribute__((unused)) const double& s, const dvector& diag)
+void param_init_matrix::add_value([[maybe_unused]] const dvector& y, const dvector& ndev,
+  const int& _ii, [[maybe_unused]] const double& s, const dvector& diag)
   {
     int& ii=(int&) _ii;
     int rmin=rowmin();
@@ -275,7 +275,7 @@ void param_init_matrix::add_value(__attribute__((unused)) const dvector& y, cons
   }
 
 void param_init_bounded_matrix::add_value(const dvector& y, const dvector& ndev,
-  const int& _ii, __attribute__((unused)) const double& s, const dvector& diag)
+  const int& _ii, [[maybe_unused]] const double& s, const dvector& diag)
   {
     int& ii=(int&) _ii;
     int rmin=rowmin();
@@ -293,8 +293,8 @@ void param_init_bounded_matrix::add_value(const dvector& y, const dvector& ndev,
     }
   }
 
-void param_init_d3array::add_value(__attribute__((unused)) const dvector& y, const dvector& ndev,
-  const int& _ii, __attribute__((unused)) const double& s, const dvector& diag)
+void param_init_d3array::add_value([[maybe_unused]] const dvector& y, const dvector& ndev,
+  const int& _ii, [[maybe_unused]] const double& s, const dvector& diag)
 {
   int& ii=(int&) _ii;
   int smin=indexmin();
@@ -338,7 +338,7 @@ void param_init_d3array::add_value(const dvector& ndev, const int& _ii)
   }
 }
 
-void param_init_number::get_jacobian(__attribute__((unused)) const dvector& y, const dvector& ndev,
+void param_init_number::get_jacobian([[maybe_unused]] const dvector& y, const dvector& ndev,
   const int& _ii)
   {
     int& ii=(int&) _ii;
@@ -346,7 +346,7 @@ void param_init_number::get_jacobian(__attribute__((unused)) const dvector& y, c
     ii++;
   }
 
-void param_init_bounded_number::get_jacobian(__attribute__((unused)) const dvector& y,
+void param_init_bounded_number::get_jacobian([[maybe_unused]] const dvector& y,
   const dvector& ndev, const int& _ii)
   {
     int& ii=(int&) _ii;
@@ -354,7 +354,7 @@ void param_init_bounded_number::get_jacobian(__attribute__((unused)) const dvect
     ii++;
   }
 
-void param_init_vector::get_jacobian(__attribute__((unused)) const dvector& y, const dvector& ndev,
+void param_init_vector::get_jacobian([[maybe_unused]] const dvector& y, const dvector& ndev,
   const int& _ii)
   {
     int& ii=(int&) _ii;
@@ -367,7 +367,7 @@ void param_init_vector::get_jacobian(__attribute__((unused)) const dvector& y, c
     }
   }
 
-void param_init_matrix::get_jacobian(__attribute__((unused)) const dvector& y, const dvector& ndev,
+void param_init_matrix::get_jacobian([[maybe_unused]] const dvector& y, const dvector& ndev,
    const int& _ii)
   {
     int& ii=(int&) _ii;
@@ -385,7 +385,7 @@ void param_init_matrix::get_jacobian(__attribute__((unused)) const dvector& y, c
     }
   }
 
-void param_init_bounded_matrix::get_jacobian(__attribute__((unused)) const dvector& y,
+void param_init_bounded_matrix::get_jacobian([[maybe_unused]] const dvector& y,
   const dvector& ndev, const int& _ii)
   {
     int& ii=(int&) _ii;

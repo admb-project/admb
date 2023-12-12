@@ -440,7 +440,7 @@ void initial_params::save()
   }
 
 void param_init_number::set_value(const dvar_vector& x, const int& ii,
-   __attribute__((unused)) const dvariable& pen)
+   [[maybe_unused]] const dvariable& pen)
   {
     if (ISZERO(scalefactor))
       ::set_value(*this,x,ii);
@@ -686,7 +686,7 @@ void param_init_number::bsave_value(uostream& uos)
 }
 
 void param_init_vector::set_value(const dvar_vector& x,
-  const int& ii, __attribute__((unused)) const dvariable& pen)
+  const int& ii, [[maybe_unused]] const dvariable& pen)
   {
     if (ISZERO(scalefactor))
       ::set_value(*this,x,ii);
@@ -996,7 +996,7 @@ void param_init_bounded_vector::bsave_value(uostream& uos)
 }
 
 void param_init_matrix::set_value(const dvar_vector& x, const int& ii,
-  __attribute__((unused)) const dvariable& pen)
+  [[maybe_unused]] const dvariable& pen)
   {
     if (ISZERO(scalefactor))
       ::set_value(*this,x,ii);

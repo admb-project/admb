@@ -8,7 +8,7 @@
 
 //double ndfboundp( double x, double fmin, double fmax, const double& fpen);
 
-  void param_init_number::sd_vscale(const dvar_vector& _d, __attribute__((unused)) const dvar_vector& x,
+  void param_init_number::sd_vscale(const dvar_vector& _d, [[maybe_unused]] const dvar_vector& x,
     const int& _ii)
   {
     int& ii=(int&) _ii;
@@ -27,7 +27,7 @@
   }
 
   void param_init_vector::sd_vscale(const dvar_vector& _d,
-    __attribute__((unused)) const dvar_vector& x,const int& _ii)
+    [[maybe_unused]] const dvar_vector& x,const int& _ii)
   {
     if (allocated(*this))
     {
@@ -45,7 +45,7 @@
 
 
   void param_init_matrix::sd_vscale(const dvar_vector& _d,
-    __attribute__((unused)) const dvar_vector& x,const int& _ii)
+    [[maybe_unused]] const dvar_vector& x,const int& _ii)
   {
     if (allocated(*this))
     {

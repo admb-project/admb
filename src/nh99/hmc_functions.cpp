@@ -31,7 +31,7 @@ using std::queue;
 
 
 
-int function_minimizer::compute_next_window(int i, int warmup, __attribute__((unused)) int w1, int aws, int w3){
+int function_minimizer::compute_next_window(int i, int warmup, [[maybe_unused]] int w1, int aws, int w3){
   int anw;
   anw = i+aws;
   if(anw == (warmup-w3) )
@@ -231,7 +231,7 @@ bool function_minimizer::stop_criterion(int nvar, dvector& thetaminus, dvector& 
 }
 
 
-double function_minimizer::adapt_eps(int ii, int iseps, __attribute__((unused)) double eps, double alpha,
+double function_minimizer::adapt_eps(int ii, int iseps, [[maybe_unused]] double eps, double alpha,
 				     double& adapt_delta, double& mu,
 				     dvector& epsvec, dvector& epsbar,
 				     dvector& Hbar){

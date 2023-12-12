@@ -13,7 +13,7 @@
 
 //double ndfboundp(double x, double fmin, double fmax, const double& fpen);
 
-void param_init_number::sd_scale(const dvector& _d, __attribute__((unused)) const dvector& x,
+void param_init_number::sd_scale(const dvector& _d, [[maybe_unused]] const dvector& x,
   const int& _ii)
   {
     int& ii=(int&) _ii;
@@ -48,7 +48,7 @@ void param_init_bounded_number::sd_scale(const dvector& _d, const dvector& x,
     ii++;
   }
 
-void param_init_vector::sd_scale(const dvector& _v, __attribute__((unused)) const dvector& x,
+void param_init_vector::sd_scale(const dvector& _v, [[maybe_unused]] const dvector& x,
   const int& _ii)
   {
     if (allocated(*this))
@@ -66,7 +66,7 @@ void param_init_vector::sd_scale(const dvector& _v, __attribute__((unused)) cons
     }
   }
 
-void param_init_matrix::sd_scale(const dvector& _v, __attribute__((unused)) const dvector& x,
+void param_init_matrix::sd_scale(const dvector& _v, [[maybe_unused]] const dvector& x,
   const int& _ii)
   {
     if (allocated(*this))

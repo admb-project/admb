@@ -7,7 +7,7 @@
 */
 #include <admodel.h>
 
-double function_minimizer::get_monte_carlo_value(__attribute__((unused)) int nvar, const dvector& x)
+double function_minimizer::get_monte_carlo_value([[maybe_unused]] int nvar, const dvector& x)
 {
   //initial_params::xinit(x);
   double f=0.0;

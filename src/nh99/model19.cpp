@@ -6,7 +6,7 @@
  */
 #include <admodel.h>
 
-void param_init_number::curv_scale(const dvector& _d, __attribute__((unused)) const dvector& x,
+void param_init_number::curv_scale(const dvector& _d, [[maybe_unused]] const dvector& x,
   const int& _ii)
   {
     dvector& d=(dvector&) _d;
@@ -29,7 +29,7 @@ void param_init_bounded_number::curv_scale(const dvector& _d, const dvector& x,
   ii++;
 }
 
-void param_init_vector::curv_scale(const dvector& _v, __attribute__((unused)) const dvector& x,
+void param_init_vector::curv_scale(const dvector& _v, [[maybe_unused]] const dvector& x,
   const int& _ii)
   {
     int& ii=(int&) _ii;
@@ -42,7 +42,7 @@ void param_init_vector::curv_scale(const dvector& _v, __attribute__((unused)) co
     }
   }
 
-void param_init_matrix::curv_scale(const dvector& _v, __attribute__((unused)) const dvector& x,
+void param_init_matrix::curv_scale(const dvector& _v, [[maybe_unused]] const dvector& x,
   const int& _ii)
   {
     int& ii=(int&) _ii;

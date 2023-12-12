@@ -58,7 +58,7 @@ stddev_params* stddev_params::stddevptr[150];
     return nvar;
   }
 
-  void stddev_params::setindex(__attribute__((unused)) int _index){;}
+  void stddev_params::setindex([[maybe_unused]] int _index){;}
   int stddev_params::getindex(void){return 0;}
 
   int param_stddev_number::getindex(void)

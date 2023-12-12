@@ -28,7 +28,7 @@ int initial_params::montecarlo_scale(const dvector& d, const dvector& x)
  * Description not yet available.
  * \param
  */
-void param_init_number::mc_scale(const dvector& _d, __attribute__((unused)) const dvector& x,
+void param_init_number::mc_scale(const dvector& _d, [[maybe_unused]] const dvector& x,
   const int& _ii)
 {
   dvector& d=(dvector&) _d;
@@ -41,7 +41,7 @@ void param_init_number::mc_scale(const dvector& _d, __attribute__((unused)) cons
  * Description not yet available.
  * \param
  */
-void param_init_bounded_number::mc_scale(const dvector& _d, __attribute__((unused)) const dvector& x,
+void param_init_bounded_number::mc_scale(const dvector& _d, [[maybe_unused]] const dvector& x,
   const int& _ii)
 {
   dvector& d=(dvector&) _d;
@@ -60,7 +60,7 @@ void param_init_bounded_number::mc_scale(const dvector& _d, __attribute__((unuse
  * Description not yet available.
  * \param
  */
-double ndfboundp_mc(double x, double fmin, double fmax, __attribute__((unused)) const double& fpen)
+double ndfboundp_mc(double x, double fmin, double fmax, [[maybe_unused]] const double& fpen)
 {
   if (x<-0.99999)
   {
@@ -89,7 +89,7 @@ double ndfboundp_mc(double x, double fmin, double fmax, __attribute__((unused)) 
  * Description not yet available.
  * \param
  */
-void param_init_vector::mc_scale(const dvector& _v, __attribute__((unused)) const dvector& x,
+void param_init_vector::mc_scale(const dvector& _v, [[maybe_unused]] const dvector& x,
   const int& _ii)
 {
   int& ii=(int&) _ii;
@@ -106,7 +106,7 @@ void param_init_vector::mc_scale(const dvector& _v, __attribute__((unused)) cons
  * Description not yet available.
  * \param
  */
-void param_init_matrix::mc_scale(const dvector& _v, __attribute__((unused)) const dvector& x,
+void param_init_matrix::mc_scale(const dvector& _v, [[maybe_unused]] const dvector& x,
   const int& _ii)
 {
   int& ii=(int&) _ii;
@@ -128,7 +128,7 @@ void param_init_matrix::mc_scale(const dvector& _v, __attribute__((unused)) cons
  * Description not yet available.
  * \param
  */
-void param_init_d3array::mc_scale(const dvector& _v, __attribute__((unused)) const dvector& x,
+void param_init_d3array::mc_scale(const dvector& _v, [[maybe_unused]] const dvector& x,
   const int& _ii)
 {
   int& ii=(int&) _ii;

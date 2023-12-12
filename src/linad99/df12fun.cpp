@@ -390,7 +390,7 @@ df1_two_variable& df1_two_variable::operator-=(double _v)
  * Description not yet available.
  * \param
  */
-void set_derivatives( df1_two_variable& z,const df1_two_variable& x, __attribute__((unused)) double u,
+void set_derivatives( df1_two_variable& z,const df1_two_variable& x, [[maybe_unused]] double u,
   double zp)
 {
     //*z.get_u() = u;

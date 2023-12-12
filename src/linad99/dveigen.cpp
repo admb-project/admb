@@ -185,7 +185,7 @@ void tri_dag(const dvar_matrix& _m,const dvar_vector& _d, const dvar_vector& _e)
     Press, Teukolsky, Vetterling, Flannery, chapter 11
 */
 void get_eigen(const dvar_vector& _d,const dvar_vector& _e,
-  __attribute__((unused)) const dvar_matrix& z)
+  [[maybe_unused]] const dvar_matrix& z)
 {
   ADUNCONST(dvar_vector,d)
   ADUNCONST(dvar_vector,e)

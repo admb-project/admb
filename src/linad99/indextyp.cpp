@@ -523,7 +523,7 @@ void ivector::allocate(const ad_integer& _ncl, const index_type& _nch)
  * Description not yet available.
  * \param
  */
-index_guts * number_index::operator [] (__attribute__((unused)) int i)
+index_guts * number_index::operator [] ([[maybe_unused]] int i)
 {
   return new number_index(int(*this));
 }

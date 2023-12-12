@@ -516,7 +516,7 @@ void cifstream::report_error(const char * msg)
 }
 */
 
-void cifstream::report_error(__attribute__((unused)) const char* msg) {;}
+void cifstream::report_error([[maybe_unused]] const char* msg) {;}
 
 /*
 #if !defined(__ADSGI__)

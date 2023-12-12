@@ -74,7 +74,7 @@ BOOL CtrlHandler(DWORD fdwCtrlType)
   return false;
 }
 #else
-extern "C" void onintr(__attribute__((unused)) int k)
+extern "C" void onintr([[maybe_unused]] int k)
 {
   signal(SIGINT, exit_handler);
   ctlc_flag = 1;

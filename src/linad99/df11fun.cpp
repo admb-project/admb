@@ -277,7 +277,7 @@ df1_one_variable& df1_one_variable::operator-=(double _v)
   return *this;
 }
 
-void set_derivatives( df1_one_variable& z,const df1_one_variable& x, __attribute__((unused)) double u,
+void set_derivatives( df1_one_variable& z,const df1_one_variable& x, [[maybe_unused]] double u,
   double zp)
 {
     //*z.get_u() = u;

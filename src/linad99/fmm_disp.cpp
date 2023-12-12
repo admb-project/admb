@@ -73,7 +73,7 @@
 #endif
 
 #if !defined(_MSC_VER)
-  void gotoxy(__attribute__((unused)) int x, __attribute__((unused)) int y) { ; }
+  void gotoxy([[maybe_unused]] int x, [[maybe_unused]] int y) { ; }
 
 /**
  * Description not yet available.
@@ -90,7 +90,7 @@
     unsigned char  curx, cury;
   };
 
-  void gettextinfo(__attribute__((unused)) struct text_info *r) {;}
+  void gettextinfo([[maybe_unused]] struct text_info *r) {;}
 #endif
 
 #include <string.h>
@@ -198,7 +198,7 @@ void fmmdisp(const dvector& x, const dvector& g,
  * Description not yet available.
  * \param
  */
-void fmmdisp(const double *x, __attribute__((unused)) const double *g,
+void fmmdisp(const double *x, [[maybe_unused]] const double *g,
              const int& nvar, int scroll_flag,int noprintx)
 {
   if (!noprintx)

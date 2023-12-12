@@ -439,7 +439,7 @@ banded_symmetric_dmatrix& banded_symmetric_dmatrix::operator =
  * Description not yet available.
  * \param
  */
-  dmatrix eigenvectors(const banded_symmetric_dmatrix& _SS, __attribute__((unused)) const dvector& _e)
+  dmatrix eigenvectors(const banded_symmetric_dmatrix& _SS, [[maybe_unused]] const dvector& _e)
   {
     banded_symmetric_dmatrix& S = (banded_symmetric_dmatrix&) _SS;
     if (S.bandwidth() !=2)

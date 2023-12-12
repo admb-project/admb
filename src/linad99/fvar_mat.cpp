@@ -105,7 +105,7 @@ dvar_matrix::dvar_matrix(int nrl, int nrh, int ncl, int nch)
  * Description not yet available.
  * \param
  */
- dvar_matrix::dvar_matrix(int nrl, int nrh, __attribute__((unused)) kkludge_object kk)
+ dvar_matrix::dvar_matrix(int nrl, int nrh, [[maybe_unused]] kkludge_object kk)
  {
    allocate(nrl,nrh);
 #ifndef OPT_LIB

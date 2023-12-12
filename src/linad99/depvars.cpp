@@ -105,7 +105,7 @@ dvar_matrix& operator<<(const dvar_matrix& v1, const dvar_matrix& v2)
  * Description not yet available.
  * \param
  */
-void gradient_structure::save_dependent_variable_position(__attribute__((unused)) const prevariable& v1)
+void gradient_structure::save_dependent_variable_position([[maybe_unused]] const prevariable& v1)
     {
       int depvar_count=++DEPVARS_INFO->depvar_count;
       //max_num_dependent_variables=ndv;

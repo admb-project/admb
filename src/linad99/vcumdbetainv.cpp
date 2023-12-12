@@ -65,7 +65,7 @@ df1_two_variable betacf(const df1_two_variable& a,const df1_two_variable& b,
 
 
 df1_two_variable betai(const df1_two_variable& a,
-  const df1_two_variable& b,double x, __attribute__((unused)) int maxit)
+  const df1_two_variable& b,double x, [[maybe_unused]] int maxit)
 {
   df1_two_variable bt;
 

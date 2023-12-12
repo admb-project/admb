@@ -79,7 +79,7 @@ static void report_gradstack_flag2(void)
  * Description not yet available.
  * \param
  */
-void set_gradstack_flag(__attribute__((unused)) char* str)
+void set_gradstack_flag([[maybe_unused]] char* str)
 {
 #if defined(CHK_ID_STRING)
   //int wsize=sizeof(char);
@@ -106,7 +106,7 @@ void set_gradstack_flag(__attribute__((unused)) char* str)
  * Description not yet available.
  * \param
  */
-void set_gradstack_flag(__attribute__((unused)) char* _str, __attribute__((unused)) int i, __attribute__((unused))int j)
+void set_gradstack_flag([[maybe_unused]] char* _str, [[maybe_unused]] int i, [[maybe_unused]] int j)
 {
 #if defined(CHK_ID_STRING)
   adstring ads=_str;
@@ -146,7 +146,7 @@ if the two strings are not identical. Only available in the "safe"
 library. Used primarily for debugging adjoint coide.
 \param str1 Character sting to compare with value retrieved from stack.
 */
-void verify_identifier_string(__attribute__((unused)) const char* str1)
+void verify_identifier_string([[maybe_unused]] const char* str1)
 {
 #if defined(CHK_ID_STRING)
   // Back up the stream and read the number of bytes written in the

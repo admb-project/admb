@@ -23,7 +23,7 @@ unsigned int size_count(const dvector& x)
  * Description not yet available.
  * \param
  */
-int size_count_partial(__attribute__((unused)) const dvector& x, int n)
+int size_count_partial([[maybe_unused]] const dvector& x, int n)
 {
   return n;
 }

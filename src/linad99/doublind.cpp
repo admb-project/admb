@@ -215,7 +215,7 @@ double_index_guts::double_index_guts(const double_index_guts& ig)
  * Description not yet available.
  * \param
  */
-double_index_guts * double_index::operator [] (__attribute__((unused)) int i)
+double_index_guts * double_index::operator [] ([[maybe_unused]] int i)
 {
   return new double_index(double(*this));
 }

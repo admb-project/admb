@@ -24,7 +24,7 @@ uistream& uistream::operator>> (const TYPE& x) \
   return *this; \
 }
 
-uostream::uostream(const char* name, int  m, __attribute__((unused)) int prot)
+uostream::uostream(const char* name, int  m, [[maybe_unused]] int prot)
   :ofstream(name, std::ios::binary | std::ios::openmode(m))
 {
 }
@@ -33,7 +33,7 @@ uostream::uostream(const char* name, int  m, __attribute__((unused)) int prot)
  * Description not yet available.
  * \param
  */
-void uistream::open(const char* name, int m, __attribute__((unused)) int prot)
+void uistream::open(const char* name, int m, [[maybe_unused]] int prot)
 {
   ifstream::open(name, std::ios::binary | std::ios::openmode(m));
 }
@@ -42,7 +42,7 @@ void uistream::open(const char* name, int m, __attribute__((unused)) int prot)
  * Description not yet available.
  * \param
  */
-void uostream::open(const char* name, int m, __attribute__((unused)) int prot)
+void uostream::open(const char* name, int m, [[maybe_unused]] int prot)
 {
   ofstream::open(name, std::ios::binary | std::ios::openmode(m));
 }
@@ -51,7 +51,7 @@ void uostream::open(const char* name, int m, __attribute__((unused)) int prot)
  * Description not yet available.
  * \param
  */
-uistream::uistream(const char* name, int m, __attribute__((unused)) int prot)
+uistream::uistream(const char* name, int m, [[maybe_unused]] int prot)
   :ifstream(name, std::ios::binary | std::ios::openmode(m))
 {
 }

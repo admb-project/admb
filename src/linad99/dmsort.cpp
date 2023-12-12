@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-dmatrix sort(const dmatrix& m, int column, __attribute__((unused)) int NSTACK)
+dmatrix sort(const dmatrix& m, int column, [[maybe_unused]] int NSTACK)
 {
   ivector ind(m.rowmin(),m.rowmax());
   ivector ind1(m.rowmin(),m.rowmax());

@@ -20,7 +20,7 @@
  * Description not yet available.
  * \param
  */
- dvar_vector::dvar_vector(int ncl,int nch, __attribute__((unused)) kkludge_object kg)
+ dvar_vector::dvar_vector(int ncl,int nch, [[maybe_unused]] kkludge_object kg)
  {
    va=NULL;
    allocate(ncl,nch);

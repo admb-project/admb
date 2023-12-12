@@ -42,7 +42,7 @@ class json
 
 public:
   json(): _value(0) { }
-  json(__attribute__((unused)) const json& other) { }
+  json([[maybe_unused]] const json& other) { }
   virtual ~json()
   {
     if (_value)

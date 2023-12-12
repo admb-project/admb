@@ -173,7 +173,7 @@ dvector_position dmatrix_position::operator()(int i)
  * Description not yet available.
  * \param
  */
-dvar_matrix_position::dvar_matrix_position(const dvar_matrix& m,__attribute__((unused)) int x):
+dvar_matrix_position::dvar_matrix_position(const dvar_matrix& m, [[maybe_unused]] int x):
   lb(m.rowmin(),m.rowmax()),
   ub(m.rowmin(),m.rowmax()),
   ptr(m.rowmin(),m.rowmax())
@@ -312,7 +312,7 @@ Only available in the "safe" library.
 Used primarily for debugging adjoint coide.
 \param str Character sting to saved on the stack.
 */
-int save_identifier_string(__attribute__((unused)) const char* str)
+int save_identifier_string([[maybe_unused]] const char* str)
 {
 #if defined(CHK_ID_STRING)
   //int wsize=sizeof(char);

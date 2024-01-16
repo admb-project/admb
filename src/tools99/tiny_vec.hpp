@@ -23,7 +23,7 @@ struct tiny_vec {
   tiny_vec(const Type &other) {
     for(int i=0; i<n; i++) data[i] = other;
   }
-  void resize(size_t length){ /* Ignore - this is fixed size */ }
+  void resize([[maybe_unused]] size_t length){ /* Ignore - this is fixed size */ }
   int size() const { return n; }
   Type operator[] (size_t i) const { return data[i]; }
   Type &operator[] (size_t i) { return data[i]; }

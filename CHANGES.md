@@ -11,8 +11,9 @@ Describe new features, changes and improvements for each release.
 * Continually streamline installation and build process
 * Continually improve and update documentation
 
-ADMB-13.2-dev
--------------
+ADMB-13.2
+---------
+*Released ?? in 2024*  
 
 #### Changes and Improvements
 

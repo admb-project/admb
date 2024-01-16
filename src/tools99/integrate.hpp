@@ -74,7 +74,7 @@ struct Integral {
   struct vectorized_integrand {
     Integrand f;
     vectorized_integrand(Integrand f_) : f(f_) {}
-    void operator() (Type *x, int n, void *ex) {
+    void operator() (Type *x, int n, [[maybe_unused]] void *ex) {
       for(int i=0; i<n; i++) x[i] = f(x[i]);
     }
   } fn;

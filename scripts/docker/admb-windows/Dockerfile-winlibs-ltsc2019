@@ -1,0 +1,12 @@
+FROM mcr.microsoft.com/windows/servercore:ltsc2019
+
+COPY admb-main.zip .
+RUN powershell Expand-Archive C:\\admb-main.zip -Destination C:\\
+
+COPY winlibs.zip .
+RUN powershell Expand-Archive C:\\winlibs.zip -Destination C:\\
+
+ENV PATH=%PATH%;C:\\Windows\\System32;C:\\admb-main\\utilities;c:\\mingw64\\bin;c:\\admb-main\\build\\admb\\bin
+RUN cd admb-main && make
+
+ENTRYPOINT [ "C:\\admb-main\\admb.cmd" ]

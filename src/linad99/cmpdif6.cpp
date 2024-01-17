@@ -34,7 +34,7 @@ void DF_FILE::save_dmatrix_position(const dmatrix& m)
 
   int min=m.rowmin();
   int max=m.rowmax();
-  size_t size = max - min + 1;
+  size_t size = static_cast<size_t>(max - min + 1);
 
   constexpr size_t wsize1=sizeof(void*);
   fwrite(&tmp.ptr.elem(min), wsize1 * size);
@@ -116,7 +116,7 @@ dvar_matrix_position DF_FILE::restore_dvar_matrix_position()
   fread(&min, wsize);
   dvar_matrix_position tmp(min,max);
 
-  int size = max - min + 1;
+  size_t size = static_cast<size_t>(max - min + 1);
 
   fread(tmp.ub.get_v() + min, wsize * size);
   fread(tmp.lb.get_v() + min, wsize * size);
@@ -147,7 +147,7 @@ dmatrix_position DF_FILE::restore_dmatrix_position()
 
   dmatrix_position tmp(min,max);
   // cout << "tmp.ptr= " << tmp.ptr ;
-  int size = max - min + 1;
+  size_t size = static_cast<size_t>(max - min + 1);
   fread(tmp.ub.get_v() + min, wsize * size);
   fread(tmp.lb.get_v() + min, wsize * size);
 

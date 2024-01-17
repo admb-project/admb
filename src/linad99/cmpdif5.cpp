@@ -343,7 +343,7 @@ void DF_FILE::save_dvar_matrix_position(const dvar_matrix& m)
 
   int min=m.rowmin();
   int max=m.rowmax();
-  int size = max - min + 1;
+  size_t size = static_cast<size_t>(max - min + 1);
 
   constexpr size_t wsize1 = sizeof(void*);
   fwrite(&tmp.ptr.elem(min), wsize1 * size);

@@ -110,7 +110,7 @@ void DF_FILE::save_dvar_vector_value(const dvar_vector& v)
   //int num_rec;
   int min=v.indexmin();
   int max=v.indexmax();
-  fwrite((double*)v.va + min, sizeof(double) * (max - min + 1));
+  fwrite((double*)v.va + min, sizeof(double) * static_cast<size_t>(max - min + 1));
 }
 
 /**
@@ -124,7 +124,7 @@ void DF_FILE::save_dvector_value(const dvector& v)
 {
   int min = v.indexmin();
   int max = v.indexmax();
-  fwrite(v.get_v() + min, sizeof(double) * (max - min + 1));
+  fwrite(v.get_v() + min, sizeof(double) * static_cast<size_t>(max - min + 1));
 }
 
 /**
@@ -139,7 +139,7 @@ void DF_FILE::save_ivector_value(const ivector& v)
   constexpr size_t sizeofint = sizeof(int);
   int min=v.indexmin();
   int max=v.indexmax();
-  fwrite(v.get_v() + min, sizeofint * (max - min + 1));
+  fwrite(v.get_v() + min, sizeofint * static_cast<size_t>(max - min + 1));
 }
 
 /**
@@ -160,7 +160,7 @@ dvector DF_FILE::restore_dvector_value(const dvector_position& tmp)
   int min = tmp.indexmin();
   int max = tmp.indexmax();
   dvector temp_vec(min, max);
-  fread(temp_vec.get_v() + min, sizeof(double) * (max - min + 1));
+  fread(temp_vec.get_v() + min, sizeof(double) * static_cast<size_t>(max - min + 1));
 
   return temp_vec;
 }
@@ -182,7 +182,7 @@ ivector DF_FILE::restore_ivector_value(const ivector_position& tmp)
   int min = tmp.indexmin();
   int max = tmp.indexmax();
   ivector temp_vec(min, max);
-  fread(temp_vec.get_v() + min, sizeofint * (max - min + 1));
+  fread(temp_vec.get_v() + min, sizeofint * static_cast<size_t>(max - min + 1));
   return temp_vec;
   // Back up the stream again for the next function
 }
@@ -202,7 +202,7 @@ dvector DF_FILE::restore_dvar_vector_value(const dvar_vector_position& tmp)
   int min = tmp.indexmin();
   int max = tmp.indexmax();
   dvector temp_vec(min, max);
-  fread(temp_vec.get_v() + min, sizeof(double) * (max - min + 1));
+  fread(temp_vec.get_v() + min, sizeof(double) * static_cast<size_t>(max - min + 1));
   return temp_vec;
 }
 /**

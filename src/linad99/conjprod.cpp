@@ -156,7 +156,7 @@ void fmmc::fmin(const double& fret, const dvector& _p, const dvector& _gg)
 #endif
   dvector& p = (dvector&)_p;
   dvector& gg = (dvector&)_gg;
-  int n=p.size();
+  int n = static_cast<int>(p.size());
   dvector& xi=*(this->xi);
   dvector& h=*(this->h);
   dvector& g=*(this->g);
@@ -847,8 +847,9 @@ label2000:
 void bracket_report([[maybe_unused]] const dvector& theta, [[maybe_unused]] const double& left_bracket,
                     [[maybe_unused]] double& right_bracket, const dvector& d)
 {
-  dvector g(1,d.size());
-  dvector u(1,d.size());
+  int size = static_cast<int>(d.size());
+  dvector g(1, size);
+  dvector u(1, size);
   ivector ii(1,3);
   int one=1;
   ii.fill_seqadd(one,one);

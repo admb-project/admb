@@ -16,12 +16,7 @@ ifndef MODEL_TPL
 endif
 
 IMAGE=admb
-ifdef BASE
-  VERSION=windows-$(BASE)
-else
-  BASE=winlibs
-  VERSION=windows
-endif
+VERSION=windows
 
 MODEL_DIR=$(dir $(MODEL_TPL))
 MODEL_EXT=$(suffix $(MODEL_TPL))
@@ -33,13 +28,16 @@ else
 endif
 
 all: $(clean)
-	$(MAKE) $(BASE)
+	$(MAKE) msys2
+	$(MAKE) winlibs
 
 msys2: msys2-x86_64.exe
-	docker build --file Dockerfile-msys2 -t $(IMAGE):$(VERSION) .
+	docker build --file Dockerfile-msys2-ltsc2022 -t $(IMAGE):$(VERSION)-msys2-ltsc2022 .
+	docker build --file Dockerfile-msys2-ltsc2019 -t $(IMAGE):$(VERSION)-msys2-ltsc2019 .
 
 winlibs: admb-main.zip winlibs.zip
-	docker build --file Dockerfile-winlibs -t $(IMAGE):$(VERSION) .
+	docker build --file Dockerfile-winlibs-ltsc2022 -t $(IMAGE):$(VERSION)-winlibs-ltsc2022 .
+	docker build --file Dockerfile-winlibs-ltsc2019 -t $(IMAGE):$(VERSION)-winlibs-ltsc2019 .
 
 msys2-x86_64.exe:
 	powershell Invoke-WebRequest -Uri https://github.com/msys2/msys2-installer/releases/download/2023-07-18/msys2-x86_64-20230718.exe -OutFile msys2-x86_64.exe

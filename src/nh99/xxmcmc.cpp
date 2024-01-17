@@ -1024,7 +1024,7 @@ void print_hist_data(const dmatrix& hist, const dmatrix& values,
     param_labels[ii]=
       stddev_params::stddevptr[i]->label();
     param_size[ii]=
-      stddev_params::stddevptr[i]->size_count();
+      static_cast<int>(stddev_params::stddevptr[i]->size_count());
 /*
     if (max_name_length<param_labels[ii].size())
     {

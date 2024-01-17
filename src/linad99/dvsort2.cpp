@@ -24,7 +24,7 @@ dvector sort(const dvector& v, int NSTACK)
    const int  FA=211;
    const int  FC=1663;
 
-  int n=v.size();
+  int n=static_cast<int>(v.size());
   dvector arr(v.indexmin(),v.indexmax());
   arr=v;
   arr.shift(1);
@@ -127,7 +127,7 @@ dvector sort(const dvector& _v, const ivector& _index, int NSTACK)
       << " in dvector sort(const dvector& v, const ivector& index)\n";
     ad_exit(1);
   }
-  int n=v.size();
+  int n=static_cast<int>(v.size());
   int One=1;
   int nne=v.indexmin();
   index.fill_seqadd(nne,One);

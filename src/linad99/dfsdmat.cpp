@@ -150,13 +150,13 @@ void dfsdmat::allocate(int _n)
   }
   else
   {
-    ptr= new double [(n*(n+1))/2];
+    ptr= new double [static_cast<unsigned int>((n*(n+1))/2)];
     shared_memory=0;
     disk_save_flag=0;
   }
   minp=ptr;
   maxp=ptr+((n*(n+1))/2-1);
-  m=new double * [n];
+  m=new double*[static_cast<unsigned int>(n)];
   m-=1;
   double * tmp =ptr;
   for (int i=1;i<=n;i++)
@@ -201,7 +201,7 @@ void dfsdmat::allocate(int _n, const gradient_structure& gs)
   shared_memory=1;
   minp=ptr;
   maxp=ptr+((n*(n+1))/2-1);
-  m=new double*[n];
+  m=new double*[static_cast<unsigned int>(n)];
   m-=1;
   double * tmp =ptr;
   for (int i=1;i<=n;i++)

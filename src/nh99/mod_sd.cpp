@@ -132,7 +132,7 @@ void function_minimizer::sd_routine(void)
       param_labels[ii]=
        (initial_params::varsptr[i])->label();
       param_size[ii]=
-       (initial_params::varsptr[i])->size_count();
+       static_cast<int>((initial_params::varsptr[i])->size_count());
       if (max_name_length<param_labels[ii].size())
       {
         max_name_length=param_labels[ii].size();
@@ -147,7 +147,7 @@ void function_minimizer::sd_routine(void)
     param_labels[ii]=
       stddev_params::stddevptr[i]->label();
     param_size[ii]=
-      stddev_params::stddevptr[i]->size_count();
+      static_cast<int>(stddev_params::stddevptr[i]->size_count());
     if (max_name_length<param_labels[ii].size())
     {
       max_name_length=param_labels[ii].size();

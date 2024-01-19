@@ -28,16 +28,15 @@ else
 endif
 
 all: $(clean)
-	$(MAKE) msys2
 	$(MAKE) winlibs
 
 msys2: msys2-x86_64.exe
-	docker build --file Dockerfile-msys2-ltsc2022 -t $(IMAGE):$(VERSION)-msys2-ltsc2022 .
-	docker build --file Dockerfile-msys2-ltsc2019 -t $(IMAGE):$(VERSION)-msys2-ltsc2019 .
+	docker build --file Dockerfile-msys2-ltsc2022 -t $(IMAGE):$(VERSION)-ltsc2022-msys2 .
+	docker build --file Dockerfile-msys2-ltsc2019 -t $(IMAGE):$(VERSION)-ltsc2019-msys2 .
 
 winlibs: admb-main.zip winlibs.zip
-	docker build --file Dockerfile-winlibs-ltsc2022 -t $(IMAGE):$(VERSION)-winlibs-ltsc2022 .
-	docker build --file Dockerfile-winlibs-ltsc2019 -t $(IMAGE):$(VERSION)-winlibs-ltsc2019 .
+	docker build --file Dockerfile-winlibs-ltsc2022 -t $(IMAGE):$(VERSION)-ltsc2022-winlibs .
+	docker build --file Dockerfile-winlibs-ltsc2019 -t $(IMAGE):$(VERSION)-ltsc2019-winlibs .
 
 msys2-x86_64.exe:
 	powershell Invoke-WebRequest -Uri https://github.com/msys2/msys2-installer/releases/download/2023-07-18/msys2-x86_64-20230718.exe -OutFile msys2-x86_64.exe

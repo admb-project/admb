@@ -6,6 +6,11 @@
 @brief Functions for dvar_vector to compute sin, ...
 */
 #include "fvar.hpp"
+#ifdef DEBUG
+  #include <cassert>
+  #include <cfenv>
+  #include <cstdlib>
+#endif
 
 /*
 //  "template" for precompiled derivative code
@@ -499,6 +504,13 @@ dvar_vector pow(const dvar_vector& v1, const double e)
   dvar_vector vtmp(v1.indexmin(),v1.indexmax());
   for (int i=v1.indexmin();i<=v1.indexmax();i++)
   {
+#ifdef DEBUG
+    if (v1.elem_value(i) == 0.0 && e < 1.0)
+    {
+      cerr << "Warning: Invalid arguments to be used in derivative computation.\n"
+	   << "         pow(" << v1.elem_value(i) << ", " << (e - 1.0 ) << ")" << endl;
+    }
+#endif
     vtmp.elem_value(i)=pow(v1.elem_value(i),e);
   }
 
@@ -530,10 +542,21 @@ void DF_dvpow(void)
   dvector v1=restore_dvar_vector_value(v1pos);
   verify_identifier_string("ddf");
   dvector dfv1(dfvtmp.indexmin(),dfvtmp.indexmax());
+
+#ifdef DEBUG
+  assert(!std::fetestexcept(FE_INVALID));
+#endif
   for (int i=dfvtmp.indexmin();i<=dfvtmp.indexmax();i++)
   {
     //vtmp.elem(i)=sin(value(v1.elem(i))));
     dfv1(i)=dfvtmp(i)*e*pow(v1.elem(i),e-1);
+#ifdef DEBUG
+    if (std::fetestexcept(FE_INVALID))
+    {
+      cerr << "Warning: FE_INVALID in " << __FILE__ << ':' << __LINE__ << endl;
+      std::feclearexcept(FE_INVALID);
+    }
+#endif
   }
   dfv1.save_dvector_derivatives(v1pos);
   //ierr=fsetpos(gradient_structure::get_fp(),&filepos);

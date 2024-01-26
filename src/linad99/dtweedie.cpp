@@ -2,9 +2,9 @@
 #include <type_traits>
 #include <fvar.hpp>
 
-int imax2(int a, double v)
+unsigned int imax2(unsigned int a, double v)
 {
-  int b = static_cast<int>(v);
+  unsigned int b = static_cast<unsigned int>(v);
   return a > b ? a : b;  
 }
 unsigned int imin2(unsigned int a, unsigned int b)

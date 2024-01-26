@@ -145,6 +145,9 @@ void df1b2variable::initialize(void)
     #pragma warning restore 4458
   #endif
 #endif
+#if (__cplusplus >= 201703L)
+  [[maybe_unused]]
+#endif
   size_t total_bytes=sizeof(df1b2_header)+sizeof(df1b2_header);
   initialize(nvar);
 }

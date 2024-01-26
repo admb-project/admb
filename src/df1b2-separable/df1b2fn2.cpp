@@ -134,7 +134,18 @@ void df1b2variable::initialize(void)
     df1b2variable::pool->sanity_check();
   }
 #endif
+#ifdef DEBUG
+  #ifdef _MSC_VER
+    #pragma warning disable 4458
+  #endif
+#endif
   unsigned int nvar=((twointsandptr*)ptr)->ptr->nvar;
+#ifdef DEBUG
+  #ifdef _MSC_VER
+    #pragma warning restore 4458
+  #endif
+#endif
+  size_t total_bytes=sizeof(df1b2_header)+sizeof(df1b2_header);
   initialize(nvar);
 }
 

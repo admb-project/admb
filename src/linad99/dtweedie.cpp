@@ -7,7 +7,7 @@ int imax2(int a, double v)
   int b = static_cast<int>(v);
   return a > b ? a : b;  
 }
-int imin2(int a, int b)
+unsigned int imin2(unsigned int a, unsigned int b)
 {
   return a < b ? a : b;  
 }

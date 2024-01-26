@@ -48,7 +48,7 @@ Float tweedie_logW(double y, Float& phi, Float& p){
     if (j * (cc - a1 * log(j)) < (w - TWEEDIE_DROP))
       break ;
   }
-  int jh = static_cast<int>(ceil(j));
+  unsigned int jh = static_cast<unsigned int>(ceil(j));
   /* locate lower bound */
   j = jmax;
   while (1) {
@@ -60,7 +60,7 @@ Float tweedie_logW(double y, Float& phi, Float& p){
   unsigned int jd = jh - jl + 1;
 
   /* set limit for # terms in the sum */
-  int nterms = imin2(jd, TWEEDIE_NTERM) ;
+  unsigned int nterms = imin2(jd, TWEEDIE_NTERM) ;
   //std::vector<Float> ww(nterms);
   /* evaluate series using the finite sum*/
   /* y > 0 */

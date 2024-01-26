@@ -65,15 +65,11 @@ int df1b2_gradlist::write_pass1_minuseq(const df1b2variable * _px,
 #endif
   fixed_smartlist & nlist=f1b2gradlist->nlist;
   test_smartlist& list=f1b2gradlist->list;
-  fixed_smartlist & nlist=f1b2gradlist->nlist;
-  test_smartlist& list=f1b2gradlist->list;
 #ifdef DEBUG
   #ifdef _MSC_VER
     #pragma warning restore 4458
   #endif
 #endif
-
-  size_t total_bytes=sizeof(df1b2_header)+sizeof(df1b2_header);
 
   size_t total_bytes=sizeof(df1b2_header)+sizeof(df1b2_header);
 #if defined(SAFE_ALL)

@@ -310,14 +310,14 @@ elif [ "$CXX" == "g++" ]; then
     CXXFLAGS="-std=c++14 $CXXFLAGS"
     LDFLAGS="-std=c++14 $LDFLAGS"
   elif [ "$GCCMAJVER" == "9" ]; then
-    CXXFLAGS="-std=c++14 $CXXFLAGS"
-    LDFLAGS="-std=c++14 $LDFLAGS"
-  elif [ "$GCCMAJVER" == "10" ]; then
-    CXXFLAGS="-std=c++14 $CXXFLAGS"
-    LDFLAGS="-std=c++14 $LDFLAGS"
-  else
     CXXFLAGS="-std=c++17 $CXXFLAGS"
     LDFLAGS="-std=c++17 $LDFLAGS"
+  elif [ "$GCCMAJVER" == "10" ]; then
+    CXXFLAGS="-std=c++17 $CXXFLAGS"
+    LDFLAGS="-std=c++17 $LDFLAGS"
+  else
+    CXXFLAGS="-std=c++20 $CXXFLAGS"
+    LDFLAGS="-std=c++20 $LDFLAGS"
   fi
 fi
 CXXFLAGS="$CXXFLAGS -D_USE_MATH_DEFINES"

@@ -178,11 +178,12 @@ if "!CXX!"=="cl" (
     echo Error: Unable to find !CXX!
     exit /B 1
   )
+  set CPPSTD=17
   set LD=!CXX!
   if defined CXXFLAGS (
-    set CXXFLAGS= /c /nologo /std:c++17 /EHsc !CXXFLAGS!
+    set CXXFLAGS= /c /nologo /std:c++!CPPSTD! /EHsc !CXXFLAGS!
   ) else (
-    set CXXFLAGS= /c /nologo /std:c++17 /EHsc
+    set CXXFLAGS= /c /nologo /std:c++!CPPSTD! /EHsc
   )
   if defined g (
     set CXXFLAGS=!CXXFLAGS! /Z7
@@ -216,7 +217,7 @@ if "!CXX!"=="cl" (
     )
   )
   if defined fast (
-    set CXXFLAGS=!CXXFLAGS! /nologo /std:c++17 /DOPT_LIB
+    set CXXFLAGS=!CXXFLAGS! /nologo /std:c++!CPPSTD! /DOPT_LIB
     if defined g (
       if exist "!ADMB_HOME!\lib\admb-contribo!OSNAME!!CXXVERSION!-debug.lib" (
         set libs="!ADMB_HOME!\lib\admb-contribo!OSNAME!!CXXVERSION!-debug.lib" /link
@@ -689,9 +690,9 @@ if not defined tpls (
       ) else (
         if "!CXX!"=="cl" (
           if defined output (
-            set CMD=!LD!!LDFLAGS! /nologo /std:c++17 /Fe!output! !objs! !libs!
+            set CMD=!LD!!LDFLAGS! /nologo /std:c++!CPPSTD! /Fe!output! !objs! !libs!
           ) else (
-            set CMD=!LD!!LDFLAGS! /nologo /std:c++17 /Fe!main!.exe !objs! !libs!
+            set CMD=!LD!!LDFLAGS! /nologo /std:c++!CPPSTD! /Fe!main!.exe !objs! !libs!
           )
         ) else (
           if defined output (
@@ -754,15 +755,15 @@ if not defined tpls (
       if "!CXX!"=="cl" (
         if defined objs (
           if defined output (
-            set CMD=!LD!!LDFLAGS! /nologo /std:c++17 /Fe!output! !tpl!.obj !objs! !libs!
+            set CMD=!LD!!LDFLAGS! /nologo /std:c++!CPPSTD! /Fe!output! !tpl!.obj !objs! !libs!
           ) else (
-            set CMD=!LD!!LDFLAGS! /nologo /std:c++17 /Fe!tpl!.exe !tpl!.obj !objs! !libs!
+            set CMD=!LD!!LDFLAGS! /nologo /std:c++!CPPSTD! /Fe!tpl!.exe !tpl!.obj !objs! !libs!
           ) 
         ) else (
           if defined output (
-            set CMD=!LD!!LDFLAGS! /nologo /std:c++17 /Fe!output! !tpl!.obj !libs!
+            set CMD=!LD!!LDFLAGS! /nologo /std:c++!CPPSTD! /Fe!output! !tpl!.obj !libs!
           ) else (
-            set CMD=!LD!!LDFLAGS! /nologo /std:c++17 /Fe!tpl!.exe !tpl!.obj !libs!
+            set CMD=!LD!!LDFLAGS! /nologo /std:c++!CPPSTD! /Fe!tpl!.exe !tpl!.obj !libs!
           ) 
         )
       ) else (

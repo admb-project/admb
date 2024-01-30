@@ -21,6 +21,8 @@ ADMB-13.2
 
 * Added ADMB Docker Image scripts to automate building uploads.
 
+* Defaults to ISO/IEC C++20 standard for latest compilers.
+
 ADMB-13.1
 ---------
 *Released December 23, 2022*  

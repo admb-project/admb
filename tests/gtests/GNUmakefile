@@ -376,9 +376,9 @@ endif
 
 gtest-all.obj: googletest-read-only
 ifeq ($(CMDSHELL),cmd)
-	$(CXX) -c $(CXXFLAGS) -std=c++11 -g -I$(GTEST_DIR)\\include -I$(GTEST_DIR) -o $@ $(GTEST_DIR)\\src\\gtest-all.cc
+	$(CXX) -c $(CXXFLAGS) -std=c++17 -g -I$(GTEST_DIR)\\include -I$(GTEST_DIR) -o $@ $(GTEST_DIR)\\src\\gtest-all.cc
 else
-	$(CXX) -c $(CXXFLAGS) -std=c++11 -g -I$(GTEST_DIR)/include -I$(GTEST_DIR) -o $@ $(GTEST_DIR)/src/gtest-all.cc
+	$(CXX) -c $(CXXFLAGS) -std=c++17 -g -I$(GTEST_DIR)/include -I$(GTEST_DIR) -o $@ $(GTEST_DIR)/src/gtest-all.cc
 endif
 
 googletest-read-only:

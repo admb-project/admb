@@ -180,9 +180,9 @@ if "!CXX!"=="cl" (
   )
   set LD=!CXX!
   if defined CXXFLAGS (
-    set CXXFLAGS= /c /nologo /EHsc !CXXFLAGS!
+    set CXXFLAGS= /c /nologo /std:c++17 /EHsc !CXXFLAGS!
   ) else (
-    set CXXFLAGS= /c /nologo /EHsc
+    set CXXFLAGS= /c /nologo /std:c++17 /EHsc
   )
   if defined g (
     set CXXFLAGS=!CXXFLAGS! /Z7
@@ -216,7 +216,7 @@ if "!CXX!"=="cl" (
     )
   )
   if defined fast (
-    set CXXFLAGS=!CXXFLAGS! /nologo /DOPT_LIB
+    set CXXFLAGS=!CXXFLAGS! /nologo /std:c++17 /DOPT_LIB
     if defined g (
       if exist "!ADMB_HOME!\lib\admb-contribo!OSNAME!!CXXVERSION!-debug.lib" (
         set libs="!ADMB_HOME!\lib\admb-contribo!OSNAME!!CXXVERSION!-debug.lib" /link
@@ -689,9 +689,9 @@ if not defined tpls (
       ) else (
         if "!CXX!"=="cl" (
           if defined output (
-            set CMD=!LD!!LDFLAGS! /nologo /Fe!output! !objs! !libs!
+            set CMD=!LD!!LDFLAGS! /nologo /std:c++17 /Fe!output! !objs! !libs!
           ) else (
-            set CMD=!LD!!LDFLAGS! /nologo /Fe!main!.exe !objs! !libs!
+            set CMD=!LD!!LDFLAGS! /nologo /std:c++17 /Fe!main!.exe !objs! !libs!
           )
         ) else (
           if defined output (
@@ -754,15 +754,15 @@ if not defined tpls (
       if "!CXX!"=="cl" (
         if defined objs (
           if defined output (
-            set CMD=!LD!!LDFLAGS! /nologo /Fe!output! !tpl!.obj !objs! !libs!
+            set CMD=!LD!!LDFLAGS! /nologo /std:c++17 /Fe!output! !tpl!.obj !objs! !libs!
           ) else (
-            set CMD=!LD!!LDFLAGS! /nologo /Fe!tpl!.exe !tpl!.obj !objs! !libs!
+            set CMD=!LD!!LDFLAGS! /nologo /std:c++17 /Fe!tpl!.exe !tpl!.obj !objs! !libs!
           ) 
         ) else (
           if defined output (
-            set CMD=!LD!!LDFLAGS! /nologo /Fe!output! !tpl!.obj !libs!
+            set CMD=!LD!!LDFLAGS! /nologo /std:c++17 /Fe!output! !tpl!.obj !libs!
           ) else (
-            set CMD=!LD!!LDFLAGS! /nologo /Fe!tpl!.exe !tpl!.obj !libs!
+            set CMD=!LD!!LDFLAGS! /nologo /std:c++17 /Fe!tpl!.exe !tpl!.obj !libs!
           ) 
         )
       ) else (

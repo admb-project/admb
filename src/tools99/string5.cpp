@@ -117,7 +117,7 @@ adstring& adstring_array::operator[](int i)
     ad_exit(1);
   }
 
-#ifdef DEBUG
+#ifndef OPT_LIB
   assert(indexmin() <= i && i <= indexmax());
 #endif
 

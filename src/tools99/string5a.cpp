@@ -29,9 +29,17 @@ adstring_array& adstring_array::append_distinct(const adstring& s)
   {
     cerr << "Error allocating memory in adstring_array" << endl;
   }
-  int size = tmp_max - tmp_min + 1;
-  adstring** tmp_ptr =
-    new adstring*[static_cast<unsigned int>(size < 0 ? 0 : size)];
+#ifndef OPT_LIB
+  if (tmp_min > tmp_max)
+  {
+    cerr << "Error: tmp_max must be >= tmp_min in\n"
+         << "       adstring_array::append_distinct(const adstring&)"
+         << endl;
+    ad_exit(1);
+  }
+#endif
+  unsigned int size = static_cast<unsigned int>(tmp_max - tmp_min + 1);
+  adstring** tmp_ptr = new adstring*[size];
   if (!tmp_ptr)
   {
     cerr << "Error allocating memory in adstring_array +=" << endl;

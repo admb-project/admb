@@ -79,12 +79,14 @@ Allocate vector of adstring with range [min, max].
 */
 void adstring_array::allocate(int min, int max)
 {
+#ifndef OPT_LIB
   if (min > max)
   {
     cerr << " Error in adstring_array(int min,int max) --"
          << " max must be >= min" << endl;
     ad_exit(1);
   }
+#endif
   shape = new vector_shape(min, max);
   if (!shape)
   {
@@ -115,7 +117,7 @@ adstring& adstring_array::operator[](int i)
     ad_exit(1);
   }
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(indexmin() <= i && i <= indexmax());
 #endif
 

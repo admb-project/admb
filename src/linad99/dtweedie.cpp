@@ -2,10 +2,17 @@
 #include <type_traits>
 #include <fvar.hpp>
 
+#ifdef DEBUG
+  #include <cassert>
+  #include <climits>
+#endif
+
 unsigned int imax2(unsigned int a, double v)
 {
-  unsigned int b = static_cast<unsigned int>(v);
-  return a > b ? a : b;  
+#ifdef DEBUG
+  assert(v <= double(UINT_MAX));
+#endif
+  return static_cast<double>(a) >= v ? a : static_cast<unsigned int>(v);
 }
 unsigned int imin2(unsigned int a, unsigned int b)
 {

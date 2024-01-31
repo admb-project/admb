@@ -326,7 +326,7 @@ else
 	cp ../../examples/admb/finance/finance.dat .
 endif
 
-gtest-all: gtest-all.obj $(GTESTS_ALL)
+gtest-all: gtest-all.obj $(patsubst %.cpp,%.obj,$(GTESTS_ALL))
 ifeq ($(CMDSHELL),cmd)
 	set "CXXFLAGS=$(CXXFLAGS) -I$(GTEST_DIR)\\include" & set "LDFLAGS=-pthread $(LDFLAGS)"  & ..\\..\\admb $(ADMB_OPTIONS) $^
 else
@@ -380,6 +380,14 @@ ifeq ($(CMDSHELL),cmd)
 else
 	$(CXX) -c $(CXXFLAGS) -std=c++17 -g -I$(GTEST_DIR)/include -I$(GTEST_DIR) -o $@ $(GTEST_DIR)/src/gtest-all.cc
 endif
+
+%.obj:%.cpp
+ifeq ($(CMDSHELL),cmd)
+	set "CXXFLAGS=$(CXXFLAGS) -I$(GTEST_DIR)\\include" & set "LDFLAGS=-pthread $(LDFLAGS)"  & ..\\..\\admb -c $(ADMB_OPTIONS) $^
+else
+	CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" LDFLAGS="-pthread $(LDFLAGS)" ../../admb$(EXT) -c $(ADMB_OPTIONS) $^
+endif
+
 
 googletest-read-only:
 	git clone --depth=1 --branch=v1.14.0 https://github.com/google/googletest.git googletest-read-only

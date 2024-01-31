@@ -872,4 +872,4 @@ REM                   johnoel split -s option into separate -g and -s options
 REM r244 [2009-05-28] arnima  created
 
 :EOF
-EXIT /B
+EXIT /B %ERRORLEVEL%

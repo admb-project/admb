@@ -102,7 +102,6 @@ GTESTS_ALL=\
  main.cpp
 
 all: clean
-	$(MAKE) /NOLOGO gtest-all
 	$(MAKE) /NOLOGO run
 
 googletest-read-only:
@@ -111,13 +110,14 @@ googletest-read-only:
 gtest-all.obj: googletest-read-only
 	$(CXX) /c /EHsc /Igoogletest-read-only\googletest\include /Igoogletest-read-only\googletest /Fo$@ googletest-read-only\googletest\src\gtest-all.cc
 
-gtest-all: gtest-all.obj $(GTESTS_ALL)
+gtest-all.exe: gtest-all.obj $(GTESTS_ALL)
 	set CXXFLAGS=/Igoogletest-read-only\googletest\include
 	..\..\admb $(ADMB_OPTIONS) $?
 
-run:
-	gtest-all
+run: gtest-all.exe
+	@if exist gtest-all.exe gtest-all.exe
 
 clean:
 	@if exist gtest-all.obj del /Q gtest-all.obj
 	@if exist gtest-all.exe del /Q gtest-all.exe
+	@del /Q *.obj

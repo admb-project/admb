@@ -638,7 +638,7 @@ if defined srcs (
       if defined output (
         if not exist !output! (
           echo.&echo Error: Unable to build !src! to !output!
-          goto ERROR
+          goto EOF
         ) else (
           if not defined objs (
             set objs=!output!
@@ -649,7 +649,7 @@ if defined srcs (
       ) else (
         if not exist !filename!.obj (
           echo.&echo Error: Unable to build !src! to !filename!.obj
-          goto ERROR
+          goto EOF
         ) else (
           if not defined objs (
             set objs=!filename!.obj
@@ -661,7 +661,7 @@ if defined srcs (
     ) else (
       if not exist !filename!.obj (
         echo.&echo Error: Unable to build !src! to !filename!.obj
-        goto ERROR
+        goto EOF
       ) else (
         if not defined objs (
           set objs=!filename!.obj
@@ -872,4 +872,4 @@ REM                   johnoel split -s option into separate -g and -s options
 REM r244 [2009-05-28] arnima  created
 
 :EOF
-EXIT /B %ERRORLEVEL%
+EXIT /B !ERRORLEVEL!

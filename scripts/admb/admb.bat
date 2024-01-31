@@ -176,7 +176,7 @@ if "!CXX!"=="cl" (
   where /Q !CXX!
   if errorlevel 1 (
     echo Error: Unable to find !CXX!
-    exit /B 1
+    goto ERROR
   )
   for /f "tokens=*" %%i in ('!CXX! 2^>^&1 ^| findstr " 19.3"') do (
     set CPPSTD=/std:c++20
@@ -291,7 +291,7 @@ if "!CXX!"=="cl" (
         set "PATH=!SHORT_SCRIPT_PATH!..\utilities\mingw\bin;!PATH!"
       ) else (
         echo Error: Unable to find !CXX!
-        exit /B 1
+        goto ERROR
       )
     )
     for /f %%i in ('!CXX! -dumpversion ^| findstr /b 4.') do (
@@ -413,7 +413,7 @@ if "!CXX!"=="cl" (
               set libs="!ADMB_HOME!\lib\libadmbo!CXXVERSION!.a"
             ) else (
               echo Error: Unable to find ADMB DEBUG library 'libadmbo!CXXVERSION!.a'
-              exit /B 1
+              goto ERROR
             )
           )
         ) 
@@ -434,7 +434,7 @@ if "!CXX!"=="cl" (
               set libs="!ADMB_HOME!\lib\libadmb!CXXVERSION!.a"
             ) else (
               echo Error: Unable to find ADMB DEBUG library 'libadmb!CXXVERSION!.a'
-              exit /B 1
+              goto ERROR
             )
           )
         ) 
@@ -458,7 +458,7 @@ if "!CXX!"=="cl" (
               set libs="!ADMB_HOME!\lib\libadmbo!CXXVERSION!-debug.a"
             ) else (
               echo Error: Unable to find ADMB library 'libadmbo!CXXVERSION!.a'
-              exit /B 1
+              goto ERROR
             )
           )
         ) 
@@ -479,7 +479,7 @@ if "!CXX!"=="cl" (
               set libs="!ADMB_HOME!\lib\libadmb!CXXVERSION!-debug.a"
             ) else (
               echo Error: Unable to find ADMB library 'libadmb!CXXVERSION!.a'
-              exit /B 1
+              goto ERROR
             )
           )
         ) 
@@ -539,7 +539,7 @@ for %%a in (!tpls!) do (
         set "PATH=!SHORT_SCRIPT_PATH!..\..\..\utilities;!PATH!"
       ) else (
         echo Error: Unable to find sed.exe
-        exit /B 1
+        goto ERROR
       )
     )
   )

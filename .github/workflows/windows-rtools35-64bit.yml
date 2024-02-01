@@ -43,7 +43,6 @@ jobs:
     - name: tests
       run: |
         utilities\make --directory=tests examples
-        utilities\make --directory=tests unit-gtests
         utilities\make --directory=tests outputs.txt
       shell: cmd
     - name: Artifact

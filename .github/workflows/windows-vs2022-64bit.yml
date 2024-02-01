@@ -11,12 +11,12 @@ jobs:
     - uses: actions/checkout@main
     - name: clean
       run: |
-        pushd "%ProgramFiles%\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
+        pushd "%ProgramFiles%\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build" && call vcvars64.bat && popd
         nmake clean
       shell: cmd
     - name: build
       run: |
-        pushd "%ProgramFiles%\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
+        pushd "%ProgramFiles%\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build" && call vcvars64.bat && popd
         nmake
         nmake shared
       shell: cmd
@@ -31,7 +31,7 @@ jobs:
         path: build\\admb
     - name: debug
       run: |
-        pushd "%ProgramFiles%\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
+        pushd "%ProgramFiles%\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build" && call vcvars64.bat && popd
         nmake DEBUG=yes
         nmake shared DEBUG=yes
       shell: cmd
@@ -42,14 +42,14 @@ jobs:
         path: build\\admb
     - name: gtests
       run: |
-        pushd "%ProgramFiles%\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
-        pushd tests & nmake test-gtests & popd
+        pushd "%ProgramFiles%\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build" && call vcvars64.bat && popd
+        pushd tests && nmake test-gtests && popd
       shell: cmd
     - name: tests
       run: |
-        pushd "%ProgramFiles%\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
-        pushd tests & nmake examples & popd
-        pushd tests & nmake outputs.txt & popd
+        pushd "%ProgramFiles%\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build" && call vcvars64.bat && popd
+        pushd tests && nmake examples && popd
+        pushd tests && nmake outputs.txt && popd
       shell: cmd
     - name: Artifact
       uses: actions/upload-artifact@v1
@@ -58,6 +58,6 @@ jobs:
         path: outputs.txt
     - name: analyze
       run: |
-        pushd "%ProgramFiles%\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build" & call vcvars64.bat & popd
-        pushd src & nmake CXXFLAGS=/analyze DEBUG=yes objects & popd
+        pushd "%ProgramFiles%\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build" && call vcvars64.bat && popd
+        pushd src && nmake CXXFLAGS=/analyze DEBUG=yes objects && popd
       shell: cmd

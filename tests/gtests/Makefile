@@ -113,7 +113,7 @@ gtest-all.obj: googletest-read-only
 gtest-all.exe: gtest-all.obj $(GTESTS_ALL)
 	set CXXFLAGS=/Igoogletest-read-only\googletest\include
 	..\..\admb $(ADMB_OPTIONS) $?
-	@if not exist gtest-all.exe exit /b %errorlevel%
+	if not exist gtest-all.exe exit /b 1
 
 run: gtest-all.exe
 	gtest-all.exe

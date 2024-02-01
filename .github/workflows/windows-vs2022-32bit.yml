@@ -36,11 +36,15 @@ jobs:
       with:
         name: admb_vs2022_debug_32bit
         path: build\\admb
+    - name: gtests
+      run: |
+        pushd "%ProgramFiles%\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build" & call vcvars32.bat & popd
+        pushd tests & nmake test-gtests & popd
+      shell: cmd
     - name: tests
       run: |
         pushd "%ProgramFiles%\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build" & call vcvars32.bat & popd
         pushd tests & nmake examples & popd
-        pushd tests & nmake unit-gtests & popd
         pushd tests & nmake outputs.txt & popd
       shell: cmd
     - name: Artifact

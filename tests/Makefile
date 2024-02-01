@@ -4,7 +4,7 @@ ADMB_VER=admb
 
 DESTDIR=..\\build\\$(ADMB_VER)
 
-all:\
+all:
 	$(MAKE) /NOLOGO examples
 	$(MAKE) /NOLOGO core
 	@$(MAKE) /NOLOGO outputs.txt
@@ -74,7 +74,7 @@ unit-gtests:
 	$(MAKE) /NOLOGO test-gtests
 
 test-gtests:
-	pushd gtests& $(MAKE) /NOLOGO all & popd
+	pushd gtests& $(MAKE) all & popd
 
 test-initializationfunction:
 	pushd initializationfunction & $(MAKE) /NOLOGO & popd

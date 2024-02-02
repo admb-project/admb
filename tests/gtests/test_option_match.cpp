@@ -10,7 +10,7 @@ TEST_F(test_option_match, option_negative)
 
   int nopt = 0;
 
-  int option_match(int argc, char *argv[], const char *option, int& _nopt);
+  int option_match(int argc, char** argv, const char *option, int& _nopt);
 
   ASSERT_EQ(1, option_match(argc, argv, "-option", nopt));
   ASSERT_EQ(0, nopt);
@@ -20,7 +20,7 @@ TEST_F(test_option_match, calls)
 {
   //ASSERT_NE(0, strcmp(0, "-option"));
 
-  int option_match(int argc, char *argv[], const char *option, int& _nopt);
+  int option_match(int argc, char** argv, const char *option, int& _nopt);
 
   int nopt = -1;
   ASSERT_EQ(-1, option_match(0, 0, 0, nopt));

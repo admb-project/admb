@@ -6,7 +6,7 @@ class test_option_match: public ::testing::Test {};
 TEST_F(test_option_match, option_negative)
 {
   int argc = 3;
-  char* argv[3] = { "./simple", "-option", "-1"};
+  const char* argv[3] = { "./simple", "-option", "-1"};
 
   int nopt = 0;
 

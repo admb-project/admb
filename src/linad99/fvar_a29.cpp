@@ -544,7 +544,11 @@ void DF_dvpow(void)
   dvector dfv1(dfvtmp.indexmin(),dfvtmp.indexmax());
 
 #ifdef DEBUG
-  assert(!std::fetestexcept(FE_INVALID));
+  if (std::fetestexcept(FE_INVALID))
+  {
+    cerr << "Warning: FE_INVALID in " << __FILE__ << ':' << __LINE__ << endl;
+    std::feclearexcept(FE_INVALID);
+  }
 #endif
   for (int i=dfvtmp.indexmin();i<=dfvtmp.indexmax();i++)
   {

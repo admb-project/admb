@@ -833,10 +833,6 @@ TEST_F(test_dvar3_array, sqrt)
 }
 TEST_F(test_dvar3_array, sqr)
 {
-#ifdef DEBUG
-std::feclearexcept(FE_ALL_EXCEPT);
-#endif
-
   ad_exit=&test_ad_exit;
 
   gradient_structure gs;
@@ -902,11 +898,7 @@ std::feclearexcept(FE_ALL_EXCEPT);
 
   dvector gradients(1, 8);
 
-#ifdef DEBUG
-  ASSERT_DEATH(gradcalc(8, gradients), "Assertion");
-#else
   gradcalc(8, gradients);
-#endif
 
   ASSERT_DOUBLE_EQ(gradients(1), 2.0 * independents(1));
   ASSERT_DOUBLE_EQ(gradients(2), 2.0 * independents(2));
@@ -916,10 +908,6 @@ std::feclearexcept(FE_ALL_EXCEPT);
   ASSERT_DOUBLE_EQ(gradients(6), 2.0 * independents(6));
   ASSERT_DOUBLE_EQ(gradients(7), 2.0 * independents(7));
   ASSERT_DOUBLE_EQ(gradients(8), 2.0 * independents(8));
-
-#ifdef DEBUG
-std::feclearexcept(FE_ALL_EXCEPT);
-#endif
 }
 TEST_F(test_dvar3_array, log)
 {

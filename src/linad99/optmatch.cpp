@@ -22,7 +22,7 @@ program.
 \return An index into "argv" where the match with "string" is obtained. In case
 of no match, the value "-1" is returned.
 */
-int option_match(int argc, char* argv[], const char* option)
+int option_match(int argc, char** argv, const char* option)
 {
   int match = -1;
   if (argv)
@@ -115,7 +115,7 @@ program.
 \return An index into "argv" where the match with "string" is obtained. In case
 of no match, the value "-1" is returned.
 */
-int option_match(int argc, char *argv[], const char *option, int& nopt)
+int option_match(int argc, char** argv, const char *option, int& nopt)
 {
   int match = -1;
   nopt=0;

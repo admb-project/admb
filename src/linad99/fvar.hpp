@@ -8872,8 +8872,8 @@ protected:
   static THREAD_LOCAL char** argv;
 };
 
-int option_match(int argc, char *argv[], const char *string);
-int option_match(int argc, char *argv[], const char *string, int& nopt);
+int option_match(int argc, char** argv, const char *string);
+int option_match(int argc, char** argv, const char *string, int& nopt);
 int option_match(char *s, const char *string, int& nopt);
 int option_match(char *s, const char *string);
 int ad_chdir(const char *s);

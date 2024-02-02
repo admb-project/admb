@@ -6,7 +6,7 @@ jobs:
   build:
 
     runs-on: macos-latest
-    
+
     steps:
     - uses: actions/checkout@main
     - name: clean
@@ -36,10 +36,12 @@ jobs:
       with:
         name: admb_dmg_distribution
         path: build/admb-macos.dmg
+    - name: gtests
+      run: |
+        make --directory=tests/gtests
     - name: tests
       run: |
         make --directory=tests examples
-        make --directory=tests unit-gtests
         make --directory=tests outputs.txt
     - name: Artifact
       uses: actions/upload-artifact@v1

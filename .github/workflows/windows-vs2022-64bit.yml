@@ -6,7 +6,7 @@ jobs:
   build:
 
     runs-on: windows-latest
-    
+ 
     steps:
     - uses: actions/checkout@main
     - name: clean
@@ -43,7 +43,8 @@ jobs:
     - name: gtests
       run: |
         pushd "%ProgramFiles%\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build" && call vcvars64.bat && popd
-        pushd "tests\\gtests" && nmake && popd
+        nmake
+      working-directory: tests\\gtests
       shell: cmd
     - name: tests
       run: |

@@ -6,7 +6,7 @@ jobs:
   build:
 
     runs-on: [windows-latest]
-    
+
     steps:
     - uses: actions/checkout@main
     - name: clean
@@ -25,11 +25,15 @@ jobs:
       with:
         name: admb_msys2_debug
         path: build\\admb
+    - name: gtests
+      run: |
+        set PATH=C:\PortableGit\bin;C:\msys64\usr\bin;C:\msys64\mingw64\bin;%PATH%
+        make --directory=tests\\gtests
+      shell: cmd
     - name: tests
       run: |
         set PATH=C:\PortableGit\bin;C:\msys64\usr\bin;C:\msys64\mingw64\bin;%PATH%
         make --directory=tests examples
-        make --directory=tests unit-gtests
         make --directory=tests outputs.txt
       shell: cmd
     - name: Artifact

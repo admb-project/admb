@@ -5,8 +5,8 @@ on: [push]
 jobs:
   build:
 
-    runs-on: windows-latest 
-    
+    runs-on: windows-latest
+
     steps:
     - uses: actions/checkout@main
     - name: Set up R

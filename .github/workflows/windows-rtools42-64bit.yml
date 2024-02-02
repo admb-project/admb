@@ -5,8 +5,8 @@ on: [push]
 jobs:
   build:
 
-    runs-on: windows-latest 
-    
+    runs-on: windows-latest
+
     steps:
     - uses: actions/checkout@main
     - name: Set up R
@@ -38,11 +38,14 @@ jobs:
       with:
         name: admb_rtools42_debug
         path: build\\admb
+    - name: gtests
+      run: |
+        utilities\\make --directory=tests\\gtests
+      shell: cmd
     - name: tests
       run: |
-        utilities\make --directory=tests examples
-        utilities\make --directory=tests unit-gtests
-        utilities\make --directory=tests outputs.txt
+        utilities\\make --directory=tests examples
+        utilities\\make --directory=tests outputs.txt
       shell: cmd
     - name: Artifact
       uses: actions/upload-artifact@v1

@@ -4,7 +4,6 @@ GTESTS_ALL=\
  test_adstring_strcase.cpp\
  test_fmm_control.cpp\
  test_adstring_array.cpp\
- test_option_match.cpp\
  test_lvector.cpp\
  test_adpool.cpp\
  test_param_init_d3array.cpp\

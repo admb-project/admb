@@ -6,7 +6,7 @@ class test_option_match: public ::testing::Test {};
 TEST_F(test_option_match, option_negative)
 {
   int argc = 3;
-  const char* argv[3] = { "./simple", "-option", "-1"};
+  char* argv[] = { "./simple", "-option", "-1"};
 
   int nopt = 0;
 
@@ -33,13 +33,13 @@ TEST_F(test_option_match, calls)
   char* argv[1] = { "./simple"};
 
   char* option = "-none";
-  ASSERT_EQ(-1, option_match(argc, static_cast<char**>(argv), option, nopt));
+  ASSERT_EQ(-1, option_match(argc, argv, option, nopt));
   ASSERT_EQ(0, nopt);
 
   int argc2 = 2;
   char* argv2[2] = { "./simple", "-myoption" };
   char* myoption = "-myoption";
-  ASSERT_EQ(1, option_match(argc2, static_cast<char**>(argv2), myoption, nopt));
+  ASSERT_EQ(1, option_match(argc2, argv2, myoption, nopt));
   ASSERT_EQ(0, nopt);
 
   int argc3 = 3;

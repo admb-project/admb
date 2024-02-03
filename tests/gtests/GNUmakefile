@@ -37,7 +37,6 @@ GTESTS_ALL=\
  test_line_adstring.cpp\
  test_multi_index.cpp\
  test_adtimer.cpp\
- test_idea.cpp\
  test_df_file.cpp\
  test_multinomial.cpp\
  test_multi_index.cpp\

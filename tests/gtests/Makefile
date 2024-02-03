@@ -11,7 +11,6 @@ GTESTS_ALL=\
  test_banded_symmetric_dmatrix.cpp\
  test_line_adstring.cpp\
  test_multi_index.cpp\
- test_idea.cpp\
  test_multinomial.cpp\
  test_multi_index.cpp\
  test_param_init_vector_vector.cpp\

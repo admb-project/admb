@@ -26,7 +26,7 @@ TEST_F(test_ad_comm, defaultconstructor)
 TEST_F(test_ad_comm, constructor)
 {
   int argc = 3;
-  char* argv[] = { "./simple" , "-ind", "other.dat"};
+  char* argv[] = { (char*)"./simple" , (char*)"-ind", (char*)"other.dat"};
   ad_comm2 adcomm(argc, argv);
   ad_comm::argc = 0;
   ad_comm::argv = nullptr;
@@ -34,7 +34,7 @@ TEST_F(test_ad_comm, constructor)
 TEST_F(test_ad_comm, timer)
 {
   int argc = 2;
-  char* argv[] = { "./simple" , "-timer" };
+  char* argv[] = { (char*)"./simple" , (char*)"-timer" };
   ad_comm2 adcomm(argc, argv);
   ad_comm::argc = 0;
   ad_comm::argv = nullptr;
@@ -44,7 +44,7 @@ TEST_F(test_ad_comm, help)
   ad_exit=&test_ad_exit;
 
   int argc = 2;
-  char* argv[] = { "./simple" , "-help"};
+  char* argv[] = { (char*)"./simple" , (char*)"-help"};
   ASSERT_ANY_THROW({
     ad_comm2 adcomm(argc, argv);
   });
@@ -56,7 +56,7 @@ TEST_F(test_ad_comm, info)
   ad_exit=&test_ad_exit;
 
   int argc = 2;
-  char* argv[] = { "./simple" , "-info"};
+  char* argv[] = { (char*)"./simple" , (char*)"-info"};
   ASSERT_ANY_THROW({
     ad_comm2 adcomm(argc, argv);
   });
@@ -66,7 +66,7 @@ TEST_F(test_ad_comm, info)
 TEST_F(test_ad_comm, option_match_ind)
 {
   int argc = 7;
-  char* argv[] = {"./dogsbmDIC", "-ind", "dog4s.ctl", "-ainp", "dog4p.pin", "-nox", "-est"};
+  char* argv[] = {(char*)"./dogsbmDIC", (char*)"-ind", (char*)"dog4s.ctl", (char*)"-ainp", (char*)"dog4p.pin", (char*)"-nox", (char*)"-est"};
   int opt = option_match(argc, argv, "-ind");
   EXPECT_EQ(1, opt);
 }
@@ -74,7 +74,7 @@ TEST_F(test_ad_comm, option_match_ind_option_with_unicode_char)
 {
   int argc = 3;
   //the '-' is a unicode char
-  char* argv[] = {"./dogsbmDIC", "–ind", "dog4s.ctl"};
+  char* argv[] = {(char*)"./dogsbmDIC", (char*)"–ind", (char*)"dog4s.ctl"};
   EXPECT_EQ('\xE2', argv[1][0]);
   EXPECT_EQ('\x80', argv[1][1]);
   EXPECT_EQ('\x93', argv[1][2]);

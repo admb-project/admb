@@ -39,6 +39,7 @@ GTESTS_ALL=\
  test_init_adstring.cpp\
  test_init_line_adstring.cpp\
  test_dll_param_matrix.cpp\
+ test_dvector.cpp\
  test_dvar3_array.cpp\
  test_dvar6_array.cpp\
  test_dvar7_array.cpp\

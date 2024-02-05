@@ -520,7 +520,7 @@ TEST_F(test_dvector, filename_goodcolumn)
   ofs << "7 8 9\n";
   ofs.close();
 
-  dvector v("test_dvector.txt", 2);
+  dvector v((char*)"test_dvector.txt", 2);
   ASSERT_EQ(1, v.indexmin());
   ASSERT_EQ(3, v.indexmax());
   ASSERT_EQ(3, v.size());
@@ -539,7 +539,7 @@ TEST_F(test_dvector, filename_badcolumn)
   ofs.close();
   ASSERT_ANY_THROW
   ({
-    dvector v("test_dvector.txt", 4);
+    dvector v((char*)"test_dvector.txt", 4);
   });
 }
 TEST_F(test_dvector, filename_negativebadcolumn)
@@ -553,7 +553,7 @@ TEST_F(test_dvector, filename_negativebadcolumn)
   ofs.close();
   ASSERT_ANY_THROW
   ({
-    dvector v("test_dvector.txt", -1);
+    dvector v((char*)"test_dvector.txt", -1);
   });
 }
 TEST_F(test_dvector, filename_zerobadcolumn)
@@ -567,7 +567,7 @@ TEST_F(test_dvector, filename_zerobadcolumn)
   ofs.close();
   ASSERT_ANY_THROW
   ({
-    dvector v("test_dvector.txt", 0);
+    dvector v((char*)"test_dvector.txt", 0);
   });
 }
 TEST_F(test_dvector, filename_raggedcolumn)
@@ -581,7 +581,7 @@ TEST_F(test_dvector, filename_raggedcolumn)
   ofs.close();
   ASSERT_ANY_THROW
   ({
-    dvector v("test_dvector.txt", 2);
+    dvector v((char*)"test_dvector.txt", 2);
   });
 }
 TEST_F(test_dvector, sgn)

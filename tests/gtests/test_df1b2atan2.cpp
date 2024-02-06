@@ -172,7 +172,7 @@ TEST_F(test_df1b2atan2, default_constructor_withallocate)
 TEST_F(test_df1b2atan2, df1b2_gradlist_default_constructor)
 {
   int argc = 1;
-  char* argv[] = {"./gtest-all"};
+  char* argv[] = {(char*)"./gtest-all"};
   ad_comm::argc = argc;
   ad_comm::argv = argv;
 
@@ -199,7 +199,7 @@ TEST_F(test_df1b2atan2, df1b2_gradlist_default_constructor)
 TEST_F(test_df1b2atan2, no_derivatives_0)
 {
   int argc = 1;
-  char* argv[] = {"./gtest-all"};
+  char* argv[] = {(char*)"./gtest-all"};
   ad_comm::argc = argc;
   ad_comm::argv = argv;
 
@@ -226,7 +226,7 @@ TEST_F(test_df1b2atan2, no_derivatives_0)
 TEST_F(test_df1b2atan2, atan2)
 {
   int argc = 1;
-  char* argv[] = {"./gtest-all"};
+  char* argv[] = {(char*)"./gtest-all"};
   ad_comm::argc = argc;
   ad_comm::argv = argv;
 

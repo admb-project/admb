@@ -4,6 +4,7 @@ GTESTS_ALL=\
  test_adstring_strcase.cpp\
  test_fmm_control.cpp\
  test_adstring_array.cpp\
+ test_option_match.cpp\
  test_lvector.cpp\
  test_adpool.cpp\
  test_param_init_d3array.cpp\
@@ -11,6 +12,7 @@ GTESTS_ALL=\
  test_banded_symmetric_dmatrix.cpp\
  test_line_adstring.cpp\
  test_multi_index.cpp\
+ test_idea.cpp\
  test_multinomial.cpp\
  test_multi_index.cpp\
  test_param_init_vector_vector.cpp\

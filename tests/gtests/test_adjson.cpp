@@ -90,15 +90,15 @@ TEST_F(test_adjson, input_output_string_solidus)
 
   json data;
 
-  istringstream input("\"abc\/def\"");
+  istringstream input("\"abc/def\"");
   input >> data;
   string* str = (string*)data.get_value();
-  ASSERT_STREQ((char*)"\"abc\/def\"", str->get_value().c_str());
+  ASSERT_STREQ((char*)"\"abc/def\"", str->get_value().c_str());
 
   ostringstream output;
   output << data;
   std::string s = data.str();
-  ASSERT_STREQ((char*)"\"abc\/def\"", s.c_str());
+  ASSERT_STREQ((char*)"\"abc/def\"", s.c_str());
 }
 TEST_F(test_adjson, input_output_string_tab)
 {

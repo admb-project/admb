@@ -6,7 +6,7 @@ class test_option_match: public ::testing::Test {};
 TEST_F(test_option_match, option_negative)
 {
   int argc = 3;
-  char* argv[] = { "./simple", "-option", "-1"};
+  char* argv[] = { (char*)"./simple", (char*)"-option", (char*)"-1"};
 
   int nopt = 0;
 
@@ -30,21 +30,21 @@ TEST_F(test_option_match, calls)
   ASSERT_EQ(-1, option_match(1, 0, "-check", nopt));
 
   int argc = 1;
-  char* argv[1] = { "./simple"};
+  char* argv[1] = { (char*)"./simple"};
 
-  char* option = "-none";
+  char* option = (char*)"-none";
   ASSERT_EQ(-1, option_match(argc, argv, option, nopt));
   ASSERT_EQ(0, nopt);
 
   int argc2 = 2;
-  char* argv2[2] = { "./simple", "-myoption" };
-  char* myoption = "-myoption";
+  char* argv2[2] = { (char*)"./simple", (char*)"-myoption" };
+  char* myoption = (char*)"-myoption";
   ASSERT_EQ(1, option_match(argc2, argv2, myoption, nopt));
   ASSERT_EQ(0, nopt);
 
   int argc3 = 3;
-  char* argv3[3] = { "./simple", "\0", "-myoption" };
-  char* option3 = "-myoption";
+  char* argv3[3] = { (char*)"./simple", (char*)"\0", (char*)"-myoption" };
+  char* option3 = (char*)"-myoption";
   ASSERT_EQ(2, option_match(argc3, argv3, option3, nopt));
   ASSERT_EQ(0, nopt);
 }
@@ -61,11 +61,11 @@ TEST_F(test_option_match, check_null_indexes)
   //ASSERT_NE(0, strcmp(p, " "));
 
   ASSERT_EQ(-1, option_match(NULL, "abc")); 
-  ASSERT_EQ(1, option_match("abc def ghi jkl", "abc")); 
-  ASSERT_EQ(2, option_match("abc def ghi jkl", "def")); 
-  ASSERT_EQ(3, option_match("abc def ghi jkl", "ghi")); 
-  ASSERT_EQ(4, option_match("abc def ghi jkl", "jkl")); 
-  ASSERT_EQ(-1, option_match("abc def ghi jkl", "f g")); 
+  ASSERT_EQ(1, option_match((char*)"abc def ghi jkl", "abc")); 
+  ASSERT_EQ(2, option_match((char*)"abc def ghi jkl", "def")); 
+  ASSERT_EQ(3, option_match((char*)"abc def ghi jkl", "ghi")); 
+  ASSERT_EQ(4, option_match((char*)"abc def ghi jkl", "jkl")); 
+  ASSERT_EQ(-1, option_match((char*)"abc def ghi jkl", "f g")); 
 }
 #endif
 TEST_F(test_option_match, check_null_indexes_opt)
@@ -75,28 +75,28 @@ TEST_F(test_option_match, check_null_indexes_opt)
   int nopt = -1;
   ASSERT_EQ(-1, option_match(NULL, "abc", nopt)); 
   ASSERT_EQ(0, nopt);
-  ASSERT_EQ(1, option_match("abc def ghi jkl", "abc", nopt)); 
+  ASSERT_EQ(1, option_match((char*)"abc def ghi jkl", "abc", nopt)); 
   ASSERT_EQ(3, nopt);
-  ASSERT_EQ(2, option_match("abc def ghi jkl", "def", nopt)); 
+  ASSERT_EQ(2, option_match((char*)"abc def ghi jkl", "def", nopt)); 
   ASSERT_EQ(2, nopt);
-  ASSERT_EQ(3, option_match("abc def ghi jkl", "ghi", nopt)); 
+  ASSERT_EQ(3, option_match((char*)"abc def ghi jkl", "ghi", nopt)); 
   ASSERT_EQ(1, nopt);
-  ASSERT_EQ(4, option_match("abc def ghi jkl", "jkl", nopt)); 
+  ASSERT_EQ(4, option_match((char*)"abc def ghi jkl", "jkl", nopt)); 
   ASSERT_EQ(0, nopt);
-  ASSERT_EQ(-1, option_match("abc def ghi jkl", "f g", nopt)); 
+  ASSERT_EQ(-1, option_match((char*)"abc def ghi jkl", "f g", nopt)); 
   ASSERT_EQ(0, nopt);
 
-  ASSERT_EQ(1, option_match("abc def ghi -jkl", "abc", nopt)); 
+  ASSERT_EQ(1, option_match((char*)"abc def ghi -jkl", "abc", nopt)); 
   ASSERT_EQ(3, nopt);
-  ASSERT_EQ(2, option_match("abc def ghi -jkl", "def", nopt)); 
+  ASSERT_EQ(2, option_match((char*)"abc def ghi -jkl", "def", nopt)); 
   ASSERT_EQ(2, nopt);
-  ASSERT_EQ(3, option_match("abc def ghi -jkl", "ghi", nopt)); 
+  ASSERT_EQ(3, option_match((char*)"abc def ghi -jkl", "ghi", nopt)); 
   ASSERT_EQ(1, nopt);
 
-  ASSERT_EQ(1, option_match("-abc def ghi -jkl", "-abc", nopt)); 
+  ASSERT_EQ(1, option_match((char*)"-abc def ghi -jkl", "-abc", nopt)); 
   ASSERT_EQ(3, nopt);
-  ASSERT_EQ(2, option_match("abc -def ghi -jkl", "-def", nopt)); 
+  ASSERT_EQ(2, option_match((char*)"abc -def ghi -jkl", "-def", nopt)); 
   ASSERT_EQ(2, nopt);
-  ASSERT_EQ(3, option_match("abc def -ghi -jkl", "-ghi", nopt)); 
+  ASSERT_EQ(3, option_match((char*)"abc def -ghi -jkl", "-ghi", nopt)); 
   ASSERT_EQ(1, nopt);
 }

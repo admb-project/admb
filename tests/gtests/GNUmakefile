@@ -41,7 +41,6 @@ GTESTS_ALL=\
  test_idea.cpp\
  test_df_file.cpp\
  test_multinomial.cpp\
- test_multi_index.cpp\
  test_param_init_vector_vector.cpp\
  test_param_init_matrix_vector.cpp\
  test_param_init_bounded_vector_vector.cpp\
@@ -114,8 +113,6 @@ GTESTS_ALL=\
  test_atan2.cpp\
  test_gradcalc.cpp\
  test_autodif.cpp\
- test_atomic.cpp\
- test_shared_ptr.cpp\
  test_param_init_bounded_dev_vector.cpp\
  test_experimenting_mcmc.cpp\
  test_gradient_descent.cpp\

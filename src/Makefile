@@ -12,8 +12,9 @@ CXXVERSION=-cl19
 CXXVERSION=-cl
 !ENDIF
 
+DEFAULT_CPPSTD_VER=17
 !IF ([cl 2>&1 | findstr " 19.3" > nul] == 0)
-CPPSTD=/std:c++20
+CPPSTD=/std:c++$(DEFAULT_CPPSTD_VER)
 !ELSE
 CPPSTD=/std:c++17
 !ENDIF

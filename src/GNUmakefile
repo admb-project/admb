@@ -1,3 +1,4 @@
+DEFAULT_CPPSTD_VER=17
 ifndef ADMB_VER
   ADMB_VER=admb
 endif
@@ -221,13 +222,13 @@ ifeq ($(CMDSHELL),cmd)
       else ifeq (GCCVER10,$(findstring GCCVER10,$(GCCMAJVER)))
         ADCXXFLAGS:= -std=c++17 $(ADCXXFLAGS)
       else
-        ADCXXFLAGS:= -std=c++20 $(ADCXXFLAGS)
+        ADCXXFLAGS:= -std=c++$(DEFAULT_CPPSTD_VER) $(ADCXXFLAGS)
       endif
     endif
   endif
 else
   ifeq ("$(UNAME_S)","Darwin")
-    ADCXXFLAGS:= -std=c++20 $(ADCXXFLAGS)
+    ADCXXFLAGS:= -std=c++$(DEFAULT_CPPSTD_VER) $(ADCXXFLAGS)
   else
     ifeq ($(findstring clang++,$(CXX)),clang++)
       ADCXXFLAGS:= -std=c++17 $(ADCXXFLAGS)
@@ -266,7 +267,7 @@ else
       else ifeq ("$(GCCMAJVER)","10")
         ADCXXFLAGS:= -std=c++17 $(ADCXXFLAGS)
       else
-        ADCXXFLAGS:= -std=c++20 $(ADCXXFLAGS)
+        ADCXXFLAGS:= -std=c++$(DEFAULT_CPPSTD_VER) $(ADCXXFLAGS)
       endif
     endif
   endif

@@ -15,6 +15,8 @@ if ERRORLEVEL 1 (
   goto EOF
 )
 
+set DEFAULT_CPPSTD_VER=17
+
 set ADMB_HOME=
 if not defined ADMB_HOME (
   set "SCRIPT_PATH=%~dp0"
@@ -179,7 +181,7 @@ if "!CXX!"=="cl" (
     goto ERROR
   )
   for /f "tokens=*" %%i in ('!CXX! 2^>^&1 ^| findstr " 19.3"') do (
-    set CPPSTD=/std:c++20
+    set CPPSTD=/std:c++!DEFAULT_CPPSTD_VER!
   )
   if not defined CPPSTD (
     set CPPSTD=/std:c++17

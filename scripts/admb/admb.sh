@@ -29,6 +29,8 @@ if [[ "$1" == "-h" ]]; then help; exit; fi
 if [[ "$1" == "-help" ]]; then help; exit; fi
 if [[ "$1" == "--help" ]]; then help; exit; fi
 
+DEFAULT_CPPSTD_VER=17
+
 ADMB_HOME=
 if [ -z "$ADMB_HOME" ]; then
   FILE=$0
@@ -324,8 +326,8 @@ elif [ "$CXX" == "g++" ]; then
     CXXFLAGS="-std=c++17 $CXXFLAGS"
     LDFLAGS="-std=c++17 $LDFLAGS"
   else
-    CXXFLAGS="-std=c++20 $CXXFLAGS"
-    LDFLAGS="-std=c++20 $LDFLAGS"
+    CXXFLAGS="-std=c++$DEFAULT_CPPSTD_VER $CXXFLAGS"
+    LDFLAGS="-std=c++$DEFAULT_CPPSTD_VER $LDFLAGS"
   fi
 fi
 CXXFLAGS="$CXXFLAGS -D_USE_MATH_DEFINES"

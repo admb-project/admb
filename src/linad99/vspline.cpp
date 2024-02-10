@@ -11,6 +11,10 @@
  */
 
 #include <fvar.hpp>
+#ifdef DEBUG
+  #include <cassert>
+  #include <climits>
+#endif
 
 dvar_vector spline(const dvector &x,const dvar_vector&y,double yp1,double ypn);
 dvar_vector spline(const dvector &x,const dvar_vector&y,dvariable yp1,
@@ -40,7 +44,10 @@ dvariable splint(const dvector& _xa,const dvar_vector& _ya,
 {
   gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
-  dvariable ret = spline_cubic_val(_xa.size(), _xa, x, _ya, _y2a);
+#ifdef DEBUG
+  assert(_xa.size() <= INT_MAX);
+#endif
+  dvariable ret = spline_cubic_val(static_cast<int>(_xa.size()), _xa, x, _ya, _y2a);
   gs->RETURN_ARRAYS_DECREMENT();
   return ret;
 }
@@ -59,7 +66,10 @@ dvariable splint(const dvector& _xa,const dvar_vector& _ya,
 {
   gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
-  dvariable ret = spline_cubic_val2(_xa.size(), _xa, _x, _ya, _y2a);
+#ifdef DEBUG
+  assert(_xa.size() <= INT_MAX);
+#endif
+  dvariable ret = spline_cubic_val2(static_cast<int>(_xa.size()), _xa, _x, _ya, _y2a);
   gs->RETURN_ARRAYS_DECREMENT();
   return ret;
 }
@@ -169,7 +179,10 @@ dvar_vector spline(const dvector &_x,const dvar_vector&_y,dvariable yp1,
     ybcend = ypn;
   }
 
-  dvar_vector ret = spline_cubic_set(x.size(), x, y, ibcbeg, ybcbeg, ibcend,
+#ifdef DEBUG
+  assert(x.size() <= INT_MAX);
+#endif
+  dvar_vector ret = spline_cubic_set(static_cast<int>(x.size()), x, y, ibcbeg, ybcbeg, ibcend,
     ybcend);
   ret.shift(_x.indexmin());
   return ret;
@@ -216,7 +229,10 @@ dvar_vector spline(const dvector &_x,const dvar_vector&_y,double yp1,
     ybcend = ypn;
   }
 
-  dvar_vector ret = spline_cubic_set(x.size(), x, y, ibcbeg, ybcbeg, ibcend,
+#ifdef DEBUG
+  assert(x.size() <= INT_MAX);
+#endif
+  dvar_vector ret = spline_cubic_set(static_cast<int>(x.size()), x, y, ibcbeg, ybcbeg, ibcend,
     ybcend);
   ret.shift(_x.indexmin());
   return ret;
@@ -263,7 +279,10 @@ dvar_vector spline(const dvector &_x,const dvar_vector&_y,dvariable yp1,
     ybcend = ypn;
   }
 
-  dvar_vector ret = spline_cubic_set(x.size(), x, y, ibcbeg, ybcbeg, ibcend,
+#ifdef DEBUG
+  assert(x.size() <= INT_MAX);
+#endif
+  dvar_vector ret = spline_cubic_set(static_cast<int>(x.size()), x, y, ibcbeg, ybcbeg, ibcend,
     ybcend);
   ret.shift(_x.indexmin());
   return ret;

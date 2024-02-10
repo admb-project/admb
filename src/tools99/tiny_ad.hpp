@@ -10,6 +10,10 @@
 #include <iostream>
 #define CSKIP(x) x
 #endif
+#ifdef DEBUG
+  #include <cassert>
+  #include <climits>
+#endif
 
 /* Select the vector class to use (Default: tiny_vec) */
 #if defined(TINY_AD_USE_STD_VALARRAY)
@@ -304,7 +308,10 @@ namespace tiny_ad {
     variable(Base x) : Base(x) {}
     variable(double x) : Base(x) {}
     variable(double x, int id) : Base(x) {
-      setid(id);
+#ifdef DEBUG
+      assert(id >= 0 && id <= INT_MAX);
+#endif
+      setid(static_cast<unsigned int>(id));
     }
     template<class Constant>
     variable(Constant x) {

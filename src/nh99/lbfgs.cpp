@@ -259,7 +259,7 @@ static integer c__1 = 1;
 /*     **************** */
 
 /* Subroutine */ int lbfgs_(integer *n, integer *m, doublereal *x, doublereal
-        *f, doublereal *g, logical *diagco, doublereal *diag, integer *iprint,
+        *f, doublereal *g, logical *diagco, doublereal *diag, [[maybe_unused]] integer *iprint,
          doublereal *eps, doublereal *xtol, doublereal *w, integer *iflag,
    integer* iter, integer * info)
 {
@@ -299,7 +299,8 @@ ETERS (N OR M\002,\002 ARE NOT POSITIVE)\002)";
             integer *);
     static integer iscn, nfev, iycn;
     static doublereal ftol;
-    static integer nfun, ispt, iypt, i, bound;
+    [[maybe_unused]] static integer nfun;
+    static integer ispt, iypt, i, bound;
     static doublereal gnorm;
     extern /* Subroutine */ int daxpy_(integer *, doublereal *, doublereal *,
             integer *, doublereal *, integer *);

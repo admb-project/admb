@@ -417,7 +417,7 @@ static integer c__1 = 1;
 
 /* Subroutine */ int xlbfgs_(integer *n, integer *m, dvar_vector & x,
    dvariable & f, dvar_vector & g, logical *diagco, dvar_vector & diag,
-   integer *iprint, double*  eps, double*  xtol, dvar_vector & w,
+   [[maybe_unused]] integer *iprint, double*  eps, double*  xtol, dvar_vector & w,
    integer *iflag, integer* iter)
 {
     /* Initialized data */
@@ -454,7 +454,8 @@ ETERS (N OR M\002,\002 ARE NOT POSITIVE)\002)";
     static integer inmc;
     static integer info, iscn, nfev, iycn;
     static double ftol;
-    static integer nfun, ispt, iypt, i, bound;
+    [[maybe_unused]] static integer nfun;
+    static integer ispt, iypt, i, bound;
     static dvariable gnorm;
     //extern /* Subroutine */
 //  int xdaxpy_(integer *n, dvariable* da,const dvar_vector & dx,

@@ -10,7 +10,11 @@ using std::istringstream;
 #include <admodel.h>
 #include <df1b2fun.h>
 #include <adrndeff.h>
-#include<ctime>
+#include <ctime>
+#ifdef DEBUG
+  #include <cassert>
+  #include <climits>
+#endif
 
 void check_java_flags(int& start_flag,int& quit_flag,int& der_flag,
   int& next_flag);
@@ -625,7 +629,10 @@ function_minimizer::function_minimizer(long int sz):
     }
     else
     {
-      pgs = new gradient_structure(sz);
+#ifdef DEBUG
+      assert(sz >= 0 && sz <= LONG_MAX);
+#endif
+      pgs = new gradient_structure(static_cast<unsigned long>(sz));
     }
   }
 

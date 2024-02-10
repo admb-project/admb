@@ -52,6 +52,9 @@
  * Description not yet available.
  */
 #include "fvar.hpp"
+#ifdef DEBUG
+  #include <cassert>
+#endif
 
 #define N 624
 #define M 397
@@ -69,13 +72,16 @@
 */
 random_number_generator::random_number_generator(const int seed)
 {
-  unsigned long s=seed;
+#ifdef DEBUG
+  assert(seed >= 0);
+#endif
+  unsigned long s = static_cast<unsigned long>(seed);
   mt=new unsigned long [N]; /* the array for the state vector  */
   mti=N+1; /* mti==N+1 means mt[N] is not initialized */
 
   mt[0]= s & 0xffffffffUL;
   for (mti=1; mti<N; mti++) {
-    mt[mti] = (1812433253UL * (mt[mti-1] ^ (mt[mti-1] >> 30)) + mti);
+    mt[mti] = (1812433253UL * (mt[mti-1] ^ (mt[mti-1] >> 30)) + static_cast<unsigned long>(mti));
     /* See Knuth TAOCP Vol2. 3rd Ed. P.106 for multiplier. */
     /* In the previous versions, MSBs of the seed affect   */
     /* only MSBs of the array mt[].                        */
@@ -105,10 +111,13 @@ random_number_generator::~random_number_generator()
 */
 void random_number_generator::reinitialize(int seed)
 {
-  unsigned long s=seed;
+#ifdef DEBUG
+  assert(seed >= 0);
+#endif
+  unsigned long s = static_cast<unsigned long>(seed);
   mt[0]= s & 0xffffffffUL;
   for (mti=1; mti<N; mti++) {
-      mt[mti] = (1812433253UL * (mt[mti-1] ^ (mt[mti-1] >> 30)) + mti);
+      mt[mti] = (1812433253UL * (mt[mti-1] ^ (mt[mti-1] >> 30)) + static_cast<unsigned long>(mti));
       /* See Knuth TAOCP Vol2. 3rd Ed. P.106 for multiplier. */
       /* In the previous versions, MSBs of the seed affect   */
       /* only MSBs of the array mt[].                        */

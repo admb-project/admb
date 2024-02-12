@@ -21,7 +21,7 @@
 #endif
 #include <math.h>
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
   #include <climits>
 #endif
@@ -94,8 +94,8 @@ fmm_control::fmm_control(const lvector& ipar)
 {
   set_defaults();
 
-#if defined(__MINGW64__)
-  #ifndef OPT_LIB
+#if defined(_WIN64)
+  #ifdef DEBUG
   assert(ipar[1] <= LONG_MAX);
   assert(ipar[2] <= LONG_MAX);
   #endif
@@ -109,14 +109,14 @@ fmm_control::fmm_control(const lvector& ipar)
 #ifdef __HP__
   crit = .0001;
 #else
-  #ifndef OPT_LIB
+  #ifdef DEBUG
   assert(ipar[3] <= INT_MAX);
   #endif
   crit = pow(double(10), static_cast<int>(-ipar[3]));
 #endif
 
-#if defined(__MINGW64__)
-  #ifndef OPT_LIB
+#if defined(_WIN64)
+  #ifdef DEBUG
   assert(ipar[4] <= LONG_MAX);
   #endif
   imax = static_cast<long>(ipar[4]);
@@ -124,7 +124,7 @@ fmm_control::fmm_control(const lvector& ipar)
   imax = ipar[4];
 #endif
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(ipar[5] <= INT_MAX);
 #endif
   scroll_flag = static_cast<int>(ipar[5]);

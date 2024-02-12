@@ -61,14 +61,23 @@ Macro definitions.
     #define AD_LONG_INT long long int
   #endif
 #elif defined(_MSC_VER)
-  #define OFF_T __int64
-  #define LSEEK _lseeki64
+  #ifdef _WIN64
+    #define OFF_T __int64
+    #define LSEEK _lseeki64
+  #else
+    #define OFF_T long
+    #define LSEEK _lseek
+  #endif
   #define READ _read
   #define WRITE _write
   #if defined(AD_LONG_INT)
     #error "Error: AD_LONG_INT should not be defined."
   #else
-    #define AD_LONG_INT long int
+    #ifdef _WIN64
+      #define AD_LONG_INT long long int
+    #else
+      #define AD_LONG_INT long int
+    #endif
   #endif
 #else
   #define OFF_T off_t

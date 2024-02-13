@@ -96,9 +96,9 @@ double calculate_importance_sample_shess(const dvector& x,const dvector& u0,
   }
   else
   {
-    dcompressed_triplet & lst = *(pmin->lapprox->sparse_triplet2);
-    int mmin=lst.indexmin();
-    int mmax=lst.indexmax();
+    dcompressed_triplet & local_lst = *(pmin->lapprox->sparse_triplet2);
+    int mmin=local_lst.indexmin();
+    int mmax=local_lst.indexmax();
     dvar_compressed_triplet * vsparse_triplet =
       pmin->lapprox->vsparse_triplet;
 
@@ -109,8 +109,8 @@ double calculate_importance_sample_shess(const dvector& x,const dvector& u0,
       vsparse_triplet = pmin->lapprox->vsparse_triplet;
       for (int i=mmin;i<=mmax;i++)
       {
-        (*vsparse_triplet)(1,i)=lst(1,i);
-        (*vsparse_triplet)(2,i)=lst(2,i);
+        (*vsparse_triplet)(1,i)=local_lst(1,i);
+        (*vsparse_triplet)(2,i)=local_lst(2,i);
       }
     }
     else
@@ -120,8 +120,8 @@ double calculate_importance_sample_shess(const dvector& x,const dvector& u0,
         (*vsparse_triplet).allocate(mmin,mmax,us,us);
         for (int i=mmin;i<=mmax;i++)
         {
-          (*vsparse_triplet)(1,i)=lst(1,i);
-          (*vsparse_triplet)(2,i)=lst(2,i);
+          (*vsparse_triplet)(1,i)=local_lst(1,i);
+          (*vsparse_triplet)(2,i)=local_lst(2,i);
         }
       }
     }
@@ -135,8 +135,8 @@ double calculate_importance_sample_shess(const dvector& x,const dvector& u0,
       vsparse_triplet_adjoint = pmin->lapprox->vsparse_triplet_adjoint;
       for (int i=mmin;i<=mmax;i++)
       {
-        (*vsparse_triplet_adjoint)(1,i)=lst(1,i);
-        (*vsparse_triplet_adjoint)(2,i)=lst(2,i);
+        (*vsparse_triplet_adjoint)(1,i)=local_lst(1,i);
+        (*vsparse_triplet_adjoint)(2,i)=local_lst(2,i);
       }
     }
     else
@@ -146,8 +146,8 @@ double calculate_importance_sample_shess(const dvector& x,const dvector& u0,
         (*vsparse_triplet_adjoint).allocate(mmin,mmax,us,us);
         for (int i=mmin;i<=mmax;i++)
         {
-          (*vsparse_triplet_adjoint)(1,i)=lst(1,i);
-          (*vsparse_triplet_adjoint)(2,i)=lst(2,i);
+          (*vsparse_triplet_adjoint)(1,i)=local_lst(1,i);
+          (*vsparse_triplet_adjoint)(2,i)=local_lst(2,i);
         }
       }
     }

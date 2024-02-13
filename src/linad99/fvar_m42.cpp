@@ -188,7 +188,7 @@ dvariable ln_det(const dvar_matrix& aa, int& sgn)
     {
       dum = 1.0 / *pbbjj;
 
-      dvector* pbbi = &bb(j + 1);
+      pbbi = &bb(j + 1);
       for (i=j+1;i<=ub;i++)
       {
         *(pbbi->get_v() + j) *= dum;

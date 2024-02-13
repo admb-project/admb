@@ -357,9 +357,9 @@ df1_two_variable& df1_two_variable::operator*=(double _v)
  * Description not yet available.
  * \param
  */
-  df1_two_variable& df1_two_variable::operator *= (const df1_two_variable& v)
+  df1_two_variable& df1_two_variable::operator *= (const df1_two_variable& _v)
   {
-    df1_two_variable x=*this * v;
+    df1_two_variable x=*this * _v;
     *this=x;
     return *this;
   }

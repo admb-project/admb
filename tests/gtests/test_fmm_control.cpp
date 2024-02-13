@@ -60,8 +60,8 @@ extern "C"
 {
   void test_ad_exit(const int exit_code);
 }
-#if defined(__MINGW64__)
- #ifndef OPT_LIB
+#if defined(_WIN64)
+ #ifdef DEBUG
 TEST_F(test_fmm_control, constructor_ipars_max1)
 {
   ad_exit=&test_ad_exit;

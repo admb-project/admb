@@ -227,7 +227,6 @@ dvector::dvector(const char* s)
     for (int i = 1; i <= count; ++i)
     {
       int index = 0;
-      char c;
       infile.get(c);
       while (!infile.eof())
       {
@@ -479,7 +478,6 @@ void dvector::allocate(const char* s)
     for (int i = 1; i <= count; ++i)
     {
       int index = 0;
-      char c;
       infile.get(c);
       while (!infile.eof())
       {

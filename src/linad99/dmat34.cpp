@@ -122,7 +122,7 @@ dvector solve(const dmatrix& aa,const dvector& z,
   double* pvvj = &vv(lb);
   for (int j=lb;j<=ub;j++)
   {
-    dvector* pbbi = &bb(lb);
+    pbbi = &bb(lb);
     for (int i=lb;i<j;i++)
     {
       sum = *(pbbi->get_v() + j);

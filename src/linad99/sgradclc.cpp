@@ -266,7 +266,7 @@ void gradient_structure::save_arrays()
      LSEEK(GRAD_STACK1->_VARSSAV_PTR,0L,SEEK_SET);
 
 #if defined(DOS386)
-  #if (__cplusplus >= 201703L)
+  #ifndef DEBUG
      [[maybe_unused]]
   #endif
      ssize_t ret = write(GRAD_STACK1->_VARSSAV_PTR, (char*)src, bytes_needed);
@@ -326,7 +326,7 @@ void gradient_structure::restore_arrays()
     LSEEK(GRAD_STACK1->_VARSSAV_PTR,0L,SEEK_SET);
 
 #if defined(DOS386)
-  #if (__cplusplus >= 201703L)
+  #ifndef DEBUG
     [[maybe_unused]]
   #endif
     ssize_t ret = read(GRAD_STACK1->_VARSSAV_PTR, (char*)dest,bytes_needed);

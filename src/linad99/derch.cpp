@@ -42,7 +42,8 @@ void derch(const double& _f, const independent_variables & _x,
   double& f=(double&) _f;
   int& ireturn = (int&) _ireturn;
   independent_variables& x= (independent_variables&) _x;
-  static int i, n1 ,n2,ii;
+  [[maybe_unused]] static int i;
+  static int n1 ,n2,ii;
   static double fsave;
   static int order_flag;
   static double s, f1, f2, g2, xsave;

@@ -124,7 +124,7 @@ int grad_stack::read_grad_stack_buffer(OFF_T& lpos)
 #if defined(DEBUG)
     assert(sizeof(grad_stack_entry) * length <= UINT_MAX);
 #endif
-    ssize_t nread = read(_GRADFILE_PTR, ptr_first, sizeof(grad_stack_entry)*length);
+    ssize_t nread = read(_GRADFILE_PTR, ptr_first, static_cast<unsigned int>(sizeof(grad_stack_entry)*length));
     ptr = ptr_first + length-1;
 
     if (nread == -1 )

@@ -34,7 +34,7 @@ double fmm::minimize(const independent_variables & x,
   g.initialize();
 #endif
   {
-    gradient_structure gs;
+    gradient_structure local_gs;
     while (ireturn >= 0)
     {
       fmin(f,x,g);

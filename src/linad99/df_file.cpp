@@ -146,7 +146,7 @@ DF_FILE::DF_FILE(const size_t nbytes, [[maybe_unused]] const unsigned int id)
   {
     buff = new char[buff_size];
   }
-  catch (const std::bad_alloc& e)
+  catch ([[maybe_unused]] const std::bad_alloc& e)
   {
     size_t gb = nbytes / 1073741824;
     cerr << "Error: Unable to construct DF_FILE memory buffer\n"

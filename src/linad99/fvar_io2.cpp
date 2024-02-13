@@ -179,7 +179,6 @@ dvar_vector::dvar_vector(const char * s)
    for (i=1;i<=count;i++)
    {
      int index = 0;
-     char c;
      infile.get(c);
      while (!infile.eof())
      {

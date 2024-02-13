@@ -134,16 +134,12 @@ void df1b2variable::initialize(void)
     df1b2variable::pool->sanity_check();
   }
 #endif
-#ifdef DEBUG
-  #ifdef _MSC_VER
-    #pragma warning disable 4458
-  #endif
+#ifdef _MSC_VER
+  #pragma warning disable 4458
 #endif
   unsigned int nvar=((twointsandptr*)ptr)->ptr->nvar;
-#ifdef DEBUG
-  #ifdef _MSC_VER
-    #pragma warning restore 4458
-  #endif
+#ifdef _MSC_VER
+  #pragma warning restore 4458
 #endif
 #if (__cplusplus >= 201703L)
   [[maybe_unused]]

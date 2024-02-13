@@ -178,19 +178,19 @@ dvector laplace_approximation_calculator::
       }
 #endif
 
-      dvector step;
+      dvector local_step;
 #if defined(USE_ATLAS)
       if (!ad_comm::no_atlas_flag)
       {
-        step=-atlas_solve_spd(Hess,grad,ierr);
+        local_step=-atlas_solve_spd(Hess,grad,ierr);
       }
       else
       {
         dmatrix A=choleski_decomp_positive(Hess,ierr);
         if (!ierr)
         {
-          step=-solve(Hess,grad);
-          //step=-solve(A*trans(A),grad);
+          local_step=-solve(Hess,grad);
+          //local_step=-solve(A*trans(A),grad);
         }
       }
       if (ierr)
@@ -205,7 +205,7 @@ dvector laplace_approximation_calculator::
         break;
       }
 #else
-      step=-solve(Hess,grad);
+      local_step=-solve(Hess,grad);
 #endif
 
 #ifdef DIAG_TIMER
@@ -232,7 +232,7 @@ dvector laplace_approximation_calculator::
       f1b2gradlist->nlist3.initialize();
 
       uhat_old=uhat;
-      uhat+=step;
+      uhat+=local_step;
 
       double maxg_old=maxg;
       maxg=fabs(evaluate_function(uhat,pfmin));

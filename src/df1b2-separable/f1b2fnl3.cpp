@@ -245,7 +245,7 @@ void laplace_approximation_calculator::
     {
       int i2=list(*plre_indexi,2);
 
-      int* plfe_indexj = lfe_index.get_v() + 1;
+      plfe_indexj = lfe_index.get_v() + 1;
       double* plocal_Duxij = plocal_Duxi->get_v() + 1;
       for (int j=1;j<=xs;j++)
       {
@@ -265,10 +265,10 @@ void laplace_approximation_calculator::
     {
     //int nvar=us*us;
     double f;// 0.5*log(det(local_Hess))
-    dmatrix Hessadjoint=get_gradient_for_hessian_calcs(local_Hess,f);
+    dmatrix local_Hessadjoint=get_gradient_for_hessian_calcs(local_Hess,f);
     initial_df1b2params::cobjfun+=f;  // Adds 0.5*log(det(local_Hess))
 
-    dvector* pHessadjointi = &Hessadjoint(1);
+    dvector* pHessadjointi = &local_Hessadjoint(1);
     plre_indexi = lre_index.get_v() + 1;
     for (int i=1;i<=us;i++)
     {
@@ -314,9 +314,9 @@ void laplace_approximation_calculator::
       dvector utmp(1,us);
       utmp.initialize();
 
-      int* plre_indexi = lre_index.get_v() + 1;
+      plre_indexi = lre_index.get_v() + 1;
       double* putmpi = utmp.get_v() + 1;
-      double* plocal_uadjointi = local_uadjoint.get_v() + 1;
+      plocal_uadjointi = local_uadjoint.get_v() + 1;
       for (int i=1;i<=us;i++)
       {
         int i2=list(*plre_indexi, 2);
@@ -362,8 +362,8 @@ dmatrix laplace_approximation_calculator::get_gradient_for_hessian_calcs
   (const dmatrix& local_Hess,double & f)
 {
   int us=local_Hess.indexmax();
-  int nvar=us*us;
-  independent_variables cy(1,nvar);
+  int local_nvar=us*us;
+  independent_variables cy(1,local_nvar);
   cy.initialize();
 
   double* pcyii = cy.get_v() + 1;
@@ -410,8 +410,8 @@ dmatrix laplace_approximation_calculator::get_gradient_for_hessian_calcs
     vf-=w_i*d*.91893853320467241;
   }
   f=value(vf);
-  dvector g(1,nvar);
-  gradcalc(nvar,g);
+  dvector g(1,local_nvar);
+  gradcalc(local_nvar,g);
 
   dmatrix hessadjoint(1,us,1,us);
 

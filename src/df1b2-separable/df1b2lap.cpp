@@ -945,10 +945,10 @@ laplace_approximation_calculator::laplace_approximation_calculator
     break;
   case 3:
     {
-      int bw=2;
-      if (ad_comm::bandwidth) bw=ad_comm::bandwidth;
-      bHess=new banded_symmetric_dmatrix(1,usize,bw);
-      bHessadjoint=new banded_symmetric_dmatrix(1,usize,bw);
+      int local_bw=2;
+      if (ad_comm::bandwidth) local_bw=ad_comm::bandwidth;
+      bHess=new banded_symmetric_dmatrix(1,usize,local_bw);
+      bHessadjoint=new banded_symmetric_dmatrix(1,usize,local_bw);
       grad.allocate(1,usize);
       Dux.allocate(1,usize,1,xsize);
     }

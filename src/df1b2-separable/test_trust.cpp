@@ -530,9 +530,9 @@ double laplace_approximation_calculator::do_one_feval
   dvector g(1,usize);
   dvector ub(1,usize);
   initial_params::set_active_random_effects();
-  int nvar=initial_params::nvarcalc();
+  int local_nvar=initial_params::nvarcalc();
   int nvar1=initial_params::nvarcalc_all();
-  cout << nvar << " " << nvar1 << endl;
+  cout << local_nvar << " " << nvar1 << endl;
   gradient_structure::set_NO_DERIVATIVES();
   dvariable vf=0.0;
   dvariable pen=initial_params::reset(dvar_vector(x));

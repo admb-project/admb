@@ -12,7 +12,7 @@
 #include <admodel.h>
 #include <df1b2fun.h>
 #include <adrndeff.h>
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
   #include <climits>
 #endif
@@ -205,7 +205,7 @@ dvector laplace_approximation_calculator::default_calculations
         }
       }
 #endif
-      dvector step;
+      dvector local_step;
 #ifdef DIAG
       int print_hess_in_newton_raphson_flag=0;
       if (print_hess_in_newton_raphson_flag)
@@ -224,15 +224,15 @@ dvector laplace_approximation_calculator::default_calculations
 #if defined(USE_ATLAS)
       if (!ad_comm::no_atlas_flag)
       {
-        step=-atlas_solve_spd(Hess,grad,ierr);
+        local_step=-atlas_solve_spd(Hess,grad,ierr);
       }
       else
       {
         dmatrix A=choleski_decomp_positive(Hess,ierr);
         if (!ierr)
         {
-          step=-solve(Hess,grad);
-          //step=-solve(A*trans(A),grad);
+          local_step=-solve(Hess,grad);
+          //local_step=-solve(A*trans(A),grad);
         }
       }
       if (ierr)
@@ -247,7 +247,7 @@ dvector laplace_approximation_calculator::default_calculations
         break;
       }
 #else
-      //step=-solve(Hess,grad);
+      //local_step=-solve(Hess,grad);
       int ierror=0;
       int icount=0;
       int trust_update_flag=0;
@@ -256,11 +256,11 @@ dvector laplace_approximation_calculator::default_calculations
         icount++;
         if (saddlepointflag==1 || saddlepointflag==2)
         {
-          step=choleski_solve_neghess_error(Hess,grad,ierror);
+          local_step=choleski_solve_neghess_error(Hess,grad,ierror);
         }
         else
         {
-          step=-choleski_solve_error(Hess,grad,ierror);
+          local_step=-choleski_solve_error(Hess,grad,ierror);
         }
         if (ierror==1)
         {
@@ -277,14 +277,14 @@ dvector laplace_approximation_calculator::default_calculations
             const dvector & cmgrad = -grad;
             dmatrix  & mHess = (dmatrix  &) (cmHess);
             dvector & mgrad = (dvector &) (cmgrad);
-            step=local_minimization(s,mHess,mgrad,lambda);
+            local_step=local_minimization(s,mHess,mgrad,lambda);
           }
           else
           {
-            step=local_minimization(s,Hess,grad,lambda);
+            local_step=local_minimization(s,Hess,grad,lambda);
           }
           if(!ad_comm::print_hess_and_exit_flag){
-            uhat+=step;
+            uhat+=local_step;
           }
           for (int i=1;i<=usize;i++)
           {
@@ -350,7 +350,7 @@ dvector laplace_approximation_calculator::default_calculations
       {
         uhat_old=uhat;
         if(!ad_comm::print_hess_and_exit_flag){
-          uhat+=step;
+          uhat+=local_step;
         }
       }
 
@@ -581,7 +581,7 @@ dvector laplace_approximation_calculator::default_calculations
       }
       if (initial_df1b2params::separable_flag)
       {
-#ifndef OPT_LIB
+#ifdef DEBUG
         assert(nvar <= INT_MAX);
 #endif
         dvector scale(1,(int)nvar);   // need to get scale from somewhere
@@ -611,7 +611,7 @@ dvector laplace_approximation_calculator::default_calculations
         initial_params::straight_through_flag=0;
         funnel_init_var::lapprox=0;
         block_diagonal_flag=0;
-#ifndef OPT_LIB
+#ifdef DEBUG
         assert(nvar <= INT_MAX);
 #endif
         dvector scale1(1,(int)nvar);   // need to get scale from somewhere
@@ -622,9 +622,9 @@ dvector laplace_approximation_calculator::default_calculations
         quadratic_prior::in_qp_calculations=1;
         funnel_init_var::lapprox=this;
         df1b2_gradlist::set_no_derivatives();
-        dvector scale(1,(int)nvar);   // need to get scale from somewhere
-        /*check=*/initial_params::stddev_scale(scale,x);
-        dvector sscale=scale(1,Dux(1).indexmax());
+        dvector local_scale(1,(int)nvar);   // need to get scale from somewhere
+        /*check=*/initial_params::stddev_scale(local_scale,x);
+        dvector sscale=local_scale(1,Dux(1).indexmax());
 
         for (int i=1;i<=usize;i++)
         {

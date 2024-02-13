@@ -9,7 +9,7 @@
  * Description not yet available.
  */
 #include <df1b2fnl.h>
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
   #include <climits>
 #endif
@@ -41,7 +41,7 @@ imatrix * funnel_init_var::plist=0;
  */
 void funnel_init_var::add_to_list(void)
 {
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(num_vars <= INT_MAX);
 #endif
   index = (int)num_vars;
@@ -55,7 +55,7 @@ void funnel_init_var::add_to_list(void)
  */
 void funnel_init_var::delete_from_list(void)
 {
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(num_vars <= INT_MAX);
 #endif
   if (index != (int)(num_vars - 1))
@@ -107,7 +107,7 @@ void funnel_init_var::deallocate_all(void)
 {
   if (plist)
   {
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(num_active_parameters <= INT_MAX);
 #endif
     if (plist->indexmax() != (int)num_active_parameters)
@@ -138,7 +138,7 @@ void funnel_init_var::allocate_all(void)
     }
   }
   num_active_parameters=funnel_init_var::nvarcalc_all();
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(num_active_parameters <= INT_MAX);
 #endif
   if (py)
@@ -618,7 +618,7 @@ unsigned int funnel_init_var::nvarcalc_all(void)
   {
     n += list[i]->nvar_calc();
   }
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(n >= 0);
 #endif
   return (unsigned int)n;

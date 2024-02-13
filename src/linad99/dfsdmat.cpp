@@ -336,13 +336,7 @@ void dfsdmat::save()
   assert(ret != -1);
 #endif
 
-#ifdef __MINGW64__
-  size_t size = nn * sizeof(double);
-  assert(size <= UINT_MAX);
-  ssize_t num_bytes = write(tmp_file, ptr, (unsigned int)size);
-#else
-  ssize_t num_bytes=write(tmp_file,ptr,nn*sizeof(double));
-#endif
+  ssize_t num_bytes=write(tmp_file,ptr,nn * static_cast<unsigned int>(sizeof(double)));
   if (num_bytes <= 0)
   {
     cerr << "Error writing to temporary hess file in dfsdmat::save()"
@@ -368,14 +362,14 @@ Restore values to file.
 */
 void dfsdmat::restore()
 {
-  int _n=0;
+  unsigned int _n=0;
   LSEEK(tmp_file,0L,SEEK_SET);
 
 #if (__cplusplus >= 201703L)
   [[maybe_unused]]
 #endif
-  ssize_t ret = read(tmp_file,&_n,sizeof(int));
-#if !defined(OPT_LIB)
+  ssize_t ret = read(tmp_file,&_n,sizeof(unsigned int));
+#if!defined(OPT_LIB)
   assert(ret != -1);
   assert(_n > 0);
 #endif
@@ -384,15 +378,10 @@ void dfsdmat::restore()
   assert(_n < sqrt(INT_MAX));
   #endif
 #endif
-  size_t nn = (size_t)((_n * (_n + 1))/2);
+  unsigned int nn = (_n * (_n + 1)) / 2;
   //if (!shared_memory) allocate(_n);
-#ifdef __MINGW64__
-  size_t size = nn * sizeof(double);
-  assert(size <= UINT_MAX);
-  ssize_t num_bytes=read(tmp_file, ptr, (unsigned int)size);
-#else
-  ssize_t num_bytes=read(tmp_file,ptr,nn*sizeof(double));
-#endif
+  unsigned int size = nn * static_cast<unsigned int>(sizeof(double));
+  ssize_t num_bytes=read(tmp_file, ptr, size);
   if (num_bytes <= 0)
   {
     cerr << "Error reading from temporary hess file in dfsdmat::save()"

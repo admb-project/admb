@@ -114,7 +114,7 @@ void function_minimizer::build_tree(int nvar, dvector& gr, dmatrix& chd, double 
       _thetaplus = y;
       _rplus = p;
       _grprime=gr; _gr2prime=gr2; _nllprime=nll; _Hprime=Ham;
-      initial_params::copy_all_values(_parsaveprime,1.0);
+      initial_params::copy_all_values(_parsaveprime,1);
     }
     _nalphaprime=1;
     _nfevals++;

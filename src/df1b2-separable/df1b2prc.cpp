@@ -10,9 +10,6 @@
  */
 #include <df1b2fun.h>
 
-#include <cassert>
-#include <climits>
-
 /*
 //int debugcounter=0;
   df1b2variable operator / (double x,const df1b2variable& y)

@@ -4,7 +4,7 @@
  */
 #include "fvar.hpp"
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
 #endif
 
@@ -69,7 +69,7 @@ ivector operator+(const ivector& a, const ivector& b)
 {
   int min = a.indexmin();
   int max = b.indexmax();
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(min == b.indexmin() && max == b.indexmax()); 
 #endif
   ivector results(min, max);
@@ -98,7 +98,7 @@ ivector operator-(const ivector& a, const ivector& b)
 {
   int min = a.indexmin();
   int max = b.indexmax();
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(min == b.indexmin() && max == b.indexmax()); 
 #endif
   ivector results(min, max);

@@ -5,9 +5,6 @@ Copyright (c) 2008-2012 Regents of the University of California
 
 #include "fvar.hpp"
 #include "param_init_bounded_number_matrix.h"
-#ifndef OPT_LIB
-  #include <cassert>
-#endif
 
 /**
 Default constructor

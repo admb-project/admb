@@ -8,9 +8,6 @@
  */
 
 #include "admodel.h"
-#ifndef OPT_LIB
-#include <cassert>
-#endif
 #include<ctime>
 void read_empirical_covariance_matrix(int nvar, const dmatrix& S, const adstring& prog_name);
 void read_hessian_matrix_and_scale1(int nvar, const dmatrix& _SS, double s, int mcmc2_flag);

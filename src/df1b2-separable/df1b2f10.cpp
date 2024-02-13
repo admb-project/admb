@@ -138,7 +138,7 @@ void test_smartlist::rewind(void)
     [[maybe_unused]]
 #endif
     ssize_t ret = ::read(fp,&nbytes,sizeof(unsigned int));
-#ifndef OPT_LIB
+#ifdef DEBUG
     assert(ret != -1);
 #endif
     if (nbytes > bufsize)
@@ -150,7 +150,7 @@ void test_smartlist::rewind(void)
     }
     // now read the record into the buffer
     ret = ::read(fp,buffer,nbytes);
-#ifndef OPT_LIB
+#ifdef DEBUG
     assert(ret != -1);
 #endif
 
@@ -255,7 +255,7 @@ void test_smartlist::write_buffer(void)
     ssize_t ret = ::write(fp,&nbytes,sizeof(int));
 
     // write the size of the next record into the file
-#if !defined(OPT_LIB)
+#ifdef DEBUG
     assert(ret != -1);
 #endif
 
@@ -272,7 +272,7 @@ void test_smartlist::write_buffer(void)
     // now write the previous file position into the file so we can back up
     // when we want to.
     ret = ::write(fp,&pos,sizeof(off_t));
-#if !defined(OPT_LIB)
+#ifdef DEBUG
     assert(ret != -1);
 #endif
 
@@ -305,7 +305,7 @@ void test_smartlist::read_buffer(void)
     [[maybe_unused]]
 #endif
       ssize_t ret = read(fp,&pos,sizeof(off_t));
-#ifndef OPT_LIB
+#ifdef DEBUG
       assert(ret != -1);
 #endif
       // back up to the beginning of the record (plus record size)

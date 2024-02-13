@@ -21,7 +21,7 @@
 
 #include <string.h>
 #include <ctype.h>
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
   #include <climits>
 #endif
@@ -50,7 +50,7 @@ dvar_matrix =
 void dvar_matrix::fill(const char* s)
 {
   const size_t len = strlen(s);
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(len <= INT_MAX);
 #endif
   int n = static_cast<int>(len);

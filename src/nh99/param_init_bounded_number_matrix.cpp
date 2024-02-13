@@ -6,7 +6,7 @@
  */
 #include "param_init_bounded_number_matrix.h"
 #include "admb_messages.h"
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
 #endif
 
@@ -70,7 +70,7 @@ void param_init_bounded_number_matrix::allocate(
   const imatrix& phase_start,
   const char* s)
 {
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(v == NULL);
 #endif
 
@@ -106,7 +106,7 @@ Set scalefactor for each element of param_init_bounded_number_matrix.
 void param_init_bounded_number_matrix::set_scalefactor(
   const double scalefactor)
 {
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(v != NULL);
 #endif
 
@@ -124,7 +124,7 @@ scalefactor should have the same dimension as param_init_bounded_number_matrix.
 void param_init_bounded_number_matrix::set_scalefactor(
   const dmatrix& scalefactor)
 {
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(v != NULL);
 #endif
   for (int i = index_min; i <= index_max; i++)

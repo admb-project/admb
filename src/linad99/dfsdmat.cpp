@@ -45,7 +45,7 @@
   #define S_IWRITE 0000200
 #endif
 
-#if !defined(OPT_LIB) || defined(__MINGW64__) || defined(_MSC_VER)
+#if defined(DEBUG)
   #include <cassert>
   #include <climits>
 #endif
@@ -332,7 +332,7 @@ void dfsdmat::save()
     [[maybe_unused]]
 #endif
   ssize_t ret = write(tmp_file,&_n,sizeof(int));
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(ret != -1);
 #endif
 
@@ -369,11 +369,9 @@ void dfsdmat::restore()
   [[maybe_unused]]
 #endif
   ssize_t ret = read(tmp_file,&_n,sizeof(unsigned int));
-#if!defined(OPT_LIB)
+#if defined(DEBUG)
   assert(ret != -1);
   assert(_n > 0);
-#endif
-#ifndef OPT_LIB
   #ifndef __SUNPRO_CC
   assert(_n < sqrt(INT_MAX));
   #endif

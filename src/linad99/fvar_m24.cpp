@@ -4,7 +4,7 @@
  * Author: Unknown
  */
 #include <fvar.hpp>
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
   #include <climits>
 #endif
@@ -63,7 +63,7 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
 
   gs->RETURN_ARRAYS_INCREMENT();
 
-#if !defined(OPT_LIB) && (__cplusplus >= 201103L)
+#if defined(DEBUG) && (__cplusplus >= 201103L)
   int n = [](unsigned int colsize) -> int
   {
     assert(colsize <= INT_MAX);

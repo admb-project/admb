@@ -11,11 +11,6 @@
 
 #include <df1b2fun.h>
 
-#ifndef OPT_LIB
-  #include <cassert>
-  #include <climits>
-#endif
-
 void ad_read_pass1_der_values(void);
 void read_pass1_1_dv(void);
 void read_pass1_2_dv(void);

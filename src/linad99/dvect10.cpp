@@ -31,7 +31,9 @@
 #include <string.h>
 #include <ctype.h>
 
-#include <cassert>
+#ifdef DEBUG
+  #include <cassert>
+#endif
 
 const int MAX_FIELD_LENGTH = 500;
 
@@ -48,7 +50,9 @@ void dvector::fill(const char* s)
 
   const size_t n = strlen(s);
   char* t = new char[n + 1];
+#ifdef DEBUG
   assert(t);
+#endif
   t[n] = '\0';
 
   for (size_t k = 0; k < n; k++)

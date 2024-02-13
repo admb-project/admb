@@ -11,7 +11,6 @@
 // file: fvar_ops.cpp
 // operators involving prevariables
 
-
 #include "fvar.hpp"
 
 #ifdef __TURBOC__

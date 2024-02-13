@@ -27,6 +27,7 @@ TEST_F(test_admb_messages, selftest01)
   }
   FAIL();
 }
+#ifdef DEBUG
 /**
  * Tests for errors in "adstring adstring::operator()(int i, int j)"
  */
@@ -67,6 +68,7 @@ TEST_F(test_admb_messages, tools99_string1_04)
     adstring substring = a(1, a.size() + 1);
   }, "Assertion");
 }
+#endif
 /**
  * Tests for errors in "unsigned char & adstring::operator()(_CONST int i)"
  */

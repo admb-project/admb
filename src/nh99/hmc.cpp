@@ -8,9 +8,6 @@ samplers (static HMC and No-u-turn).
 */
 
 #include "admodel.h"
-#ifndef OPT_LIB
-#include <cassert>
-#endif
 #include<ctime>
 
 void read_empirical_covariance_matrix(int nvar, const dmatrix& S, const adstring& prog_name);

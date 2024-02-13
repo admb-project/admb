@@ -25,9 +25,6 @@
 #ifndef __SUN__
 #endif
 #include <math.h>
-#if !defined(OPT_LIB)
-#include <cassert>
-#endif
 
 /**
 Creates an entry in the gradient structure linked list.

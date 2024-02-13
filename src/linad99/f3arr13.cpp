@@ -8,7 +8,7 @@
 #include <fvar.hpp>
 
 #ifdef DEBUG
-#include <cassert>
+  #include <cassert>
 #endif
 
 /**

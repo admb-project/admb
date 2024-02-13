@@ -13,7 +13,7 @@
 #include <admodel.h>
 #include <df1b2fun.h>
 #include <adrndeff.h>
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
   #include <climits>
 #endif
@@ -585,7 +585,7 @@ dvector laplace_approximation_calculator::banded_calculations
       //cout << initial_df1b2params::cobjfun << endl;
       //f=initial_df1b2params::cobjfun;
       block_diagonal_flag=0;
-#ifndef OPT_LIB
+#ifdef DEBUG
       assert(nvar <= INT_MAX);
 #endif
       dvector scale1(1,(int)nvar);   // need to get scale from somewhere
@@ -695,7 +695,7 @@ void laplace_approximation_calculator::
   int num_local_re=0;
   int num_fixed_effects=0;
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(funnel_init_var::num_active_parameters <= INT_MAX);
 #endif
   ivector lre_index(1, (int)funnel_init_var::num_active_parameters);
@@ -905,7 +905,7 @@ void laplace_approximation_calculator::
   imatrix& list=*funnel_init_var::plist;
 
   int us=0; int xs=0;
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(funnel_init_var::num_active_parameters <= INT_MAX);
 #endif
   ivector lre_index(1,(int)funnel_init_var::num_active_parameters);
@@ -1035,7 +1035,7 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
   ADUNCONST(dvector,uadjoint)
   ADUNCONST(banded_symmetric_dmatrix,bHessadjoint)
   int bw=bHess.bandwidth();
-#if !defined(OPT_LIB) && (__cplusplus >= 201103L)
+#if defined(DEBUG) && (__cplusplus >= 201103L)
   const int xs = [](unsigned int size)->int
   {
     assert(size <= INT_MAX);

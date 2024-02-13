@@ -16,9 +16,8 @@
   #define getch getchar
 #endif
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
-  #include <climits>
 #endif
 
 #ifdef ISZERO
@@ -940,7 +939,7 @@ void function_minimizer::rwm_mcmc_routine(int nmcmc,int iseed0, double dscale,
         if (iac>5)
           print_hist_data(hist,values,h,mean_mcmc_values,s,parsave,iseed,
 			  size_scale);
-#ifndef OPT_LIB
+#ifdef DEBUG
       assert(isim != 0);
 #endif
       cout <<"Chain " << chain << ":Final acceptance ratio=";

@@ -11,11 +11,6 @@
 #include <df1b2fun.h>
 #include "df33fun.h"
 
-#ifndef OPT_LIB
-  #include <cassert>
-  #include <climits>
-#endif
-
 void ad_read_pass2_dvdvdv(void);
 
 /**

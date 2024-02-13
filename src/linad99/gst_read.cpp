@@ -55,7 +55,7 @@
   #include <unistd.h>
 #endif
 
-#if defined(__MINGW64__) || (defined(_WIN64) && defined(_MSC_VER))
+#if defined(DEBUG)
   #include <cassert>
   #include <climits>
 #endif
@@ -121,14 +121,10 @@ int grad_stack::read_grad_stack_buffer(OFF_T& lpos)
     }
 #endif
 
-#if defined(__MINGW64__) || (defined(_WIN64) && defined(_MSC_VER))
-    size_t size = sizeof(grad_stack_entry) * length;
-    assert(size <= UINT_MAX);
-    ssize_t nread = read(_GRADFILE_PTR, ptr_first, (unsigned int)size);
-#else
-    ssize_t nread = read(_GRADFILE_PTR, ptr_first,
-      sizeof(grad_stack_entry)*length);
+#if defined(DEBUG)
+    assert(sizeof(grad_stack_entry) * length <= UINT_MAX);
 #endif
+    ssize_t nread = read(_GRADFILE_PTR, ptr_first, sizeof(grad_stack_entry)*length);
     ptr = ptr_first + length-1;
 
     if (nread == -1 )

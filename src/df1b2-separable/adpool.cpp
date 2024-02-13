@@ -6,7 +6,7 @@
 #include <df1b2fun.h>
 #include <adpool.h>
 #include <stdint.h>
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
   #include <climits>
 #endif
@@ -145,7 +145,7 @@ void* adpool::alloc(void)
   }
 #endif
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(nvar <= SHRT_MAX);
 #endif
   ((twointsandptr*)p)->nvar=(short)nvar;

@@ -19,10 +19,6 @@
   #include <iostream.hpp>
 #endif
 
-#ifndef OPT_LIB
-  #include <cassert>
-#endif
-
 void cmdm_prod(void);
 
 /**

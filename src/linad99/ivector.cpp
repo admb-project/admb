@@ -26,7 +26,7 @@ long int _farptr_tolong(void* px);
 long int farptr_tolong(void*);
 #endif
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
   #include <climits>
 #endif
@@ -205,7 +205,7 @@ Constructor
 */
 ivector::ivector(unsigned int sz, long int* x)
 {
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(sz > 0 && sz <= INT_MAX);
   assert(x);
 #endif
@@ -215,13 +215,10 @@ ivector::ivector(unsigned int sz, long int* x)
   {
     for (unsigned int i = 0; i < sz; i++)
     {
-#ifdef OPT_LIB
-      v[i] = (int)x[i];
-#else
-      long int xi = x[i];
-      assert(xi <= INT_MAX);
-      v[i] = static_cast<int>(xi);
+#ifdef DEBUG
+      assert(x[i] <= INT_MAX);
 #endif
+      v[i] = (int)x[i];
     }
   }
 }
@@ -233,13 +230,11 @@ ivector::ivector(const dvector& u)
   allocate(u);
   for (int i=indexmin();i<=indexmax();i++)
   {
-#ifdef OPT_LIB
-    elem(i) = static_cast<int>(u.elem(i));
-#else
+#ifdef DEBUG
     double ui = u.elem(i);
     assert(ui <= INT_MAX);
-    elem(i) = static_cast<int>(ui);
 #endif
+    elem(i) = static_cast<int>(u.elem(i));
   }
 }
 /**

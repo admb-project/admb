@@ -9,7 +9,6 @@
  * Description not yet available.
  */
 #include "fvar.hpp"
-#include <cassert>
 
 /**
 Check index i is in matrix row bounds [index_min, index_max]

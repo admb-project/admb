@@ -20,9 +20,6 @@ void read_pass1_init_3(void);
 
 #ifdef DEBUG
   #include <cassert>
-#endif
-
-#ifndef OPT_LIB
   #include <climits>
 #endif
 

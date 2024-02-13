@@ -16,7 +16,7 @@
 
 #include <stdlib.h>
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
   #include <climits>
 #endif
@@ -96,7 +96,7 @@ dvar_vector::dvar_vector(const dvector& t): va(nullptr)
  */
 dvar_vector::dvar_vector(unsigned int sz, double* x)
 {
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(sz > 0 && sz <= INT_MAX);
 #endif
   allocate(0, (int)(sz - 1));

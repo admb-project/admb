@@ -224,7 +224,7 @@ TEST_F(test_adstring, chr)
   adstring actual = chr(c);
   EXPECT_STREQ("c", (char*)actual);
 }
-#ifndef _WIN32
+#ifdef DEBUG
 TEST_F(test_adstring, chr_uchar_max_plus_1)
 {
   int c = (int)UCHAR_MAX + 1;

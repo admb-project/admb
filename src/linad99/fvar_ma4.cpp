@@ -6,7 +6,7 @@
  */
 #include "fvar.hpp"
 #include <math.h>
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
   #include <climits>
 #endif
@@ -36,7 +36,7 @@ void ludcmp(const dvar_matrix& _a, const ivector& _indx, const prevariable& _d)
   ivector& indx= (ivector&) _indx;
   int i,j,k;
 
-#if !defined(OPT_LIB) && (__cplusplus >= 201103L)
+#if defined(DEBUG) && (__cplusplus >= 201103L)
   int n = [](unsigned int colsize) -> int
   {
     assert(colsize <= INT_MAX);

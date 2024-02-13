@@ -11,7 +11,7 @@
 #include <admodel.h>
 #include <df1b2fun.h>
 #include <adrndeff.h>
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
   #include <climits>
 #endif
@@ -172,7 +172,7 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
     int xmax=xadjoint.indexmax();
     dvector x_con(1,xmax);
     x_con.initialize();
-#ifndef OPT_LIB
+#ifdef DEBUG
     assert(nvar <= INT_MAX);
 #endif
     dvector dscale(1,(int)nvar);   // need to get scale from somewhere
@@ -277,7 +277,7 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
     int xmax=xadjoint.indexmax();
     dvector x_con(1,xmax);
     x_con.initialize();
-#ifndef OPT_LIB
+#ifdef DEBUG
     assert(nvar <= INT_MAX);
 #endif
     dvector dscale(1,(int)nvar);   // need to get scale from somewhere

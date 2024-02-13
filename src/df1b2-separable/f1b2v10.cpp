@@ -10,7 +10,7 @@
  */
 #include <df1b2fun.h>
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
   #include <climits>
 #endif
@@ -237,7 +237,7 @@ void ad_read_pass2_prod_vector(void);
 
   int mmin=px->indexmin();
   int mmax=px->indexmax();
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(mmax >= mmin);
 #endif
   size_t size = (size_t)(mmax - mmin + 1);

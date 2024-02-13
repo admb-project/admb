@@ -415,7 +415,7 @@ TEST_F(test_dmatrix, fill_extrabraces)
   }
   FAIL();
 }
-#ifndef OPT_LIB
+#ifdef DEBUG
 TEST_F(test_dmatrix, fill_unallocated)
 {
   ad_exit=&test_ad_exit;
@@ -482,10 +482,12 @@ TEST_F(test_dmatrix, is_valid_row)
   ASSERT_EQ(false, m.is_valid_row(5));
   ASSERT_DOUBLE_EQ(0, m(1, 1));
   ASSERT_DOUBLE_EQ(0, m(1, 3));
+#ifdef DEBUG
   ASSERT_DEATH(m(0), "Assertion");
   ASSERT_DEATH(m(5), "Assertion");
   ASSERT_DEATH(m(1, 0), "Assertion");
   ASSERT_DEATH(m(1, 4), "Assertion");
+#endif
 }
 TEST_F(test_dmatrix, multiply_d3a_array_dvector)
 {

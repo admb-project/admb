@@ -21,9 +21,11 @@
 
 #include <string.h>
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
   #include <climits>
+#endif
+#ifndef OPT_LIB
   #define CHK_ID_STRING
 #endif
 
@@ -42,7 +44,7 @@ void report_gradstack_flag(void)
   gradient_structure::fp->fread(&num_bytes,sizeof(int));
   char str1[100];
   str1[0]='\0';
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(num_bytes > 0);
 #endif
   gradient_structure::fp->fread(str1,(size_t)num_bytes);
@@ -64,7 +66,7 @@ static void report_gradstack_flag2(void)
   fp->fread(&num_bytes,sizeof(int));
   char str1[100];
   str1[0]='\0';
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(num_bytes >= 0);
 #endif
   fp->fread(str1, (size_t)num_bytes);
@@ -83,16 +85,15 @@ void set_gradstack_flag([[maybe_unused]] char* str)
 {
 #if defined(CHK_ID_STRING)
   //int wsize=sizeof(char);
-#ifdef OPT_LIB
-  int length=(int)strlen(str);
-#else
-  size_t _length = strlen(str);
-  assert(_length <= INT_MAX);
-  int length=(int)_length;
+#ifdef DEBUG
+  assert(strlen(str) <= INT_MAX);
 #endif
-#ifndef OPT_LIB
+  int length=(int)strlen(str);
+
+#ifdef DEBUG
   assert(length >= 0);
 #endif
+
   gradient_structure* gs = gradient_structure::_instance;
   DF_FILE* fp = gradient_structure::fp;
   fp->fwrite(str, (size_t)length);
@@ -116,18 +117,15 @@ void set_gradstack_flag([[maybe_unused]] char* _str, [[maybe_unused]] int i, [[m
   ads+=str(j);
   //int wsize=sizeof(char);
   char * str=(char*)(ads);
-#ifdef OPT_LIB
-  int length=(int)strlen(str);
-#else
-  size_t _length = strlen(str);
-  assert(_length <= INT_MAX);
-  int length=(int)_length;
+#ifdef DEBUG
+  assert(strlen(str) <= INT_MAX);
 #endif
+  int length=(int)strlen(str);
   gradient_structure* gs = gradient_structure::_instance;
   DF_FILE* fp = gradient_structure::fp;
   fp->fwrite(&i,sizeof(int));
   fp->fwrite(&j,sizeof(int));
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(length >= 0);
 #endif
   fp->fwrite(str, (size_t)length);
@@ -177,7 +175,7 @@ adstring get_string_marker(void)
   long int num_bytes=5;
   char str[10];
   str[num_bytes]='\0';
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(num_bytes > 0);
 #endif
   gradient_structure::fp->fread(str,(size_t)num_bytes);

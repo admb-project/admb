@@ -25,11 +25,6 @@ using std::stack;
 using std::queue;
 
 #include "admodel.h"
-#ifndef OPT_LIB
-#include <cassert>
-#endif
-
-
 
 int function_minimizer::compute_next_window(int i, int warmup, [[maybe_unused]] int w1, int aws, int w3){
   int anw;

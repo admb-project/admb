@@ -10,7 +10,7 @@
  */
 #include "fvar.hpp"
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
   #include <climits>
 #endif
@@ -80,13 +80,10 @@ dvar_vector dvar_vector::operator()(const lvector& u)
    dvar_vector tmp(u.indexmin(),u.indexmax());
    for ( int i=u.indexmin(); i<=u.indexmax(); i++)
    {
-#ifdef OPT_LIB
-     tmp(i)=(*this)((int)u(i));
-#else
-     const AD_LONG_INT ui = u(i);
-     assert(ui <= INT_MAX);
-     tmp(i)=(*this)((int)ui);
+#ifdef DEBUG
+     assert(u(i) <= INT_MAX);
 #endif
+     tmp(i)=(*this)((int)u(i));
    }
    return tmp;
  }

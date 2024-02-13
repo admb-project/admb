@@ -11,7 +11,7 @@
 
 //#include <parallel.h>
 
-#ifdef __MINGW64__
+#ifdef DEBUG
   #include <cassert>
 #endif
 
@@ -391,13 +391,11 @@ void ad_comm::allocate(void)
 
 #if defined(_WIN32)
   // strip off the .exe
-  #ifdef __MINGW64__
+  #ifdef DEBUG
   size_t _n = adprogram_name.size();
   assert(_n <= INT_MAX);
-  int n = (int)_n;
-  #else
-  int n = (int)adprogram_name.size();
   #endif
+  int n = (int)adprogram_name.size();
   if (n > 4)
   {
     if (adprogram_name(n - 3) == '.'

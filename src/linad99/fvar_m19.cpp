@@ -22,10 +22,6 @@
   #include <iostream.hpp>
 #endif
 
-#ifndef OPT_LIB
-  #include <cassert>
-#endif
-
 void dmcm_prod(void);
 
 /**

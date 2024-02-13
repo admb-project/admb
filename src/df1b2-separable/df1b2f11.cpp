@@ -3,10 +3,6 @@
  * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <df1b2fun.h>
-#ifndef OPT_LIB
-  #include <cassert>
-  #include <climits>
-#endif
 
 #if defined(CHECK_COUNT)
 void ncount_checker(int ncount,int ncount_check)

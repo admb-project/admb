@@ -9,7 +9,7 @@
   Minimize artibrary user-supplied function.
  */
 #include <fvar.hpp>
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
 #endif
 
@@ -26,7 +26,7 @@ double fmm::minimize(const independent_variables & x,
   double f = 0.0;
 
   int nvar = static_cast<int>(x.size());
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(nvar > 0);
 #endif
   dvector g(1,nvar);

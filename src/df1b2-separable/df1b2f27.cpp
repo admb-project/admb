@@ -10,10 +10,6 @@
  */
 #include <df1b2fun.h>
 
-#ifndef OPT_LIB
-  #include <cassert>
-#endif
-
 void ncount_checker(int ncount,int ncount_check);
 
 void ad_read_pass1x(void);

@@ -9,7 +9,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
 #endif
 
@@ -88,7 +88,7 @@ adstring operator+(const adstring& u, const adstring& v)
 
 adstring itoa(int n, int r)
 {
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(r != 0);
   assert(r != 1);
 #endif

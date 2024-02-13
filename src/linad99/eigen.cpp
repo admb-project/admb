@@ -8,7 +8,7 @@
 //#define eigen_vectors
 
 #include <fvar.hpp>
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
   #include <climits>
 #endif
@@ -31,7 +31,7 @@ dvector eigenvalues(const dmatrix& m)
   dmatrix m1=symmetrize(m);
   m1.colshift(1);     // set minimum column and row indices to 1
   m1.rowshift(1);
-#if !defined(OPT_LIB) && (__cplusplus >= 201103L)
+#if defined(DEBUG) && (__cplusplus >= 201103L)
   int n = [](unsigned int rowsize) -> int
   {
     assert(rowsize <= INT_MAX);
@@ -78,7 +78,7 @@ void tri_dag(const dmatrix& _m, const dvector& _d, const dvector& _e)
     "void tridag(const dmatrix& m)\n";
     ad_exit(1);
   }
-#if !defined(OPT_LIB) && (__cplusplus >= 201103L)
+#if defined(DEBUG) && (__cplusplus >= 201103L)
   int n = [](unsigned int rowsize) -> int
   {
     assert(rowsize <= INT_MAX);
@@ -206,7 +206,7 @@ void get_eigen(const dvector& _d, const dvector& _e, [[maybe_unused]] const dmat
   dmatrix& z = (dmatrix&) _z;
 #endif
   int max_iterations=30;
-#if !defined(OPT_LIB) && (__cplusplus >= 201103L)
+#if defined(DEBUG) && (__cplusplus >= 201103L)
   int n = [](unsigned int size) -> int
   {
     assert(size <= INT_MAX);
@@ -294,7 +294,7 @@ dvector get_eigen_values(const dvector& _d,const dvector& _e)
   dvector& e = (dvector&) _e;
 
   int max_iterations=30;
-#if !defined(OPT_LIB) && (__cplusplus >= 201103L)
+#if defined(DEBUG) && (__cplusplus >= 201103L)
   int n = [](unsigned int size) -> int
   {
     assert(size <= INT_MAX);
@@ -384,7 +384,7 @@ dvector get_eigen_values(const dvector& _d,const dvector& _e,
   e=xe;
 
   int max_iterations=30;
-#if !defined(OPT_LIB) && (__cplusplus >= 201103L)
+#if defined(DEBUG) && (__cplusplus >= 201103L)
   int n = [](unsigned int size) -> int
   {
     assert(size <= INT_MAX);

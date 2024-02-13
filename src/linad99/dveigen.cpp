@@ -6,7 +6,7 @@
 //#define EIGEN_VECTORS
 
 #include <fvar.hpp>
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
   #include <climits>
 #endif
@@ -23,7 +23,7 @@ dvar_vector eigenvalues(const dvar_matrix& m)
     ad_exit(1);
   }
   dvar_matrix m1=symmetrize(m);
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(m1.rowsize() <= INT_MAX);
 #endif
   int n = static_cast<int>(m1.rowsize());
@@ -69,7 +69,7 @@ void tri_dag(const dvar_matrix& _m,const dvar_vector& _d, const dvar_vector& _e)
     "void tridag(const dmatrix& m)\n";
     ad_exit(1);
   }
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(m.rowsize() <= INT_MAX);
 #endif
   int n = static_cast<int>(m.rowsize());
@@ -189,7 +189,7 @@ void get_eigen(const dvar_vector& _d,const dvar_vector& _e,
 {
   ADUNCONST(dvar_vector,d)
   ADUNCONST(dvar_vector,e)
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(d.size() <= INT_MAX);
 #endif
   int n = static_cast<int>(d.size());
@@ -277,7 +277,7 @@ dvar_vector get_eigen_values(const dvar_vector& _ddd,const dvar_vector& _eee)
   d=ddd;
   e=eee;
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(d.size() <= INT_MAX);
 #endif
   int n = static_cast<int>(d.size());

@@ -9,7 +9,7 @@
  * Description not yet available.
  */
 #include "fvar.hpp"
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
 #endif
 
@@ -19,7 +19,7 @@
  */
 mat_shape::mat_shape(int rl,int ru,int cl,int cu)
 {
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(ru >= rl);
   assert(cu >= cl);
 #endif

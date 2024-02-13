@@ -6,7 +6,10 @@
 @brief Safe member functions for dvector to get the element of a vector.
 */
 #include "fvar.hpp"
-#include <cassert>
+
+#ifdef DEBUG
+  #include <cassert>
+#endif
 
 
 /**
@@ -36,7 +39,9 @@ Returns a reference to the element at index __i__ in the array.
 */
 double& dvector::operator[](int i)
 {
+#ifdef DEBUG
   assert((index_min <= i && i <= index_max));
+#endif
 
   return *(v + i);
 }
@@ -47,7 +52,9 @@ Returns a reference to the element at index __i__ in the array.
 */
 double& dvector::operator()(int i)
 {
+#ifdef DEBUG
   assert((index_min <= i && i <= index_max));
+#endif
 
   return *(v + i);
 }
@@ -58,7 +65,9 @@ Returns a reference to the element at index __i__ in the array.
 */
 const double& dvector::operator[](int i) const
 {
+#ifdef DEBUG
   assert((index_min <= i && i <= index_max));
+#endif
 
   return *(v + i);
 }
@@ -69,7 +78,9 @@ Returns a reference to the element at index __i__ in the array.
 */
 const double& dvector::operator()(int i) const
 {
+#ifdef DEBUG
   assert((index_min <= i && i <= index_max));
+#endif
 
   return *(v + i);
 }

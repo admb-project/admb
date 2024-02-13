@@ -12,7 +12,6 @@
 #  include <windows.h>
 #endif
 #include<ctime>
-#include <cassert>
 
 void ADSleep(unsigned int x);
 

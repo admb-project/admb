@@ -5,7 +5,7 @@
  * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <df1b2fun.h>
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
   #include <climits>
 #endif
@@ -34,7 +34,7 @@ void df1b2quadratic_prior::add_to_list(void)
 void df1b2quadratic_prior::get_Lxu(dmatrix& M)
 {
   bool isallocated = Lxu && allocated(*Lxu) && index;
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(isallocated);
 #endif
   if (isallocated)
@@ -175,7 +175,7 @@ void df1b2quadratic_prior::allocate(const df1b2_init_vector& _u,
       int mmin=v.indexmin();
       int mmax=v.indexmax();
 
-#ifndef OPT_LIB
+#ifdef DEBUG
       assert(num_active_parameters <= INT_MAX);
 #endif
       if (index)

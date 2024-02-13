@@ -18,7 +18,7 @@ using std::istringstream;
 #include "cifstrem.h"
 
 #ifdef DEBUG
-#include <cassert>
+  #include <cassert>
 #endif
 
 /**

@@ -5,7 +5,7 @@
  * Copyright (c) 2009-2012 ADMB Foundation
  */
 #include <fvar.hpp>
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
   #include <climits>
 #endif
@@ -43,7 +43,7 @@ int min(const int a, const int b)
 dvar_matrix inv(const dvar_matrix& aa)
 {
   int imax = 0;
-#if !defined(OPT_LIB) && (__cplusplus >= 201103L)
+#if defined(DEBUG) && (__cplusplus >= 201103L)
   int n = [](unsigned int colsize) -> int
   {
     assert(colsize <= INT_MAX);

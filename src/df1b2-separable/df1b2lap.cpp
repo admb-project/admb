@@ -13,7 +13,7 @@ using std::istringstream;
 #include <admodel.h>
 #include <df1b2fun.h>
 #include <adrndeff.h>
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
   #include <climits>
 #endif
@@ -928,7 +928,7 @@ laplace_approximation_calculator::laplace_approximation_calculator
   }
 
   // !! need to check nvar calculation
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(maxder(1) >= minder(1));
 #endif
   nvar = (unsigned int)(maxder(1) - minder(1) + 1);
@@ -1005,7 +1005,7 @@ laplace_approximation_calculator::laplace_approximation_calculator
   }
   df1b2variable::adpool_vector[df1b2variable::adpool_counter]=
     df1b2variable::pool;
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(nvariables >= 0);
 #endif
   df1b2variable::nvar_vector[df1b2variable::adpool_counter]=
@@ -1108,7 +1108,7 @@ laplace_approximation_calculator::laplace_approximation_calculator(
   num_importance_samples = 0;
   grad.allocate(1,usize);
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(maxder(1) >= minder(1));
 #endif
   nvar = (unsigned int)(maxder(1) - minder(1) + 1);
@@ -1481,7 +1481,7 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
   ADUNCONST(dvector,uadjoint)
   ADUNCONST(dmatrix,Hessadjoint)
   ADUNCONST(dmatrix,Hess)
-#if !defined(OPT_LIB) && (__cplusplus >= 201103L)
+#if defined(DEBUG) && (__cplusplus >= 201103L)
   const int xs = [](unsigned int size)->int
   {
     assert(size <= INT_MAX);

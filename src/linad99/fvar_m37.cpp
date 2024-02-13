@@ -4,10 +4,6 @@ Copyright (c) 2008-2012 Regents of the University of California
 */
 #include <fvar.hpp>
 
-#ifndef OPT_LIB
-  #include <cassert>
-#endif
-
 /**
 Construct AD variable matrix with dimensions nrl to nrh by ncl to nch.
 

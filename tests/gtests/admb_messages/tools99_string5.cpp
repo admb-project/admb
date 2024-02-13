@@ -1,3 +1,4 @@
+#ifdef DEBUG
 /**
  * Tests errors for "adstring& adstring_array::operator [] (int i)"
  */
@@ -35,3 +36,4 @@ TEST_F(test_admb_messages, tools99_string5_03)
     adstring a0 = a(0);
   }, "Assertion");
 }
+#endif

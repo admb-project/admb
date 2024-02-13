@@ -6,7 +6,7 @@
 #include <admodel.h>
 #include <df1b2fun.h>
 #include <adrndeff.h>
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
   #include <climits>
 #endif
@@ -435,7 +435,7 @@ dvector laplace_approximation_calculator::
     }
     if (initial_df1b2params::separable_flag)
     {
-#ifndef OPT_LIB
+#ifdef DEBUG
       assert(nvar <= INT_MAX);
 #endif
       dvector scale(1,(int)nvar);   // need to get scale from somewhere
@@ -465,7 +465,7 @@ dvector laplace_approximation_calculator::
       initial_params::straight_through_flag=0;
       funnel_init_var::lapprox=0;
       block_diagonal_flag=0;
-#ifndef OPT_LIB
+#ifdef DEBUG
       assert(nvar <= INT_MAX);
 #endif
       dvector scale1(1,(int)nvar);   // need to get scale from somewhere

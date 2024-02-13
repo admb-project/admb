@@ -38,7 +38,7 @@
 #include <string.h>
 #include <ctype.h>
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
   #include <climits>
 #endif
@@ -52,7 +52,7 @@ Fill variable vector from values in string s.
 void dvar_vector::fill(const char * s)
 {
   const size_t len = strlen(s);
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(len <= INT_MAX);
 #endif
   char *t = new char[len];

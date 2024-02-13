@@ -29,7 +29,7 @@
 #endif
 
 #include <string.h>
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
 #endif
 
@@ -58,7 +58,7 @@ void lvector::read_from(const uistream& _s)
 {
   ADUNCONST(uistream,s)
   char* p = (char*)(v + indexmin());
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(indexmax() >= indexmin());
 #endif
   int n = indexmax() - indexmin() + 1;
@@ -86,7 +86,7 @@ void lvector::write_on(const uostream& _s) const
 {
   ADUNCONST (uostream,s)
   char* p = (char*)(v + indexmin());
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(indexmax() >= indexmin());
 #endif
   int n = indexmax() - indexmin() + 1;

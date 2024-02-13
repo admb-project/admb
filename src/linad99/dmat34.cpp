@@ -5,7 +5,7 @@
  * Copyright (c) 2009-2012 ADMB Foundation
  */
 #include <fvar.hpp>
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
   #include <climits>
 #endif
@@ -67,7 +67,7 @@ dvector solve(const dmatrix& aa,const dvector& z,
   const double& _ln_unsigned_det,double& sign)
 {
   double& ln_unsigned_det=(double&) (_ln_unsigned_det);
-#if !defined(OPT_LIB) && (__cplusplus >= 201103L)
+#if defined(DEBUG) && (__cplusplus >= 201103L)
   int n = [](unsigned int colsize) -> int
   {
     assert(colsize <= INT_MAX);

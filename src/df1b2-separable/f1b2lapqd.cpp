@@ -11,7 +11,9 @@
 #  include <admodel.h>
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
-#include <cassert>
+#ifdef DEBUG
+  #include <cassert>
+#endif
 
 //dvariable AD_uf_inner(const dvector& x,const dvar_vector& u);
 void get_second_ders(int xs,int us,const init_df1b2vector y,dmatrix& Hess,
@@ -46,8 +48,13 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_qd
   }
   ofs.close();
 
+#ifndef DEBUG
+  [[maybe_unused]]
+#endif
   int ret = system(" catageqd -nox -nohess -crit 1.e-10 -ainp catageqd.ppp ");
+#ifdef DEBUG
   assert(ret == 0);
+#endif
 
   uistream ifs("uval.dat");
 

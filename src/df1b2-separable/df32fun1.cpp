@@ -10,11 +10,6 @@
  */
 #include <df1b2fun.h>
 
-#ifndef OPT_LIB
-  #include <cassert>
-  #include <climits>
-#endif
-
 void ad_read_pass2_dvdv(void);
 
 /**

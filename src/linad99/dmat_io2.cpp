@@ -45,7 +45,7 @@
 #include <string.h>
 #include <ctype.h>
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
   #include <climits>
 #endif
@@ -81,13 +81,11 @@ dmatrix::dmatrix(char* s)
     myheapcheck("Entering dmatrix( char * s)" );
   #endif
 
-#ifdef OPT_LIB
-  const int n = (int)strlen(s);
-#else
-  const size_t len = strlen(s);
-  assert(len <= INT_MAX);
-  const int n = (int)len;
+#ifdef DEBUG
+  assert(strlen(s) <= INT_MAX);
 #endif
+  const int n = (int)strlen(s);
+
   int braces = 0;
   int nrow = 0;
   int ncol = 0;
@@ -206,7 +204,7 @@ dmatrix::dmatrix(char* s)
     //while ( (infile.getline(line,MAX_LINE_LENGTH)).good() )
     while ( get_non_blank_line(infile,line,MAX_LINE_LENGTH) )
     {
-#ifndef OPT_LIB
+#ifdef DEBUG
       assert(strlen(line) > 0);
 #endif
       strcat(line, " ");

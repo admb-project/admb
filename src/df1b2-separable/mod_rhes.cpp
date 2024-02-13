@@ -15,11 +15,6 @@ using std::istringstream;
 #include <df1b2fun.h>
 #include <adrndeff.h>
 
-#ifndef OPT_LIB
-  #include <cassert>
-  #include <climits>
-#endif
-
 void get_inverse_sparse_hessian(dcompressed_triplet & st, hs_symbolic& S,
   uostream& ofs1,ofstream& ofs,int usize,int xsize,dvector& u);
 

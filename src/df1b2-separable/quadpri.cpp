@@ -10,11 +10,6 @@
  */
 #include <df1b2fnl.h>
 
-#ifndef OPT_LIB
-  #include <cassert>
-  #include <climits>
-#endif
-
 int quadratic_prior::in_qp_calculations=0;
 
 // this should be a resizeable array

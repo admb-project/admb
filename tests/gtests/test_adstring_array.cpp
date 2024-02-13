@@ -42,7 +42,7 @@ TEST_F(test_adstring_array, constindex)
   EXPECT_STREQ((const char*)b(2), "two");
   EXPECT_STREQ((const char*)b(3), "three");
   EXPECT_STREQ((const char*)b(4), "four");
-#ifndef OPT_LIB
+#ifdef DEBUG
   EXPECT_DEATH(b(5), "Assertion");
 #endif
 }

@@ -6,7 +6,7 @@
  */
 #include "fvar.hpp"
 #include <math.h>
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
   #include <climits>
 #endif
@@ -227,7 +227,7 @@ void ludcmp(const dmatrix& _a, const ivector& _indx, const double& _d)
   dmatrix& a=(dmatrix&)_a;
   ivector& indx=(ivector&)_indx;
 
-#if !defined(OPT_LIB) && (__cplusplus >= 201103L)
+#if defined(DEBUG) && (__cplusplus >= 201103L)
   int n = [](unsigned int colsize) -> int
   {
     assert(colsize <= INT_MAX);
@@ -348,7 +348,7 @@ void ludcmp_det(const dmatrix& _a, const ivector& _indx, const double& _d)
   dmatrix& a=(dmatrix&)_a;
   ivector& indx=(ivector&)_indx;
 
-#if !defined(OPT_LIB) && (__cplusplus >= 201103L)
+#if defined(DEBUG) && (__cplusplus >= 201103L)
   int n = [](unsigned int colsize) -> int
   {
     assert(colsize <= INT_MAX);
@@ -618,7 +618,7 @@ void ludcmp_index(const dmatrix& _a, const ivector& _indx, const double& _d)
   double& d=(double&)_d;
   dmatrix& a=(dmatrix&)_a;
   ivector& indx=(ivector&)_indx;
-#if !defined(OPT_LIB) && (__cplusplus >= 201103L)
+#if defined(DEBUG) && (__cplusplus >= 201103L)
   int n = [](unsigned int colsize) -> int
   {
     assert(colsize <= INT_MAX);

@@ -9,13 +9,13 @@
 #include <string.h>
 #include <stdlib.h>
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
 #endif
 
 adstring adstring::operator()(const size_t i, const size_t j)
 {
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(1 <= i && i <= shape->size());
   assert(i <= j);
   assert(j <= shape->size());
@@ -31,7 +31,7 @@ adstring adstring::operator()(const size_t i, const size_t j)
 
 adstring adstring::operator()(const size_t i, const size_t j) const
 {
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(1 <= i && i <= shape->size());
   assert(i <= j);
   assert(j <= shape->size());

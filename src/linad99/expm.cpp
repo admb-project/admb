@@ -9,7 +9,7 @@
  * Matrix exponential function for dvar_matrix.
  */
 #include <fvar.hpp>
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
   #include <climits>
 #endif
@@ -203,7 +203,7 @@ dvar_matrix solve(const dvar_matrix& aa,const dvar_matrix& tz,
   gradient_structure* gs = gradient_structure::_instance;
   gs->RETURN_ARRAYS_INCREMENT();
 
-#if !defined(OPT_LIB) && (__cplusplus >= 201103L)
+#if defined(DEBUG) && (__cplusplus >= 201103L)
   int n = [](unsigned int colsize) -> int
   {
     assert(colsize <= INT_MAX);

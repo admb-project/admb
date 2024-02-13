@@ -9,7 +9,9 @@
  * Description not yet available.
  */
 #include "fvar.hpp"
-#include <cassert>
+#ifdef DEBUG
+  #include <cassert>
+#endif
 
 /**
 Check index i is in matrix row bounds [index_min, index_max]
@@ -35,7 +37,7 @@ Bounds checking is performed.
 */
 dvector& dmatrix::operator()(int i)
 {
-#ifndef OPT_LIB
+#ifdef DEBUG
   //check that index i is in range
   assert(index_min <= i && i <= index_max);
 #endif
@@ -54,14 +56,14 @@ Bounds checking is performed.
 */
 double& dmatrix::operator()(int i, int j)
 {
-#ifndef OPT_LIB
+#ifdef DEBUG
   //check that index i is in range
   assert(index_min <= i && i <= index_max);
 #endif
 
   dvector* pmi =  m + i;
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   //check that index j is in range
   assert(pmi->is_valid_index(j));
 #endif
@@ -77,14 +79,14 @@ Bounds checking is performed.
 */
 const double& dmatrix::operator()(int i, int j) const
 {
-#ifndef OPT_LIB
+#ifdef DEBUG
   //check that index i is in range
   assert(index_min <= i && i <= index_max);
 #endif
 
   dvector* pmi =  m + i;
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   //check that index j is in range
   assert(pmi->is_valid_index(j));
 #endif

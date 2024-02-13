@@ -13,7 +13,7 @@
   #define getch getchar
 #endif
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
   #include <climits>
 #endif
@@ -877,7 +877,7 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
         if (iac>5)
           print_hist_data(hist,values,h,mean_mcmc_values,s,parsave,iseed,
             size_scale);
-#ifndef OPT_LIB
+#ifdef DEBUG
       assert(isim != 0);
 #endif
       cout << iac/double(isim) << endl;
@@ -1045,13 +1045,11 @@ void print_hist_data(const dmatrix& hist, const dmatrix& values,
     mmin(i)=minnz(hist(i));
     mmax(i)=maxnz(hist(i));
   }
-#ifdef OPT_LIB
-  int nsim = (int)sum(hist(1));
-#else
+#ifdef DEBUG
   double _nsim = sum(hist(1));
   assert(_nsim <= (double)INT_MAX);
-  int nsim = (int)_nsim;
 #endif
+  int nsim = (int)sum(hist(1));
   ofs << "# samples sizes" << endl;
   ofs << nsim << endl;
   ofs << "# step size scaling factor" << endl;

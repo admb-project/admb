@@ -21,7 +21,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
   #include <climits>
 #endif
@@ -151,13 +151,10 @@ void derch(const double& _f, const independent_variables & _x,
         int count = 0;
         for (int _ii = index.indexmin(); _ii <= index.indexmax(); ++_ii)
         {
-#ifdef OPT_LIB
-          int idx = (int)index(_ii);
-#else
-          double _idx = index(_ii);
-          assert(_idx <= (double)INT_MAX);
-          int idx = (int)_idx;
+#ifdef DEBUG
+          assert(index(_ii)<= (double)INT_MAX);
 #endif
+          int idx = (int)index(_ii);
           if (x.indexmin() <= idx && idx <= x.indexmax())
           {
             ++count;

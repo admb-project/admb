@@ -45,7 +45,7 @@
 
 #include <math.h>
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
 #endif
 
@@ -119,11 +119,12 @@ void gradient_structure::jacobcalc(int nvar, const ofstream& _ofs)
     if (last_cpos)
     {
       OFF_T cmp_lpos=DEPVARS_INFO->cmpdif_file_position(ijac);
-#ifndef OPT_LIB
+#ifndef DEBUG
+  [[maybe_unused]]
+#endif
       OFF_T ret = LSEEK(fp->file_ptr,cmp_lpos,SEEK_SET);
+#ifdef DEBUG
       assert(ret >= 0);
-#else
-      LSEEK(fp->file_ptr,cmp_lpos,SEEK_SET);
 #endif
       fp->read_cmpdif_stack_buffer(cmp_lpos);
     }

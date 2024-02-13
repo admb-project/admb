@@ -14,7 +14,7 @@
 #endif
 #include <df1b2fun.h>
 #include "admb_messages.h"
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
   #include <climits>
 #endif
@@ -112,7 +112,7 @@ int adptr_diff(void* x, void* y)
   intptr_t a = (intptr_t)x;
   intptr_t b = (intptr_t)y;
   ptrdiff_t diff = a - b;
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(diff <= INT_MAX);
 #endif
   return (int)diff;
@@ -658,7 +658,7 @@ Constructor
 smartlist::smartlist(unsigned int _bufsize,const adstring& _filename):
   sbptr(NULL)
 {
-#ifndef OPT_LIB
+#ifdef DEBUG
   //cerr << "need to modify smartlist class for multibyte char" << endl;
   assert(sizeof(char) == 1);
 #endif
@@ -723,13 +723,10 @@ void set_dependent_variable(const df1b2variable& _x)
 dmatrix get_hessian(const init_df1b2vector& _x)
 {
   ADUNCONST(init_df1b2vector,x)
-#ifdef OPT_LIB
-  int nvar = (int)df1b2variable::nvar;
-#else
-  unsigned int _nvar=df1b2variable::nvar;
-  assert(_nvar <= INT_MAX);
-  int nvar = (int)_nvar;
+#ifdef DEBUG
+  assert(df1b2variable::nvar <= INT_MAX);
 #endif
+  int nvar = (int)df1b2variable::nvar;
   dmatrix h(1,nvar,1,nvar);
   for (int i=1;i<=nvar;i++)
   {
@@ -817,13 +814,10 @@ double d3F(P_USER_FUNCTION pu,const init_df1b2vector& _x,int i,int j,int k,
 dmatrix check_second_derivatives([[maybe_unused]] const init_df1b2vector& x)
 {
   f1b2gradlist->set_no_derivatives();
-#ifdef OPT_LIB
-  int nvar = (int)df1b2variable::nvar;
-#else
-  unsigned int _nvar=df1b2variable::nvar;
-  assert(_nvar <= INT_MAX);
-  int nvar = (int)_nvar;
+#ifdef DEBUG
+  assert(df1b2variable::nvar <= INT_MAX);
 #endif
+  int nvar = (int)df1b2variable::nvar;
   dmatrix h(1, nvar, 1, nvar);
   //const double delta=1.e-3;
   h.initialize();
@@ -844,13 +838,10 @@ dmatrix check_second_derivatives([[maybe_unused]] const init_df1b2vector& x)
 d3_array check_third_derivatives([[maybe_unused]] const init_df1b2vector& x)
 {
   f1b2gradlist->set_no_derivatives();
-#ifdef OPT_LIB
-  int nvar = (int)df1b2variable::nvar;
-#else
-  unsigned int _nvar=df1b2variable::nvar;
-  assert(_nvar <= INT_MAX);
-  int nvar = (int)_nvar;
+#ifdef DEBUG
+  assert(df1b2variable::nvar <= INT_MAX);
 #endif
+  int nvar = (int)df1b2variable::nvar;
   d3_array h(1, nvar, 1, nvar, 1, nvar);
   //const double delta=2.e-4;
   h.initialize();

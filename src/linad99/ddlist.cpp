@@ -7,7 +7,7 @@ Copyright (c) 2008-2012 Regents of the University of California
 #include "fvar.hpp"
 
 #include <stdlib.h>
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
 #endif
 
@@ -40,7 +40,7 @@ dlist::dlist()
     (char*)malloc(gradient_structure::MAX_DLINKS * sizeof(dlink));
   variables_save = new double[gradient_structure::MAX_DLINKS];
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   //fails for insufficient memory to allocate space for dvariables save buffer
   assert(variables_save != NULL);
 #endif
@@ -74,14 +74,14 @@ Return new unlinked node.
 */
 dlink* dlist::create()
 {
-#ifndef OPT_LIB
+#ifdef DEBUG
   //If fails, then need to increase the maximum number of dlinks.
   assert(nlinks < gradient_structure::MAX_DLINKS);
 #endif
 
   dlink* link = (dlink*)(&ddlist_space[sizeof(dlink) * nlinks]);
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(link);
 #endif
 
@@ -116,7 +116,7 @@ Append link to list.
 */
 dlink* dlist::append(dlink* link)
 {
-#ifndef OPT_LIB
+#ifdef DEBUG
   //Should fail if link is NULL.
   assert(link);
 #endif

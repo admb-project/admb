@@ -71,7 +71,7 @@
   long _cdecl _farptr_tolong(void _far *);
 #endif
 
-#if !defined(OPT_LIB) || defined(_MSC_VER)
+#ifdef DEBUG
   #include <cassert>
 #endif
 void gradcalc(int nvar, const dvector& g)
@@ -270,7 +270,7 @@ void gradient_structure::save_arrays()
      [[maybe_unused]]
   #endif
      ssize_t ret = write(GRAD_STACK1->_VARSSAV_PTR, (char*)src, bytes_needed);
-  #ifndef OPT_LIB
+  #ifdef DEBUG
      assert(ret != -1);
   #endif
 #else
@@ -330,7 +330,7 @@ void gradient_structure::restore_arrays()
     [[maybe_unused]]
   #endif
     ssize_t ret = read(GRAD_STACK1->_VARSSAV_PTR, (char*)dest,bytes_needed);
-  #if !defined(OPT_LIB)
+  #ifdef DEBUG
     assert(ret != -1);
   #endif
 #else

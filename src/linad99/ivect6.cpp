@@ -10,7 +10,7 @@ Contains ivector sum and pow functions.
 */
 #include <fvar.hpp>
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
   #include <climits>
 #endif
@@ -53,7 +53,7 @@ ivector pow(const ivector& v1, int x)
     double value = pow(v1.elem(i),x);
 #endif
 
-#ifndef OPT_LIB
+#ifdef DEBUG
     assert(value <= (double)INT_MAX);
 #endif
 
@@ -79,7 +79,7 @@ ivector pow(int x, const ivector& v1)
     double value = pow(x, v1.elem(i));
 #endif
 
-#ifndef OPT_LIB
+#ifdef DEBUG
     assert(value <= (double)INT_MAX);
 #endif
 

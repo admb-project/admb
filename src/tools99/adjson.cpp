@@ -3,7 +3,7 @@
 
 #include <fvar.hpp>
 #include "adjson.h"
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
   #include <climits>
 #endif
@@ -133,7 +133,7 @@ istream& dvector::parse(istream& input)
     deallocate();
   }
   size_t size = a->_value.size();
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(size <= INT_MAX);
 #endif
   allocate(1, static_cast<int>(size));

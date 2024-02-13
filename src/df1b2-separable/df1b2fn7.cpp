@@ -15,11 +15,6 @@
     int addebug_count=0;
 #endif
 
-#ifndef OPT_LIB
-  #include <cassert>
-  #include <climits>
-#endif
-
 void ad_read_write_tilde_values(void);
 void read_tilde_values_1(void);
 void read_tilde_values_2(void);

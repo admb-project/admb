@@ -13,7 +13,7 @@
 #ifdef __NDPX__
   #include <dos.h> //itoa
 #endif
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
   #include <climits>
 #endif
@@ -123,7 +123,7 @@ adstring str(const int a)
 
 adstring chr(int c)
 {
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(0 <= c && c <= CHAR_MAX);
 #endif
   return adstring((char)c);

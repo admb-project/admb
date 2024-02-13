@@ -166,6 +166,7 @@ TEST_F(test_admb_messages, linad99_dmat_acc_02)
   }
   FAIL();
 }
+#ifdef DEBUG
 /**
  * Tests errors for "dvector& dmatrix::operator() (int i)"
  */
@@ -188,6 +189,7 @@ TEST_F(test_admb_messages, linad99_dmat8_02)
     dvector v6 = m(6);
   }, "Assertion");
 }
+#endif
 /**
  * Tests errors for "dmatrix& d3_array::operator() (int i)"
  */
@@ -528,6 +530,7 @@ TEST_F(test_admb_messages, linad99_f3arr1_08)
   }
   FAIL();
 }
+#ifdef DEBUG
 /**
  * Tests errors for "double& dvar_vector::operator[] (int i)"
  */
@@ -572,6 +575,7 @@ TEST_F(test_admb_messages, linad99_dvec_acc_04)
     double d6 = v(6);
   }, "Assertion");
 }
+#endif
 /**
  * Tests errors for "dvar_vector extract_column(_CONST dvar_matrix& m,int j)"
  */

@@ -4,7 +4,7 @@ Author: David Fournier
 Copyright (c) 2008-2012 Regents of the University of California
 */
 #include <df1b2fun.h>
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
 #endif
 
@@ -948,7 +948,7 @@ df1b2variable mean(const df1b2matrix& _x)
     tmp+=sum(x(i));
     nitems+=x(i).indexmax()-x(i).indexmin()+1;
   }
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(nitems > 0);
 #endif
   return tmp/nitems;

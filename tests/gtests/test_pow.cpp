@@ -28,7 +28,7 @@ TEST_F(test_pow, exponent_ivector)
   ASSERT_EQ(2, ret(2));
   ASSERT_EQ(4, ret(3));
 }
-#ifndef _WIN32
+#ifdef DEBUG
 TEST_F(test_pow, base_is_int_max)
 {
   const int base = INT_MAX;

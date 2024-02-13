@@ -17,7 +17,7 @@
   #include <fstream.hpp>
 #endif
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
 #endif
 
@@ -39,7 +39,7 @@ Read values from input into ivector.
 */
 void ivector::read_from(const uistream& input)
 {
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(indexmax() >= indexmin());
 #endif
 
@@ -67,7 +67,7 @@ Write ivector values to output.
 */
 void ivector::write_on(const uostream& output) const
 {
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(indexmax() >= indexmin());
 #endif
 

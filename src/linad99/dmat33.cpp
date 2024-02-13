@@ -9,8 +9,10 @@
  * Description not yet available.
  */
 #include "fvar.hpp"
-#include <cassert>
-#include <climits>
+#ifdef DEBUG
+  #include <cassert>
+  #include <climits>
+#endif
 
 //class banded_symmetric_dmatrix;
 
@@ -21,7 +23,9 @@
 ostream& operator<<(const ostream& ofs1, const banded_symmetric_dmatrix& S1)
 {
   std::streamsize width = ofs1.width();
+#ifdef DEBUG
   assert(width <= INT_MAX);
+#endif
   int w= (int)width;
   ostream& ofs=(ostream&) ofs1;
   banded_symmetric_dmatrix& S=(banded_symmetric_dmatrix&)(S1);

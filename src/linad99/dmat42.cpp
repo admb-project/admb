@@ -13,7 +13,7 @@
  */
 
 #include <fvar.hpp>
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
 #endif
 
@@ -178,7 +178,7 @@ int svd_mln(int m, int n, int  withu, int withv, double eps, double tol,
   int i,j,k,l,l1,iter,retval;
   double c,f,g,h,s,x,y,z;
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(n > 0);
 #endif
 
@@ -459,7 +459,7 @@ int svd_nlm(int m, int n, int withu, int withv, double eps, double tol,
   int i,j,k,l,l1,iter,retval;
   double c,f,g,h,s,x,y,z;
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(n > 0);
 #endif
   double* e = (double *)calloc((size_t)n, sizeof(double));

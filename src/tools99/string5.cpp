@@ -8,7 +8,7 @@
 #include <fvar.hpp>
 #include <stdlib.h>
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
 #endif
 
@@ -117,7 +117,7 @@ adstring& adstring_array::operator[](int i)
     ad_exit(1);
   }
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(indexmin() <= i && i <= indexmax());
 #endif
 
@@ -136,7 +136,7 @@ adstring& adstring_array::operator()(int i)
     ad_exit(1);
   }
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(indexmin() <= i && i <= indexmax());
 #endif
 
@@ -155,7 +155,7 @@ const adstring& adstring_array::operator[](int i) const
     ad_exit(1);
   }
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(indexmin() <= i && i <= indexmax());
 #endif
 
@@ -174,7 +174,7 @@ const adstring& adstring_array::operator()(int i) const
     ad_exit(1);
   }
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(indexmin() <= i && i <= indexmax());
 #endif
 

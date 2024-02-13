@@ -34,7 +34,9 @@
 #include <unistd.h>
 #endif
 
-#include <cassert>
+#ifdef DEBUG
+  #include <cassert>
+#endif
 
 /**
  * Description not yet available.
@@ -65,8 +67,13 @@ void ad_getcd(const adstring& _s)
   char tmp[301];
   tmp[0]='\0';
   #ifdef __GNUC__
+#ifndef DEBUG
+  [[maybe_unused]]
+#endif
   char* ret = getcwd(tmp,300);
+#ifdef DEBUG
   assert(ret != 0);
+#endif
   #else
   getcwd(tmp,300);
   #endif

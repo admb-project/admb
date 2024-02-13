@@ -15,7 +15,7 @@
   #include <iostream.h>
 #endif
 #include <stdlib.h>
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
 #endif
 
@@ -553,7 +553,7 @@ Remove and delete arr_link node pptr from gradient_structure::ARR_LIST1.
 */
 void arr_list::arr_remove(arr_link** pptr)
 {
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(pptr != NULL);
 #endif
 

@@ -19,7 +19,7 @@
 
 #include <stdlib.h>
 #include "fvar.hpp"
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
   #include <climits>
 #endif
@@ -120,7 +120,7 @@ lvector& lvector::operator=(const lvector& t)
  */
 lvector::lvector( unsigned int sz, AD_LONG_INT * x )
 {
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(sz > 0 && sz - 1 <= INT_MAX);
 #endif
   if ((shape=new vector_shape(0, (int)(sz - 1))) == 0)
@@ -216,7 +216,7 @@ Intialize vector values to zero.
 void lvector::initialize(void)
 {
   //for (int i = indexmin(); i <= indexmax(); i++) { elem(i) = 0; }
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(size() > 0);
 #endif
   memset((void*)(v + indexmin()), 0,

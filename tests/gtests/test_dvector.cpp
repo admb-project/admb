@@ -394,7 +394,7 @@ TEST_F(test_dvector, allocate)
   ASSERT_EQ(dv.indexmin(), 2);
   ASSERT_EQ(dv.indexmax(), 5);
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   for (int i = 2; i <= 5; ++i)
   {
     ASSERT_DOUBLE_EQ(0, dv(i));
@@ -437,8 +437,10 @@ TEST_F(test_dvector, is_valid_index)
   ASSERT_EQ(true, false || dv.is_valid_index(1));
   ASSERT_EQ(true, false || dv.is_valid_index(4));
   ASSERT_EQ(false, false || dv.is_valid_index(5));
+#ifdef DEBUG
   ASSERT_DEATH(dv(0), "Assertion");
   ASSERT_DEATH(dv(5), "Assertion");
+#endif
 }
 TEST_F(test_dvector, dll_data_int)
 {

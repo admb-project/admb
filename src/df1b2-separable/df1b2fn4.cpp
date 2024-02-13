@@ -18,11 +18,6 @@ void read_pass1_eq_3(void);
   extern int addebug_count;
 #endif
 
-#ifndef OPT_LIB
-  #include <cassert>
-  #include <climits>
-#endif
-
 /**
  * Description not yet available.
  * \param

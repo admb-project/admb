@@ -123,11 +123,11 @@ void gradient_structure::funnel_gradcalc()
 
   double_and_int* tmp = (double_and_int*)ARR_LIST1->ARRAY_MEMBLOCK_BASE;
 
-  unsigned long int max_last_offset = ARR_LIST1->get_max_last_offset();
-
   constexpr size_t size = sizeof(double_and_int);
 
-   for (unsigned int i = 0; i < (max_last_offset/size); i++)
+  unsigned long int local_max_last_offset = ARR_LIST1->get_max_last_offset() / size;
+
+   for (unsigned int i = 0; i < local_max_last_offset; i++)
    {
      tmp->x = 0;
 #if defined (__ZTC__)

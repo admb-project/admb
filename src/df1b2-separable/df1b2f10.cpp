@@ -3,7 +3,9 @@
  * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <df1b2fun.h>
-#include <cassert>
+#ifdef DEBUG
+  #include <cassert>
+#endif
 
 #ifdef _MSC_VER
   #ifdef _M_X64
@@ -156,10 +158,8 @@ void test_smartlist::rewind(void)
 
     // skip over file postion entry in file
     // so we are ready to read second record
-#ifdef OPT_LIB
-    lseek(fp, (off_t)sizeof(off_t), SEEK_CUR);
-#else
     ret = lseek(fp, (off_t)sizeof(off_t), SEEK_CUR);
+#ifdef DEBUG
     assert(ret >= 0);
 #endif
   }
@@ -301,7 +301,7 @@ void test_smartlist::read_buffer(void)
       // offset of the begining of the record is at the end
       // of the record
       lseek(fp,-pos,SEEK_CUR);
-#if (__cplusplus >= 201703L)
+#ifndef DEBUG
     [[maybe_unused]]
 #endif
       ssize_t ret = read(fp,&pos,sizeof(off_t));
@@ -314,11 +314,11 @@ void test_smartlist::read_buffer(void)
     }
     // get the record size
     unsigned int nbytes = 0;
-#if (__cplusplus >= 201703L)
+#ifndef DEBUG
     [[maybe_unused]]
 #endif
     ssize_t result = ::read(fp,&nbytes,sizeof(unsigned int));
-#ifndef OPT_LIB
+#ifdef DEBUG
     assert(result != -1);
 #endif
     if (nbytes <= 0 || nbytes > bufsize)
@@ -342,11 +342,11 @@ void test_smartlist::read_buffer(void)
     if (direction ==-1) // we are going backwards
     {
       // backup the file pointer again
-#if (__cplusplus >= 201703L)
+#ifndef DEBUG
     [[maybe_unused]]
 #endif
       off_t ret = lseek(fp,pos,SEEK_SET);
-#ifndef OPT_LIB
+#ifdef DEBUG
       assert(ret >= 0);
 #endif
       // *(off_t*)(bptr)=lseek(fp,pos,SEEK_SET);
@@ -354,10 +354,11 @@ void test_smartlist::read_buffer(void)
     else  // we are going forward
     {
       // skip over file postion entry in file
-#ifdef OPT_LIB
-      lseek(fp, pos, SEEK_CUR);
-#else
+#ifndef DEBUG
+    [[maybe_unused]]
+#endif
       off_t ret = lseek(fp, pos, SEEK_CUR);
+#ifdef DEBUG
       assert(ret >= 0);
 #endif
     }

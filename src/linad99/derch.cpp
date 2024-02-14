@@ -66,12 +66,12 @@ void derch(const double& _f, const independent_variables & _x,
     ofstream ofs("derivatives");
     dmatrix dtmp=sort(trans(tmp),3);
     ofs << dtmp << endl;
-    for (int i=g.indexmin();i<=g.indexmax();i++)
+    for (int local_i=g.indexmin();local_i<=g.indexmax();++local_i)
     {
-      if (fabs(g(i))>maxg)
+      if (fabs(g(local_i))>maxg)
       {
-        maxg=fabs(g(i));
-        maxind=i;
+        maxg=fabs(g(local_i));
+        maxind=local_i;
       }
     }
     cout << "maxind = " << maxind << " maxg = " << maxg << endl;

@@ -188,23 +188,23 @@ double get_initial_u(double a,double y)
     else if ( (log(.15)<=logB && logB <=log(.35)) ||
        ((log(.15)<=logB && logB <=log(.45)) && a>=.3) )
     {
-      double y=-logB;
-      double v=y-(1-a)*log(y);
-      x0=y-(1-a)*log(v)-log(1+(1.0-a)/(1.0+v));
+      double local_y=-logB;
+      double v=local_y-(1-a)*log(local_y);
+      x0=local_y-(1-a)*log(v)-log(1+(1.0-a)/(1.0+v));
       log_x0=log(x0);
     }
     else if (log(.01)<logB && logB < log(.15))
     {
-      double y=-logB;
-      double v=y-(1-a)*log(y);
-      x0=y-(1-a)*log(v)-log((v*v+2*(3-a)*v+(2-a)*(3-a))/(v*v +(5-a)*v+2));
+      double local_y=-logB;
+      double v=local_y-(1-a)*log(local_y);
+      x0=local_y-(1-a)*log(v)-log((v*v+2*(3-a)*v+(2-a)*(3-a))/(v*v +(5-a)*v+2));
       log_x0=log(x0);
     }
     else if (logB < log(.01))
     {
-      double y=-logB;
-      double v=y-(1-a)*log(y);
-      x0=y-(1-a)*log(v)-log((v*v+2*(3-a)*v+(2-a)*(3-a))/(v*v +(5-a)*v+2));
+      double local_y=-logB;
+      double v=local_y-(1-a)*log(local_y);
+      x0=local_y-(1-a)*log(v)-log((v*v+2*(3-a)*v+(2-a)*(3-a))/(v*v +(5-a)*v+2));
       log_x0=log(x0);
     }
     else

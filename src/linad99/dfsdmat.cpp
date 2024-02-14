@@ -328,7 +328,7 @@ void dfsdmat::save()
   LSEEK(tmp_file,0L,SEEK_SET);
   unsigned int _n = (unsigned int)size();
   unsigned int nn = (_n*(_n+1))/2;
-#if (__cplusplus >= 201703L)
+#ifndef DEBUG
     [[maybe_unused]]
 #endif
   ssize_t ret = write(tmp_file,&_n,sizeof(int));
@@ -365,7 +365,7 @@ void dfsdmat::restore()
   unsigned int _n=0;
   LSEEK(tmp_file,0L,SEEK_SET);
 
-#if (__cplusplus >= 201703L)
+#ifndef DEBUG
   [[maybe_unused]]
 #endif
   ssize_t ret = read(tmp_file,&_n,sizeof(unsigned int));

@@ -162,18 +162,8 @@ int df1b2_gradlist::write_pass1_pluseq(const df1b2variable * _px,
   //int nvar=df1b2variable::nvar;
   ADUNCONST(df1b2variable*,px)
 
-#ifdef DEBUG
-  #ifdef _MSC_VER
-    #pragma warning disable 4458
-  #endif
-#endif
-  fixed_smartlist & nlist=f1b2gradlist->nlist;
-  test_smartlist& list=f1b2gradlist->list;
-#ifdef DEBUG
-  #ifdef _MSC_VER
-    #pragma warning restore 4458
-  #endif
-#endif
+  fixed_smartlist& local_nlist=f1b2gradlist->nlist;
+  test_smartlist& local_list=f1b2gradlist->list;
 
   size_t total_bytes=sizeof(df1b2_header)+sizeof(df1b2_header);
 #if defined(SAFE_ALL)
@@ -181,19 +171,19 @@ int df1b2_gradlist::write_pass1_pluseq(const df1b2variable * _px,
   int slen=strlen(ids);
   total_bytes+=slen;
 #endif
-  list.check_buffer_size(total_bytes);
-  void * tmpptr=list.bptr;
+  local_list.check_buffer_size(total_bytes);
+  void * tmpptr=local_list.bptr;
 #if defined(SAFE_ALL)
-  memcpy(list,ids,slen);
+  memcpy(local_list,ids,slen);
 #endif
 
-  memcpy(list,(df1b2_header*)(px),sizeof(df1b2_header));
-  memcpy(list,(df1b2_header*)(pz),sizeof(df1b2_header));
+  memcpy(local_list,(df1b2_header*)(px),sizeof(df1b2_header));
+  memcpy(local_list,(df1b2_header*)(pz),sizeof(df1b2_header));
 
   // ***** write  record size
-  nlist.bptr->numbytes=adptr_diff(list.bptr,tmpptr);
-  nlist.bptr->pf=(ADrfptr)(&ad_read_pass1_plus_eq);
-  ++nlist;
+  local_nlist.bptr->numbytes=adptr_diff(local_list.bptr,tmpptr);
+  local_nlist.bptr->pf=(ADrfptr)(&ad_read_pass1_plus_eq);
+  ++local_nlist;
   return 0;
 }
 

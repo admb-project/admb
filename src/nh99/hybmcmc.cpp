@@ -586,8 +586,8 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
              {
                //pprob=-log(0.95*exp(-r2)+0.05/3.0*exp(-r2/9.0));
                double r2=0.5*norm2(phalf);
-               double z=0.95*exp(-r2)+0.05/3.0*exp(-r2/9.0);
-               double xx=(0.95*exp(-r2)+0.05/27.0*exp(-r2/9.0))/z;
+               double local_z=0.95*exp(-r2)+0.05/3.0*exp(-r2/9.0);
+               double xx=(0.95*exp(-r2)+0.05/27.0*exp(-r2/9.0))/local_z;
                dvector zz=xx*phalf;
                y+=hstep*zz;
              }
@@ -607,8 +607,8 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
              else
              {
                double r2=0.5*norm2(phalf);
-               double z=0.95*exp(-r2)+0.05/3.0*exp(-r2/9.0);
-               dvector zz=(0.95*exp(-r2)+0.05/27.0*exp(-r2/9.0))/z*phalf;
+               double local_z=0.95*exp(-r2)+0.05/3.0*exp(-r2/9.0);
+               dvector zz=(0.95*exp(-r2)+0.05/27.0*exp(-r2/9.0))/local_z*phalf;
                y-=hstep*phalf;
              }
              z=x0+chd*y;

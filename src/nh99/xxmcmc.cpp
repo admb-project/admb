@@ -163,10 +163,7 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
     uostream * pofs_sd = NULL;
 
     initial_params::set_inactive_random_effects();
-#if (__cplusplus >= 201703L)
-    [[maybe_unused]]
-#endif
-    int nvar_x=initial_params::nvarcalc();
+    [[maybe_unused]] int nvar_x=initial_params::nvarcalc();
     initial_params::set_active_random_effects();
     int nvar_re=initial_params::nvarcalc();
 

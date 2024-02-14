@@ -249,9 +249,9 @@ Reads to str from input cifstream.
 cifstream& cifstream::operator>>(line_adstring& str)
 {
   filter();
-  char line[256];
-  getline(line, 256);
-  str.realloc(&line[0]);
+  char local_line[256];
+  getline(local_line, 256);
+  str.realloc(&local_line[0]);
   return *this;
 }
 /**

@@ -209,8 +209,8 @@ void laplace_approximation_calculator::generate_antithetical_rvs()
   {
     M(i)=M(i)/norm(M(i));
   }
-  int nvar=(samplesize-1)*n;
-  independent_variables xx(1,nvar);
+  int local_nvar=(samplesize-1)*n;
+  independent_variables xx(1,local_nvar);
   ii=0;
   for (int i=2;i<=samplesize;i++)
   {
@@ -220,33 +220,33 @@ void laplace_approximation_calculator::generate_antithetical_rvs()
     }
   }
 
-  fmmt1 fmc(nvar,5);
-  //fmm fmc(nvar,5);
-  fmc.noprintx=1;
-  fmc.iprint = defaults::iprint;
-  fmc.maxfn=2500;
-  fmc.crit=1.e-6;
+  fmmt1 local_fmc(local_nvar,5);
+  //fmm fmc(local_nvar,5);
+  local_fmc.noprintx=1;
+  local_fmc.iprint = defaults::iprint;
+  local_fmc.maxfn=2500;
+  local_fmc.crit=1.e-6;
 
   double f;
   double fbest=1.e+50;;
-  dvector g(1,nvar);
-  dvector gbest(1,nvar);
-  dvector xbest(1,nvar);
+  dvector g(1,local_nvar);
+  dvector gbest(1,local_nvar);
+  dvector xbest(1,local_nvar);
 
   gbest.fill_seqadd(1.e+50,0.);
   {
-    while (fmc.ireturn>=0)
+    while (local_fmc.ireturn>=0)
     {
       //int badflag=0;
-      fmc.fmin(f,xx,g);
-      if (fmc.ihang)
+      local_fmc.fmin(f,xx,g);
+      if (local_fmc.ihang)
       {
         //int hang_flag=fmc.ihang;
         //double maxg=max(g);
         //double ccrit=fmc.crit;
         //int current_ifn=fmc.ifn;
       }
-      if (fmc.ireturn>0)
+      if (local_fmc.ireturn>0)
       {
          f=fcomp1(xx,dist,samplesize,n,g,M);
          if (f < fbest)

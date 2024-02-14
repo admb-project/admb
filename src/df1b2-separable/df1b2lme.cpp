@@ -41,11 +41,11 @@ void laplace_approximation_calculator::get_hessian_components_banded_lme
         ad_exit(1);
       }
       df1b2_gradlist::set_no_derivatives();
-      int nvar=initial_params::nvarcalc_all();
-      dvector x(1,nvar);
+      int local_nvar=initial_params::nvarcalc_all();
+      dvector x(1,local_nvar);
       initial_params::xinit_all(x);
       initial_df1b2params::reset_all(x);
-      for (int i=1;i<=nvar;i++) y(i)=x(i);
+      for (int i=1;i<=local_nvar;i++) y(i)=x(i);
       step=get_newton_raphson_info_banded(pfmin);
       *tmpHess=Hess;
     }
@@ -78,11 +78,11 @@ void laplace_approximation_calculator::get_hessian_components_banded_lme
     }
 
     df1b2_gradlist::set_no_derivatives();
-    int nvar=initial_params::nvarcalc_all();
-    dvector x(1,nvar);
+    int local_nvar=initial_params::nvarcalc_all();
+    dvector x(1,local_nvar);
     initial_params::xinit_all(x);
     initial_df1b2params::reset_all(x);
-    for (int i=1;i<=nvar;i++) y(i)=x(i);
+    for (int i=1;i<=local_nvar;i++) y(i)=x(i);
     step=get_newton_raphson_info_banded(pfmin);
 
     switch(hesstype)
@@ -202,7 +202,7 @@ dvector laplace_approximation_calculator::banded_calculations_lme
   dvariable tmp=0.0;
   dvariable sgn;
 
-  dvector step=value(solve(vHess,g,tmp,sgn));
+  dvector local_step=value(solve(vHess,g,tmp,sgn));
   if (value(sgn)<=0)
   {
     cerr << "sgn sucks" << endl;
@@ -213,7 +213,7 @@ dvector laplace_approximation_calculator::banded_calculations_lme
   dvector g1(1,nv);
   ld=0.5*tmp;
   gradcalc(nv,g1);
-  uhat-=step;
+  uhat-=local_step;
 
   initial_params::set_active_only_random_effects();
   double maxg=max(fabs(get_gradient_lme(uhat,pfmin)));
@@ -251,10 +251,7 @@ dvector laplace_approximation_calculator::get_gradient_lme
 
   objective_function_value::fun_without_pen=value(vf);
   vf+=pen;
-#if (__cplusplus >= 201703L)
-  [[maybe_unused]]
-#endif
-  double f = value(vf);
+  [[maybe_unused]] double f = value(vf);
   gradcalc(usize, g);
   return g;
 }
@@ -281,10 +278,7 @@ dvector laplace_approximation_calculator::get_gradient_lme
 
   objective_function_value::fun_without_pen=value(vf);
   vf+=pen;
-#if (__cplusplus >= 201703L)
-  [[maybe_unused]]
-#endif
-  double f = value(vf);
+  [[maybe_unused]] double f = value(vf);
   gradcalc(usize, g);
   return g;
 }

@@ -171,7 +171,7 @@ void laplace_approximation_calculator::
       }
       else
       {
-        dcompressed_triplet * vsparse_triplet_adjoint =
+        dcompressed_triplet * local_vsparse_triplet_adjoint =
           pmin->lapprox->vsparse_triplet_adjoint;
         for (int i=1;i<=num_local_re;i++)
         {
@@ -192,7 +192,7 @@ void laplace_approximation_calculator::
                 //  +=locy(i2).u_bar[j2-1];
                 sparse_count_adjoint++;
                 locy(i2).get_u_bar_tilde()[j2-1]=
-                  (*vsparse_triplet_adjoint)
+                  (*local_vsparse_triplet_adjoint)
                     ((*sparse_iterator)(sparse_count_adjoint));
               }
             }

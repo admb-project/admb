@@ -542,9 +542,9 @@ void fixed_smartlist::read_file(void)
 {
   //rewind the file
   off_t pos=lseek(fp,0L,SEEK_SET);
-  char buffer[50000];
+  char local_buffer[50000];
   int offset=0;
-  fixed_list_entry * b= (fixed_list_entry*) &(buffer[0]);
+  fixed_list_entry * b= (fixed_list_entry*) &(local_buffer[0]);
   cout << b << endl;
   ssize_t nw = 0;
   do
@@ -553,7 +553,7 @@ void fixed_smartlist::read_file(void)
     nw = ::read(fp,&nbytes,sizeof(unsigned int));
     if (nw != -1)
     {
-      nw = ::read(fp, buffer + offset, (size_t)nbytes);
+      nw = ::read(fp, local_buffer + offset, (size_t)nbytes);
       if (nw != -1)
       {
         offset+=nbytes;

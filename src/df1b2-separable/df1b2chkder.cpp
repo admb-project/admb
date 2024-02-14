@@ -438,9 +438,9 @@ dvector laplace_approximation_calculator::
 #ifdef DEBUG
       assert(nvar <= INT_MAX);
 #endif
-      dvector scale(1,(int)nvar);   // need to get scale from somewhere
-      /*int check=*/initial_params::stddev_scale(scale,x);
-      dvector sscale=scale(1,Dux(1).indexmax());
+      dvector local_scale(1,(int)nvar);   // need to get scale from somewhere
+      /*int check=*/initial_params::stddev_scale(local_scale,x);
+      dvector sscale=local_scale(1,Dux(1).indexmax());
       for (i=1;i<=usize;i++)
       {
         Dux(i)=elem_prod(Dux(i),sscale);

@@ -337,11 +337,12 @@ funnel_init_df1b2variable::funnel_init_df1b2variable
   (const random_effects_bounded_vector_info & _u)
   : df1b2variable(newadkl)
 {
-  ADUNCONST(random_effects_bounded_vector_info,u)
-  df1b2variable& x = (*(u.pv)).df1b2vector::operator () (u.i);
+  //ADUNCONST(random_effects_bounded_vector_info,u)
+  random_effects_bounded_vector_info& local_u = const_cast<random_effects_bounded_vector_info&>(_u);
+  df1b2variable& x = (*(local_u.pv)).df1b2vector::operator () (local_u.i);
 
   type=1;
-  pointer=u.pv;
+  pointer=local_u.pv;
   ind_index = x.get_ind_index();
   if (ind_index<0)
   {

@@ -842,9 +842,10 @@ init_df1_three_variable::init_df1_three_variable(const prevariable& _v)
   }
   else
   {
-    ADUNCONST(prevariable,v)
-    ind_var[num_ind_var++]=&v;
-    *get_u() =  value(v);
+    //ADUNCONST(prevariable,v)
+    prevariable& local_v = const_cast<prevariable&>(_v);
+    ind_var[num_ind_var++]=&local_v;
+    *get_u() = value(local_v);
     switch(num_ind_var)
     {
     case 1:

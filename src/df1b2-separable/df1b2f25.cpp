@@ -88,13 +88,13 @@ void df1b2_init_vector::sd_scale(const dvector& _v, [[maybe_unused]] const dvect
     if (allocated())
     {
       int& ii=(int&) _ii;
-      dvector& v=(dvector&) _v;
+      dvector& local_v = const_cast<dvector&>(_v);
       int mmin=indexmin();
       int mmax=indexmax();
       for (int i=mmin;i<=mmax;i++)
       {
-        v(ii)=1.;
-        if (!ISZERO(scalefactor)) v(ii)/=scalefactor;
+        local_v(ii)=1.;
+        if (!ISZERO(scalefactor)) local_v(ii)/=scalefactor;
         ii++;
       }
     }
@@ -110,7 +110,7 @@ void df1b2_init_matrix::sd_scale(const dvector& _v, [[maybe_unused]] const dvect
     if (allocated())
     {
       int& ii=(int&) _ii;
-      dvector& v=(dvector&) _v;
+      dvector& local_v = const_cast<dvector&>(_v);
       int mmin=indexmin();
       int mmax=indexmax();
       for (int i=mmin;i<=mmax;i++)
@@ -121,8 +121,8 @@ void df1b2_init_matrix::sd_scale(const dvector& _v, [[maybe_unused]] const dvect
           int cmax=((*this)(i)).indexmax();
           for (int j=cmin;j<=cmax;j++)
           {
-            v(ii)=1.;
-            if (!ISZERO(scalefactor)) v(ii)/=scalefactor;
+            local_v(ii) = 1.0;
+            if (!ISZERO(scalefactor)) local_v(ii)/=scalefactor;
             ii++;
           }
         }
@@ -140,7 +140,7 @@ void df1b2_init_bounded_vector::sd_scale(const dvector& _v,const dvector& x,
     if (allocated())
     {
       int& ii=(int&) _ii;
-      dvector& v=(dvector&) _v;
+      dvector& local_v = const_cast<dvector&>(_v);
       int mmin=indexmin();
       int mmax=indexmax();
       double pen=0;
@@ -149,9 +149,9 @@ void df1b2_init_bounded_vector::sd_scale(const dvector& _v,const dvector& x,
         for (int i=mmin;i<=mmax;i++)
         {
           if (ISZERO(scalefactor))
-            v(ii)=ndfboundp(x(ii),minb,maxb,pen);
+            local_v(ii)=ndfboundp(x(ii),minb,maxb,pen);
           else
-            v(ii)=ndfboundp(x(ii)/scalefactor,minb,maxb,pen)/scalefactor;
+            local_v(ii)=ndfboundp(x(ii)/scalefactor,minb,maxb,pen)/scalefactor;
           ii++;
         }
       }
@@ -159,7 +159,7 @@ void df1b2_init_bounded_vector::sd_scale(const dvector& _v,const dvector& x,
       {
         for (int i=mmin;i<=mmax;i++)
         {
-          v(ii)=ndfboundp_mc(x(ii),minb,maxb,pen);
+          local_v(ii)=ndfboundp_mc(x(ii),minb,maxb,pen);
           ii++;
         }
       }
@@ -176,7 +176,7 @@ void df1b2_init_bounded_matrix::sd_scale(const dvector& _v,const dvector& x,
     if (allocated())
     {
       int& ii=(int&) _ii;
-      dvector& v=(dvector&) _v;
+      dvector& local_v = const_cast<dvector&>(_v);
       int rmin=indexmin();
       int rmax=indexmax();
       double pen=0;
@@ -189,9 +189,9 @@ void df1b2_init_bounded_matrix::sd_scale(const dvector& _v,const dvector& x,
           for (int j=cmin;j<=cmax;j++)
           {
             if (ISZERO(scalefactor))
-              v(ii)=ndfboundp(x(ii),minb,maxb,pen);
+              local_v(ii)=ndfboundp(x(ii),minb,maxb,pen);
             else
-              v(ii)=ndfboundp(x(ii)/scalefactor,minb,maxb,pen)/
+              local_v(ii)=ndfboundp(x(ii)/scalefactor,minb,maxb,pen)/
                 scalefactor;
             ii++;
           }

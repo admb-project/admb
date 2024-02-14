@@ -82,23 +82,23 @@ dvariable function_minimizer::random_effects_maximization(const dvar_vector& _x)
   }
   gradient_structure::set_YES_DERIVATIVES();
   // set convergence criterion for this phase
-  dvector convergence_criteria;
-  if (!(!convergence_criteria))
+  dvector local_convergence_criteria;
+  if (!(!local_convergence_criteria))
   {
-    int ind=min(convergence_criteria.indexmax(),
+    int ind=min(local_convergence_criteria.indexmax(),
     initial_params::current_phase);
-    crit=convergence_criteria(ind);
+    crit=local_convergence_criteria(ind);
   }
   if (!ISZERO(_crit))
   {
     crit = _crit;
   }
-  dvector maximum_function_evaluations;
-  if (!(!maximum_function_evaluations) && !maxfn_option)
+  dvector local_maximum_function_evaluations;
+  if (!(!local_maximum_function_evaluations) && !maxfn_option)
   {
-    int ind=min(maximum_function_evaluations.indexmax(),
+    int ind=min(local_maximum_function_evaluations.indexmax(),
       initial_params::current_phase);
-    maxfn= (int) maximum_function_evaluations(ind);
+    maxfn= (int) local_maximum_function_evaluations(ind);
   }
   dvariable vf=0.0;
 

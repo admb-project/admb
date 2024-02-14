@@ -546,9 +546,9 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0, [[maybe_unused]
   independent_variables _parsaveprime(1,nvar);
 
   // These are used inside NUTS by reference
-  int _nalphaprime, _nprime, _nfevals;
-  double _alphaprime;
-  bool _sprime, _divergent;
+  int _nalphaprime = 0;
+  double _alphaprime = 0.0;
+  bool _sprime;
   int ndivergent=0; // # divergences post-warmup
   int nsamples=0; // total samples, not always nmcmc if duration option used
   // Declare some local variables used below.
@@ -591,7 +591,7 @@ void function_minimizer::nuts_mcmc_routine(int nmcmc,int iseed0, [[maybe_unused]
       epsvec(1)=eps; epsbar(1)=eps; Hbar(1)=0;
     }
     // Generate single NUTS trajectory by repeatedly doubling build_tree
-    _nprime=0; _divergent=0; _nfevals=0;
+    int _nprime=0; bool _divergent=0; int _nfevals=0;
     n=1; s=1; j=0;
     // Reset global ones to initial point of this trajectory
     thetaminus_end=theta; thetaplus_end=theta; thetaprime=theta;

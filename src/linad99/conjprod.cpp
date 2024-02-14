@@ -264,10 +264,10 @@ label800:
   }
 
   {
-    for (int j=1;j<=n;j++)
+    for (int local_j=1;local_j<=n;local_j++)
     {
-      g[j] = -xi[j];
-      xi[j]=h[j]=g[j];
+      g[local_j] = -xi[local_j];
+      xi[local_j]=h[local_j]=g[local_j];
     }
   }
 
@@ -453,11 +453,11 @@ label1000:
 
     this->dgg=this->gg=0.0;
     {
-      for (int j=1;j<=n;j++)
+      for (int local_j=1;local_j<=n;local_j++)
       {
-        this->gg += g[j]*g[j];
-/*      dgg += xi[j]*xi[j];  */
-        this->dgg += (xi[j]+g[j])*xi[j];
+        this->gg += g[local_j]*g[local_j];
+/*      dgg += xi[local_j]*xi[local_j];  */
+        this->dgg += (xi[local_j]+g[local_j])*xi[local_j];
       }
     }
     if (this->gg == 0.0)
@@ -467,10 +467,10 @@ label1000:
     }
     this->gam=this->dgg/this->gg;
     {
-      for (int j=1;j<=n;j++)
+      for (int local_j=1;local_j<=n;local_j++)
       {
-        g[j] = -xi[j]; // g seems to hold the negative gradient
-        xi[j]=h[j]=g[j]+this->gam*h[j];
+        g[local_j] = -xi[local_j]; // g seems to hold the negative gradient
+        xi[local_j]=h[local_j]=g[local_j]+this->gam*h[local_j];
       }
     }
 //  if (this->iter <= ITMAX) goto label1000;

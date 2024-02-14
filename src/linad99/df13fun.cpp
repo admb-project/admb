@@ -965,15 +965,15 @@ df1_three_matrix choleski_decomp(const df1_three_matrix& MM)
  * Description not yet available.
  * \param
  */
-dvariable& dvariable::operator = (const df1_three_variable& v)
+dvariable& dvariable::operator = (const df1_three_variable& _v)
 {
   const prevariable * px=df1_three_variable::ind_var[0];
   const prevariable * py=df1_three_variable::ind_var[1];
   const prevariable * pz=df1_three_variable::ind_var[2];
-  double  dfx= *v.get_u_x();
-  double  dfy= *v.get_u_y();
-  double  dfz= *v.get_u_z();
-  value(*this)=*v.get_u();
+  double  dfx = *_v.get_u_x();
+  double  dfy = *_v.get_u_y();
+  double  dfz = *_v.get_u_z();
+  value(*this) = *_v.get_u();
 
   gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation3ind,
     &(value(*this)),&(value(*px)),dfx,&(value(*py)),dfy,&(value(*pz)),

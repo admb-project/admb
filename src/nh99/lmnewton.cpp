@@ -224,7 +224,7 @@ L50:
 
 void function_minimizer::limited_memory_quasi_newton
   (double& f, const independent_variables& _x, int m, int noprintx,
-  int maxfn, double crit)
+  int _maxfn, double crit)
 {
   independent_variables& x = (independent_variables&) _x;
   if (m<=0)
@@ -353,7 +353,7 @@ L20:
     goto L50;
   }
   ++icall;
-  if (icall > maxfn)
+  if (icall > _maxfn)
   {
     goto L50;
   }

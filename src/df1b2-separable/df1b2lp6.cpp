@@ -190,19 +190,19 @@ void laplace_approximation_calculator::
     }
     else if (hesstype==4)
     {
-      dvector step;
+      dvector local_step;
 
 #     if defined(USE_ATLAS)
         if (!ad_comm::no_atlas_flag)
         {
-          step=-atlas_solve_spd(Hess,grad,ierr);
+          local_step=-atlas_solve_spd(Hess,grad,ierr);
         }
         else
         {
           dmatrix A=choleski_decomp_positive(Hess,ierr);
           if (!ierr)
           {
-            step=-solve(Hess,grad);
+            local_step=-solve(Hess,grad);
             //step=-solve(A*trans(A),grad);
           }
         }
@@ -214,7 +214,7 @@ void laplace_approximation_calculator::
           dvector temp=solve(*sparse_triplet2,grad,*sparse_symbolic2,ierr);
           if (ierr)
           {
-            step=-temp;
+            local_step=-temp;
           }
           else
           {
@@ -250,13 +250,13 @@ void laplace_approximation_calculator::
         }
         else
         {
-          step=-solve(Hess,grad);
+          local_step=-solve(Hess,grad);
         }
 #     endif
       if (pmin->bad_step_flag)
         break;
       uhat_old=uhat;
-      uhat+=step;
+      uhat+=local_step;
 
       double maxg_old=maxg;
       maxg=fabs(evaluate_function(uhat,pfmin));
@@ -742,7 +742,7 @@ void laplace_approximation_calculator::
         for (int i=1;i<=num_local_re;i++)
         {
           int lrei = *plre_indexi;
-          ivector* plisti = &list(lrei);
+          plisti = &list(lrei);
           int i1 = *(plisti->get_v() + 1) - xsize;
           int i2 = *(plisti->get_v() + 2);
 

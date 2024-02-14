@@ -109,7 +109,6 @@ void function_minimizer::hess_step(){
   dvector gr2(1,nvar);		// updated gradients
   dvariable nll,nll2;		// minimal values
   //double maxgrad;
-  double maxgrad0, mingrad0, maxgrad2, mingrad2;
   read_mle_hmc(nvar, mle); // takes MLE from admodel.hes file
 
   // Push the original bounded MLE through the model
@@ -122,8 +121,10 @@ void function_minimizer::hess_step(){
   *objective_function_value::pobjfun=0.0;
   userfunction();
   gradcalc(nvar,gr0);			      // initial unbounded gradient
-  maxgrad0=max(fabs(gr0));
-  mingrad0=min(fabs(gr0));
+  double maxgrad0=max(fabs(gr0));
+  double mingrad0=min(fabs(gr0));
+  double maxgrad2 = maxgrad0;
+  double mingrad2 = mingrad0;
   nll=*objective_function_value::pobjfun;
   adstring_array pars(1,nvar);
   pars = get_param_names();

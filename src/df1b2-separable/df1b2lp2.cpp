@@ -190,7 +190,7 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
       {
         ivector& re_list=(*block_diagonal_re_list)(i);
         ivector& fe_list=(*block_diagonal_fe_list)(i);
-        dmatrix& Dux=(*block_diagonal_Dux)(i);
+        dmatrix& local_Dux=(*block_diagonal_Dux)(i);
         dmatrix& H=(*block_diagonal_hessian)(i);
         xxx(re_list,fe_list);
         int mmax=re_list.indexmax();
@@ -206,7 +206,7 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
           if (allocated(H))
           {
             dvector tmp1=solve(H,tmp);
-            dvector xtmp=tmp1*Dux;
+            dvector xtmp=tmp1*local_Dux;
             for (int j=1;j<=fe_list.indexmax();j++)
             {
               x_con(fe_list(j))+=xtmp(j);
@@ -298,7 +298,7 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
         {
           ivector& re_list=(*block_diagonal_re_list)(i);
           ivector& fe_list=(*block_diagonal_fe_list)(i);
-          dmatrix& Dux=(*block_diagonal_Dux)(i);
+          dmatrix& local_Dux=(*block_diagonal_Dux)(i);
           xxx(re_list,fe_list);
           int mmax=re_list.indexmax();
           dvector tmp(1,mmax);
@@ -311,7 +311,7 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
           if (allocated(fe_list))
           {
             dvector tmp1=solve(H,tmp);
-            dvector xtmp=tmp1*Dux;
+            dvector xtmp=tmp1*local_Dux;
             for (int j=1;j<=fe_list.indexmax();j++)
             {
               x_con(fe_list(j))+=xtmp(j);

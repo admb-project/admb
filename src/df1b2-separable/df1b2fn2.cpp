@@ -135,9 +135,7 @@ void df1b2variable::initialize(void)
   }
 #endif
   unsigned int local_nvar=((twointsandptr*)ptr)->ptr->nvar;
-#if (__cplusplus >= 201703L)
   [[maybe_unused]]
-#endif
   size_t total_bytes=sizeof(df1b2_header)+sizeof(df1b2_header);
   initialize(local_nvar);
 }

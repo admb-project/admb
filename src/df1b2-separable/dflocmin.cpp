@@ -39,7 +39,7 @@ dvar_vector *
  * \param
  */
 dvector laplace_approximation_calculator::local_minimization
-(dvector& s,dmatrix& H,dvector& grad,double lambda)
+(dvector& s,dmatrix& H,dvector& _grad,double lambda)
 {
   dvector vbest(1,usize);
   vbest.initialize();
@@ -52,7 +52,7 @@ dvector laplace_approximation_calculator::local_minimization
   std::ostream& output_stream = get_output_stream();
   do
   {
-    dvector v=local_minimization_routine(s,H,grad,lambda);
+    dvector v=local_minimization_routine(s,H,_grad,lambda);
     dvector xx=uhat+v;
     double f2=evaluate_function_no_derivatives(xx,pmin);
     output_stream << endl << fbest-f2 << endl;
@@ -95,7 +95,7 @@ dvector laplace_approximation_calculator::local_minimization
  * \param
  */
 dvector laplace_approximation_calculator::local_minimization_routine
-(dvector& s,dmatrix& H,dvector& grad,double lambda)
+(dvector& s,dmatrix& H,dvector& _grad,double lambda)
 {
   double f=0.0;
   double fb=1.e+100;
@@ -124,7 +124,7 @@ dvector laplace_approximation_calculator::local_minimization_routine
       dvector z=H*v;
       double vHv=v*z;
 
-      double gradv=grad*v;
+      double gradv=_grad*v;
       f=lambda*gradv+0.5*lambda*lambda*vHv+ square(ns2-1.0);
       //f=0.5*lambda*lambda*s*H*s;
       if (f<fb)
@@ -132,7 +132,7 @@ dvector laplace_approximation_calculator::local_minimization_routine
         fb=f;
         ub=s;
       }
-      g=lambda*grad/ns -lambda * gradv*s/ns2
+      g=lambda*_grad/ns -lambda * gradv*s/ns2
            + lambda * lambda * z/ns
            - lambda * lambda * vHv*s/ns2 + 4.0*(ns2-1.0)*s;
     }

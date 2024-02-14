@@ -476,9 +476,9 @@ dvector laplace_approximation_calculator::
       quadratic_prior::in_qp_calculations=1;
       funnel_init_var::lapprox=this;
       df1b2_gradlist::set_no_derivatives();
-      dvector scale(1,(int)nvar);   // need to get scale from somewhere
-      /*check=*/initial_params::stddev_scale(scale,x);
-      dvector sscale=scale(1,Dux(1).indexmax());
+      dvector local_scale(1,(int)nvar);   // need to get scale from somewhere
+      /*check=*/initial_params::stddev_scale(local_scale,x);
+      dvector sscale=local_scale(1,Dux(1).indexmax());
 
       for (i=1;i<=usize;i++)
       {

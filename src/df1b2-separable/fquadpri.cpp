@@ -31,7 +31,7 @@ void df1b2quadratic_prior::add_to_list(void)
     ptr[num_quadratic_prior++]=this;
   }
 }
-void df1b2quadratic_prior::get_Lxu(dmatrix& M)
+void df1b2quadratic_prior::get_Lxu(dmatrix& _M)
 {
   bool isallocated = Lxu && allocated(*Lxu) && index;
 #ifdef DEBUG
@@ -41,7 +41,7 @@ void df1b2quadratic_prior::get_Lxu(dmatrix& M)
   {
     int mmin=(*pu)(pu->indexmin()).get_ind_index();
     int size=pu->size();
-    int offset=mmin-M(M.indexmin()).indexmax()-1;  // subtract x offset
+    int offset=mmin-_M(_M.indexmin()).indexmax()-1;  // subtract x offset
     int nvar = index->indexmax();
     {
       switch(old_style_flag)
@@ -52,7 +52,7 @@ void df1b2quadratic_prior::get_Lxu(dmatrix& M)
           int jcol=(*index)(i);
           for (int ii=1;ii<=size;ii++)
           {
-            M(ii+offset,jcol)+=(*Lxu)(i,ii);
+            _M(ii+offset,jcol)+=(*Lxu)(i,ii);
           }
         }
         break;
@@ -65,7 +65,7 @@ void df1b2quadratic_prior::get_Lxu(dmatrix& M)
           int jcol=(*index)(i);
           for (int ii=1;ii<=size;ii++)
           {
-            M(ii+offset,jcol)+=(*Lxu)(i,ii);
+            _M(ii+offset,jcol)+=(*Lxu)(i,ii);
           }
         }
         */
@@ -75,7 +75,7 @@ void df1b2quadratic_prior::get_Lxu(dmatrix& M)
           int jcol=(*index)(i);
           for (int ii=1;ii<=size;ii++)
           {
-            M(ii+offset,jcol)+=(*Lxu)(i,ii);
+            _M(ii+offset,jcol)+=(*Lxu)(i,ii);
           }
         }
         break;

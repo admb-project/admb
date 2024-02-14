@@ -1388,7 +1388,7 @@ void random_effects_userfunction(double f,const dvector& x, const dvector& g);
  * \param
  */
 void get_second_ders([[maybe_unused]] int xs, [[maybe_unused]] int us,const init_df1b2vector _y,dmatrix& Hess,
-  dmatrix& Dux, df1b2_gradlist * f1b2gradlist,function_minimizer * pfmin,
+  dmatrix& Dux, df1b2_gradlist * _f1b2gradlist,function_minimizer * pfmin,
   laplace_approximation_calculator * lpc)
 {
   // Note that xs is the number of active non random effects
@@ -1448,7 +1448,7 @@ void get_second_ders([[maybe_unused]] int xs, [[maybe_unused]] int us,const init
           Dux(i,j)=y(i+xsize).u_bar[j-1];
     }
     if (ip<num_der_blocks)
-      f1b2gradlist->reset();
+      _f1b2gradlist->reset();
   }
 
   if  (ad_comm::print_hess_and_exit_flag)
@@ -1922,7 +1922,7 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
  * \param
  */
 void get_newton_raphson_info(int xs,int us,const init_df1b2vector _y,
-  dmatrix& Hess, dvector& grad, [[maybe_unused]] df1b2_gradlist * f1b2gradlist,
+  dmatrix& Hess, dvector& grad, [[maybe_unused]] df1b2_gradlist * _f1b2gradlist,
   function_minimizer * pfmin)
 {
   // Note that xs is the number of active non random effects

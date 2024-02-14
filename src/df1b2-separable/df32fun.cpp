@@ -1064,10 +1064,11 @@ init_df3_two_variable::init_df3_two_variable(const df1b2variable& _v)
   }
   else
   {
-    ADUNCONST(df1b2variable,v)
+    //ADUNCONST(df1b2variable,v)
+    df1b2variable& local_v = const_cast<df1b2variable&>(_v);
 
-    ind_var[num_ind_var++]=&v;
-    *get_u() =  *v.get_u();
+    ind_var[num_ind_var++]=&local_v;
+    *get_u() =  *local_v.get_u();
     switch(num_ind_var)
     {
     case 1:

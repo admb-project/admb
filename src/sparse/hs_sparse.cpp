@@ -1771,9 +1771,9 @@ ivector cs_amd (XCONST hs_smatrix &A)  /* Implements only order == 1: Chol*/
                 assert(n >= 0);
 #endif
                 h %= static_cast<unsigned int>(n);                    /* finalize hash of i */
-                next [i] = hhead [h] ;            /* place i in hash bucket */
-                hhead [h] = i ;
-                last [i] = h ;                   /* save hash of i in last[i] */
+                next [i] = hhead [static_cast<int>(h)] ;            /* place i in hash bucket */
+                hhead [static_cast<int>(h)] = i ;
+                last [i] = static_cast<int>(h);                   /* save hash of i in last[i] */
             }
         }                                    /* scan2 is done */
         degree [k] = dk ;                    /* finalize |Lk| */
@@ -2072,7 +2072,10 @@ ivector cs_amd (XCONST dvar_hs_smatrix &A) /* Implements only order == 1: Chol*/
                     {
                         d += dext ;            /* sum up the set differences */
                         Ci [pn++] = e ;            /* keep e in Ei */
-                        h += e ;            /* compute the hash of node i */
+#ifdef DEBUG
+                        assert(e >= 0);
+#endif
+                        h += static_cast<unsigned int>(e);            /* compute the hash of node i */
                     }
                     else
                     {
@@ -2090,7 +2093,10 @@ ivector cs_amd (XCONST dvar_hs_smatrix &A) /* Implements only order == 1: Chol*/
                 if ((nvj = nv [j]) <= 0) continue ; /* node j dead or in Lk */
                 d += nvj ;                    /* degree(i) += |j| */
                 Ci [pn++] = j ;                  /* place j in node list of i */
-                h += j ;                    /* compute hash for node i */
+#ifdef DEBUG
+                assert(j >= 0);
+#endif
+                h += static_cast<unsigned int>(j);                    /* compute hash for node i */
             }
             if (d == 0)                         /* check for mass elimination */
             {
@@ -2109,10 +2115,13 @@ ivector cs_amd (XCONST dvar_hs_smatrix &A) /* Implements only order == 1: Chol*/
                 Ci [p3] = Ci [p1] ;            /* move 1st el. to end of Ei */
                 Ci [p1] = k ;                /* add k as 1st element in of Ei */
                 len [i] = pn - p1 + 1 ;     /* new len of adj. list of node i */
-                h %= n ;                    /* finalize hash of i */
-                next [i] = hhead [h] ;            /* place i in hash bucket */
-                hhead [h] = i ;
-                last [i] = h ;                   /* save hash of i in last[i] */
+#ifdef DEBUG
+                assert(n >= 0);
+#endif
+                h %= static_cast<unsigned int>(n);                    /* finalize hash of i */
+                next [i] = hhead [static_cast<int>(h)] ;            /* place i in hash bucket */
+                hhead [static_cast<int>(h)] = i ;
+                last [i] = static_cast<int>(h);                   /* save hash of i in last[i] */
             }
         }                                    /* scan2 is done */
         degree [k] = dk ;                    /* finalize |Lk| */

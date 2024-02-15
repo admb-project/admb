@@ -19,6 +19,7 @@
 //pthread_mutex_t mutex_dfpool = PTHREAD_MUTEX_INITIALIZER;
 #ifdef DEBUG
   #include <cassert>
+  #include <climits>
 #endif
 
 #define USE_ADJOINT_CODE
@@ -1783,9 +1784,12 @@ ivector cs_amd (XCONST hs_smatrix &A)  /* Implements only order == 1: Chol*/
         {
             i = Ci [pk] ;
             if (nv [i] >= 0) continue ;                /* skip if i is dead */
-            h = last [i] ;                      /* scan hash bucket of node i */
-            i = hhead [h] ;
-            hhead [h] = -1 ;                     /* hash bucket will be empty */
+#ifdef DEBUG
+            assert(last[i] >= 0);
+#endif
+            h = static_cast<unsigned int>(last[i]);                      /* scan hash bucket of node i */
+            i = hhead [static_cast<int>(h)] ;
+            hhead[static_cast<int>(h)] = -1 ;                     /* hash bucket will be empty */
             for ( ; i != -1 && next [i] != -1 ; i = next [i], mark++)
             {
                 ln = len [i] ;
@@ -2119,9 +2123,12 @@ ivector cs_amd (XCONST dvar_hs_smatrix &A) /* Implements only order == 1: Chol*/
         {
             i = Ci [pk] ;
             if (nv [i] >= 0) continue ;                /* skip if i is dead */
-            h = last [i] ;                      /* scan hash bucket of node i */
-            i = hhead [h] ;
-            hhead [h] = -1 ;                     /* hash bucket will be empty */
+#ifdef DEBUG
+            assert(last[i] >= 0);
+#endif
+            h = static_cast<unsigned int>(last[i]);                      /* scan hash bucket of node i */
+            i = hhead[static_cast<int>(h)];
+            hhead[static_cast<int>(h)] = -1 ;                     /* hash bucket will be empty */
             for ( ; i != -1 && next [i] != -1 ; i = next [i], mark++)
             {
                 ln = len [i] ;

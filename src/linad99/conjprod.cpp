@@ -157,7 +157,7 @@ void fmmc::fmin(const double& fret, const dvector& _p, const dvector& _gg)
   dvector& p = (dvector&)_p;
   dvector& local_gg = (dvector&)_gg;
   int n = static_cast<int>(p.size());
-  dvector& xi=*(this->xi);
+  dvector& ptr_xi=*(this->xi);
   dvector& ptr_h = *(this->h);
   dvector& ptr_g = *(this->g);
   double& ptr_fp = this->fp;
@@ -243,7 +243,7 @@ label800:
 
   this->frp_flag=0;
   this->ireturn=0;
-  xi=local_gg;
+  ptr_xi=local_gg;
   this->fp=fret;
   //(*dfunc)(p,xi);
 
@@ -266,8 +266,8 @@ label800:
   {
     for (int local_j=1;local_j<=n;local_j++)
     {
-      ptr_g[local_j] = -xi[local_j];
-      xi[local_j]=ptr_h[local_j]=ptr_g[local_j];
+      ptr_g[local_j] = -ptr_xi[local_j];
+      ptr_xi[local_j]=ptr_h[local_j]=ptr_g[local_j];
     }
   }
 
@@ -446,7 +446,7 @@ label1000:
   label3000:
     this->frp_flag=0;
     this->ireturn=0;
-    xi=local_gg;
+    ptr_xi=local_gg;
     this->fp=fret;
 
     //fp=fcomp(p,xi);
@@ -457,7 +457,7 @@ label1000:
       {
         this->gg += ptr_g[local_j]*ptr_g[local_j];
 /*      dgg += xi[local_j]*xi[local_j];  */
-        this->dgg += (xi[local_j]+ptr_g[local_j])*xi[local_j];
+        this->dgg += (ptr_xi[local_j]+ptr_g[local_j])*ptr_xi[local_j];
       }
     }
     if (this->gg == 0.0)
@@ -469,8 +469,8 @@ label1000:
     {
       for (int local_j=1;local_j<=n;local_j++)
       {
-        ptr_g[local_j] = -xi[local_j]; // g seems to hold the negative gradient
-        xi[local_j]=ptr_h[local_j]=ptr_g[local_j]+this->gam*ptr_h[local_j];
+        ptr_g[local_j] = -ptr_xi[local_j]; // g seems to hold the negative gradient
+        ptr_xi[local_j]=ptr_h[local_j]=ptr_g[local_j]+this->gam*ptr_h[local_j];
       }
     }
 //  if (this->iter <= ITMAX) goto label1000;

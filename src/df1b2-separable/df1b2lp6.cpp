@@ -1140,10 +1140,10 @@ dvector laplace_approximation_calculator::
   banded_calculations_trust_region_approach(const dvector& _uhat,
   function_minimizer * pfmin)
 {
-  dvector& uhat=(dvector&) _uhat;
-  dvector uhat_old(uhat.indexmin(),uhat.indexmax());
-  dvector uhat_new(uhat.indexmin(),uhat.indexmax());
-  dvector uhat_best(uhat.indexmin(),uhat.indexmax());
+  dvector& local_uhat=(dvector&) _uhat;
+  dvector uhat_old(local_uhat.indexmin(),local_uhat.indexmax());
+  dvector uhat_new(local_uhat.indexmin(),local_uhat.indexmax());
+  dvector uhat_best(local_uhat.indexmin(),local_uhat.indexmax());
 
   double wght=0.0;
   double delta=5.e-5;
@@ -1169,7 +1169,7 @@ dvector laplace_approximation_calculator::
     int mmax=bHess->indexmax();
     banded_symmetric_dmatrix tmp(mmin,mmax,bHess->bandwidth());
     tmp=*bHess;
-    uhat_old=uhat;
+    uhat_old=local_uhat;
     int ierr=0;
     for (int i=mmin;i<=mmax;i++)
     {
@@ -1181,12 +1181,12 @@ dvector laplace_approximation_calculator::
       dvector v=solve(bltd,grad);
       step=-solve_trans(bltd,v);
 
-      uhat_old=uhat;
-      uhat+=step;
+      uhat_old=local_uhat;
+      local_uhat+=step;
       //cout << "norm(uhat_old) = " << norm(uhat_old)
        //    << "   norm(uhat) = " << norm(uhat)  << endl;
 
-      /*double maxg=*/evaluate_function(newval,uhat,pfmin);
+      /*double maxg=*/evaluate_function(newval,local_uhat,pfmin);
       if (have_value && newval>newfbest)
       {
         break;
@@ -1208,11 +1208,11 @@ dvector laplace_approximation_calculator::
       if (newval<newfbest)
       {
         newfbest=newval;
-        uhat_best=uhat;
+        uhat_best=local_uhat;
         have_value=jj;
       }
-      uhat_new=uhat;
-      uhat=uhat_old;
+      uhat_new=local_uhat;
+      local_uhat=uhat_old;
     }
     else
     {

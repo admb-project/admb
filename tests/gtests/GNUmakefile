@@ -202,6 +202,7 @@ ifeq ($(SAFE_ONLY),yes)
 endif
 
 all: clean
+	$(MAKE) googletest-read-only
 	$(MAKE) gtest-all
 	$(MAKE) run
 
@@ -371,7 +372,7 @@ else
 	CXXFLAGS="$(CXXFLAGS) -I$(GTEST_DIR)/include" LDFLAGS=-pthread ../../admb$(EXT) $(ADMB_OPTIONS) test_nuts.obj gtest-all.obj nuts_da.obj main.cpp
 endif
 
-gtest-all.obj: googletest-read-only
+gtest-all.obj:
 ifeq ($(CMDSHELL),cmd)
 	$(CXX) -c $(CXXFLAGS) -std=c++14 -g -I$(GTEST_DIR)\\include -I$(GTEST_DIR) -o $@ $(GTEST_DIR)\\src\\gtest-all.cc
 else

@@ -33,11 +33,11 @@ int xlbfgs_(integer *n, integer *m, dvar_vector & x, dvariable & f,
 dvariable function_minimizer::random_effects_maximization(const dvar_vector& _x)
 {
   integer m=5;
-  double crit=0.0;
+  double upper_crit=0.0;
   //double crit=1.e-3;
-  int maxfn=400;
+  int local_maxfn=400;
   int maxiter=50;
-  int iprint = -defaults::iprint;
+  int local_iprint = -defaults::iprint;
 
   dvar_vector& x = (dvar_vector&)(_x);
 
@@ -58,9 +58,9 @@ dvariable function_minimizer::random_effects_maximization(const dvar_vector& _x)
   {
     noprintx=1;
   }
-  double _crit=0;
+  double local_crit=0;
   integer itn=0;
-  int ifn=0;
+  int local_ifn=0;
   int nopt = 0;
   // set the convergence criterion by command line
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-crit",nopt))>-1)
@@ -72,11 +72,11 @@ dvariable function_minimizer::random_effects_maximization(const dvar_vector& _x)
     else
     {
       char * end;
-      _crit=strtod(ad_comm::argv[on+1],&end);
-      if (_crit<=0)
+      local_crit=strtod(ad_comm::argv[on+1],&end);
+      if (local_crit<=0)
       {
         cerr << "Usage -crit option needs positive number  -- ignored" << endl;
-        _crit=0.0;
+        local_crit=0.0;
       }
     }
   }
@@ -87,18 +87,18 @@ dvariable function_minimizer::random_effects_maximization(const dvar_vector& _x)
   {
     int ind=min(local_convergence_criteria.indexmax(),
     initial_params::current_phase);
-    crit=local_convergence_criteria(ind);
+    upper_crit=local_convergence_criteria(ind);
   }
-  if (!ISZERO(_crit))
+  if (!ISZERO(local_crit))
   {
-    crit = _crit;
+    upper_crit = local_crit;
   }
   dvector local_maximum_function_evaluations;
   if (!(!local_maximum_function_evaluations) && !maxfn_option)
   {
     int ind=min(local_maximum_function_evaluations.indexmax(),
       initial_params::current_phase);
-    maxfn= (int) local_maximum_function_evaluations(ind);
+    local_maxfn= (int) local_maximum_function_evaluations(ind);
   }
   dvariable vf=0.0;
 
@@ -121,7 +121,7 @@ dvariable function_minimizer::random_effects_maximization(const dvar_vector& _x)
   dvar_vector w(1,nvar+2*m+2*nvar*m);
   iprintx[0] = iprint;
   iprintx[1] = 0;
-  crit = 1e-5;
+  upper_crit = 1e-5;
   xtol = 1e-16;
   icall = 0;
   iflag = 0;
@@ -130,7 +130,7 @@ L20:
   f = 0.;
   //vf=initial_params::reset(dvar_vector(x));
   f=user_randeff(x);
-  ifn++;
+  local_ifn++;
   if (f<fbest)
   {
     fbest=f;
@@ -143,13 +143,13 @@ L20:
 
 #if defined(USE_DDOUBLE)
 #undef double
-  if(fmod(double(itn),double(iprint)) == 0)
+  if(fmod(double(itn),double(local_iprint)) == 0)
 #define double dd_real
 #else
-  if(fmod(double(itn),double(iprint)) == 0)
+  if(fmod(double(itn),double(local_iprint)) == 0)
 #endif
   {
-    if (iprint>0)
+    if (local_iprint>0)
     {
       if (!itn)
       {
@@ -161,7 +161,7 @@ L20:
       }
 
       printf("%d variables; iteration %d; function evaluation %d\n",
-        nvar, itn, ifn);
+        nvar, itn, local_ifn);
 
       if (!itn)
       {
@@ -188,9 +188,9 @@ L20:
       }
     }
   }
-  crit=1.e-15;
+  upper_crit=1.e-15;
   xlbfgs_(&nvar, &m, x , f, g, &diagco, diag,
-    iprintx, &crit, &xtol, w, &iflag,&itn);
+    iprintx, &upper_crit, &xtol, w, &iflag,&itn);
 
   if (iflag <= 0)
   {
@@ -201,7 +201,7 @@ L20:
     goto L50;
   }
   ++icall;
-  if (icall > maxfn)
+  if (icall > local_maxfn)
   if (itn > maxiter)
   {
     cout << "Exceeded maxiter" << endl;
@@ -215,13 +215,13 @@ L50:
     xbest=x;
     gbest=g;
   }
-  if (iprint>0)
+  if (local_iprint>0)
   {
     double xf=value(f);
     double xg=max(value(g));
     printf("\nfinal statistics: ");
     printf("%d variables; iteration %d; function evaluation %d\n",
-        nvar, itn, ifn);
+        nvar, itn, local_ifn);
     printf(
         "Function value %12.4le; maximum gradient component mag %12.4le\n",
         xf, xg);

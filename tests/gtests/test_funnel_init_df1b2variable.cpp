@@ -1,10 +1,7 @@
 #include <gtest/gtest.h>
 #include <df1b2fun.h>
 
-extern "C"
-{
-  void test_ad_exit(const int exit_code);
-}
+void test_ad_exit(const int exit_code);
 
 class test_funnel_init_df1b2variable: public ::testing::Test
 {

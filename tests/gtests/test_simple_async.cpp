@@ -4,10 +4,7 @@
 #include <admodel.h>
 #include <unistd.h>
 
-extern "C"
-{
-  void test_ad_exit(const int exit_code);
-}
+void test_ad_exit(const int exit_code);
 
 class test_simple_async: public ::testing::Test {};
 

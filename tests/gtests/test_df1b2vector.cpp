@@ -1,10 +1,7 @@
 #include <gtest/gtest.h>
 #include "df1b2fun.h"
 
-extern "C"
-{
-  void test_ad_exit(const int exit_code);
-}
+void test_ad_exit(const int exit_code);
 
 extern df1b2_gradlist* f1b2gradlist;
 

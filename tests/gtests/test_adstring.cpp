@@ -4,10 +4,7 @@
 #include <admodel.h>
 #include <climits>
 
-extern "C"
-{
-  void test_ad_exit(const int exit_code);
-}
+void test_ad_exit(const int exit_code);
 
 class test_adstring: public ::testing::Test {};
 

@@ -3,10 +3,7 @@
 #include <limits.h>
 #include <fvar.hpp>
 
-extern "C"
-{
-  void test_ad_exit(const int exit_code);
-}
+void test_ad_exit(const int exit_code);
 
 class test_df_file:public ::testing::Test {};
 

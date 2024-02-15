@@ -2,11 +2,7 @@
 #include <fvar.hpp>
 #include <climits>
 
-
-extern "C"
-{
-  void test_ad_exit(const int exit_code);
-}
+void test_ad_exit(const int exit_code);
 
 class test_gradcalc: public ::testing::Test {};
 

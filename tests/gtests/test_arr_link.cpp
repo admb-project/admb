@@ -2,10 +2,7 @@
 #include "fvar.hpp"
 #include <cassert>
 
-extern "C"
-{
-  void test_ad_exit(const int exit_code);
-}
+void test_ad_exit(const int exit_code);
 
 class test_arr_link: public ::testing::Test {};
 

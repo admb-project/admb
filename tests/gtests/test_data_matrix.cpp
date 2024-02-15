@@ -1,10 +1,7 @@
 #include <gtest/gtest.h>
 #include "admodel.h"
 
-extern "C"
-{
-  void test_ad_exit(const int exit_code);
-}
+void test_ad_exit(const int exit_code);
 
 class test_data_matrix: public ::testing::Test {};
 

@@ -2,10 +2,7 @@
 #include <cmath>
 #include "fvar.hpp"
 
-extern "C"
-{
-  void test_ad_exit(const int exit_code);
-}
+void test_ad_exit(const int exit_code);
 
 class test_d5_array: public ::testing::Test {};
 

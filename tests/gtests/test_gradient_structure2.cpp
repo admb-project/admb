@@ -1,10 +1,7 @@
 #include <gtest/gtest.h>
 #include <fvar.hpp>
 
-extern "C"
-{
-  void test_ad_exit(const int exit_code);
-}
+void test_ad_exit(const int exit_code);
 
 class test_gradient_structure2: public ::testing::Test {};
 

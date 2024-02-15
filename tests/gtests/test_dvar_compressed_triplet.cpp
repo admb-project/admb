@@ -3,10 +3,7 @@
 #define XCONST const
 #include <hs.h>
 
-extern "C"
-{
-  void test_ad_exit(const int exit_code);
-}
+void test_ad_exit(const int exit_code);
 
 class test_dvar_compressed_triplet: public ::testing::Test { };
 

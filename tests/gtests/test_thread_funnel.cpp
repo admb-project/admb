@@ -5,7 +5,6 @@
 
 class test_thread_funnel: public ::testing::Test {};
 
-
 int Ai = 0;
 struct A
 {

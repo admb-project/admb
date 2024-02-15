@@ -155,12 +155,12 @@ void fmmc::fmin(const double& fret, const dvector& _p, const dvector& _gg)
     }
 #endif
   dvector& p = (dvector&)_p;
-  dvector& gg = (dvector&)_gg;
+  dvector& local_gg = (dvector&)_gg;
   int n = static_cast<int>(p.size());
   dvector& xi=*(this->xi);
-  dvector& h=*(this->h);
-  dvector& g=*(this->g);
-  double& fp=this->fp;
+  dvector& ptr_h = *(this->h);
+  dvector& ptr_g = *(this->g);
+  double& ptr_fp = this->fp;
   //int& its=this->its;
   //int& J=this->J;
   if (this->frp_flag > 0) this->ifn++;
@@ -168,7 +168,7 @@ void fmmc::fmin(const double& fret, const dvector& _p, const dvector& _gg)
   if (ireturn >= 3)
   {
     {
-      derch(fret, p , gg, n, ireturn);
+      derch(fret, p , local_gg, n, ireturn);
     }
     return;
   }
@@ -183,9 +183,9 @@ void fmmc::fmin(const double& fret, const dvector& _p, const dvector& _gg)
 #endif
 
       int con_flag = 1;
-      for (int jj=gg.indexmin();jj<=gg.indexmax();jj++)
+      for (int jj=local_gg.indexmin();jj<=local_gg.indexmax();jj++)
       {
-        if (fabs(gg(jj)) > crit)
+        if (fabs(local_gg(jj)) > crit)
         {
           con_flag=0;
           break;
@@ -202,15 +202,15 @@ void fmmc::fmin(const double& fret, const dvector& _p, const dvector& _gg)
             printf("%d variables; iteration %ld; function evaluation %ld\n",
             n, iter, ifn);
             printf("Function value %le; maximum gradient component mag %le\n",
-               fret, max(fabs(gg)) );
-            fmmdisp(p, gg, n, this->scroll_flag); //fmc);
+               fret, max(fabs(local_gg)) );
+            fmmdisp(p, local_gg, n, this->scroll_flag); //fmc);
           }
         }
         return;
       }
       fbest=fret;
       *xbest=p;
-      *gbest=gg;
+      *gbest=local_gg;
     }
   }
 
@@ -239,11 +239,11 @@ label800:
 
   fbest=fret;
   *xbest=p;
-  *gbest=gg;
+  *gbest=local_gg;
 
   this->frp_flag=0;
   this->ireturn=0;
-  xi=gg;
+  xi=local_gg;
   this->fp=fret;
   //(*dfunc)(p,xi);
 
@@ -266,8 +266,8 @@ label800:
   {
     for (int local_j=1;local_j<=n;local_j++)
     {
-      g[local_j] = -xi[local_j];
-      xi[local_j]=h[local_j]=g[local_j];
+      ptr_g[local_j] = -xi[local_j];
+      xi[local_j]=ptr_h[local_j]=ptr_g[local_j];
     }
   }
 
@@ -290,7 +290,7 @@ label1000:
       {
         ireturn = 3;
         {
-          derch(fret, p , gg, n, ireturn);
+          derch(fret, p , local_gg, n, ireturn);
         }
         return;
       }
@@ -313,7 +313,7 @@ label1000:
             }
           }
           p=*xbest;
-          gg=*gbest;
+          local_gg=*gbest;
           return;
         }
         else
@@ -323,7 +323,7 @@ label1000:
       }
     }
     {
-      mylinmin(fret,fp,p,-1.*(g),*this);
+      mylinmin(fret,ptr_fp,p,-1.*(ptr_g),*this);
     }
     if (this->lin_flag ==0) goto label10;
 
@@ -339,7 +339,7 @@ label1000:
       //this->extf=fcomp( *(this->extx),*(this->extg) );
       this->extf=fret;
       *(this->extx)=p;
-      *(this->extg)=gg;
+      *(this->extg)=local_gg;
       goto label5;
   label10:
 
@@ -367,7 +367,7 @@ label1000:
         }
       }
       p=*xbest;
-      gg=*gbest;
+      local_gg=*gbest;
       return;
     }
 
@@ -419,7 +419,7 @@ label1000:
         fmmdisp(*xbest, *gbest, n, this->scroll_flag); //fmc);
       }
       p=*xbest;
-      gg=*gbest;
+      local_gg=*gbest;
       this->ireturn=-1;
       return;
     }
@@ -446,7 +446,7 @@ label1000:
   label3000:
     this->frp_flag=0;
     this->ireturn=0;
-    xi=gg;
+    xi=local_gg;
     this->fp=fret;
 
     //fp=fcomp(p,xi);
@@ -455,9 +455,9 @@ label1000:
     {
       for (int local_j=1;local_j<=n;local_j++)
       {
-        this->gg += g[local_j]*g[local_j];
+        this->gg += ptr_g[local_j]*ptr_g[local_j];
 /*      dgg += xi[local_j]*xi[local_j];  */
-        this->dgg += (xi[local_j]+g[local_j])*xi[local_j];
+        this->dgg += (xi[local_j]+ptr_g[local_j])*xi[local_j];
       }
     }
     if (this->gg == 0.0)
@@ -469,8 +469,8 @@ label1000:
     {
       for (int local_j=1;local_j<=n;local_j++)
       {
-        g[local_j] = -xi[local_j]; // g seems to hold the negative gradient
-        xi[local_j]=h[local_j]=g[local_j]+this->gam*h[local_j];
+        ptr_g[local_j] = -xi[local_j]; // g seems to hold the negative gradient
+        xi[local_j]=ptr_h[local_j]=ptr_g[local_j]+this->gam*ptr_h[local_j];
       }
     }
 //  if (this->iter <= ITMAX) goto label1000;

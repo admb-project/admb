@@ -48,9 +48,9 @@ void function_minimizer::limited_memory_quasi_newton(
   // get the number of active
   int nvar = initial_params::nvarcalc();
 
-  double _crit=0;
+  double local_crit=0;
   int itn=0;
-  int ifn=0;
+  int local_ifn=0;
   int nopt = 0;
   // set the convergence criterion by command line
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-crit",nopt))>-1)
@@ -62,11 +62,11 @@ void function_minimizer::limited_memory_quasi_newton(
     else
     {
       char * end;
-      _crit=strtod(ad_comm::argv[on+1],&end);
-      if (_crit<=0)
+      local_crit=strtod(ad_comm::argv[on+1],&end);
+      if (local_crit<=0)
       {
         cerr << "Usage -crit option needs positive number  -- ignored" << endl;
-        _crit=0.0;
+        local_crit=0.0;
       }
     }
   }
@@ -79,9 +79,9 @@ void function_minimizer::limited_memory_quasi_newton(
     initial_params::current_phase);
     crit=convergence_criteria(ind);
   }
-  if (!ISZERO(_crit))
+  if (!ISZERO(local_crit))
   {
-    crit = _crit;
+    crit = local_crit;
   }
   if (!(!maximum_function_evaluations) && !maxfn_option)
   {
@@ -135,7 +135,7 @@ L20:
   userfunction();
   vf+=*objective_function_value::pobjfun;
   f=value(vf);
-  ifn++;
+  local_ifn++;
   if (f<fbest)
   {
     fbest=f;
@@ -159,7 +159,7 @@ L20:
 
       printf(
         "%d variables; iteration %d; function evaluation %d\n",
-        nvar, itn, ifn);
+        nvar, itn, local_ifn);
 
       if (!itn)
       {
@@ -211,7 +211,7 @@ L50:
 
     printf(
       "%d variables; iteration %d; function evaluation %d\n",
-      nvar, itn, ifn);
+      nvar, itn, local_ifn);
     printf(
       "Function value %12.4le; maximum gradient component mag %12.4le\n",
       f, max(g));
@@ -224,7 +224,7 @@ L50:
 
 void function_minimizer::limited_memory_quasi_newton
   (double& f, const independent_variables& _x, int m, int noprintx,
-  int _maxfn, double crit)
+  int _maxfn, double _crit)
 {
   independent_variables& x = (independent_variables&) _x;
   if (m<=0)
@@ -237,9 +237,9 @@ void function_minimizer::limited_memory_quasi_newton
   // get the number of active
   int nvar = initial_params::nvarcalc();
 
-  double _crit=0;
+  double local_crit=0;
   int itn=0;
-  int ifn=0;
+  int local_ifn=0;
   int nopt = 0;
   // set the convergence criterion by command line
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-crit",nopt))>-1)
@@ -251,8 +251,8 @@ void function_minimizer::limited_memory_quasi_newton
     else
     {
       char* end;
-      _crit=strtod(ad_comm::argv[on+1],&end);
-      if (_crit<=0)
+      local_crit=strtod(ad_comm::argv[on+1],&end);
+      if (local_crit<=0)
       {
         cerr << "Usage -crit option needs positive number  -- ignored" << endl;
       }
@@ -278,7 +278,7 @@ void function_minimizer::limited_memory_quasi_newton
   dvector w(1,nvar+2*m+2*nvar*m);
   iprintx[0] = iprint;
   iprintx[1] = 0;
-  crit = 1e-5;
+  _crit = 1e-5;
   xtol = 1e-16;
   icall = 0;
   iflag = 0;
@@ -291,7 +291,7 @@ L20:
   userfunction();
   vf+=*objective_function_value::pobjfun;
   f=value(vf);
-  ifn++;
+  local_ifn++;
   if (f<fbest)
   {
     fbest=f;
@@ -315,7 +315,7 @@ L20:
 
       printf(
         "%d variables; iteration %d; function evaluation %d\n",
-        nvar, itn, ifn);
+        nvar, itn, local_ifn);
 
       if (!itn)
       {
@@ -344,7 +344,7 @@ L20:
   long int liflag=iflag;
   long int lm=m;
   lbfgs_(&lnvar, &lm, &(x[1]) , &f, &(g[1]), &diagco, &(diag[1]),
-    &liprintx, &crit, &xtol, &(w[1]), &liflag,&litn,&linfo);
+    &liprintx, &_crit, &xtol, &(w[1]), &liflag,&litn,&linfo);
   itn=int(litn);
   iflag=int(liflag);
 
@@ -363,7 +363,7 @@ L50:
   {
     printf("\nfinal statistics: ");
     printf("%d variables; iteration %d; function evaluation %d\n",
-        nvar, itn, ifn);
+        nvar, itn, local_ifn);
     printf(
         "Function value %12.4le; maximum gradient component mag %12.4le\n",
         f, max(g));

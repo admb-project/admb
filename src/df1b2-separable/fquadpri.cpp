@@ -146,7 +146,7 @@ void df1b2quadratic_prior::allocate(const df1b2_init_vector& _u,
     M =new df1b2matrix(_M);
     pu = new df1b2_init_vector(_u);
   }
-  void df1b2quadratic_prior::operator = (const df1b2matrix & M)
+  void df1b2quadratic_prior::operator = (const df1b2matrix& _M)
   {
     quadratic_prior::in_qp_calculations=0;
     num_active_parameters=funnel_init_var::num_vars;
@@ -156,16 +156,16 @@ void df1b2quadratic_prior::allocate(const df1b2_init_vector& _u,
     if (laplace_approximation_calculator::where_are_we_flag==3)
     {
       df1b2variable::noallocate=1;
-      df1b2vector v(M.indexmin(),M.indexmax());
+      df1b2vector v(_M.indexmin(),_M.indexmax());
       df1b2variable::noallocate=0;
       switch (old_style_flag)
       {
       case 0:
       case 1:
-        v = solve(M,cu);
+        v = solve(_M,cu);
         break;
       case 2:
-        v = M*cu;
+        v = _M*cu;
         break;
       default:
         cerr << "Illegal value for quadratic_prior::old_style_flag"
@@ -316,11 +316,11 @@ void constant_df1b2quadratic_re_penalty::set_old_style_flag(void)
 {
   old_style_flag=2;
 }
-void constant_df1b2quadratic_re_penalty::operator = ([[maybe_unused]] const dmatrix & M)
+void constant_df1b2quadratic_re_penalty::operator = ([[maybe_unused]] const dmatrix& _M)
 {
   //df1b2quadratic_prior::operator = (M);
 }
-void df1b2quadratic_prior::operator = ([[maybe_unused]] const dmatrix & M)
+void df1b2quadratic_prior::operator = ([[maybe_unused]] const dmatrix& _M)
 {
   quadratic_prior::in_qp_calculations=0;
   num_active_parameters=funnel_init_var::num_vars;

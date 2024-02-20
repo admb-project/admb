@@ -1,7 +1,7 @@
 # ADMB Building Source for Unix
 
-*ADMB-13.1*  
-*Released December 23, 2022*  
+*ADMB-13.2*  
+*Released March 5, 2024*  
 
 Describe building ADMB from source for Unix.
 
@@ -31,14 +31,14 @@ Building Source
 
 1. **Download**
 
-   Download ADMB source distribution [admb-13.1-src.zip](https://github.com/admb-project/admb/releases/download/admb-13.1/admb-13.1-src.zip)
+   Download ADMB source distribution [admb-13.2-src.zip](https://github.com/admb-project/admb/releases/download/admb-13.2/admb-13.2-src.zip)
 
    Open a **Terminal** window
 
    Use the command below to extract contents of zip file to _~/admb/_. 
 
    ```
-   [~]$ unzip admb-13.1-src.zip
+   [~]$ unzip admb-13.2-src.zip
    ```
 
    _**Alternative**_ &mdash; Use Git client (see command below) to get source from version control repository.

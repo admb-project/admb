@@ -15,8 +15,9 @@ ifndef MODEL_TPL
   endif
 endif
 
-IMAGE=admb
-VERSION=windows
+VERSION=-13.2
+IMAGE=admb$(VERSION)
+OS=windows
 
 MODEL_DIR=$(dir $(MODEL_TPL))
 MODEL_EXT=$(suffix $(MODEL_TPL))
@@ -31,12 +32,12 @@ all: $(clean)
 	$(MAKE) winlibs
 
 msys2: msys2-x86_64.exe
-	docker build --file Dockerfile-msys2-ltsc2022 -t $(IMAGE):$(VERSION)-ltsc2022-msys2 .
-	docker build --file Dockerfile-msys2-ltsc2019 -t $(IMAGE):$(VERSION)-ltsc2019-msys2 .
+	docker build --file Dockerfile-msys2-ltsc2022 -t $(IMAGE):$(OS)-ltsc2022-msys2 .
+	docker build --file Dockerfile-msys2-ltsc2019 -t $(IMAGE):$(OS)-ltsc2019-msys2 .
 
 winlibs: admb.zip winlibs.zip
-	docker build --file Dockerfile-winlibs-ltsc2022 -t $(IMAGE):$(VERSION)-ltsc2022-winlibs .
-	docker build --file Dockerfile-winlibs-ltsc2019 -t $(IMAGE):$(VERSION)-ltsc2019-winlibs .
+	docker build --file Dockerfile-winlibs-ltsc2022 -t $(IMAGE):$(OS)-ltsc2022-winlibs .
+	docker build --file Dockerfile-winlibs-ltsc2019 -t $(IMAGE):$(OS)-ltsc2019-winlibs .
 
 msys2-x86_64.exe:
 	powershell Invoke-WebRequest -Uri https://github.com/msys2/msys2-installer/releases/download/2023-07-18/msys2-x86_64-20230718.exe -OutFile msys2-x86_64.exe
@@ -48,7 +49,7 @@ winlibs.zip:
 	powershell Invoke-WebRequest -Uri https://github.com/brechtsanders/winlibs_mingw/releases/download/13.2.0mcf-16.0.6-11.0.1-ucrt-r2/winlibs-x86_64-mcf-seh-gcc-13.2.0-mingw-w64ucrt-11.0.1-r2.zip -OutFile winlibs.zip
 
 run: $(MODEL_NAME)
-	docker run --rm --volume $(MOUNT_DIR):c:\\$(MODEL_NAME) --workdir c:\\$(MODEL_NAME) $(IMAGE):$(VERSION) $(MODEL_NAME)$(MODEL_EXT)
+	docker run --rm --volume $(MOUNT_DIR):c:\\$(MODEL_NAME) --workdir c:\\$(MODEL_NAME) $(IMAGE):$(OS) $(MODEL_NAME)$(MODEL_EXT)
 ifeq ($(ISCMDSHELL),yes)
 	cd $(MODEL_NAME) && $(MODEL_NAME)
 else
@@ -56,7 +57,7 @@ else
 endif
 
 console: $(MODEL_NAME)
-	docker run -it --entrypoint cmd --rm --volume $(MOUNT_DIR):C:\\$(MODEL_NAME) --workdir C:\\$(MODEL_NAME) $(IMAGE):$(VERSION)
+	docker run -it --entrypoint cmd --rm --volume $(MOUNT_DIR):C:\\$(MODEL_NAME) --workdir C:\\$(MODEL_NAME) $(IMAGE):$(OS)
 
 $(MODEL_NAME):
 ifeq ($(ISCMDSHELL),yes)

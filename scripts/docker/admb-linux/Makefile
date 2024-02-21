@@ -13,13 +13,14 @@ ifndef MODEL_TPL
 endif
 
 
-IMAGE=admb
+VERSION=-13.2
+IMAGE=admb$(VERSION)
 
 ifdef BASE
-  VERSION=linux-$(BASE)
+  OS=linux-$(BASE)
 else
   BASE=gcc
-  VERSION=linux
+  OS=linux
 endif
 
 CONTAINER=$(IMAGE)
@@ -37,16 +38,16 @@ all:
 	$(MAKE) $(BASE)
 
 gcc:
-	docker build --file Dockerfile-gcc -t $(CONTAINER):$(VERSION) .
+	docker build --file Dockerfile-gcc -t $(CONTAINER):$(OS) .
 
 ubuntu:
-	docker build --file Dockerfile-ubuntu -t $(CONTAINER):$(VERSION) .
+	docker build --file Dockerfile-ubuntu -t $(CONTAINER):$(OS) .
 
 debian:
-	docker build --file Dockerfile-debian -t $(CONTAINER):$(VERSION) .
+	docker build --file Dockerfile-debian -t $(CONTAINER):$(OS) .
 
 run: $(MODEL_NAME)
-	docker run --rm --volume $(MOUNT_DIR)://$(MODEL_NAME) --workdir //$(MODEL_NAME) $(CONTAINER):$(VERSION) $(MODEL_NAME)$(MODEL_EXT)
+	docker run --rm --volume $(MOUNT_DIR)://$(MODEL_NAME) --workdir //$(MODEL_NAME) $(CONTAINER):$(OS) $(MODEL_NAME)$(MODEL_EXT)
 ifneq ($(OS),Windows_NT)
   ifeq ($(shell uname -s),Linux)
 	cd $(MODEL_NAME) && ./$(MODEL_NAME)
@@ -54,7 +55,7 @@ ifneq ($(OS),Windows_NT)
 endif
 
 console: $(MODEL_NAME)
-	docker run -it --hostname container --rm --entrypoint //bin//bash --volume $(MOUNT_DIR)://$(MODEL_NAME) --workdir //$(MODEL_NAME) $(CONTAINER):$(VERSION)
+	docker run -it --hostname container --rm --entrypoint //bin//bash --volume $(MOUNT_DIR)://$(MODEL_NAME) --workdir //$(MODEL_NAME) $(CONTAINER):$(OS)
 
 $(MODEL_NAME):
 ifeq ($(ISCMDSHELL),yes)

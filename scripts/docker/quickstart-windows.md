@@ -27,7 +27,7 @@ Downloads
 
 * Using the Docker Desktop, pull the [ADMB Docker Image](https://hub.docker.com/r/johnoel/admb/) or use the command below in the command prompt to download ADMB Docker Windows image.
 
-       docker pull johnoel/admb:windows
+       docker pull johnoel/admb-13.2:windows
 
 Usage
 -----
@@ -38,7 +38,7 @@ Usage
 
 2. Build simple.tpl into an Windows executable using the ADMB Docker Image and the mounted current local directory.
 
-        docker run --rm --volume %CD%:C:\simple --workdir C:\simple johnoel/admb:windows simple.tpl
+        docker run --rm --volume %CD%:C:\simple --workdir C:\simple johnoel/admb-13.2:windows simple.tpl
 
 3. Run **simple.exe** Windows executable.
 
@@ -50,7 +50,7 @@ Usage
 
    Or, use container to run executable.  The output files will be written to the directory on local directory.
 
-       docker run --rm --volume %CD%:C:\simple --workdir C:\simple --entrypoint simple.exe johnoel/admb:windows   
+       docker run --rm --volume %CD%:C:\simple --workdir C:\simple --entrypoint simple.exe johnoel/admb-13.2:windows   
 
 Console
 -------
@@ -59,7 +59,7 @@ The procedure below shows how to use the interactive command line shell to build
 
 1. Use docker to open container's interactive shell and mount current local directory to the container.
 
-        docker run -it --entrypoint cmd --rm --volume %CD%:C:\simple --workdir C:\simple johnoel/admb:windows
+        docker run -it --entrypoint cmd --rm --volume %CD%:C:\simple --workdir C:\simple johnoel/admb-13.2:windows
 
 2. Build and run simple model within the container's interactive shell.
     
@@ -92,7 +92,7 @@ Below details the options for **docker run**:
 
 * **--workdir** changes the container current directory to **C:\simple**. 
 
-* **johnoel/admb:windows** is the name of the Docker Image and **simple.tpl** is the file to build.
+* **johnoel/admb-13.2:windows** is the name of the Docker Image and **simple.tpl** is the file to build.
 
 Help
 ----

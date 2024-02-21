@@ -27,7 +27,7 @@ Downloads
 
 Using the Docker Desktop, download the [ADMB Docker Image](https://hub.docker.com/r/johnoel/admb/) or use the command below from the terminal.
 
-       docker pull johnoel/admb:linux
+       docker pull johnoel/admb-13.2:linux
 
 Usage
 -----
@@ -40,11 +40,11 @@ Usage
 
    For Windows host,
    
-        docker run --rm --volume %CD%:/simple --workdir /simple johnoel/admb:linux simple.tpl
+        docker run --rm --volume %CD%:/simple --workdir /simple johnoel/admb-13.2:linux simple.tpl
 
    For Unix host,
 
-        docker run --rm --volume $PWD:/simple --workdir /simple johnoel/admb:linux simple.tpl
+        docker run --rm --volume $PWD:/simple --workdir /simple johnoel/admb-13.2:linux simple.tpl
 
    _*Note*: A warning will be displayed for running AMD64 image on the Apple processor, but it will build and run model._
 
@@ -54,11 +54,11 @@ Usage
 
    For Windows host,
 
-        docker run --rm --volume %CD%:/simple --workdir /simple --entrypoint ./simple johnoel/admb:linux
+        docker run --rm --volume %CD%:/simple --workdir /simple --entrypoint ./simple johnoel/admb-13.2:linux
         
    For Unix host,
 
-        docker run --rm --volume $PWD:/simple --workdir /simple --entrypoint ./simple johnoel/admb:linux
+        docker run --rm --volume $PWD:/simple --workdir /simple --entrypoint ./simple johnoel/admb-13.2:linux
 
    For Linux host, executable could be run locally.
    
@@ -73,11 +73,11 @@ The procedure below shows how to use the container's interactive command line sh
 
    For Windows host,
    
-       docker run -it --entrypoint /bin/bash --rm --volume %CD%:/simple --workdir /simple johnoel/admb:linux
+       docker run -it --entrypoint /bin/bash --rm --volume %CD%:/simple --workdir /simple johnoel/admb-13.2:linux
 
    For Unix host,
    
-       docker run -it --entrypoint /bin/bash --rm --volume $PWD:/simple --workdir /simple johnoel/admb:linux
+       docker run -it --entrypoint /bin/bash --rm --volume $PWD:/simple --workdir /simple johnoel/admb-13.2:linux
 
 2. Build and run simple model within the container's interactive shell.
     
@@ -110,7 +110,7 @@ Below details the options for **docker run**:
 
 * **--workdir** changes the container current directory to **/simple**. 
 
-* **johnoel/admb:linx** is the name of the Docker Image and **simple.tpl** is the file to build.
+* **johnoel/admb-13.2:linx** is the name of the Docker Image and **simple.tpl** is the file to build.
 
 Help
 ----

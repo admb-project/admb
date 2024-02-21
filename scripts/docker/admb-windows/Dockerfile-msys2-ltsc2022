@@ -3,13 +3,13 @@ FROM mcr.microsoft.com/windows/servercore:ltsc2022
 COPY msys2-x86_64.exe .
 RUN .\msys2-x86_64.exe install --confirm-command --root c:/msys64
 
-ENV PATH=%PATH%;C:\\msys64\\usr\\bin;C:\\msys64\\bin;c:\\msys64\\mingw64\\bin;c:\\Windows\\system32;c:\\admb-main\\
+ENV PATH=%PATH%;C:\\msys64\\usr\\bin;C:\\msys64\\bin;c:\\msys64\\mingw64\\bin;c:\\Windows\\system32;c:\\admb\\
 
 RUN cd c:\msys64 && pacman -Syuu --noconfirm
 RUN cd c:\msys64 && pacman -Syuu --noconfirm
 RUN cd c:\msys64 && pacman -Syuu --noconfirm mingw-w64-x86_64-toolchain flex make git
 
-RUN cd c:\ && git clone https://github.com/admb-project/admb.git admb-main
-RUN cd c:\\admb-main && make
+RUN cd c:\ && git clone https://github.com/admb-project/admb.git
+RUN cd c:\\admb && make
 
-ENTRYPOINT [ "C:\\admb-main\\admb.cmd" ]
+ENTRYPOINT [ "C:\\admb\\admb.cmd" ]

@@ -1,12 +1,12 @@
 FROM mcr.microsoft.com/windows/servercore:ltsc2022
 
-COPY admb-main.zip .
-RUN powershell Expand-Archive C:\\admb-main.zip -Destination C:\\
+COPY admb.zip .
+RUN powershell Expand-Archive C:\\admb.zip -Destination C:\\
 
 COPY winlibs.zip .
 RUN powershell Expand-Archive C:\\winlibs.zip -Destination C:\\
 
-ENV PATH=%PATH%;C:\\Windows\\System32;C:\\admb-main\\utilities;c:\\mingw64\\bin;c:\\admb-main\\build\\admb\\bin
-RUN cd admb-main && make
+ENV PATH=%PATH%;C:\\Windows\\System32;C:\\admb\\utilities;c:\\mingw64\\bin;c:\\admb\\build\\admb\\bin
+RUN cd admb && make
 
-ENTRYPOINT [ "C:\\admb-main\\admb.cmd" ]
+ENTRYPOINT [ "C:\\admb\\admb.cmd" ]

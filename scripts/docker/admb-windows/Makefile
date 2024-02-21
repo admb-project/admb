@@ -34,15 +34,15 @@ msys2: msys2-x86_64.exe
 	docker build --file Dockerfile-msys2-ltsc2022 -t $(IMAGE):$(VERSION)-ltsc2022-msys2 .
 	docker build --file Dockerfile-msys2-ltsc2019 -t $(IMAGE):$(VERSION)-ltsc2019-msys2 .
 
-winlibs: admb-main.zip winlibs.zip
+winlibs: admb.zip winlibs.zip
 	docker build --file Dockerfile-winlibs-ltsc2022 -t $(IMAGE):$(VERSION)-ltsc2022-winlibs .
 	docker build --file Dockerfile-winlibs-ltsc2019 -t $(IMAGE):$(VERSION)-ltsc2019-winlibs .
 
 msys2-x86_64.exe:
 	powershell Invoke-WebRequest -Uri https://github.com/msys2/msys2-installer/releases/download/2023-07-18/msys2-x86_64-20230718.exe -OutFile msys2-x86_64.exe
 
-admb-main.zip:
-	powershell Invoke-WebRequest -Uri https://github.com/admb-project/admb/archive/refs/heads/main.zip -OutFile admb-main.zip
+admb.zip:
+	powershell Invoke-WebRequest -Uri https://github.com/admb-project/admb/archive/refs/heads/main.zip -OutFile admb.zip
 
 winlibs.zip:
 	powershell Invoke-WebRequest -Uri https://github.com/brechtsanders/winlibs_mingw/releases/download/13.2.0mcf-16.0.6-11.0.1-ucrt-r2/winlibs-x86_64-mcf-seh-gcc-13.2.0-mingw-w64ucrt-11.0.1-r2.zip -OutFile winlibs.zip
@@ -68,12 +68,12 @@ endif
 clean:
 ifeq ($(ISCMDSHELL),yes)
 	@if exist msys2-x86_64.exe del msys2-x86_64.exe
-	@if exist admb-main.zip del admb-main.zip
+	@if exist admb.zip del admb.zip
 	@if exist winlibs.zip del winlibs.zip
 	@if exist rmdir /S /Q simple
 else
 	@rm -vf msys2-x86_64.exe
-	@rm -vf admb-main.zip
+	@rm -vf admb.zip
 	@rm -vf winlibs.zip
 	@rm -vrf simple
 endif

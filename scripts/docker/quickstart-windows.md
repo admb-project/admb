@@ -1,6 +1,9 @@
 QuickStart - Using ADMB Docker Windows Image
 ============================================
 
+*ADMB-13.2*  
+*Released March 15, 2024*  
+
 Details prerequisites and procedures to use the ADMB Docker Windows image for building and running ADMB models with the [simple example](https://github.com/admb-project/admb/tree/main/examples/admb/simple)
 
 ADMB Docker Windows Image

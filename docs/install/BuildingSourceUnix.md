@@ -1,7 +1,7 @@
 # ADMB Building Source for Unix
 
 *ADMB-13.2*  
-*Released March 5, 2024*  
+*Released March 15, 2024*  
 
 Describe building ADMB from source for Unix.
 

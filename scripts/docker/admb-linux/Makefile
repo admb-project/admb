@@ -38,13 +38,13 @@ all:
 	$(MAKE) $(BASE)
 
 gcc:
-	docker build --file Dockerfile-gcc -t $(CONTAINER):$(OS) .
+	docker build --no-cache --file Dockerfile-gcc -t $(CONTAINER):$(OS) .
 
 ubuntu:
-	docker build --file Dockerfile-ubuntu -t $(CONTAINER):$(OS) .
+	docker build --no-cache --file Dockerfile-ubuntu -t $(CONTAINER):$(OS) .
 
 debian:
-	docker build --file Dockerfile-debian -t $(CONTAINER):$(OS) .
+	docker build --no-cache --file Dockerfile-debian -t $(CONTAINER):$(OS) .
 
 run: $(MODEL_NAME)
 	docker run --rm --volume $(MOUNT_DIR)://$(MODEL_NAME) --workdir //$(MODEL_NAME) $(CONTAINER):$(OS) $(MODEL_NAME)$(MODEL_EXT)

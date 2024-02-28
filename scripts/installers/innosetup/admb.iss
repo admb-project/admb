@@ -29,7 +29,7 @@ Source: "..\..\..\README.md"; DestDir: "{app}"; DestName: "README.txt"
 Source: "..\..\..\VERSION.txt"; DestDir: "{app}"; DestName: "Version.txt"
 Source: "..\..\..\examples\*"; DestDir: "{app}\examples"; Flags: recursesubdirs
 Source: "..\..\..\utilities\*"; DestDir: "{app}\utilities"; Flags: recursesubdirs
-Source: "C:\rtools43\mingw64\*"; DestDir: "{app}\utilities\mingw64"; Flags: recursesubdirs
+Source: "C:\winlibs-x86_64-mcf-seh-gcc-13.2.0-mingw-w64ucrt-11.0.1-r3\mingw64\*"; DestDir: "{app}\utilities\mingw64"; Flags: recursesubdirs
 
 [Icons]
 Name: "{app}\{#ADMB_VERSION} Command Prompt"; Filename: "{cmd}"; Parameters: "/K ""{app}\bin\set-admb-command-prompt.bat"""; WorkingDir: "{app}"; Comment: "{#ADMB_VERSION} Command Prompt"

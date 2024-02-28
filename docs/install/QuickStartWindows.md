@@ -1,7 +1,7 @@
 # ADMB Quick Start Windows
 
-*ADMB-13.1*  
-*Released December 23, 2022*  
+*ADMB-13.2*  
+*Released March 15, 2022*  
 
 Describe downloading, installing and using ADMB from binary release for Windows.
 
@@ -12,7 +12,7 @@ Quick Start
 
 1. **Download**
 
-   Download installer [admb-13.1-windows.exe](https://github.com/admb-project/admb/releases/download/admb-13.1/admb-13.1-windows.exe).
+   Download installer [admb-13.2-windows.exe](https://github.com/admb-project/admb/releases/download/admb-13.2/admb-13.2-windows.exe).
 
    _**Note**_ &mdash; Installer includes MinGW-w64 C++ compiler.
 
@@ -22,33 +22,33 @@ Quick Start
 
 3. **Use** ADMB
 
-   To use ADMB, locate and double click **ADMB-13.1 Command Prompt** in the Windows Start Menu.
+   To use ADMB, locate and double click **ADMB-13.2 Command Prompt** in the Windows Start Menu.
 
-   In the **ADMB-13.1 Command Prompt** window, use the commands below to build and run the simple example.
+   In the **ADMB-13.2 Command Prompt** window, use the commands below to build and run the simple example.
 
    Change to simple example directory.
 
    ```
-   C:\> cd \admb-13.1\examples\admb\simple
+   C:\> cd \admb-13.2\examples\admb\simple
    ```
 
    Build simple example.
 
    ```
-   C:\admb-13.1\examples\admb\simple> admb simple.tpl
+   C:\admb-13.2\examples\admb\simple> admb simple.tpl
    ```
 
    Run simple example.
 
    ```
-   C:\admb-13.1\examples\admb\simple> simple.exe
+   C:\admb-13.2\examples\admb\simple> simple.exe
    ```
 
    Read [manuals](http://www.admb-project.org/docs/manuals/) for more information.
 
 4. **Configure PATH** Optional
 
-   An alternative to using the **ADMB-13.1 Command Prompt** is to add the ADMB installation directory **C:\admb-13.1\bin** to the system enviroment **PATH** variable.  This will allow admb to be used in the **Windows Command Prompt**.
+   An alternative to using the **ADMB-13.2 Command Prompt** is to add the ADMB installation directory **C:\admb-13.2\bin** to the system enviroment **PATH** variable.  This will allow admb to be used in the **Windows Command Prompt**.
 
 AD Studio
 ---------

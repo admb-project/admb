@@ -1,7 +1,7 @@
 # ADMB Quick Start Unix
 
-*ADMB-13.1*  
-*Released December 23, 2022*  
+*ADMB-13.2*  
+*Released March 15, 2024*  
 
 Describe downloading, installing and using ADMB from binary release for Linux.
 
@@ -26,14 +26,14 @@ Quick Start
 
 1. **Download**
 
-   Download linux ZIP file [admb-13.1-linux.zip](https://github.com/admb-project/admb/releases/download/admb-13.1/admb-13.1-linux.zip).
+   Download linux ZIP file [admb-13.2-linux.zip](https://github.com/admb-project/admb/releases/download/admb-13.2/admb-13.2-linux.zip).
 
 2. **Install**
 
    Open a **Terminal**, then use the command below to extract contents of downloaded zip file to _~/admb/_. 
 
    ```
-   [~]$ unzip admb-13.1-linux.zip
+   [~]$ unzip admb-13.2-linux.zip
    ```
 
 3. **Use** ADMB

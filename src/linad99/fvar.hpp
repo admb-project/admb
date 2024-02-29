@@ -7310,7 +7310,7 @@ class dvar7_array
    dvar7_array & operator=(const d7_array &);
    dvar7_array & operator=(const dvar7_array & m);
    dvar7_array(d7_array & m2);
-   dvar7_array(dvar7_array & m2);
+   dvar7_array(const dvar7_array& m2);
    dvar7_array();
    ~dvar7_array();
    void shallow_copy(const dvar7_array&);

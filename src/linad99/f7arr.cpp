@@ -56,7 +56,7 @@ void dvar7_array::allocate(int l7, int u7)
 }
 
 /// Copy constructor
-dvar7_array::dvar7_array(dvar7_array& other)
+dvar7_array::dvar7_array(const dvar7_array& other)
 {
   shallow_copy(other);
 }

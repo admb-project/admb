@@ -28,7 +28,7 @@ double calculate_importance_sample_shess(const dvector& x,const dvector& u0,
 {
   ADUNCONST(dvector,xadjoint)
   ADUNCONST(dvector,uadjoint)
-#if defined(DEBUG) && (__cplusplus >= 201103L)
+#if defined(DEBUG)
   const int xs = [](unsigned int size)->int
   {
     assert(size <= INT_MAX);

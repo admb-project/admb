@@ -1035,7 +1035,7 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
   ADUNCONST(dvector,uadjoint)
   ADUNCONST(banded_symmetric_dmatrix,bHessadjoint)
   int bw=bHess.bandwidth();
-#if defined(DEBUG) && (__cplusplus >= 201103L)
+#if defined(DEBUG)
   const int xs = [](unsigned int size)->int
   {
     assert(size <= INT_MAX);

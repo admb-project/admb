@@ -11,7 +11,7 @@
 #include <admodel.h>
 #include <df1b2fun.h>
 #include <adrndeff.h>
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
   #include <climits>
 #endif
@@ -28,7 +28,7 @@ double do_gauss_hermite_block_diagonal(const dvector& x,
   ADUNCONST(dvector,xadjoint)
   ADUNCONST(dvector,uadjoint)
   //ADUNCONST(dmatrix,Hessadjoint)
-#if !defined(OPT_LIB) && (__cplusplus >= 201103L)
+#ifdef DEBUG
   const int xs = [](unsigned int size)->int
   {
     assert(size <= INT_MAX);

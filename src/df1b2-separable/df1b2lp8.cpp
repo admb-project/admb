@@ -11,7 +11,7 @@
 #include <admodel.h>
 #include <df1b2fun.h>
 #include <adrndeff.h>
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
   #include <climits>
 #endif
@@ -944,13 +944,11 @@ void save_number_of_local_effects(int num_separable_calls,
       ad_exit(1);
     }
     int old_max=(*num_local_re_array)->indexmax();
-#ifdef OPT_LIB
-    int new_max=old_max+100+(int)(10.0*sqrt(double(old_max)));
-#else
     double sqrt_oldmax = 10.0 * sqrt(double(old_max));
+#ifdef DEBUG
     assert(sqrt_oldmax <= INT_MAX);
-    int new_max=old_max+100+(int)sqrt_oldmax;
 #endif
+    int new_max=old_max+100+(int)sqrt_oldmax;
     ivector tmp(1,old_max);
     tmp=(**num_local_re_array);
     //(*num_local_re_array)=new ivector(1,new_max);
@@ -988,13 +986,11 @@ void save_number_of_local_effects(int num_separable_calls,
       ad_exit(1);
     }
     int old_max=(*num_local_fixed_array)->indexmax();
-#ifdef OPT_LIB
-    int new_max=old_max+100+(int)(10.0*sqrt(double(old_max)));
-#else
     double sqrt_oldmax = 10.0 * sqrt(double(old_max));
+#ifdef DEBUG
     assert(sqrt_oldmax <= INT_MAX);
-    int new_max=old_max+100+(int)sqrt_oldmax;
 #endif
+    int new_max=old_max+100+(int)sqrt_oldmax;
     ivector tmp(1,old_max);
     tmp=(**num_local_fixed_array);
     //(*num_local_fixed_array)=new ivector(1,new_max);
@@ -1023,7 +1019,7 @@ void laplace_approximation_calculator::
   imatrix& list=*funnel_init_var::plist;
   int num_local_re=0;
   int num_fixed_effects=0;
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(funnel_init_var::num_active_parameters <= INT_MAX);
 #endif
   ivector lre_index(1, (int)funnel_init_var::num_active_parameters);

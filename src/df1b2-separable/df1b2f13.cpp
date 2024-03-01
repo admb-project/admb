@@ -3,7 +3,9 @@
  * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <df1b2fun.h>
-#include <cassert>
+#ifdef DEBUG
+  #include <cassert>
+#endif
 
 #ifdef _MSC_VER
   #ifdef _M_X64
@@ -102,10 +104,10 @@ void fixed_smartlist::allocate(const size_t _bufsize,const adstring& _filename)
 void fixed_smartlist::write(const size_t n)
 {
 #if defined(__MINGW64__) || (defined(_WIN64) && defined(_MSC_VER))
-  #ifndef OPT_LIB
+  #ifdef DEBUG
   assert(n <= UINT_MAX);
   #endif
-  ssize_t nw = ::write(fp,buffer,(unsigned int)n);
+  ssize_t nw = ::write(fp,buffer,static_cast<unsigned int>(n));
 #else
   ssize_t nw = ::write(fp, buffer, n);
 #endif
@@ -128,8 +130,10 @@ void fixed_smartlist::rewind(void)
     lseek(fp,0L,SEEK_SET);
     // get the record size
     unsigned int nbytes=0;
-    ssize_t ret = ::read(fp,&nbytes,sizeof(unsigned int));
+    [[maybe_unused]] ssize_t ret = ::read(fp,&nbytes,sizeof(unsigned int));
+#ifdef DEBUG
     assert(ret != -1);
+#endif
     if (nbytes > bufsize)
     {
       cerr << "Error -- record size in file seems to be larger than"
@@ -140,14 +144,14 @@ void fixed_smartlist::rewind(void)
     }
     // now read the record into the buffer
     ret = ::read(fp,buffer,nbytes);
+#ifdef DEBUG
     assert(ret != -1);
+#endif
 
     // skip over file postion entry in file
     // so we are ready to read second record
-#ifdef OPT_LIB
-    lseek(fp, (off_t)sizeof(off_t), SEEK_CUR);
-#else
     ret = lseek(fp, (off_t)sizeof(off_t), SEEK_CUR);
+#ifdef DEBUG
     assert(ret >= 0);
 #endif
   }
@@ -200,13 +204,12 @@ void fixed_smartlist::restore_end(void)
   {
     if (end_saved)
     {
-#ifdef OPT_LIB
-      lseek(fp, 0L, SEEK_END);
-      lseek(fp, endof_file_ptr, SEEK_SET);
-#else
-      off_t ret = lseek(fp, 0L, SEEK_END);
+      [[maybe_unused]] off_t ret = lseek(fp, 0L, SEEK_END);
+#ifdef DEBUG
       assert(ret >= 0);
+#endif
       ret = lseek(fp, endof_file_ptr, SEEK_SET);
+#ifdef DEBUG
       assert(ret >= 0);
 #endif
       read_buffer();
@@ -247,17 +250,14 @@ void fixed_smartlist::write_buffer_one_less(void)
     off_t pos=lseek(fp,0L,SEEK_CUR);
 
     // write the size of the next record into the file
-#if (__cplusplus >= 201703L)
-    [[maybe_unused]]
-#endif
-    ssize_t ret = ::write(fp, &nbytes, sizeof(unsigned int));
-#if !defined(OPT_LIB)
+    [[maybe_unused]] ssize_t ret = ::write(fp, &nbytes, sizeof(unsigned int));
+#ifdef DEBUG
     assert(ret != -1);
 #endif
 
     // write the record into the file
-    ssize_t nw = ::write(fp,buffer,nbytes);
-#ifndef OPT_LIB
+    [[maybe_unused]] ssize_t nw = ::write(fp,buffer,nbytes);
+#ifdef DEBUG
     assert(nw != -1);
 #endif
     if ((size_t)nw < nbytes)
@@ -271,7 +271,7 @@ void fixed_smartlist::write_buffer_one_less(void)
     // now write the previous file position into the file so we can back up
     // when we want to.
     ret = ::write(fp,&pos,sizeof(off_t));
-#if !defined(OPT_LIB)
+#ifdef DEBUG
     assert(ret != -1);
 #endif
 
@@ -300,12 +300,14 @@ void fixed_smartlist::write_buffer(void)
     off_t pos=lseek(fp,0L,SEEK_CUR);
 
     // write the size of the next record into the file
-    ssize_t ret = ::write(fp,&nbytes,sizeof(unsigned int));
+    [[maybe_unused]] ssize_t ret = ::write(fp,&nbytes,sizeof(unsigned int));
+#ifdef DEBUG
     assert(ret != -1);
+#endif
 
     // write the record into the file
-    ssize_t nw=::write(fp,buffer,nbytes);
-#ifndef OPT_LIB
+    [[maybe_unused]] ssize_t nw=::write(fp,buffer,nbytes);
+#ifdef DEBUG
     assert(nw != -1);
 #endif
     if ((size_t)nw < nbytes)
@@ -319,7 +321,9 @@ void fixed_smartlist::write_buffer(void)
     // now write the previous file position into the file so we can back up
     // when we want to.
     ret = ::write(fp,&pos,sizeof(off_t));
+#ifdef DEBUG
     assert(ret != -1);
+#endif
 
     endof_file_ptr=lseek(fp,0L,SEEK_CUR);
     //cout << lseek(fp,0L,SEEK_CUR) << endl;
@@ -353,16 +357,20 @@ void fixed_smartlist::read_buffer(void)
       // offset of the begining of the record is at the end
       // of the record
       lseek(fp,-((off_t)sizeof(off_t)),SEEK_CUR);
-      ssize_t ret = read(fp,&pos,sizeof(off_t));
+      [[maybe_unused]] ssize_t ret = read(fp,&pos,sizeof(off_t));
+#ifdef DEBUG
       assert(ret != -1);
+#endif
       // back up to the beginning of the record (plus record size)
       lseek(fp,pos,SEEK_SET);
       //*(off_t*)(bptr)=lseek(fp,pos,SEEK_SET);
     }
     // get the record size
     unsigned int nbytes = 0;
-    ssize_t result = ::read(fp,&nbytes,sizeof(unsigned int));
+    [[maybe_unused]] ssize_t result = ::read(fp,&nbytes,sizeof(unsigned int));
+#ifdef DEBUG
     assert(result != -1);
+#endif
     if (nbytes > bufsize)
     {
       cerr << "Error -- record size in file seems to be larger than"
@@ -372,8 +380,8 @@ void fixed_smartlist::read_buffer(void)
       ad_exit(1);
     }
     // now read the record into the buffer
-    ssize_t nr = ::read(fp,buffer,nbytes);
-#ifndef OPT_LIB
+    [[maybe_unused]] ssize_t nr = ::read(fp,buffer,nbytes);
+#ifdef DEBUG
     assert(nr != -1);
 #endif
     if ((size_t)nr != nbytes)
@@ -391,10 +399,8 @@ void fixed_smartlist::read_buffer(void)
     if (direction ==-1) // we are going backwards
     {
       // backup the file pointer again
-#ifdef OPT_LIB
-      lseek(fp,pos,SEEK_SET);
-#else
-      off_t ret = lseek(fp, pos, SEEK_SET);
+      [[maybe_unused]] off_t ret = lseek(fp, pos, SEEK_SET);
+#ifdef DEBUG
       assert(ret >= 0);
 #endif
       // *(off_t*)(bptr)=lseek(fp,pos,SEEK_SET);
@@ -402,10 +408,8 @@ void fixed_smartlist::read_buffer(void)
     else  // we are going forward
     {
       // skip over file postion entry in file
-#ifdef OPT_LIB
-      lseek(fp,(off_t)sizeof(off_t),SEEK_CUR);
-#else
-      off_t ret = lseek(fp, (off_t)sizeof(off_t), SEEK_CUR);
+      [[maybe_unused]] off_t ret = lseek(fp, (off_t)sizeof(off_t), SEEK_CUR);
+#ifdef DEBUG
       assert(ret >= 0);
 #endif
     }

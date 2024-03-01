@@ -28,7 +28,7 @@ double do_gauss_hermite_block_diagonal_multi(const dvector& x,
   ADUNCONST(dvector,xadjoint)
   ADUNCONST(dvector,uadjoint)
   //ADUNCONST(dmatrix,Hessadjoint)
-#if defined(DEBUG) && (__cplusplus >= 201103L)
+#if defined(DEBUG)
   const int xs = [](unsigned int size)->int
   {
     assert(size <= INT_MAX);

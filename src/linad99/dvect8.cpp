@@ -10,7 +10,7 @@
  */
 #include "fvar.hpp"
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
   #include <climits>
 #endif
@@ -67,13 +67,10 @@ dvector dvector::operator ()(const lvector& u)
 
    for ( int i=u.indexmin(); i<=u.indexmax(); i++)
    {
-#ifdef OPT_LIB
-     tmp(i)=(*this)((int)u(i));
-#else
-     const AD_LONG_INT ui = u(i);
-     assert(ui <= INT_MAX);
-     tmp(i)=(*this)((int)ui);
+#ifdef DEBUG
+     assert(u(i) <= INT_MAX);
 #endif
+     tmp(i)=(*this)(static_cast<int>(u(i)));
    }
    return tmp;
  }

@@ -42,7 +42,7 @@
 #include <sstream>
 using std::istringstream;
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   #include <cassert>
 #endif
 
@@ -160,7 +160,7 @@ dvar_vector::dvar_vector(const char * s)
      cout << "Created a ncopies with address " << _farptr_tolong(&(shape->ncopies))<<"\n";
      cout << "Created a dvector with address " << _farptr_tolong(va) <<"\n";
    #endif
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(size() > 0);
 #endif
    gradient_structure* gs = gradient_structure::_instance;

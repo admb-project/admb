@@ -61,11 +61,7 @@
 #include <string.h>
 #include <time.h>
 
-#if !defined(OPT_LIB)
-  #include <cassert>
-  #include <climits>
-#endif
-#if defined(__MINGW64__) || (defined(_MSC_VER) && defined(_M_X64))
+#ifdef DEBUG
   #include <cassert>
   #include <climits>
 #endif
@@ -133,7 +129,7 @@ grad_stack::grad_stack(const size_t size, [[maybe_unused]] const unsigned int id
   true_length = size;
   length = true_length;
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   assert(length > 0);
 #endif
 
@@ -375,13 +371,15 @@ void grad_stack::write_grad_stack_buffer(gradient_structure* gs)
   // save the current end of file in case we can't write the whole buffer
   end_pos = lseek(_GRADFILE_PTR,0L,SEEK_CUR);
 #if defined(__MINGW64__) || (defined(_WIN64) && defined(_MSC_VER))
+  #ifdef DEBUG
   assert(nbw <= UINT_MAX);
+  #endif
   ssize_t ierr = write(_GRADFILE_PTR, ptr_first, (unsigned int)nbw);
 #else
   ssize_t ierr = write(_GRADFILE_PTR, ptr_first, nbw);
 #endif
 
-#ifndef OPT_LIB
+#ifdef DEBUG
   #ifdef _MSC_VER
   assert(nbw <= SSIZE_MAX);
   #endif
@@ -391,18 +389,18 @@ void grad_stack::write_grad_stack_buffer(gradient_structure* gs)
   {
     cout << "Wrote " << ierr << " not " << nbw << endl;
 
-#ifndef OPT_LIB
-    OFF_T offset = LSEEK(_GRADFILE_PTR, end_pos, SEEK_SET);
+    [[maybe_unused]] OFF_T offset = LSEEK(_GRADFILE_PTR, end_pos, SEEK_SET);
+#ifdef DEBUG
     assert(offset != -1);
-#else
-    LSEEK(_GRADFILE_PTR, end_pos, SEEK_SET);
 #endif
 
     //save the end of file for this file so we can reposition later
     end_pos1 = end_pos;
     increment_current_gradfile_ptr();
 #if defined(__MINGW64__) || (defined(_WIN64) && defined(_MSC_VER))
+  #ifdef DEBUG
     assert(nbw <= UINT_MAX);
+  #endif
     ierr = write(_GRADFILE_PTR, ptr_first, (unsigned int)nbw);
 #else
     ierr = write(_GRADFILE_PTR, ptr_first, nbw);

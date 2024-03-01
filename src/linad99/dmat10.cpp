@@ -5,7 +5,9 @@
 #include "fvar.hpp"
 #include <string.h>
 #include <ctype.h>
-#include <cassert>
+#ifdef DEBUG
+  #include <cassert>
+#endif
 #include <climits>
 
 /**
@@ -33,7 +35,9 @@ void dmatrix::fill(const char* s)
   #endif
 
   size_t len = strlen(s);
+#ifdef DEBUG
   assert(len <= INT_MAX);
+#endif
   int n = static_cast<int>(len);
   int braces = 0;
   int nrow = 0;

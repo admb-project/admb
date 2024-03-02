@@ -9,7 +9,7 @@ Details prerequisites and procedures to use the ADMB Docker Linux image for buil
 ADMB Docker Linux Image
 -----------------------
 
-The ADMB Docker image uses the *Debian 12.1 (Bookwork)* as the base operating system.
+The ADMB Docker image uses the *Debian 12.1 (Bookwork)* as the base container.
 
 Below is the list of tools that are preinstalled.
 
@@ -31,6 +31,10 @@ Downloads
 Using the Docker Desktop, download the [ADMB Docker Image](https://hub.docker.com/r/johnoel/admb/) or use the command below from the terminal.
 
        docker pull johnoel/admb-13.2:linux
+
+For MacOS with ARM64 CPU host computers, download the docker image with the command below.
+
+       docker pull johnoel/admb-13.2:linux-arm64
 
 Usage
 -----

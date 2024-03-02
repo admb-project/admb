@@ -9,7 +9,7 @@ Details prerequisites and procedures to use the ADMB Docker Windows image for bu
 ADMB Docker Windows Image
 -------------------------
 
-The ADMB Docker Windows image uses the *Windows 10 LTSC 2019* as the base operating system.
+The ADMB Docker Windows image uses the *Windows LTSC 2022 or 2019* as the base container.
 
 Below is the list of tools that are preinstalled.
 
@@ -28,11 +28,11 @@ After the installing Docker Desktop, double click the the Docker Desktop to run 
 Downloads
 ---------
 
-* Using the Docker Desktop, pull the [ADMB Docker Image](https://hub.docker.com/r/johnoel/admb/) or use the command below in the command prompt to download ADMB Docker Windows image.
+Using the Docker Desktop, pull the [ADMB Docker Image](https://hub.docker.com/r/johnoel/admb/) or use the command below in the command prompt to download ADMB Docker Windows image.  The image uses *Windows 2022 LTSC* as the base container.
 
        docker pull johnoel/admb-13.2:windows
 
-For Windows 10 users, use the docker image in the procedures below.
+For Windows 10 users, use the docker image in the procedures below.  The image uses *Windows 2019 LTSC* as the base container.
 
        docker pull johnoel/admb-13.2:windows10
 

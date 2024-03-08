@@ -47,7 +47,7 @@ debian:
 	docker build --no-cache --file Dockerfile-debian -t $(CONTAINER):$(OS) .
 
 run: $(MODEL_NAME)
-	docker run --rm --volume $(MOUNT_DIR)://$(MODEL_NAME) --workdir //$(MODEL_NAME) $(CONTAINER):$(OS) $(MODEL_NAME)$(MODEL_EXT)
+	docker run -e ADMB_OPTIONS=-s --rm --volume $(MOUNT_DIR)://$(MODEL_NAME) --workdir //$(MODEL_NAME) $(CONTAINER):$(OS) $(MODEL_NAME)$(MODEL_EXT)
 ifneq ($(OS),Windows_NT)
   ifeq ($(shell uname -s),Linux)
 	cd $(MODEL_NAME) && ./$(MODEL_NAME)

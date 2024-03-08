@@ -45,7 +45,7 @@ Usage
 
 2. Build simple.tpl into an Windows executable using the ADMB Docker Image and the mounted current local directory.
 
-        docker run --rm --volume %CD%:C:\simple --workdir C:\simple johnoel/admb-13.2:windows simple.tpl
+        docker run -e ADMB_OPTION=-s --rm --volume %CD%:C:\simple --workdir C:\simple johnoel/admb-13.2:windows simple.tpl
 
 3. Run **simple.exe** Windows executable.
 

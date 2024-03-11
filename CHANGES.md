@@ -25,6 +25,8 @@ ADMB-13.2
 
 * Clean compiler builds (no warnings).
 
+* Many changes to improve build files and scripts.
+
 ADMB-13.1
 ---------
 *Released December 23, 2022*  

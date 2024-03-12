@@ -23,7 +23,9 @@ The Windows operating system is needed on the host computer to use the ADMB Dock
 
 * Download and install the [Docker Desktop](https://www.docker.com/products/docker-desktop/) for Windows.
 
-After the installing Docker Desktop, double click the the Docker Desktop to run services, then set the Docker type to Windows Containers (read [documentation](https://learn.microsoft.com/en-us/virtualization/windowscontainers/quick-start/set-up-environment?tabs=dockerce#install-the-container-runtime)).
+After the installing Docker Desktop, double click the the Docker Desktop to run services, then set the Docker type to Windows Containers (read [documentation](https://learn.microsoft.com/en-us/virtualization/windowscontainers/quick-start/set-up-environment?tabs=dockerce#install-the-container-runtime)). The image below is a screenshot of where to go to switch to from Linux to Windows containers. 
+
+![Screenshot of switching to Windows containers](windows_docker_image.png)
 
 Downloads
 ---------
@@ -39,7 +41,7 @@ For Windows 10 users, use the docker image in the procedures below.  The image u
 Usage
 -----
 
-1. Open Command Prompt and change to the model local directory.
+1. Open Command Prompt and change to the model local directory. In this example we will be navigating to the simple directory under examples/admb/simple.
 
         cd C:\simple
 

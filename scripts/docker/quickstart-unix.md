@@ -13,7 +13,7 @@ The ADMB Docker image uses the *Debian 12.1 (Bookwork)* as the base container.
 
 Below is the list of tools that are preinstalled.
 
-* Compiler - GNU GCC version 13.2 
+* Compiler - GNU GCC version 13.2 (or later?)
 * ADMB - latest version
 
 Prerequisites
@@ -25,10 +25,19 @@ To use ADMB Docker Image for Linux, the operating system of host computer must b
 
 For MacOS or Windows computers, click the Docker Desktop to run the Docker services on the local host computer.
 
+Alternative to using Docker Desktop - GitHub Codespaces
+------------------------------------------------------
+If you are a GitHub user and have your model on GitHub, you can take advantage of [GitHub Codespaces](https://github.com/features/codespaces) which start up an Ubuntu Linux dev environment from your repository in your browser with VSCode as the default editor and already has Docker installed and you can use Docker through the terminal commands (see below under Downloads and Usage). Windows and macOS are not supported on Codespaces.
+
+You can customize the [Codespace startup configuration](https://docs.github.com/en/codespaces/setting-up-your-project-for-codespaces/adding-a-dev-container-configuration/introduction-to-dev-containers) by creating a .devcontainer/devcontainer.json file (instructions in the Codespace startup configuration link). The customizations include adding R and R packages upon startup, adding VSCode extensions, changing the image from which the Codespace is built, and much more.  
+
+You get up to 60 hours per month for free on Codespaces, after which you will be prompted to pay in order to continue using Codespaces. Generally, 60 hours is plenty of time, though if you need time beyond this, the pricing is pretty affordable. 
+
+
 Downloads
 ---------
 
-Using the Docker Desktop, download the [ADMB Docker Image](https://hub.docker.com/r/johnoel/admb/) or use the command below from the terminal.
+Using the Docker Desktop, download the [ADMB Docker Image](https://hub.docker.com/r/johnoel/admb/) by typing "admb-13.2" in the Docker Desktop search bar or use the command below from the terminal.
 
        docker pull johnoel/admb-13.2:linux
 
@@ -39,7 +48,7 @@ For MacOS with ARM64 CPU host computers, download the docker image with the comm
 Usage
 -----
 
-1. Open a Terminal (or Command Prompt for Windows) and change to the model local directory.
+1. Open a Terminal (or Command Prompt for Windows) and change to the model local directory. In this example we will be navigating to the simple directory under examples/admb/simple.
 
         cd simple
 

@@ -25,7 +25,7 @@ The Windows operating system is needed on the host computer to use the ADMB Dock
 
 After the installing Docker Desktop, double click the the Docker Desktop to run services, then set the Docker type to Windows Containers (read [documentation](https://learn.microsoft.com/en-us/virtualization/windowscontainers/quick-start/set-up-environment?tabs=dockerce#install-the-container-runtime)). The image below is a screenshot of where to go to switch to from Linux to Windows containers. 
 
-![Screenshot of switching to Windows containers](windows_docker_image.png)
+[<img src="windows_docker_image.png" alt="Screenshot of switching to Windows containers" width="75%"/>](windows_docker_image.png)
 
 Downloads
 ---------

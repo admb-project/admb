@@ -13,6 +13,6 @@ jobs:
         brew install --HEAD colima
         brew install docker
         colima delete
-        colima start -f --arch x86_64
+        colima start
         docker pull johnoel/admb-13.2:linux-arm64
         colima stop

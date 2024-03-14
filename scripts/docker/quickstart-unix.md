@@ -61,11 +61,11 @@ Usage
 
    For Windows host,
 
-        docker run --env LDFLAGS=-static --rm --volume %CD%:/simple --workdir /simple --entrypoint ./simple johnoel/admb-13.2:linux
+        docker run --env --rm --volume %CD%:/simple --workdir /simple --entrypoint ./simple johnoel/admb-13.2:linux
         
    For Unix host,
 
-        docker run --env LDFLAGS=-static --rm --volume $PWD:/simple --workdir /simple --entrypoint ./simple johnoel/admb-13.2:linux
+        docker run --env --rm --volume $PWD:/simple --workdir /simple --entrypoint ./simple johnoel/admb-13.2:linux
 
    For Linux host, executable could be run locally.
    

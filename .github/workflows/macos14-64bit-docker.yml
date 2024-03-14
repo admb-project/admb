@@ -20,5 +20,6 @@ jobs:
         docker pull johnoel/admb-13.2:linux
         pushd examples/admb/simple
         docker run --rm --volume $PWD:/simple --workdir /simple johnoel/admb-13.2:linux simple.tpl
+        docker run --rm --volume $PWD:/simple --workdir /simple --entrypoint ./simple johnoel/admb-13.2:linux
         popd
         colima stop

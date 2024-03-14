@@ -9,7 +9,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@main
-    - name: docker
+    - name: dist
       run: |
         brew update
         brew upgrade

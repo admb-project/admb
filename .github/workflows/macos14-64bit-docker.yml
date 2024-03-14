@@ -17,5 +17,4 @@ jobs:
         colima delete
         colima start --arch x86_64
         docker pull johnoel/admb-13.2:linux-arm64
-	cd examples/admb/simple
         colima stop

@@ -10,7 +10,7 @@ jobs:
     steps:
     - name: dist
       run: |
-        brew install docker
+        brew install docker colima
         brew update
         brew upgrade
         colima delete

@@ -10,10 +10,10 @@ jobs:
     steps:
     - name: dist
       run: |
-        brew install --HEAD colima
-        brew install docker
         brew update
         brew upgrade
+        brew install --HEAD colima
+        brew install docker
         colima delete
         colima start
         docker pull johnoel/admb-13.2:linux-arm64

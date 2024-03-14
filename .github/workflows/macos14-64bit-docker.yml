@@ -1,4 +1,4 @@
-name: macos-64bit
+name: macos-64bit-docker
 
 on: [push]
 

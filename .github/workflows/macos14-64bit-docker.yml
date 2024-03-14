@@ -1,0 +1,17 @@
+name: macos-64bit
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: macos-14
+
+    steps:
+    - name: dist
+      run: |
+        brew install docker
+        brew update
+        colima delete
+        colima start -f --arch aarch64 
+        docker pull johnoel/admb-13.2:linux-arm64

@@ -12,6 +12,8 @@ jobs:
       run: |
         brew install --HEAD colima
         brew install docker
+        brew update
+        brew upgrade
         colima delete
         colima start
         docker pull johnoel/admb-13.2:linux-arm64

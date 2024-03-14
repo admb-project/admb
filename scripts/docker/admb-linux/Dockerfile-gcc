@@ -8,6 +8,7 @@ RUN apt-get install flex --yes
 RUN apt-get install git --yes
 
 RUN cd /usr/local/src && git clone https://github.com/admb-project/admb.git
+RUN cd /usr/local/src/admb && git checkout admb-13.2
 RUN make --directory /usr/local/src/admb -j 8
 RUN make --directory /usr/local/src/admb install
 RUN useradd -m --shell /bin/bash --home-dir /workdir admb

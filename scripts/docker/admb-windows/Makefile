@@ -43,7 +43,7 @@ msys2-x86_64.exe:
 	powershell Invoke-WebRequest -Uri https://github.com/msys2/msys2-installer/releases/download/2023-07-18/msys2-x86_64-20230718.exe -OutFile msys2-x86_64.exe
 
 admb.zip:
-	powershell Invoke-WebRequest -Uri https://github.com/admb-project/admb/archive/refs/heads/main.zip -OutFile admb.zip
+	powershell Invoke-WebRequest -Uri https://github.com/admb-project/admb/releases/download/admb-13.2/admb-13.2-src.zip -OutFile admb.zip
 
 winlibs.zip:
 	powershell Invoke-WebRequest -Uri https://github.com/brechtsanders/winlibs_mingw/releases/download/13.2.0mcf-16.0.6-11.0.1-ucrt-r2/winlibs-x86_64-mcf-seh-gcc-13.2.0-mingw-w64ucrt-11.0.1-r2.zip -OutFile winlibs.zip

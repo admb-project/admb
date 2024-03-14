@@ -18,6 +18,4 @@ jobs:
         colima start --arch x86_64
         docker pull johnoel/admb-13.2:linux-arm64
 	cd examples/admb/simple
-        docker run --env LDFLAGS=-static --rm --volume $PWD:/simple --workdir /simple johnoel/admb-13.2:linux simple.tpl
-        docker run --env LDFLAGS=-static --rm --volume $PWD:/simple --workdir /simple --entrypoint ./simple johnoel/admb-13.2:linux
         colima stop

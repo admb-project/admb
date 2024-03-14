@@ -8,6 +8,7 @@ jobs:
     runs-on: macos-14
 
     steps:
+    - uses: actions/checkout@main
     - name: dist
       run: |
         brew update

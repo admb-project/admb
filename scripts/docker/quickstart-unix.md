@@ -1,25 +1,25 @@
-QuickStart - Using ADMB Docker Linux Image
+QuickStart - Using ADMB Docker Image for Linux
 ==========================================
 
 *ADMB-13.2*  
 *Released March 15, 2024*  
 
-Details prerequisites and procedures to use the ADMB Docker Linux image for building and running ADMB models with the [simple example](https://github.com/admb-project/admb/tree/main/examples/admb/simple).
+Details, prerequisites, and procedures to use the ADMB Docker Image for Linux for building and running ADMB models with the [simple example](https://github.com/admb-project/admb/tree/main/examples/admb/simple).
 
-ADMB Docker Linux Image
+ADMB Docker Image for Linux
 -----------------------
 
-The ADMB Docker image uses the *Debian 12.1 (Bookwork)* as the base container.
+The ADMB Docker Image for Linux uses the *Debian 12.1 (Bookwork)* as the base container.
 
 Below is the list of tools that are preinstalled.
 
-* Compiler - GNU GCC version 13.2 (or later?)
+* Compiler - GNU GCC version 13.2
 * ADMB - latest version
 
 Prerequisites
 -------------
 
-To use ADMB Docker Image for Linux, the operating system of host computer must be either Linux, MacOS or Windows.
+To use the ADMB Docker Image for Linux, the operating system of host computer must be either Linux, MacOS or Windows.
 
 * Download and install the [Docker Desktop](https://www.docker.com/products/docker-desktop/).
 
@@ -52,7 +52,7 @@ Usage
 
         cd simple
 
-2. Builds simple.tpl into a Linux executable using the ADMB Docker Linux Image and the mounted current local directory.
+2. Builds simple.tpl into a Linux executable using the ADMB Docker Image for Linux and the mounted current local directory.
 
    For Windows host,
    
@@ -66,7 +66,7 @@ Usage
 
 4. Run **simple** Linux executable.
 
-   The Linux executable is incompatible for MacOS and Windows platforms, but the Docker Linux Image can be used to run the program.  See the Docker commands below.
+   The Linux executable is incompatible for MacOS and Windows platforms, but the ADMB Docker Image for Linux can be used to run the program.  See the Docker commands below.
 
    For Windows host,
 
@@ -85,7 +85,7 @@ Console
 
 The procedure below shows how to use the container's interactive command line shell to build and run models.
 
-1. Use docker to open container's interactive shell and mount current local directory to the container.
+1. Use Docker to open container's interactive shell and mount current local directory to the container.
 
    For Windows host,
    
@@ -136,6 +136,6 @@ Help
 Below are links to documentation and online support for ADMB and Docker.
 
 * [ADMB Manuals](https://www.admb-project.org/docs/manuals/)
-* [ADMB Discussions(Support)](https://github.com/admb-project/admb/discussions)
+* [ADMB Discussions (Support)](https://github.com/admb-project/admb/discussions)
 * [Docker Documentation](https://docs.docker.com/)
 * [Introduction to Containers and Docker](https://learn.microsoft.com/en-us/dotnet/architecture/microservices/container-docker-introduction/)

@@ -41,9 +41,9 @@ For Windows 10 users, use the docker image in the procedures below.  The image u
 Usage
 -----
 
-1. Open Command Prompt and change to the model local directory. In this example we will be navigating to the simple directory under examples/admb/simple.
+1. Open Command Prompt and change to the model local directory. In this example we will be navigating to the simple directory under examples\admb\simple.
 
-        cd C:\simple
+        cd C:examples\admb\simple
 
 2. Build simple.tpl into an Windows executable using the ADMB Docker Image for Windows and the mounted current local directory.
 

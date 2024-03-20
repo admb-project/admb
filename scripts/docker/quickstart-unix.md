@@ -41,16 +41,12 @@ Using the Docker Desktop, download the [ADMB Docker Image](https://hub.docker.co
 
        docker pull johnoel/admb-13.2:linux
 
-For MacOS with ARM64 CPU host computers, download the docker image with the command below.
-
-       docker pull johnoel/admb-13.2:linux-arm64
-
 Usage
 -----
 
 1. Open a Terminal (or Command Prompt for Windows) and change to the model local directory. In this example we will be navigating to the simple directory under examples/admb/simple.
 
-        cd simple
+        cd examples/admb/simple
 
 2. Builds simple.tpl into a Linux executable using the ADMB Docker Image for Linux and the mounted current local directory.
 

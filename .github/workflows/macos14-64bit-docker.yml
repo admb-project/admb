@@ -1,0 +1,25 @@
+name: macos-64bit-docker
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: macos-14
+
+    steps:
+    - uses: actions/checkout@main
+    - name: dist
+      run: |
+        brew update
+        brew upgrade
+        brew install --HEAD colima
+        brew install docker
+        colima delete
+        colima start --arch x86_64
+        docker pull johnoel/admb-13.2:linux
+        pushd examples/admb/simple
+        docker run --rm --volume $PWD:/simple --workdir /simple johnoel/admb-13.2:linux simple.tpl
+        docker run --rm --volume $PWD:/simple --workdir /simple --entrypoint ./simple johnoel/admb-13.2:linux
+        popd
+        colima stop

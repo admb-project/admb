@@ -17,7 +17,7 @@ ifeq ($(OS),Windows_NT)
     endif
   else
     ifeq ($(wildcard ../utilities/mingw/bin/g++.exe),../utilities/mingw/bin/g++.exe)
-      PATH:=$(abspath /../utilities/mingw/bin);$(PATH)
+      PATH:=$(abspath ../utilities/mingw/bin);$(PATH)
     endif
   endif
 endif

@@ -1,3 +1,10 @@
+# ADMB Mode 13.2.0 (2026-03-09)
+
+* Updated links in documentation.
+
+
+
+
 # ADMB Mode 12.1-0 (2020-01-19)
 
 * Improved `admb-clean` so it deletes "hesscheck" and "*.rhes".

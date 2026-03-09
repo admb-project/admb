@@ -1,12 +1,12 @@
 ;;; admb.el --- Major mode for creating statistical models with AD Model Builder
 
-;; Copyright (C) 2003-2020 Arni Magnusson
+;; Copyright (C) 2003-2026 Arni Magnusson
 
 ;; Author:   Arni Magnusson
 ;; Keywords: languages
-;; URL:      https://github.com/admb-project/admb/blob/main/contrib/emacs
+;; URL:      https://github.com/admb-project/admb/tree/main/contrib/emacs
 
-(defconst admb-mode-version "12.1-0" "ADMB Mode version number.")
+(defconst admb-mode-version "13.2.0" "ADMB Mode version number.")
 
 ;;; Commentary:
 ;;
@@ -65,26 +65,28 @@
 ;;
 ;; Fournier, D. An introduction to AD Model Builder for use in nonlinear
 ;;   modeling and statistics.
-;;   [http://admb-project.org/docs/manuals/]
+;;   [https://www.admb-project.org/docs/manuals/]
 ;; Fournier, D. AUTODIF: A C++ array language extension with automatic
 ;;   differentiation for use in nonlinear modeling and statistics.
-;;   [http://admb-project.org/docs/manuals/]
+;;   [https://www.admb-project.org/docs/manuals/]
 ;; Fournier, D.A., H.J. Skaug, J. Ancheta, J. Ianelli, A. Magnusson, M.N.
 ;;   Maunder, A. Nielsen, and J. Sibert. 2012. AD Model Builder: Using automatic
 ;;   differentiation for statistical inference of highly parameterized complex
 ;;   nonlinear models. Optimization Methods and Software 27:233-249.
+;;   [https://doi.org/10.1080/10556788.2011.597854]
 ;; Magnusson, A. 2009. ADMB-IDE: Easy and efficient user interface. ADMB
-;;   Foundation Newsletter 1(3):1-2. [http://admb-foundation.org/wp-content/
-;;   uploads/Newsletter/ADMBNewsletterJuly2009.pdf]
+;;   Foundation Newsletter 1(3):1-2.
+;;   [https://admb-foundation.org/wp-content/uploads/Newsletter/
+;;   ADMBNewsletterJuly2009.pdf]
 ;; Skaug, H. and D. Fournier. Random effects in AD Model Builder: ADMB-RE user
-;;   guide. [http://admb-project.org/docs/manuals/]
+;;   guide.
+;;   [https://www.admb-project.org/docs/manuals/]
 ;;
 ;; Known issues:
 ;;
 ;; Indendation is not very smart.
 ;; Cursor motion and deletions swallow entire underscore_separated_object_name,
 ;;   instead of pausing at each underscore.
-;; Does not work in XEmacs, reportedly.
 
 ;;; History:
 ;;

@@ -19,11 +19,6 @@ ADMB is an open source project.  Read the AD Model Builder [LICENSE][LICENSE_lin
 
 [LICENSE_link]: https://raw.githubusercontent.com/admb-project/admb/main/LICENSE.txt
 
-Donations
----------
-ADMB is freely available for download. If you would like to contribute or donate funds,
-please contact <users@admb-project.org>.
-
 ADMB Citation
 -------------
 Fournier, D.A., Skaug, H.J., Ancheta, J., Ianelli, J., Magnusson, A., Maunder, M.N.,

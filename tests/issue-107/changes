@@ -1,0 +1,33 @@
+diff --git a/src/nh99/model5.cpp b/src/nh99/model5.cpp
+index 18a38a11..ae7177f9 100644
+--- a/src/nh99/model5.cpp
++++ b/src/nh99/model5.cpp
+@@ -18,10 +18,10 @@ void param_init_bounded_dev_vector::set_value(const dvar_vector& x,
+     {
+       ::set_value(*this,x,ii,minb,maxb,pen);
+     }
+-    dvariable s=mean(*this);
+-    pen+=10000.0*s*s;
+     if (!initial_params::mc_phase)
+     {
++      dvariable s=mean(*this);
++      //pen+=10000.0*s*s;
+       (*this)-=s;
+     }
+   }
+diff --git a/src/nh99/xmodelm3.cpp b/src/nh99/xmodelm3.cpp
+index 2db14566..7dc2f739 100644
+--- a/src/nh99/xmodelm3.cpp
++++ b/src/nh99/xmodelm3.cpp
+@@ -529,7 +529,10 @@ void tracing_message(int traceflag,const char *s);
+       report(g);
+       // in case the user changes some initial_params in the report section
+       // call reset again
+-      initial_params::reset(dvar_vector(x));
++      if (initial_params::current_phase < initial_params::max_number_phases)
++      {
++        initial_params::reset(dvar_vector(x));
++      }
+       report_function_minimizer_stats();
+       if (quit_flag=='Q') break;
+       if (!quit_flag || quit_flag == 'N')

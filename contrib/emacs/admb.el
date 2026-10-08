@@ -1,4 +1,4 @@
-;;; admb.el --- Major mode for creating statistical models with AD Model Builder
+;;; admb.el --- Major mode for AD Model Builder  -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2003-2026 Arni Magnusson
 
@@ -6,7 +6,7 @@
 ;; Keywords: languages
 ;; URL:      https://github.com/admb-project/admb/tree/main/contrib/emacs
 
-(defconst admb-mode-version "13.2.0" "ADMB Mode version number.")
+(defconst admb-mode-version "13.2.1" "ADMB Mode version number.")
 
 ;;; Commentary:
 ;;
@@ -298,10 +298,10 @@ Use `admb-toggle-flag' to set `admb-flags', `admb-tpl2cpp-command', and
          (2 font-lock-function-name-face)) ; skip type
        (cons (concat "\\<\\(" (mapconcat 'eval SECTIONS "\\|") "\\)\\>")
              'admb-section-face)
-       (cons (regexp-opt CONSTANTS 'words) font-lock-constant-face)
-       (cons (regexp-opt DATATYPES 'words) font-lock-type-face)
-       (cons (regexp-opt FUNCTIONS 'words) font-lock-keyword-face)
-       (cons (regexp-opt IMPORTANT 'words) font-lock-builtin-face)))))
+       (cons (regexp-opt CONSTANTS 'words) 'font-lock-constant-face)
+       (cons (regexp-opt DATATYPES 'words) 'font-lock-type-face)
+       (cons (regexp-opt FUNCTIONS 'words) 'font-lock-keyword-face)
+       (cons (regexp-opt IMPORTANT 'words) 'font-lock-builtin-face)))))
 (defvar admb-menu
   '("ADMB"
     ["Translate"            admb-tpl2cpp       ]
@@ -481,12 +481,12 @@ This command combines `admb-init', `admb-link-command', and `admb-flags'."
 If you haven't already configured an `outline-mode-hook', here is an example
 that makes it easy to return to `admb-mode':\n
 \(defun my-outline-hook ()
-  (local-set-key [mouse-1] 'outline-mouse-select)
-  (local-set-key [return]  'admb-mode           )
+  (local-set-key [mouse-1] \\='outline-mouse-select)
+  (local-set-key [return]  \\='admb-mode           )
   (defun outline-mouse-select ()
     \"Select position and return to `admb-mode'.\" (interactive)
     (admb-mode)(beginning-of-line)))
-\(add-hook 'outline-mode-hook 'my-outline-hook)"
+\(add-hook \\='outline-mode-hook \\='my-outline-hook)"
   (interactive)
   (let ((outreg outline-regexp))
     (outline-mode)(setq outline-regexp outreg))

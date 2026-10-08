@@ -1,3 +1,10 @@
+# ADMB Mode 13.2.1 (2026-10-09)
+
+* Maintenance release, adapting to recent changes in Emacs.
+
+
+
+
 # ADMB Mode 13.2.0 (2026-03-09)
 
 * Updated links in documentation.
